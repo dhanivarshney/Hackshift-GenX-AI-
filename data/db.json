@@ -13,7 +13,7 @@
         "Distributed Systems",
         "Redis",
         "Docker",
-        "PostgreSQL"
+        "Kafka"
       ],
       "goal": "Seeking Backend / Distributed Systems SDE Referral",
       "activeIntent": "Seeking Backend / Go SDE Referral",
@@ -160,7 +160,15 @@
       ],
       "desc": "My team is expanding our real-time order matching infra. Submit your GitHub project with concurrency handling for a warm internal referral.",
       "deadline": "3 Referral Slots Left",
-      "applicants": []
+      "applicants": [
+        {
+          "candidateName": "Aman Sharma (CSE '26)",
+          "candidateRole": "CSE '26",
+          "repoUrl": "https://github.com/aman-cs/distri-cache-engine",
+          "pitch": "hi",
+          "appliedAt": "2026-10-17T18:35:42.997Z"
+        }
+      ]
     },
     {
       "id": "bounty-3",
@@ -201,17 +209,113 @@
   ],
   "referrals": [
     {
+      "id": "ref-1792258023641",
+      "studentName": "Aman Sharma",
+      "studentBranch": "B.Tech CSE '26",
+      "cgpa": "8.92",
+      "targetCompany": "Google",
+      "alumnusName": "Aditi Rao",
+      "repoUrl": "https://github.com/tiangolo/fastapi",
+      "readinessScore": 96,
+      "capabilityScore": 95,
+      "resumeScore": 96,
+      "githubScore": 96,
+      "skills": [
+        "Go",
+        "Distributed Systems",
+        "Redis",
+        "Docker",
+        "Kafka"
+      ],
+      "resumeSummary": "Final year CSE student with proven experience building low-latency distributed caching layers, concurrency handling in Go, and microservices architecture.",
+      "summary": "High-throughput async API engine with P99 latency benchmarks.",
+      "blockerAsk": "Autoscaling async inference pipelines with sub-10ms P99 latency on K8s.",
+      "status": "referred",
+      "submittedAt": "2026-10-17T17:27:03.641Z",
+      "feedback": "Endorsed candidate directly for Google Cloud platform team.",
+      "actionedAt": "2026-10-17T17:27:20.908Z"
+    },
+    {
       "id": "ref-1",
       "studentName": "Aman Sharma",
       "studentBranch": "B.Tech CSE '26",
+      "cgpa": "8.92",
       "targetCompany": "Swiggy",
       "alumnusName": "Rohan Mehta",
       "repoUrl": "https://github.com/aman-cs/distri-cache-engine",
       "readinessScore": 94,
+      "capabilityScore": 95,
+      "resumeScore": 96,
+      "githubScore": 96,
+      "skills": [
+        "Go",
+        "Distributed Systems",
+        "Redis",
+        "Docker",
+        "Kafka"
+      ],
+      "resumeSummary": "Final year CSE student with proven experience building low-latency distributed caching layers, concurrency handling in Go, and microservices architecture.",
       "summary": "Candidate implemented custom consistent-hashing ring in Go to distribute cache keys across 5 Redis nodes. 92.4% test coverage.",
       "blockerAsk": "Optimizing Redis caching cluster eviction latency under 10k concurrent requests.",
-      "status": "pending",
-      "submittedAt": "2026-10-17T12:00:00Z"
+      "status": "referred",
+      "submittedAt": "2026-10-17T12:00:00Z",
+      "feedback": "Candidate endorsed for SDE-1 backend position via internal ATS.",
+      "actionedAt": "2026-10-17T18:44:37.187Z"
     }
-  ]
+  ],
+  "studentProfile": {
+    "name": "Aman Sharma",
+    "college": "Apex Institute of Technology",
+    "branch": "B.Tech CSE '26",
+    "batch": "Batch '26 (Final Year)",
+    "cgpa": "8.92",
+    "targetRole": "Backend Engineer / Distributed Systems",
+    "skills": [
+      "Go",
+      "Distributed Systems",
+      "Redis",
+      "Docker",
+      "Kafka"
+    ],
+    "githubUrl": "https://github.com/aman-cs/distri-cache-engine",
+    "leetcodeUrl": "https://leetcode.com/u/aman_sharma_99",
+    "portfolioUrl": "https://amansharma.dev",
+    "bio": "Distributed systems enthusiast • Built Redis caching engine with consistent hashing ring • Solved 280+ LeetCode problems • Passionate about high-throughput Go microservices.",
+    "resume": {
+      "fileName": "Aman_Sharma_Resume_2026.pdf",
+      "fileSize": "142 KB",
+      "uploadedAt": "2026-10-17T18:34:42.305Z",
+      "summary": "Final year CSE student with proven experience building low-latency distributed caching layers, concurrency handling in Go, and microservices architecture.",
+      "experience": [
+        {
+          "role": "Backend Engineering Intern",
+          "company": "CloudNative Labs",
+          "duration": "May 2025 - July 2025",
+          "details": "Engineered asynchronous message ingestion pipeline using Go and Kafka, handling 15,000 events/sec with sub-20ms P99 latency. Implemented graceful degradation under network partitions."
+        }
+      ],
+      "education": "B.Tech in Computer Science & Engineering, Apex Institute of Technology (2022 - 2026) | Cumulative GPA: 8.92 / 10.0",
+      "projects": [
+        "Distributed Redis Caching Ring (Go, Consistent Hashing, 92.4% Unit Test Coverage, Zero Memory Leaks)",
+        "Async Inference Task Orchestrator (Python, FastAPI, Redis Queue, Docker Containers)"
+      ],
+      "rawText": "Backend Engineering Intern at CloudNative Labs. Engineered asynchronous message ingestion pipeline using Go and Kafka, handling 15,000 events/sec with sub-20ms P99 latency. Reduced P99 response time by 35% with in-memory caching."
+    },
+    "capabilityScore": {
+      "overall": 95,
+      "resumeScore": 96,
+      "githubScore": 96,
+      "skillsScore": 90,
+      "academicScore": 95,
+      "tier": "Top 1% Exceptional Talent",
+      "badge": "Verified High-Conviction",
+      "insights": [
+        "Production-grade architecture evaluated for Backend Engineer / Distributed Systems.",
+        "Resume impact metrics verified: ATS score at 96%.",
+        "Solid academic foundation with 8.92 CGPA and verified skills matrix."
+      ]
+    },
+    "resumeText": "Backend Engineering Intern at CloudNative Labs. Engineered asynchronous message ingestion pipeline using Go and Kafka, handling 15,000 events/sec with sub-20ms P99 latency. Reduced P99 response time by 35% with in-memory caching.",
+    "updatedAt": "2026-10-17T18:34:42.305Z"
+  }
 }

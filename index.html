@@ -130,7 +130,7 @@
     }
     .bg-orb-4 {
       width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(236, 72, 153, 0.07) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
       top: 25%; right: 12%;
       animation-duration: 26s;
       animation-delay: -6s;
@@ -162,8 +162,8 @@
       background: linear-gradient(90deg,
         rgba(59,130,246,0) 0%,
         rgba(59,130,246,0.7) 25%,
-        rgba(168,85,247,0.85) 50%,
-        rgba(236,72,153,0.7) 75%,
+        rgba(99,102,241,0.85) 50%,
+        rgba(14,165,233,0.75) 75%,
         rgba(59,130,246,0) 100%);
       background-size: 200% 100%;
       animation: aurora-sweep 4s linear infinite;
@@ -225,13 +225,13 @@
 
     /* ===================== PRIMARY GRADIENT BUTTON ===================== */
     .btn-gradient-primary {
-      background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 82%, #be185d 100%);
-      box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.4), 0 2px 12px -2px rgba(190, 24, 93, 0.25);
+      background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 45%, #4f46e5 100%);
+      box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.45), 0 2px 12px -2px rgba(79, 70, 229, 0.25);
       transition: all 0.25s ease;
     }
     .btn-gradient-primary:hover {
-      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #9333ea 82%, #db2777 100%);
-      box-shadow: 0 12px 28px -4px rgba(56, 189, 248, 0.4), 0 4px 16px -2px rgba(219, 39, 119, 0.35);
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 45%, #4338ca 100%);
+      box-shadow: 0 12px 28px -4px rgba(56, 189, 248, 0.45), 0 4px 16px -2px rgba(99, 102, 241, 0.35);
       transform: translateY(-1px);
     }
 
@@ -691,9 +691,9 @@
 
       <!-- Project Title with Letter Glow -->
       <div class="space-y-3">
-        <h1 class="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight text-white flex items-baseline justify-center select-none leading-tight py-2 overflow-visible">
+        <h1 class="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-black tracking-tight text-white flex items-baseline justify-center select-none leading-none py-4 overflow-visible">
           <span class="bg-gradient-to-br from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">Link</span>
-          <span class="text-7xl sm:text-8xl md:text-9xl font-black italic bg-gradient-to-tr from-sky-400 via-indigo-400 to-fuchsia-400 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(56,189,248,0.5)] ml-1 inline-block pr-3 pl-1 pb-1 overflow-visible">X</span>
+          <span class="text-8xl sm:text-9xl md:text-[11.5rem] lg:text-[13.5rem] font-black italic bg-gradient-to-tr from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_45px_rgba(56,189,248,0.7)] ml-2.5 inline-block pr-8 pl-2 pb-2 overflow-visible">X</span>
         </h1>
         <p class="text-xs sm:text-sm font-semibold text-slate-300 tracking-wider uppercase font-mono pt-1">
           Building a Network, Not a Directory
@@ -749,228 +749,209 @@
       <span class="text-slate-400 hidden sm:inline">Track 1: Building a Network, Not a Directory</span>
     </div>
 
-    <!-- Quick Switcher for Hackathon Judges (Active on Login screen, hidden during session) -->
+    <!-- Session Status / Actions (Demo Portals removed for clean production experience) -->
     <div class="flex items-center space-x-3">
-      <div id="quick-demo-pills" class="hidden md:flex items-center space-x-1.5 text-[11px] font-medium bg-[#080d1a] border border-slate-800 rounded-lg p-1">
-        <span class="text-slate-500 px-1.5 font-bold uppercase text-[9px]">Demo Portals:</span>
-        <button onclick="directAuthenticateAs('student')" class="px-2 py-0.5 rounded text-sky-300 hover:bg-slate-800">Student</button>
-        <button onclick="directAuthenticateAs('alumnus')" class="px-2 py-0.5 rounded text-emerald-300 hover:bg-slate-800">Alumnus</button>
-        <button onclick="directAuthenticateAs('founder')" class="px-2 py-0.5 rounded text-amber-300 hover:bg-slate-800">Founder</button>
-        <button onclick="directAuthenticateAs('faculty')" class="px-2 py-0.5 rounded text-purple-300 hover:bg-slate-800">Faculty</button>
-        <button onclick="directAuthenticateAs('recruiter')" class="px-2 py-0.5 rounded text-cyan-300 hover:bg-slate-800">Recruiter</button>
-        <button onclick="directAuthenticateAs('institution')" class="px-2 py-0.5 rounded text-rose-300 hover:bg-slate-800">Institution</button>
-      </div>
-
       <!-- Active Session Indicator (shown when logged in) -->
       <div id="top-bar-session-pill" class="hidden items-center space-x-2 text-[11px] font-medium bg-[#080d1a] border border-slate-800 rounded-lg px-3 py-1">
         <!-- Injected by JS -->
       </div>
-
-      <a href="/presentation.html" target="_blank" class="flex items-center space-x-1.5 px-3 py-1 bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 hover:from-blue-600/50 hover:to-pink-600/50 text-slate-100 rounded-lg border border-purple-500/40 text-[11px] font-semibold transition shadow-sm">
-        <i data-lucide="presentation" class="w-3.5 h-3.5 text-pink-400"></i>
-        <span>Pitch Deck</span>
-      </a>
-
-      <button onclick="triggerConfetti()" class="flex items-center space-x-1.5 px-3 py-1 bg-slate-900/90 hover:bg-slate-800 text-sky-300 rounded-lg border border-slate-700 text-[11px] font-semibold transition shadow-sm">
-        <i data-lucide="sparkles" class="w-3 h-3 text-sky-400"></i>
-        <span>Pitch Aha!</span>
-      </button>
     </div>
   </div>
 
-  <!-- ================= SCREEN 1: THE GRAND HERO LOGIN INTERFACE ================= -->
-  <section id="hero-login-screen" class="flex-1 flex flex-col justify-center items-center px-4 py-8 sm:py-14 max-w-5xl mx-auto w-full relative">
+  <!-- ================= SCREEN 1: THE SIMPLIFIED & ELEGANT ROLE PORTAL LAUNCHPAD ================= -->
+  <section id="hero-login-screen" class="flex-1 flex flex-col justify-center items-center px-4 py-8 sm:py-12 max-w-5xl mx-auto w-full relative">
     
-    <!-- Hero Title & Tagline in Middle -->
-    <div class="text-center max-w-4xl mx-auto space-y-4 mb-8 relative z-10">
+    <!-- Hero Title & Tagline -->
+    <div class="text-center max-w-3xl mx-auto space-y-3 mb-8 relative z-10">
       
-      <!-- High-tech Pre-header Badge with subtle gradient aura -->
-      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-950/60 via-purple-950/50 to-pink-950/40 border border-purple-500/30 text-slate-200 text-xs font-semibold tracking-wider uppercase shadow-xl shadow-purple-950/20 backdrop-blur-md">
-        <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
-        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pink-400"></i>
-        <span class="bg-gradient-to-r from-sky-300 via-indigo-200 to-pink-300 bg-clip-text text-transparent font-bold">Autonomous Intent &amp; Reciprocity Network</span>
-      </div>
+      <!-- CENTERED BIG PROJECT NAME WITH GLOWING X -->
+      <div class="relative py-1 flex flex-col items-center justify-center">
+        <div class="absolute -inset-6 max-w-xl mx-auto bg-gradient-to-r from-blue-600/20 via-indigo-600/25 to-sky-500/20 blur-3xl -z-10 rounded-full pointer-events-none"></div>
 
-      <!-- CENTERED BIG PROJECT NAME WITH HUGE GLOWING X -->
-      <div class="relative py-2 flex flex-col items-center justify-center">
-        <!-- Ambient multi-color radial glow behind name -->
-        <div class="absolute -inset-6 max-w-2xl mx-auto bg-gradient-to-r from-blue-600/20 via-purple-600/25 to-pink-500/20 blur-3xl -z-10 rounded-full scale-125 pointer-events-none"></div>
-
-        <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-white flex items-baseline justify-center select-none leading-tight py-3 px-4 overflow-visible drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
+        <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-white flex items-baseline justify-center select-none leading-none py-2 px-4 overflow-visible drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
           <span class="bg-gradient-to-br from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">Link</span>
-          <span class="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-black italic bg-gradient-to-tr from-sky-400 via-indigo-400 via-purple-400 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(56,189,248,0.5)] drop-shadow-[0_0_65px_rgba(236,72,153,0.35)] ml-1.5 inline-block pr-6 sm:pr-8 pl-1 pt-2 pb-3 overflow-visible hover:scale-105 transition-all duration-300">X</span>
+          <span class="text-7xl sm:text-8xl md:text-9xl lg:text-[11rem] font-black italic bg-gradient-to-tr from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(56,189,248,0.7)] ml-2 inline-block pr-8 pl-1 pt-1 pb-2 overflow-visible">X</span>
         </h1>
-
-        <!-- Subtitle Tagline with dual gradient lines -->
-        <div class="flex items-center justify-center space-x-3 mt-3">
-          <div class="h-px w-12 sm:w-24 bg-gradient-to-r from-transparent via-blue-500/60 to-purple-500/80"></div>
-          <span class="text-xs sm:text-sm font-semibold tracking-widest uppercase font-mono bg-gradient-to-r from-sky-400 via-indigo-300 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">Autonomous Intent Exchange</span>
-          <div class="h-px w-12 sm:w-24 bg-gradient-to-l from-transparent via-blue-500/60 to-purple-500/80"></div>
-        </div>
       </div>
 
-      <!-- Core Mission Statement -->
-      <p class="text-base sm:text-xl font-bold text-white max-w-2xl mx-auto tracking-wide">
-        Building a <span class="bg-gradient-to-r from-sky-300 via-purple-300 to-pink-300 bg-clip-text text-transparent font-extrabold">Living Network</span>, Not a Dead Directory.
+      <!-- Human-friendly Value Proposition -->
+      <p class="text-lg sm:text-xl font-bold text-white max-w-xl mx-auto tracking-wide">
+        Where Students Get <span class="bg-gradient-to-r from-sky-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent font-extrabold">Alumni Referrals</span> &amp; <span class="text-emerald-400">Paid Gigs</span>.
       </p>
       
-      <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
-        Zero spam. An autonomous intent exchange connecting Students, Alumni, Founders, Faculty &amp; Institutions with verified GitHub proof-of-work, real-time micro-bounties, and high-conviction 1-click ATS referrals.
+      <p class="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed">
+        No cold DMs. Upload your resume &amp; projects to get verified by AI, then receive instant 1-click referrals from seniors at top companies.
       </p>
 
-      <!-- High-Impact Value Badges with rich gradient shades -->
-      <div class="flex flex-wrap items-center justify-center gap-2.5 pt-2 text-xs">
-        <span class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-950/60 to-slate-900/90 border border-blue-500/30 text-sky-200 shadow-md shadow-blue-950/20 hover:border-blue-400/60 transition">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-sky-400"></i>
-          <span>Zero Cold DMs</span>
-        </span>
-        <span class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-950/60 to-slate-900/90 border border-indigo-500/30 text-indigo-200 shadow-md shadow-indigo-950/20 hover:border-indigo-400/60 transition">
-          <i data-lucide="git-pull-request" class="w-3.5 h-3.5 text-indigo-400"></i>
-          <span>Verified GitHub Staking</span>
-        </span>
-        <span class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-purple-950/60 to-slate-900/90 border border-purple-500/30 text-purple-200 shadow-md shadow-purple-950/20 hover:border-purple-400/60 transition">
-          <i data-lucide="zap" class="w-3.5 h-3.5 text-purple-400"></i>
-          <span>1-Click Warm Referrals</span>
-        </span>
-        <span class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-pink-950/60 to-slate-900/90 border border-pink-500/30 text-pink-200 shadow-md shadow-pink-950/20 hover:border-pink-400/60 transition">
-          <i data-lucide="coins" class="w-3.5 h-3.5 text-pink-400"></i>
-          <span>Escrow-Backed Bounties</span>
-        </span>
-      </div>
-
-      <!-- Action Prompt -->
-      <div class="pt-3 flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-400">
-        <span class="bg-gradient-to-r from-slate-400 to-slate-200 bg-clip-text text-transparent">Select Your Portal to Enter</span>
-        <i data-lucide="arrow-down" class="w-4 h-4 text-pink-400 animate-bounce"></i>
-      </div>
-
-    </div>
-
-    <!-- Interactive 6-Role Switcher Bar with subtle gradient border -->
-    <div class="w-full max-w-4xl p-[1px] rounded-2xl bg-gradient-to-r from-blue-500/30 via-purple-500/40 to-pink-500/30 shadow-2xl shadow-purple-950/30 mb-6">
-      <div class="bg-[#050916]/95 rounded-2xl p-1.5 backdrop-blur-md overflow-x-auto custom-scrollbar">
-        <div id="hero-role-tabs" class="flex space-x-1 w-full text-xs font-bold">
-          <!-- Injected dynamically by JS -->
-        </div>
+      <div class="pt-2 text-xs font-semibold uppercase tracking-wider text-sky-400 font-mono">
+        Select a role below to explore live:
       </div>
     </div>
 
-    <!-- The Split Interactive Login Card with gradient frame -->
-    <div class="w-full max-w-5xl p-[1px] rounded-3xl bg-gradient-to-b from-sky-500/30 via-purple-500/25 to-pink-500/35 shadow-2xl shadow-black/90">
-      <div class="glass-panel rounded-[23px] w-full grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
-        
-        <!-- Left Column: Role Value Proposition & Visual Hero with deep gradient backdrop -->
-        <div id="hero-side-banner" class="lg:col-span-5 p-8 flex flex-col justify-between bg-gradient-to-br from-[#0c142e] via-[#070c1d] to-[#030611] border-b lg:border-b-0 lg:border-r border-slate-800/80 relative">
-          <div class="space-y-4">
-            <div id="hero-side-icon-box" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500/20 via-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center text-sky-300 shadow-lg shadow-purple-950/30">
-              <i id="hero-side-icon" data-lucide="graduation-cap" class="w-7 h-7"></i>
+    <!-- 6 Role Cards Grid (3x2 on desktop, 1-click instant login) -->
+    <div class="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      
+      <!-- 1. Student Card -->
+      <div onclick="directAuthenticateAs('student')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-sky-500/50 hover:bg-[#0c142c] transition-all duration-200 shadow-lg hover:shadow-sky-500/10 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-sky-400 border border-blue-500/25 flex items-center justify-center group-hover:scale-110 transition">
+              <i data-lucide="graduation-cap" class="w-5 h-5"></i>
             </div>
-
-            <div>
-              <span id="hero-side-badge" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-gradient-to-r from-sky-500/15 via-purple-500/15 to-pink-500/15 text-sky-200 border border-purple-500/30">
-                Verified Student Access
-              </span>
-              <h3 id="hero-side-title" class="text-2xl font-black text-white mt-2">Student Builder Gateway</h3>
-              <p id="hero-side-desc" class="text-xs text-slate-300 mt-2 leading-relaxed">
-                Connect directly with alumni in your target companies without cold DMs. Showcase real code, solve startup bounties, and secure high-conviction job referrals.
-              </p>
-            </div>
-
-            <!-- Role Benefits Bullet Points -->
-            <div id="hero-side-bullets" class="space-y-2.5 pt-2">
-              <!-- Injected by JS -->
-            </div>
+            <span class="text-[10px] bg-sky-500/10 text-sky-300 border border-sky-500/20 px-2 py-0.5 rounded font-mono font-semibold">Most Popular</span>
           </div>
-
-          <div class="pt-6 border-t border-slate-800/80 mt-6 flex items-center justify-between text-[11px] text-slate-400">
-            <span>Apex Institute Node #402</span>
-            <span class="text-emerald-400 flex items-center space-x-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>Auth Active</span>
-            </span>
-          </div>
-        </div>
-
-        <!-- Right Column: Interactive Login Form -->
-        <div class="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-center space-y-6 bg-gradient-to-br from-[#050918]/90 via-[#040714]/95 to-[#0b0617]/90">
-          
           <div>
-            <h3 id="hero-form-heading" class="text-xl font-bold text-white">Sign In to Student Portal</h3>
-            <p id="hero-form-subheading" class="text-xs text-slate-400 mt-1">Use your campus credentials or instant 1-click hackathon bypass.</p>
+            <h3 class="text-base font-bold text-white group-hover:text-sky-300 transition">Student Portal</h3>
+            <p class="text-xs text-slate-400 mt-1">Aman Sharma (CSE '26)</p>
           </div>
-
-          <!-- ⚡ Fast Hackathon Instant Sign-In Box with glowing gradient border -->
-          <div class="p-[1px] rounded-2xl bg-gradient-to-r from-blue-500/35 via-purple-500/40 to-pink-500/35 shadow-lg shadow-purple-950/20">
-            <div class="p-4 rounded-[15px] bg-gradient-to-br from-[#091024] via-[#060a19] to-[#0c071d] space-y-3">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                  <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
-                  <span class="text-xs font-bold text-white">Judges Fast-Track Demo Pass</span>
-                </div>
-                <span class="text-[10px] font-mono text-pink-300 bg-pink-500/10 px-2 py-0.5 rounded border border-pink-500/30">Pre-Verified</span>
-              </div>
-              <p id="hero-demo-text" class="text-xs text-slate-300">
-                Sign in instantly as <b>Aman Sharma</b> (CSE '26 • Distributed Systems Builder) with pre-loaded GitHub data and intent.
-              </p>
-              <button onclick="executeHeroLogin()" class="w-full py-2.5 btn-gradient-primary text-white font-bold rounded-xl text-xs flex items-center justify-center space-x-2 transition cursor-pointer">
-                <i data-lucide="zap" class="w-4 h-4"></i>
-                <span>1-Click Instant Sign In</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Alternative Form Fields -->
-          <form onsubmit="handleHeroLoginSubmit(event)" class="space-y-4 pt-2">
-            
-            <div id="hero-dynamic-fields" class="space-y-3 text-xs">
-              <!-- Injected by JS according to selected role -->
-            </div>
-
-            <div class="flex items-center justify-between text-xs text-slate-400">
-              <label class="flex items-center space-x-2 cursor-pointer">
-                <input type="checkbox" checked class="rounded bg-[#080d1a] border-slate-800 text-sky-600 focus:ring-sky-500">
-                <span>Remember session</span>
-              </label>
-              <a href="#" onclick="openForgotPasswordModal(event)" class="text-sky-400 hover:text-pink-300 transition-colors duration-200">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="w-full py-2.5 bg-gradient-to-r from-slate-900/90 via-purple-950/30 to-slate-900/90 hover:from-slate-800 hover:to-slate-800 text-slate-200 font-semibold rounded-xl text-xs border border-purple-500/20 hover:border-purple-500/40 transition flex items-center justify-center space-x-2 cursor-pointer">
-              <i data-lucide="lock" class="w-3.5 h-3.5 text-sky-400"></i>
-              <span>Sign In with Credentials</span>
-            </button>
-          </form>
-
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Upload resume &amp; GitHub projects, get scored (95/100), and request 1-click ATS referrals.
+          </p>
         </div>
-
+        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-sky-400 font-bold">
+          <span>Enter as Student &rarr;</span>
+        </div>
       </div>
-    </div>
+
+      <!-- 2. Alumnus Card -->
+      <div onclick="directAuthenticateAs('alumnus')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-emerald-500/50 hover:bg-[#071a17] transition-all duration-200 shadow-lg hover:shadow-emerald-500/10 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 flex items-center justify-center group-hover:scale-110 transition">
+              <i data-lucide="briefcase" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono font-semibold">Swiggy SDE-2</span>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition">Alumnus Portal</h3>
+            <p class="text-xs text-slate-400 mt-1">Rohan Mehta (Batch '20)</p>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Review 1-minute student code dossiers and endorse juniors directly to your company's ATS.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-emerald-400 font-bold">
+          <span>Enter as Alumnus &rarr;</span>
+        </div>
+      </div>
+
+      <!-- 3. Founder Card -->
+      <div onclick="directAuthenticateAs('founder')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-amber-500/50 hover:bg-[#1a1408] transition-all duration-200 shadow-lg hover:shadow-amber-500/10 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25 flex items-center justify-center group-hover:scale-110 transition">
+              <i data-lucide="rocket" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[10px] bg-amber-500/10 text-amber-300 border border-amber-500/20 px-2 py-0.5 rounded font-mono font-semibold">YC W24 Founder</span>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition">Founder Portal</h3>
+            <p class="text-xs text-slate-400 mt-1">Neha Kapoor (HyperScale AI)</p>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Post ₹5,000–₹20,000 micro-bounties and hire campus builders based on real code PRs.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-amber-400 font-bold">
+          <span>Enter as Founder &rarr;</span>
+        </div>
+      </div>
+
+      <!-- 4. Recruiter Card -->
+      <div onclick="directAuthenticateAs('recruiter')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-cyan-500/50 hover:bg-[#071824] transition-all duration-200 shadow-lg hover:shadow-cyan-500/10 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/25 flex items-center justify-center group-hover:scale-110 transition">
+              <i data-lucide="user-check" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[10px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 px-2 py-0.5 rounded font-mono font-semibold">Tech Talent</span>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-cyan-300 transition">Recruiter Portal</h3>
+            <p class="text-xs text-slate-400 mt-1">Vikram Seth (Razorpay)</p>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Filter through pre-vetted top 1% candidates with verified GitHub code scores and parsed resumes.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-cyan-400 font-bold">
+          <span>Enter as Recruiter &rarr;</span>
+        </div>
+      </div>
+
+      <!-- 5. Faculty Card -->
+      <div onclick="directAuthenticateAs('faculty')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-purple-500/50 hover:bg-[#160b24] transition-all duration-200 shadow-lg hover:shadow-purple-500/10 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/25 flex items-center justify-center group-hover:scale-110 transition">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[10px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-2 py-0.5 rounded font-mono font-semibold">Dean R&amp;D</span>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition">Faculty Portal</h3>
+            <p class="text-xs text-slate-400 mt-1">Dr. R.K. Verma (Apex Tech)</p>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Pair student capstones with industry alumni co-guides for real-world research &amp; IEEE papers.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-purple-400 font-bold">
+          <span>Enter as Faculty &rarr;</span>
+        </div>
+      </div>
+
+      <!-- 6. Institution Card -->
+      <div onclick="directAuthenticateAs('institution')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-rose-500/50 hover:bg-[#200812] transition-all duration-200 shadow-lg hover:shadow-rose-500/10 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/25 flex items-center justify-center group-hover:scale-110 transition">
+              <i data-lucide="landmark" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[10px] bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2 py-0.5 rounded font-mono font-semibold">Command Desk</span>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-rose-300 transition">Institution Portal</h3>
+            <p class="text-xs text-slate-400 mt-1">Apex Alumni Administration</p>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Monitor verified referral conversions (89%), student earnings, and NIRF/NAAC accreditation metrics.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-rose-400 font-bold">
+          <span>Enter as Institution &rarr;</span>
+        </div>
+      </div>
 
     </div>
+
+    <!-- Collapsible Alternative Email Login (for realistic enterprise test) -->
+    <details class="w-full max-w-md mx-auto text-xs text-slate-400 bg-[#080d1a] border border-slate-800 rounded-2xl p-4">
+      <summary class="cursor-pointer font-semibold text-slate-300 hover:text-white flex items-center justify-between select-none">
+        <span>Looking for traditional email login?</span>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
+      </summary>
+      <form onsubmit="handleHeroLoginSubmit(event)" class="space-y-3 pt-3 mt-2 border-t border-slate-800">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Email</label>
+          <input type="email" value="2022CS084@apex.edu" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Password</label>
+          <input type="password" value="password123" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+        </div>
+        <button type="submit" class="w-full py-2 btn-gradient-primary text-white font-bold rounded-xl text-xs transition">
+          Sign In
+        </button>
+      </form>
+    </details>
 
   </section>
 
   <!-- ================= SCREEN 2: AUTHENTICATED APPLICATION WORKSPACE ================= -->
   <div id="authenticated-workspace" class="hidden flex-1 flex flex-col">
     
-    <!-- Workspace Top Header -->
-<<<<<<< HEAD
     <header class="sticky top-0 z-40 bg-[#030611]/95 backdrop-blur-md border-b border-slate-800/80">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-        
-        <!-- Brand Logo & Portal Tag -->
-        <div class="flex items-center space-x-3">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 flex items-center justify-center shadow-lg shadow-blue-500/20">
-            <i data-lucide="network" class="w-5 h-5 text-white"></i>
-          </div>
-          <div>
-            <div class="flex items-center space-x-2">
-              <span class="text-xl font-black tracking-tight text-white flex items-baseline overflow-visible">
-                <span>Link</span>
-                <span class="text-2xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-purple-300 drop-shadow-[0_0_10px_rgba(56,189,248,0.5)] ml-0.5 inline-block pr-1.5 overflow-visible">X</span>
-              </span>
-              <span id="current-portal-badge" class="text-[10px] font-bold uppercase tracking-wider bg-sky-500/10 text-sky-300 border border-sky-500/25 px-2 py-0.5 rounded">Student Portal</span>
-=======
-    <header class="sticky top-0 z-40 bg-[#040711]/90 backdrop-blur-md border-b border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
         
         <div class="flex items-center space-x-3 sm:space-x-4">
@@ -984,16 +965,18 @@
 
           <!-- Brand Logo & Portal Tag -->
           <div class="flex items-center space-x-3">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 shrink-0">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
               <i data-lucide="network" class="w-5 h-5 text-white"></i>
             </div>
             <div>
               <div class="flex items-center space-x-2">
-                <span class="text-lg font-black tracking-tight text-white">Nexus<span class="text-indigo-400">IQ</span></span>
-                <span id="current-portal-badge" class="text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded">Student Portal</span>
+                <span class="text-xl font-black tracking-tight text-white flex items-baseline overflow-visible">
+                  <span>Link</span>
+                  <span class="text-2xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-purple-300 drop-shadow-[0_0_10px_rgba(56,189,248,0.5)] ml-0.5 inline-block pr-1.5 overflow-visible">X</span>
+                </span>
+                <span id="current-portal-badge" class="text-[10px] font-bold uppercase tracking-wider bg-sky-500/10 text-sky-300 border border-sky-500/25 px-2 py-0.5 rounded">Student Portal</span>
               </div>
               <p class="text-[11px] text-slate-400 -mt-0.5">Apex Institute Network Node</p>
->>>>>>> d561c1f72652c3b41eb662b75ae22cbeccae271d
             </div>
           </div>
         </div>
@@ -1044,40 +1027,363 @@
       </div>
     </header>
 
-    <!-- Workspace Hero Banner -->
-    <section class="border-b border-slate-800/80 bg-gradient-to-b from-[#080e1c]/60 via-[#030611]/40 to-transparent py-4">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div class="flex items-center space-x-4">
-          <div id="hero-avatar" class="w-13 h-13 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 border border-sky-400/30 flex items-center justify-center text-xl font-bold text-white shadow-lg shadow-blue-500/20">
-            AS
-          </div>
-          <div>
-            <div class="flex items-center space-x-2">
-              <h2 id="hero-name" class="text-lg font-bold text-white">Aman Sharma</h2>
-              <span id="hero-tag" class="text-xs px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-300 border border-sky-500/25 font-medium">Student (CSE '26)</span>
-            </div>
-            <p id="hero-bio" class="text-xs text-slate-400 mt-0.5">Distributed systems enthusiast • Built Redis caching engine • Solved 280+ LeetCode</p>
-          </div>
-        </div>
-
-        <div class="flex items-center space-x-4 bg-[#080e1c] border border-slate-800 rounded-xl px-4 py-2.5 shadow-md">
-          <div>
-            <div class="text-[10px] uppercase font-bold text-slate-400">Active Persona Goal:</div>
-            <div id="hero-goal" class="text-xs font-semibold text-sky-400 flex items-center space-x-1.5">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-sky-400"></i>
-              <span>Seeking Backend / Distributed Systems SDE Referral</span>
-            </div>
-          </div>
-          <button onclick="openChangeIntentModal()" class="text-xs font-medium text-sky-400 hover:text-sky-300 underline ml-2">Edit</button>
-        </div>
-      </div>
-    </section>
-
     <!-- Workspace Main Views -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
+      <!-- ================= TAB 0: STUDENT CAPABILITY PROFILE & RESUME SCORER ================= -->
+      <div id="view-student-profile" class="space-y-6">
+        
+        <!-- Header Banner with Live Recruiter Sync Indicator -->
+        <div class="bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-slate-900/60 border border-slate-800 rounded-2xl p-6 relative overflow-hidden shadow-lg">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
+            <div class="max-w-2xl">
+              <div class="flex items-center space-x-2">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded border border-sky-500/20 flex items-center space-x-1">
+                  <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                  <span>Verified Profile</span>
+                </span>
+                <span class="text-xs text-emerald-400 font-mono flex items-center space-x-1">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span>Visible to Alumni &amp; Recruiters</span>
+                </span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-white mt-2">My Capability Profile &amp; Resume Score</h2>
+              <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                Update your academic details, skills, and resume. Your <b>Capability Score (0–100)</b> is automatically evaluated from your resume depth, GitHub proof-of-work, and tech stack match.
+              </p>
+            </div>
+
+            <!-- Current Capability Score Pill -->
+            <div class="flex items-center space-x-4 bg-[#050916]/90 border border-sky-500/30 rounded-2xl p-4 shadow-lg backdrop-blur-md">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 flex flex-col items-center justify-center text-white shadow-md shadow-blue-500/30">
+                <span id="header-score-number" class="text-xl font-black leading-none">95</span>
+                <span class="text-[9px] font-mono text-sky-200">/ 100</span>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Capability Score</div>
+                <div id="header-score-tier" class="text-xs font-bold text-sky-300">Top 1% Exceptional Talent</div>
+                <div class="text-[10px] text-emerald-400 font-mono mt-0.5 flex items-center space-x-1">
+                  <i data-lucide="check-circle" class="w-3 h-3"></i>
+                  <span>Eligible for 1-Click Referral</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- LEFT COLUMN (7 COLS): Profile Form & Resume Uploader -->
+          <div class="lg:col-span-7 space-y-6">
+            
+            <!-- 1. Academic & Personal Details -->
+            <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+                  <i data-lucide="user" class="w-4 h-4 text-sky-400"></i>
+                  <span>Academic &amp; Student Identity</span>
+                </h3>
+                <span class="text-[11px] text-slate-400 font-mono">Step 1 of 3</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="block text-xs font-medium text-slate-300 mb-1">Full Legal Name</label>
+                  <input type="text" id="prof-name" value="Aman Sharma" class="w-full bg-[#060a14] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/20">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-300 mb-1">College / University</label>
+                  <input type="text" id="prof-college" value="Apex Institute of Technology" class="w-full bg-[#060a14] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/20">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-300 mb-1">Degree &amp; Major</label>
+                  <input type="text" id="prof-branch" value="B.Tech Computer Science &amp; Engineering" class="w-full bg-[#060a14] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/20">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Graduation Year</label>
+                    <input type="text" id="prof-batch" value="2026" class="w-full bg-[#060a14] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/20">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">CGPA / GPA (out of 10)</label>
+                    <input type="text" id="prof-cgpa" value="8.92" class="w-full bg-[#060a14] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/20 font-mono">
+                  </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-medium text-slate-300 mb-1">Target Engineering Role(s)</label>
+                  <input type="text" id="prof-target-role" value="Backend Engineer / Distributed Systems SDE" class="w-full bg-[#060a14] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/20" placeholder="e.g. Backend SDE, Full-Stack, AI Engineer">
+                </div>
+
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-medium text-slate-300 mb-1">Professional Bio &amp; Pitch</label>
+                  <textarea id="prof-bio" rows="2" class="w-full bg-[#060a14] border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/20 leading-relaxed">Distributed systems enthusiast • Built Redis caching engine with consistent hashing ring • Solved 280+ LeetCode problems • Passionate about high-throughput Go microservices.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Technical Skills Matrix (Interactive Chip Tags) -->
+            <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-3.5">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div>
+                  <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+                    <i data-lucide="cpu" class="w-4 h-4 text-sky-400"></i>
+                    <span>Verified Tech Stacks &amp; Core Skills</span>
+                  </h3>
+                  <p class="text-[11px] text-slate-400 mt-0.5">Skills are weighted against recruiter ATS algorithms for match accuracy.</p>
+                </div>
+                <span id="prof-skills-count" class="text-[11px] font-mono text-sky-300 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20">8 Skills</span>
+              </div>
+
+              <!-- Live Active Skills Badges -->
+              <div id="prof-skills-container" class="flex flex-wrap gap-2 min-h-[38px] p-2 bg-[#040711] border border-slate-800/80 rounded-xl">
+                <!-- Injected dynamically via renderSkillChips() -->
+              </div>
+
+              <!-- Input to add custom skill -->
+              <div class="flex items-center space-x-2">
+                <input type="text" id="prof-skill-input" placeholder="Type a skill (e.g. Kafka, Rust, gRPC) and press Add..." class="flex-1 bg-[#060a14] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/20">
+                <button type="button" onclick="handleAddCustomSkill()" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition flex items-center space-x-1">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>Add Skill</span>
+                </button>
+              </div>
+
+              <!-- Recommended 1-Click Suggestions -->
+              <div class="flex items-center space-x-1.5 flex-wrap pt-1 text-[11px]">
+                <span class="text-slate-400 font-semibold mr-1">Recommended:</span>
+                <button type="button" onclick="quickAddSkill('Kafka')" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-sky-300 border border-slate-800 transition">+ Kafka</button>
+                <button type="button" onclick="quickAddSkill('Kubernetes')" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-sky-300 border border-slate-800 transition">+ Kubernetes</button>
+                <button type="button" onclick="quickAddSkill('System Design')" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-sky-300 border border-slate-800 transition">+ System Design</button>
+                <button type="button" onclick="quickAddSkill('FastAPI')" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-sky-300 border border-slate-800 transition">+ FastAPI</button>
+                <button type="button" onclick="quickAddSkill('Python')" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-sky-300 border border-slate-800 transition">+ Python</button>
+              </div>
+            </div>
+
+            <!-- 3. Coding Repositories & Proof Links -->
+            <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-3.5">
+              <h3 class="text-sm font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-3">
+                <i data-lucide="git-branch" class="w-4 h-4 text-sky-400"></i>
+                <span>Code Repositories &amp; Competitive Track Record</span>
+              </h3>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-medium text-slate-300 mb-1">Primary GitHub Project Repository (Proof-of-Work)</label>
+                  <div class="relative">
+                    <input type="text" id="prof-github-url" value="https://github.com/aman-cs/distri-cache-engine" class="w-full bg-[#060a14] border border-slate-800 rounded-xl pl-8 pr-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-sky-500">
+                    <i data-lucide="github" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-300 mb-1">LeetCode / Codeforces Profile</label>
+                  <div class="relative">
+                    <input type="text" id="prof-leetcode-url" value="https://leetcode.com/u/aman_sharma_99" class="w-full bg-[#060a14] border border-slate-800 rounded-xl pl-8 pr-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-sky-500">
+                    <i data-lucide="code" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-300 mb-1">Live Demo / Portfolio URL</label>
+                  <div class="relative">
+                    <input type="text" id="prof-portfolio-url" value="https://amansharma.dev" class="w-full bg-[#060a14] border border-slate-800 rounded-xl pl-8 pr-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-sky-500">
+                    <i data-lucide="globe" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Resume Upload & Document Parser -->
+            <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div>
+                  <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+                    <i data-lucide="file-text" class="w-4 h-4 text-sky-400"></i>
+                    <span>Resume Upload &amp; ATS Capability Parser</span>
+                  </h3>
+                  <p class="text-[11px] text-slate-400 mt-0.5">Upload PDF/Word/Text resume or paste content to compute your ATS Match &amp; Experience Score.</p>
+                </div>
+                <button type="button" onclick="loadSampleResumeData()" class="px-2.5 py-1 rounded-lg bg-blue-950/60 hover:bg-blue-900 border border-blue-500/30 text-sky-300 text-xs font-semibold transition flex items-center space-x-1">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-sky-400"></i>
+                  <span>Load Sample Resume</span>
+                </button>
+              </div>
+
+              <!-- Drag and drop zone -->
+              <div id="resume-dropzone" onclick="document.getElementById('prof-resume-file').click()" class="border-2 border-dashed border-slate-700 hover:border-sky-500/60 rounded-2xl p-6 text-center bg-[#040711] cursor-pointer transition group">
+                <input type="file" id="prof-resume-file" accept=".pdf,.doc,.docx,.txt" class="hidden" onchange="handleResumeFileSelected(event)">
+                <div class="w-12 h-12 mx-auto rounded-xl bg-slate-900 group-hover:bg-sky-500/10 text-slate-400 group-hover:text-sky-400 border border-slate-800 group-hover:border-sky-500/30 flex items-center justify-center transition">
+                  <i data-lucide="upload-cloud" class="w-6 h-6"></i>
+                </div>
+                <div class="mt-3">
+                  <span class="text-xs font-bold text-white group-hover:text-sky-300">Click to upload or drag &amp; drop resume</span>
+                  <p class="text-[11px] text-slate-400 mt-0.5">Supports PDF, DOCX, TXT (Max 5MB)</p>
+                </div>
+              </div>
+
+              <!-- Active Uploaded Resume File Pill -->
+              <div id="prof-resume-status" class="flex items-center justify-between p-3 rounded-xl bg-[#060a14] border border-slate-800">
+                <div class="flex items-center space-x-3">
+                  <div class="p-2 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                    <i data-lucide="file-check" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <div id="prof-resume-filename" class="text-xs font-bold text-white">Aman_Sharma_Resume_2026.pdf</div>
+                    <div id="prof-resume-meta" class="text-[10px] text-slate-400">142 KB • Parsed &amp; ATS Verified</div>
+                  </div>
+                </div>
+                <span class="text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 px-2 py-0.5 rounded font-mono font-semibold">Ready for Radar</span>
+              </div>
+
+              <!-- Parsed Resume Content Preview (Editable) -->
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label class="block text-xs font-medium text-slate-300">Parsed Resume Content &amp; Work Experience</label>
+                  <span class="text-[10px] text-slate-400 font-mono">Used for automated scoring</span>
+                </div>
+                <textarea id="prof-resume-raw" rows="4" class="w-full bg-[#060a14] border border-slate-800 rounded-xl p-3 text-xs text-white font-mono focus:outline-none focus:border-sky-500 leading-relaxed custom-scrollbar" placeholder="Paste your resume text here or upload file..."></textarea>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN (5 COLS): Dynamic Holistic Capability Score Card -->
+          <div class="lg:col-span-5 space-y-6">
+            
+            <div class="glass-panel rounded-2xl p-6 border border-sky-500/25 bg-gradient-to-b from-[#080e1c] to-[#040711] space-y-6 sticky top-20 shadow-2xl">
+              
+              <!-- Giant Capability Score Dial -->
+              <div class="text-center space-y-2 border-b border-slate-800 pb-5">
+                <span class="text-[11px] font-bold uppercase tracking-widest text-sky-400 font-mono">LinkX Capability Index</span>
+                
+                <div class="relative py-2 flex items-center justify-center">
+                  <div class="w-32 h-32 rounded-full border-4 border-slate-800 border-t-sky-400 border-r-blue-500 flex flex-col items-center justify-center bg-[#030611] shadow-[0_0_30px_rgba(56,189,248,0.25)]">
+                    <span id="score-display-big" class="text-4xl font-black text-white tracking-tight">95</span>
+                    <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Out of 100</span>
+                  </div>
+                </div>
+
+                <div id="score-tier-badge" class="inline-block px-3 py-1 rounded-full bg-sky-500/10 text-sky-300 border border-sky-500/25 text-xs font-bold shadow-sm">
+                  Top 1% Exceptional Talent
+                </div>
+                
+                <p id="score-subtext" class="text-xs text-slate-300 max-w-xs mx-auto leading-relaxed">
+                  High-conviction student candidate. Eligible for direct 1-click ATS referrals by alumni.
+                </p>
+              </div>
+
+              <!-- Component Sub-scores Breakdown -->
+              <div class="space-y-3.5">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">Scoring Matrix Breakdown</h4>
+                
+                <!-- 1. Resume ATS Score -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-slate-300 flex items-center space-x-1.5">
+                      <i data-lucide="file-text" class="w-3.5 h-3.5 text-sky-400"></i>
+                      <span>Resume ATS &amp; Impact (25%)</span>
+                    </span>
+                    <span id="bar-score-resume" class="font-bold text-sky-400">93%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                    <div id="bar-fill-resume" class="h-full bg-gradient-to-r from-blue-500 to-sky-400 rounded-full transition-all duration-500" style="width: 93%"></div>
+                  </div>
+                </div>
+
+                <!-- 2. GitHub Code Score -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-slate-300 flex items-center space-x-1.5">
+                      <i data-lucide="github" class="w-3.5 h-3.5 text-indigo-400"></i>
+                      <span>GitHub Proof-of-Work (35%)</span>
+                    </span>
+                    <span id="bar-score-github" class="font-bold text-indigo-400">96%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                    <div id="bar-fill-github" class="h-full bg-gradient-to-r from-indigo-500 to-blue-400 rounded-full transition-all duration-500" style="width: 96%"></div>
+                  </div>
+                </div>
+
+                <!-- 3. Skills Matrix Score -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-slate-300 flex items-center space-x-1.5">
+                      <i data-lucide="cpu" class="w-3.5 h-3.5 text-cyan-400"></i>
+                      <span>Technical Stack Match (20%)</span>
+                    </span>
+                    <span id="bar-score-skills" class="font-bold text-cyan-400">94%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                    <div id="bar-fill-skills" class="h-full bg-gradient-to-r from-cyan-500 to-teal-400 rounded-full transition-all duration-500" style="width: 94%"></div>
+                  </div>
+                </div>
+
+                <!-- 4. Academic & Problem Solving -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-slate-300 flex items-center space-x-1.5">
+                      <i data-lucide="award" class="w-3.5 h-3.5 text-amber-400"></i>
+                      <span>Academics &amp; LeetCode (20%)</span>
+                    </span>
+                    <span id="bar-score-academic" class="font-bold text-amber-400">92%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                    <div id="bar-fill-academic" class="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-500" style="width: 92%"></div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- AI Evaluation Insights -->
+              <div class="p-3.5 rounded-xl bg-[#040711] border border-slate-800 space-y-2 text-xs">
+                <div class="font-semibold text-slate-200 flex items-center space-x-1.5">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-sky-400"></i>
+                  <span>Automated Evaluator Notes</span>
+                </div>
+                <ul id="score-insights-list" class="space-y-1.5 text-slate-300 text-[11px] leading-relaxed">
+                  <li class="flex items-start space-x-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span>
+                    <span>Production-grade Go concurrency patterns implemented with zero memory leaks.</span>
+                  </li>
+                  <li class="flex items-start space-x-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span>
+                    <span>Resume details 35% latency drop &amp; 15k events/sec in Kafka pipeline.</span>
+                  </li>
+                  <li class="flex items-start space-x-1.5">
+                    <span class="text-emerald-400 font-bold">✓</span>
+                    <span>High test rigor (92.4% coverage) and solid 8.92 CGPA.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="space-y-2.5 pt-1">
+                <button type="button" onclick="handleSaveStudentProfile()" id="btn-save-profile" class="w-full py-3 btn-gradient-primary text-white font-bold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/30 hover:scale-[1.01] transition">
+                  <i data-lucide="check-check" class="w-4 h-4"></i>
+                  <span>Save Profile &amp; Recalculate Score</span>
+                </button>
+
+                <button type="button" onclick="switchTab('proof-of-work')" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white rounded-xl text-xs font-semibold border border-slate-800 hover:border-slate-700 transition flex items-center justify-center space-x-2">
+                  <i data-lucide="send" class="w-3.5 h-3.5 text-sky-400"></i>
+                  <span>Dispatch 1-Click Referral with This Score</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
       <!-- ================= TAB 1: INTENT MATCH RADAR ================= -->
-      <div id="view-intent-radar" class="space-y-6">
+      <div id="view-intent-radar" class="hidden space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#080e1c] border border-slate-800 rounded-xl p-4">
           <div class="flex items-center space-x-3">
             <div class="p-2 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
@@ -1102,7 +1408,7 @@
         </div>
       </div>
 
-      <!-- ================= TAB 2: PROOF-OF-WORK PITCH LAB ================= -->
+      <!-- ================= TAB 2: PROOF-OF-WORK VERIFICATION ================= -->
       <div id="view-proof-of-work" class="hidden space-y-6">
         <div class="bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-slate-900/60 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
           <div class="max-w-2xl">
@@ -1137,17 +1443,34 @@
             </div>
 
             <div>
-              <label class="block text-xs font-medium text-slate-300 mb-1">GitHub Repository or Pull Request URL</label>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-medium text-slate-300">GitHub Repository URL</label>
+                <span class="text-[10px] text-sky-400 font-semibold">1-Click Presets:</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 pb-2">
+                <button type="button" onclick="fillSampleRepo('https://github.com/aman-cs/distri-cache-engine', 'Swiggy', 'Optimizing Redis caching cluster eviction latency under 10k concurrent requests.', 'Redis Engine (Go)')" class="px-2 py-1 rounded-lg bg-blue-950/50 hover:bg-blue-900/70 border border-blue-500/30 text-blue-300 text-[10px] font-semibold transition flex items-center space-x-1">
+                  <i data-lucide="zap" class="w-3 h-3 text-sky-400"></i>
+                  <span>Redis Engine (Swiggy)</span>
+                </button>
+                <button type="button" onclick="fillSampleRepo('https://github.com/expressjs/express', 'Atlassian', 'Reducing middleware pipeline overhead and memory footprint in Express core.', 'Express Core (Node)')" class="px-2 py-1 rounded-lg bg-indigo-950/50 hover:bg-indigo-900/70 border border-indigo-500/30 text-indigo-300 text-[10px] font-semibold transition flex items-center space-x-1">
+                  <i data-lucide="git-merge" class="w-3 h-3 text-indigo-400"></i>
+                  <span>Express API (Atlassian)</span>
+                </button>
+                <button type="button" onclick="fillSampleRepo('https://github.com/tiangolo/fastapi', 'Google', 'Autoscaling async inference pipelines with sub-10ms P99 latency on K8s.', 'FastAPI (Python)')" class="px-2 py-1 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-cyan-500/30 text-cyan-300 text-[10px] font-semibold transition flex items-center space-x-1">
+                  <i data-lucide="cpu" class="w-3 h-3 text-cyan-400"></i>
+                  <span>FastAPI (Google)</span>
+                </button>
+              </div>
               <div class="relative">
-                <input type="text" id="pow-repo-url" value="https://github.com/expressjs/express" class="w-full bg-[#060a14] border border-slate-800 rounded-xl pl-8 pr-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-sky-500" placeholder="https://github.com/username/project">
+                <input type="text" id="pow-repo-url" value="https://github.com/aman-cs/distri-cache-engine" class="w-full bg-[#060a14] border border-slate-800 rounded-xl pl-8 pr-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-sky-500" placeholder="https://github.com/username/project">
                 <i data-lucide="github" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
               </div>
-              <p class="text-[10px] text-slate-400 mt-1">Accepts any real public GitHub repository (e.g. your personal project, hackathon build, or open source PR).</p>
+              <p class="text-[10px] text-slate-400 mt-1">Accepts any real public GitHub repository or pre-selected campus project.</p>
             </div>
 
             <div>
               <label class="block text-xs font-medium text-slate-300 mb-1">Specific Production Blocker or 3-Minute Question</label>
-              <textarea id="pow-blocker" rows="3" class="w-full bg-[#060a14] border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-sky-500" placeholder="Optimizing Redis caching cluster eviction latency under 10k concurrent requests."></textarea>
+              <textarea id="pow-blocker" rows="3" class="w-full bg-[#060a14] border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-sky-500" placeholder="Optimizing Redis caching cluster eviction latency under 10k concurrent requests.">Optimizing Redis caching cluster eviction latency under 10k concurrent requests.</textarea>
             </div>
 
             <button onclick="generateProofOfWorkDossier()" id="btn-generate-pow" class="w-full py-2.5 btn-gradient-primary text-white font-semibold rounded-xl text-xs flex items-center justify-center space-x-2 transition">
@@ -1174,6 +1497,26 @@
                 <p class="text-xs text-slate-400">Click <b>"Analyze Code & Generate Dossier"</b> to synthesize live repository metrics into an alumnus-ready flash card.</p>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Live Dispatched Referrals Status (Visible to Student) -->
+        <div class="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+            <div class="flex items-center space-x-2">
+              <div class="p-1.5 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-white">My Active Proof-of-Work Referral Dispatches</h3>
+                <p class="text-[11px] text-slate-400">Real-time status of dossiers sent to alumni decision desks.</p>
+              </div>
+            </div>
+            <span id="student-dispatches-count" class="text-[11px] font-mono text-sky-300 bg-sky-500/10 px-2.5 py-1 rounded-lg border border-sky-500/20">1 Active Request</span>
+          </div>
+
+          <div id="student-referrals-container" class="space-y-3">
+            <!-- Injected dynamically via renderStudentReferrals() -->
           </div>
         </div>
       </div>
@@ -1264,7 +1607,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div class="glass-panel rounded-2xl p-4 border border-slate-800">
             <div class="text-[11px] font-bold uppercase text-slate-400">Active Network Size</div>
-            <div class="text-2xl font-black text-white mt-1">4,820</div>
+            <div id="inst-stat-members" class="text-2xl font-black text-white mt-1">4,820</div>
             <div class="text-[11px] text-emerald-400 flex items-center space-x-1 mt-1">
               <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
               <span>+28% vs Static Directory</span>
@@ -1273,19 +1616,19 @@
 
           <div class="glass-panel rounded-2xl p-4 border border-slate-800">
             <div class="text-[11px] font-bold uppercase text-slate-400">Verified Warm Referrals</div>
-            <div class="text-2xl font-black text-sky-400 mt-1">342</div>
+            <div id="inst-stat-referrals" class="text-2xl font-black text-sky-400 mt-1">342</div>
             <div class="text-[11px] text-slate-400 mt-1">89% conversion to interview</div>
           </div>
 
           <div class="glass-panel rounded-2xl p-4 border border-slate-800">
             <div class="text-[11px] font-bold uppercase text-slate-400">Student Bounty Earnings</div>
-            <div class="text-2xl font-black text-amber-300 mt-1">₹4.2 Lakh</div>
+            <div id="inst-stat-bounties" class="text-2xl font-black text-amber-300 mt-1">₹4.2 Lakh</div>
             <div class="text-[11px] text-slate-400 mt-1">Direct student disbursements</div>
           </div>
 
           <div class="glass-panel rounded-2xl p-4 border border-slate-800">
             <div class="text-[11px] font-bold uppercase text-slate-400">Industry Capstone Projects</div>
-            <div class="text-2xl font-black text-indigo-400 mt-1">64</div>
+            <div id="inst-stat-capstones" class="text-2xl font-black text-indigo-400 mt-1">64</div>
             <div class="text-[11px] text-slate-400 mt-1">Faculty & Alum Co-Mentored</div>
           </div>
         </div>
@@ -1387,7 +1730,7 @@
       <!-- Center: Protocol Badge -->
       <div class="hidden md:flex items-center space-x-2 text-slate-400 text-[11px]">
         <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-        <span class="font-mono text-slate-300">NexusIQ Lineage Protocol</span>
+        <span class="font-mono text-slate-300">LinkX Lineage Protocol</span>
         <span class="text-slate-600">|</span>
         <span>Autonomous Intent &amp; Proof-of-Work</span>
       </div>
@@ -1538,6 +1881,107 @@
         <button onclick="closeModal('modal-intent')" class="px-4 py-2 bg-slate-900 text-slate-300 rounded-xl text-xs hover:bg-slate-800 border border-slate-800">Cancel</button>
         <button onclick="saveActiveIntent()" class="px-5 py-2 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-md shadow-blue-600/30">Save Intent</button>
       </div>
+    </div>
+  <!-- ================= MODAL: CANDIDATE RESUME & CAPABILITY DOSSIER (FOR ALUMNI & RECRUITERS) ================= -->
+  <div id="modal-candidate-resume" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-[#080d1a] border border-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-[#040711]">
+        <div class="flex items-center space-x-3">
+          <div id="modal-cand-avatar" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-blue-500/20">
+            AS
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h3 id="modal-cand-name" class="text-sm font-bold text-white">Aman Sharma</h3>
+              <span id="modal-cand-badge" class="text-[10px] bg-sky-500/10 text-sky-300 border border-sky-500/25 px-2 py-0.5 rounded font-mono font-semibold">Top 1% Talent</span>
+            </div>
+            <p id="modal-cand-sub" class="text-xs text-slate-400">B.Tech CSE '26 • Apex Institute of Technology • CGPA 8.92</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <div class="text-right">
+            <span id="modal-cand-score" class="text-lg font-black text-sky-400">95/100</span>
+            <div class="text-[9px] text-slate-500 font-mono uppercase">Capability Index</div>
+          </div>
+          <button onclick="closeModal('modal-candidate-resume')" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 overflow-y-auto space-y-5 custom-scrollbar text-xs">
+        
+        <!-- Score Highlights Bar -->
+        <div class="grid grid-cols-4 gap-2 text-center">
+          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2.5">
+            <div class="text-slate-400 text-[10px]">Resume ATS</div>
+            <div id="modal-cand-resume-score" class="text-sky-400 font-black text-sm mt-0.5">93%</div>
+          </div>
+          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2.5">
+            <div class="text-slate-400 text-[10px]">GitHub PoW</div>
+            <div id="modal-cand-github-score" class="text-indigo-400 font-black text-sm mt-0.5">96%</div>
+          </div>
+          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2.5">
+            <div class="text-slate-400 text-[10px]">Test Coverage</div>
+            <div class="text-cyan-400 font-black text-sm mt-0.5">92.4%</div>
+          </div>
+          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2.5">
+            <div class="text-slate-400 text-[10px]">CGPA</div>
+            <div id="modal-cand-cgpa" class="text-amber-400 font-black text-sm mt-0.5">8.92</div>
+          </div>
+        </div>
+
+        <!-- Verified Skills Tags -->
+        <div class="space-y-1.5">
+          <div class="font-semibold text-slate-200">Verified Technical Skills:</div>
+          <div id="modal-cand-skills" class="flex flex-wrap gap-1.5">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <!-- Parsed Resume Content -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-semibold text-slate-200">Parsed Resume &amp; Work Experience:</span>
+            <span id="modal-cand-res-filename" class="text-[10px] text-slate-400 font-mono">Aman_Sharma_Resume_2026.pdf</span>
+          </div>
+          <div id="modal-cand-resume-body" class="bg-[#040711] border border-slate-800 rounded-xl p-4 font-mono text-[11px] text-slate-300 whitespace-pre-line leading-relaxed max-h-56 overflow-y-auto custom-scrollbar">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <!-- GitHub Architecture Highlight -->
+        <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-sky-300 font-semibold flex items-center space-x-1.5">
+              <i data-lucide="git-pull-request" class="w-3.5 h-3.5"></i>
+              <span>GitHub Architecture Highlight</span>
+            </span>
+            <a id="modal-cand-repo-link" href="https://github.com/aman-cs/distri-cache-engine" target="_blank" class="text-sky-400 hover:underline font-mono text-[10px]">View Repo &rarr;</a>
+          </div>
+          <p id="modal-cand-summary" class="text-slate-300 leading-relaxed">
+            Candidate implemented custom consistent-hashing ring in Go to distribute cache keys across 5 Redis nodes. 92.4% test coverage.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-800 bg-[#040711] flex items-center justify-between">
+        <span class="text-[11px] text-slate-400 font-mono">Endorsement passes directly to ATS</span>
+        <div class="flex items-center space-x-2">
+          <button onclick="closeModal('modal-candidate-resume')" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-xl text-xs border border-slate-800 transition">Close</button>
+          <button id="modal-cand-btn-refer" onclick="handleModalReferCandidate()" class="px-5 py-2 btn-gradient-primary text-white font-bold rounded-xl text-xs shadow-md shadow-blue-600/30 flex items-center space-x-1.5 transition">
+            <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+            <span>Endorse for 1-Click Referral</span>
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 

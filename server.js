@@ -154,6 +154,161 @@ app.get('/api/institution/stats', (req, res) => {
   });
 });
 
+// 7. Student Profile & Holistic Proof-of-Capability Scoring Engine
+app.get('/api/student/profile', (req, res) => {
+  const db = readDB();
+  const profile = db.studentProfile || {
+    name: 'Aman Sharma',
+    college: 'Apex Institute of Technology',
+    branch: "B.Tech Computer Science & Engineering",
+    batch: "Batch '26 (Final Year)",
+    cgpa: "8.92",
+    targetRole: "Backend Engineer / Distributed Systems SDE",
+    skills: ["Go", "Distributed Systems", "Redis", "Docker", "PostgreSQL", "Kafka", "Kubernetes", "System Design"],
+    githubUrl: "https://github.com/aman-cs/distri-cache-engine",
+    leetcodeUrl: "https://leetcode.com/u/aman_sharma_99",
+    portfolioUrl: "https://amansharma.dev",
+    bio: "Distributed systems enthusiast • Built Redis caching engine with consistent hashing ring • Solved 280+ LeetCode problems",
+    resume: {
+      fileName: "Aman_Sharma_Resume_2026.pdf",
+      fileSize: "142 KB",
+      uploadedAt: new Date().toISOString(),
+      summary: "Final year CSE student with proven experience building low-latency distributed caching layers, concurrency handling in Go, and microservices architecture.",
+      rawText: "Aman Sharma | B.Tech CSE (8.92 CGPA) | Go, Distributed Systems, Redis, Kafka, Docker | Backend Engineering Intern @ CloudNative Labs"
+    },
+    capabilityScore: {
+      overall: 95,
+      resumeScore: 93,
+      githubScore: 96,
+      skillsScore: 94,
+      academicScore: 92,
+      tier: "Top 1% Exceptional Talent",
+      badge: "Tier-1 Referral Ready",
+      insights: [
+        "Production-grade Go concurrency patterns implemented with zero memory leaks.",
+        "Resume exhibits strong quantifiable metrics (35% latency drop, 15k events/sec).",
+        "High test rigor (92.4% coverage) and consistent-hashing ring design."
+      ]
+    }
+  };
+  res.json({ success: true, profile });
+});
+
+app.post('/api/student/profile', (req, res) => {
+  const db = readDB();
+  const incoming = req.body || {};
+
+  const skills = Array.isArray(incoming.skills) 
+    ? incoming.skills 
+    : (incoming.skills ? incoming.skills.split(',').map(s => s.trim()).filter(Boolean) : ["Go", "Distributed Systems", "Redis", "Docker"]);
+  const cgpa = parseFloat(incoming.cgpa) || 8.92;
+  const rawResume = (incoming.resume?.rawText || incoming.resumeText || '');
+
+  // 1. Resume & ATS Score (heuristics: metrics, action verbs, structure)
+  let resumeScore = 88;
+  if (rawResume.length > 150) resumeScore += 2;
+  if (/(\d+%\s*(latency|improvement|reduction|increase|boost)|\d+\s*(req\/sec|users|events|records))/i.test(rawResume)) resumeScore += 4;
+  if (/(intern|engineer|lead|architect|developer|designer)/i.test(rawResume)) resumeScore += 2;
+  resumeScore = Math.min(98, Math.max(76, resumeScore));
+
+  // 2. GitHub & Code Architecture Score
+  let githubScore = 93;
+  if (incoming.githubUrl && incoming.githubUrl.includes('github.com')) githubScore += 3;
+  githubScore = Math.min(99, Math.max(80, githubScore));
+
+  // 3. Technical Skills Depth Score
+  let skillsScore = Math.min(98, 80 + Math.min(skills.length * 2, 16));
+
+  // 4. Academic & Problem Solving Score
+  let academicScore = Math.min(98, Math.round(68 + (cgpa / 10) * 30));
+
+  // Composite Weighted Score: 25% Resume + 35% GitHub + 20% Skills + 20% Academics
+  const overall = Math.round(
+    resumeScore * 0.25 +
+    githubScore * 0.35 +
+    skillsScore * 0.20 +
+    academicScore * 0.20
+  );
+
+  let tier = 'Top 1% Exceptional Talent';
+  let badge = 'Tier-1 Referral Ready';
+  if (overall >= 93) {
+    tier = 'Top 1% Exceptional Talent';
+    badge = 'Verified High-Conviction';
+  } else if (overall >= 88) {
+    tier = 'Top 5% Strong Builder';
+    badge = 'Verified Production-Ready';
+  } else {
+    tier = 'Top 15% Verified Candidate';
+    badge = 'Active Candidate';
+  }
+
+  const capabilityScore = {
+    overall,
+    resumeScore,
+    githubScore,
+    skillsScore,
+    academicScore,
+    tier,
+    badge,
+    insights: [
+      `Production-grade architecture evaluated for ${incoming.targetRole || 'Target Role'}.`,
+      `Resume impact metrics verified: ATS score at ${resumeScore}%.`,
+      `Solid academic foundation with ${cgpa} CGPA and verified skills matrix.`
+    ]
+  };
+
+  const updatedProfile = {
+    ...(db.studentProfile || {}),
+    ...incoming,
+    skills,
+    cgpa: cgpa.toString(),
+    capabilityScore,
+    resume: {
+      ...(db.studentProfile?.resume || {}),
+      ...(incoming.resume || {}),
+      rawText: rawResume || db.studentProfile?.resume?.rawText,
+      uploadedAt: new Date().toISOString()
+    },
+    updatedAt: new Date().toISOString()
+  };
+
+  db.studentProfile = updatedProfile;
+
+  // Sync student persona
+  const studentPersona = db.personas?.find(p => p.id === 'student');
+  if (studentPersona) {
+    if (incoming.name) studentPersona.name = incoming.name;
+    if (incoming.branch) studentPersona.branch = incoming.branch;
+    if (incoming.college) studentPersona.companyOrCollege = incoming.college;
+    if (incoming.bio) studentPersona.bio = incoming.bio;
+    if (skills.length) studentPersona.skills = skills;
+  }
+
+  // Sync capability score into pending student referrals
+  if (Array.isArray(db.referrals)) {
+    db.referrals.forEach(ref => {
+      if (ref.studentName === updatedProfile.name) {
+        ref.capabilityScore = overall;
+        ref.resumeScore = resumeScore;
+        ref.githubScore = githubScore;
+        ref.cgpa = cgpa.toString();
+        ref.skills = skills;
+        if (updatedProfile.resume?.summary) {
+          ref.resumeSummary = updatedProfile.resume.summary;
+        }
+      }
+    });
+  }
+
+  writeDB(db);
+  res.json({
+    success: true,
+    message: 'Profile and Proof-of-Capability Score updated successfully!',
+    profile: updatedProfile
+  });
+});
+
 function startServer(port) {
   const server = app.listen(port, () => {
     console.log(`🚀 LinkX Full-Stack Engine running live at http://localhost:${port}`);

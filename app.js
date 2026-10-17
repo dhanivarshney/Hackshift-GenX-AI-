@@ -24,7 +24,7 @@ const ROLE_CONFIGS = {
     bannerBadge: 'Verified Student Access',
     bannerDesc: 'Connect directly with alumni in your target companies without cold DMs. Showcase real code, solve startup bounties, and secure high-conviction job referrals.',
     demoText: 'Sign in instantly as <b>Aman Sharma</b> (CSE \'26 • Go / Distributed Systems Builder) with pre-loaded GitHub data and active referral requests.',
-    defaultTab: 'intent-radar',
+    defaultTab: 'student-profile',
     bullets: [
       { icon: 'shield-check', title: 'Zero Cold DMs', text: 'Reach alumni with verified code readiness, not generic text.' },
       { icon: 'zap', title: 'Earn Startup Bounties', text: 'Solve real micro-tasks (\$50–\$200) funded by alumni founders.' },
@@ -199,6 +199,22 @@ let splashTimer = null;
 // ================= MATCH RADAR DATA =================
 const MATCH_RADAR_ITEMS = [
   {
+    id: 'match-student-1',
+    category: 'hiring',
+    targetPerson: 'Aman Sharma',
+    targetRole: 'Student (CSE \'26) • Go / Distributed Systems Builder',
+    company: 'Apex Institute of Technology',
+    matchScore: 95,
+    avatar: 'AS',
+    avatarBg: 'bg-blue-600',
+    intentBadge: 'Capability Score: 95/100 (Top 1%)',
+    intentDesc: 'Built Redis caching engine in Go with consistent hashing ring & 92.4% test coverage. 8.92 CGPA.',
+    synergy: 'Verified resume with 35% latency drop. Stack aligns 98% with backend intern requisitions.',
+    actionLabel: 'Inspect Resume & Dossier',
+    actionType: 'candidate-modal',
+    refId: 'ref-1'
+  },
+  {
     id: 'match-1',
     category: 'hiring',
     targetPerson: 'Rohan Mehta',
@@ -210,7 +226,7 @@ const MATCH_RADAR_ITEMS = [
     intentBadge: 'Active Referral Quota (2/3 Open)',
     intentDesc: 'Looking for a junior with solid Go or Distributed Caching experience.',
     synergy: 'Your Redis Caching engine matches his team’s high-throughput order dispatch stack.',
-    actionLabel: '1-Click Proof-of-Work Pitch',
+    actionLabel: 'Verify Code & Request Referral',
     actionType: 'pitch'
   },
   {
@@ -354,7 +370,7 @@ function renderHeroRoleTabs() {
     const isSelected = key === currentHeroRoleId;
     const cfg = ROLE_CONFIGS[key];
     const activeClass = isSelected
-      ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-lg shadow-purple-600/40 font-bold border border-pink-400/40 scale-[1.02]'
+      ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 text-white shadow-lg shadow-blue-600/30 font-bold border border-sky-400/40 scale-[1.02]'
       : 'text-slate-400 hover:text-white hover:bg-slate-800/60 font-medium';
     return `
       <button onclick="renderHeroRoleView('${key}')" class="flex-1 py-2 px-3 rounded-xl transition text-center whitespace-nowrap flex items-center justify-center space-x-1.5 ${activeClass}">
@@ -425,36 +441,37 @@ function directAuthenticateAs(roleId) {
 // ================= ROLE-SPECIFIC NAVIGATION CONFIGURATIONS =================
 const ROLE_TABS = {
   student: [
-    { id: 'intent-radar', label: 'Alumni Match Radar', icon: 'compass', badge: '14 Matches' },
-    { id: 'proof-of-work', label: 'Proof-of-Work Pitch Lab', icon: 'cpu', badge: 'Anti-Spam' },
-    { id: 'bounties', label: 'Student Bounty Board', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
-    { id: 'network-graph', label: 'Campus Lineage Graph', icon: 'share-2' }
+    { id: 'student-profile', label: 'Profile & Resume Score', icon: 'user-check', badge: '95/100', badgeId: 'profile-score-badge' },
+    { id: 'proof-of-work', label: 'Get Referral', icon: 'send', badge: 'Verified' },
+    { id: 'intent-radar', label: 'Matched Alumni', icon: 'compass', badge: '14 Matches' },
+    { id: 'bounties', label: 'Paid Bounties', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
+    { id: 'network-graph', label: 'Campus Network', icon: 'share-2' }
   ],
   alumnus: [
-    { id: 'alumnus-inbox', label: 'Decision Inbox (Warm Referrals)', icon: 'inbox', badge: '1 Pending', badgeId: 'referrals-count-badge' },
-    { id: 'intent-radar', label: 'Talent Scouting Radar', icon: 'compass', badge: '14 Students' },
-    { id: 'bounties', label: 'Post & Sponsor Bounties', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
-    { id: 'network-graph', label: 'Alumni Lineage Graph', icon: 'share-2' }
+    { id: 'alumnus-inbox', label: 'Referral Requests', icon: 'inbox', badge: '1 Pending', badgeId: 'referrals-count-badge' },
+    { id: 'intent-radar', label: 'Explore Students', icon: 'compass', badge: '14 Students' },
+    { id: 'bounties', label: 'Post Bounties', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
+    { id: 'network-graph', label: 'Alumni Network', icon: 'share-2' }
   ],
   founder: [
-    { id: 'bounties', label: 'Startup Bounties & Tasks', icon: 'briefcase', badge: 'Escrow Gigs', badgeId: 'bounties-count-badge' },
-    { id: 'intent-radar', label: 'Founder Talent Radar', icon: 'compass', badge: 'Top Builders' },
-    { id: 'network-graph', label: 'Founder Ecosystem Graph', icon: 'share-2' }
+    { id: 'bounties', label: 'Startup Gigs & Bounties', icon: 'briefcase', badge: 'Escrow Gigs', badgeId: 'bounties-count-badge' },
+    { id: 'intent-radar', label: 'Find Builders', icon: 'compass', badge: 'Top Builders' },
+    { id: 'network-graph', label: 'Ecosystem Network', icon: 'share-2' }
   ],
   faculty: [
-    { id: 'intent-radar', label: 'Industry Co-Guide Radar', icon: 'compass', badge: '8 Capstones' },
-    { id: 'network-graph', label: 'Department Lineage Graph', icon: 'share-2' },
-    { id: 'institution', label: 'Academic & Outcomes Desk', icon: 'landmark', badge: 'NAAC A++' }
+    { id: 'intent-radar', label: 'Alumni Mentors', icon: 'compass', badge: '8 Mentors' },
+    { id: 'network-graph', label: 'Campus Lineage', icon: 'share-2' },
+    { id: 'institution', label: 'NAAC & Outcomes', icon: 'landmark', badge: 'NAAC A++' }
   ],
   recruiter: [
-    { id: 'intent-radar', label: 'Vetted Talent Pipeline', icon: 'compass', badge: 'Top 5%' },
-    { id: 'alumnus-inbox', label: 'Alumni-Endorsed Queue', icon: 'inbox', badge: 'Verified ATS' },
-    { id: 'bounties', label: 'Company Requisitions', icon: 'briefcase' }
+    { id: 'intent-radar', label: 'Top Candidates', icon: 'compass', badge: 'Top 5%' },
+    { id: 'alumnus-inbox', label: 'Endorsed Queue', icon: 'inbox', badge: 'Verified ATS' },
+    { id: 'bounties', label: 'Job Requisitions', icon: 'briefcase' }
   ],
   institution: [
-    { id: 'institution', label: 'Institution Impact Command', icon: 'landmark', badge: 'NAAC A++' },
-    { id: 'network-graph', label: 'Full Campus Lineage Graph', icon: 'share-2' },
-    { id: 'bounties', label: 'Campus Bounty Outcomes', icon: 'briefcase' }
+    { id: 'institution', label: 'Accreditation & Metrics', icon: 'landmark', badge: 'NAAC A++' },
+    { id: 'network-graph', label: 'Alumni Network', icon: 'share-2' },
+    { id: 'bounties', label: 'Campus Projects', icon: 'briefcase' }
   ]
 };
 
@@ -509,10 +526,6 @@ function authenticateAndOpenWorkspace(roleId, showConfetti = true, pushHistory =
   document.getElementById('hero-login-screen').classList.add('hidden');
   document.getElementById('authenticated-workspace').classList.remove('hidden');
 
-  // Hide quick demo pills in top bar during authenticated session to prevent direct role switching
-  const quickDemo = document.getElementById('quick-demo-pills');
-  if (quickDemo) quickDemo.classList.add('hidden');
-
   // Display active session pill in top bar
   const sessionStatus = document.getElementById('top-bar-session-pill');
   if (sessionStatus) {
@@ -532,34 +545,42 @@ function authenticateAndOpenWorkspace(roleId, showConfetti = true, pushHistory =
   }
 
   // Update Top Profile & Portal Tag
-  document.getElementById('current-portal-badge').textContent = cfg.portalTitle;
-  document.getElementById('user-header-avatar').textContent = cfg.avatar;
-  document.getElementById('user-header-name').textContent = cfg.name;
-  document.getElementById('user-header-role').textContent = `${cfg.roleLabel} • ${cfg.companyOrCollege}`;
+  const portalBadge = document.getElementById('current-portal-badge');
+  if (portalBadge) portalBadge.textContent = cfg.portalTitle;
+  const userHeaderAvatar = document.getElementById('user-header-avatar');
+  if (userHeaderAvatar) userHeaderAvatar.textContent = cfg.avatar;
+  const userHeaderName = document.getElementById('user-header-name');
+  if (userHeaderName) userHeaderName.textContent = cfg.name;
+  const userHeaderRole = document.getElementById('user-header-role');
+  if (userHeaderRole) userHeaderRole.textContent = `${cfg.roleLabel} • ${cfg.companyOrCollege}`;
 
-  // Update Hero Banner
-  document.getElementById('hero-avatar').textContent = cfg.avatar;
-  document.getElementById('hero-name').textContent = cfg.name;
-  document.getElementById('hero-tag').textContent = `${cfg.roleLabel} (${cfg.branch})`;
-  document.getElementById('hero-bio').textContent = cfg.bio;
-  document.getElementById('hero-goal').innerHTML = `<i data-lucide="target" class="w-3.5 h-3.5"></i><span>${cfg.goal}</span>`;
+  // Update Hero Banner (if present)
+  const heroAvatar = document.getElementById('hero-avatar');
+  if (heroAvatar) heroAvatar.textContent = cfg.avatar;
+  const heroName = document.getElementById('hero-name');
+  if (heroName) heroName.textContent = cfg.name;
+  const heroTag = document.getElementById('hero-tag');
+  if (heroTag) heroTag.textContent = `${cfg.roleLabel} (${cfg.branch})`;
+  const heroBio = document.getElementById('hero-bio');
+  if (heroBio) heroBio.textContent = cfg.bio;
+  const heroGoal = document.getElementById('hero-goal');
+  if (heroGoal) heroGoal.innerHTML = `<i data-lucide="target" class="w-3.5 h-3.5"></i><span>${cfg.goal}</span>`;
 
   // Update Active Intent badge
-  document.getElementById('active-intent-text').textContent = cfg.activeIntent;
+  const activeIntentText = document.getElementById('active-intent-text');
+  if (activeIntentText) activeIntentText.textContent = cfg.activeIntent;
 
   // Render role-specific navigation tabs strictly for this role
   renderWorkspaceTabs(roleId);
 
-<<<<<<< HEAD
   // Navigate directly to the most relevant tab for this role!
-  switchTab(cfg.defaultTab || 'intent-radar');
-=======
-  // Navigate directly to the most powerful tab for this role!
   switchTab(cfg.defaultTab || 'intent-radar', false);
->>>>>>> d561c1f72652c3b41eb662b75ae22cbeccae271d
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  lucide.createIcons();
+  // Refresh live network data strictly from backend
+  fetchBountiesFromAPI();
+  fetchReferralsFromAPI();
+  fetchInstitutionStats();
+  fetchStudentProfileFromAPI();
 
   if (showConfetti) {
     triggerConfetti();
@@ -575,10 +596,6 @@ function handleLogout(pushHistory = true) {
   document.getElementById('authenticated-workspace').classList.add('hidden');
   document.getElementById('hero-login-screen').classList.remove('hidden');
 
-  // Restore quick demo switcher on login screen
-  const quickDemo = document.getElementById('quick-demo-pills');
-  if (quickDemo) quickDemo.classList.remove('hidden');
-
   const sessionStatus = document.getElementById('top-bar-session-pill');
   if (sessionStatus) sessionStatus.classList.add('hidden');
 
@@ -588,7 +605,7 @@ function handleLogout(pushHistory = true) {
 
 // ================= NAVIGATION TABS =================
 function switchTab(tabId, pushHistory = true) {
-  const views = ['intent-radar', 'proof-of-work', 'bounties', 'alumnus-inbox', 'network-graph', 'institution'];
+  const views = ['student-profile', 'intent-radar', 'proof-of-work', 'bounties', 'alumnus-inbox', 'network-graph', 'institution'];
   
   if (pushHistory && activeSessionRoleId && window.history && window.history.pushState) {
     window.history.pushState(
@@ -622,6 +639,8 @@ function switchTab(tabId, pushHistory = true) {
     fetchReferralsFromAPI();
   } else if (tabId === 'bounties') {
     fetchBountiesFromAPI();
+  } else if (tabId === 'student-profile') {
+    fetchStudentProfileFromAPI();
   }
   lucide.createIcons();
 }
@@ -646,6 +665,7 @@ function handleNavigationBack(event) {
     'pow-detail-modal',
     'modal-post-bounty',
     'candidate-modal',
+    'modal-candidate-resume',
     'forgot-password-modal',
     'reset-password-modal'
   ];
@@ -709,9 +729,33 @@ async function fetchReferralsFromAPI() {
       const data = await res.json();
       referralsState = data.referrals || [];
       renderReferrals(referralsState);
+      renderStudentReferrals(referralsState);
       const pendingCount = referralsState.filter(r => r.status === 'pending').length;
       const badge = document.getElementById('referrals-count-badge');
       if (badge) badge.textContent = `${pendingCount} Pending`;
+      fetchInstitutionStats();
+    }
+  } catch (e) {}
+}
+
+async function fetchInstitutionStats() {
+  try {
+    const res = await fetch(`${API_BASE}/institution/stats`);
+    if (res.ok) {
+      const data = await res.json();
+      const stats = data.stats;
+      const memEl = document.getElementById('inst-stat-members');
+      const refEl = document.getElementById('inst-stat-referrals');
+      const btyEl = document.getElementById('inst-stat-bounties');
+      const capEl = document.getElementById('inst-stat-capstones');
+
+      if (memEl && stats.activeNetworkMembers) memEl.textContent = stats.activeNetworkMembers.toLocaleString();
+      if (refEl) refEl.textContent = (342 + (stats.approvedReferrals || 0)).toString();
+      if (btyEl) {
+        const valInLakh = ((stats.bountyDisbursementsInRupees || 420000) / 100000).toFixed(1);
+        btyEl.textContent = `₹${valInLakh} Lakh`;
+      }
+      if (capEl && stats.capstoneProjectsCount) capEl.textContent = stats.capstoneProjectsCount.toString();
     }
   } catch (e) {}
 }
@@ -780,10 +824,61 @@ function filterRadar(category) {
   }
 }
 
+function fillSampleRepo(repoUrl, targetCompany, blocker, label) {
+  const repoInput = document.getElementById('pow-repo-url');
+  const compSelect = document.getElementById('pow-target-company');
+  const blockerInput = document.getElementById('pow-blocker');
+
+  if (repoInput) repoInput.value = repoUrl;
+  if (compSelect) {
+    for (let i = 0; i < compSelect.options.length; i++) {
+      if (compSelect.options[i].value.toLowerCase().includes(targetCompany.toLowerCase()) || 
+          compSelect.options[i].text.toLowerCase().includes(targetCompany.toLowerCase())) {
+        compSelect.selectedIndex = i;
+        break;
+      }
+    }
+  }
+  if (blockerInput) blockerInput.value = blocker;
+
+  showToast(`Loaded preset: ${label}! Click "Analyze Code & Generate Dossier".`);
+}
+
 function handleRadarAction(itemId, actionType) {
+  const item = MATCH_RADAR_ITEMS.find(x => x.id === itemId) || MATCH_RADAR_ITEMS[0];
+
+  if (actionType === 'candidate-modal') {
+    openCandidateResumeModal(item.refId || 'ref-1');
+    return;
+  }
+
   if (actionType === 'pitch') {
     switchTab('proof-of-work');
-    showToast("Proof-of-Work Pitch Lab ready for repo analysis!");
+    const compSelect = document.getElementById('pow-target-company');
+    if (compSelect && item.company) {
+      for (let i = 0; i < compSelect.options.length; i++) {
+        if (compSelect.options[i].value.toLowerCase().includes(item.company.toLowerCase()) || 
+            compSelect.options[i].text.toLowerCase().includes(item.company.toLowerCase())) {
+          compSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+    const blockerEl = document.getElementById('pow-blocker');
+    if (blockerEl && item.synergy) {
+      blockerEl.value = item.synergy;
+    }
+    const repoInput = document.getElementById('pow-repo-url');
+    if (repoInput) {
+      if (item.company === 'Swiggy') {
+        repoInput.value = 'https://github.com/aman-cs/distri-cache-engine';
+      } else if (item.company === 'Atlassian') {
+        repoInput.value = 'https://github.com/expressjs/express';
+      } else if (item.company === 'Google' || item.company === 'Google Cloud') {
+        repoInput.value = 'https://github.com/tiangolo/fastapi';
+      }
+    }
+    showToast(`Proof-of-Work Engine ready for ${item.targetPerson} (${item.company})!`);
   } else if (actionType === 'bounty') {
     switchTab('bounties');
     showToast("Navigated to Live Opportunity Board!");
@@ -904,25 +999,53 @@ function renderDossierOutput(analysis, company, blocker) {
 }
 
 async function dispatchReferralToAlum(company, blocker) {
+  const compSelect = document.getElementById('pow-target-company');
+  const targetCompany = compSelect ? compSelect.value : (company || 'Swiggy');
+  const repoUrl = document.getElementById('pow-repo-url') ? document.getElementById('pow-repo-url').value : 'https://github.com/aman-cs/distri-cache-engine';
+  const blockerAsk = document.getElementById('pow-blocker') ? document.getElementById('pow-blocker').value : blocker;
+
+  const ALUM_MAP = {
+    'Swiggy': 'Rohan Mehta',
+    'Google': 'Aditi Rao',
+    'Atlassian': 'Kunal Varma',
+    'HyperScale AI': 'Neha Kapoor'
+  };
+  const alumnusName = ALUM_MAP[targetCompany] || 'Rohan Mehta';
+
+  const prof = currentStudentProfile || {};
+  const capabilityScore = prof.capabilityScore?.overall || 95;
+  const resumeScore = prof.capabilityScore?.resumeScore || 93;
+  const githubScore = latestAnalysis ? latestAnalysis.readinessScore : (prof.capabilityScore?.githubScore || 96);
+  const skills = prof.skills || currentStudentSkills;
+  const cgpa = prof.cgpa || '8.92';
+  const resumeSummary = prof.resume?.summary || 'Backend Engineering Intern • Kafka ingestion pipeline • 15k req/sec';
+
   try {
     const res = await fetch(`${API_BASE}/referrals`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        studentName: 'Aman Sharma',
-        targetCompany: company,
-        alumnusName: 'Rohan Mehta',
-        repoUrl: document.getElementById('pow-repo-url').value,
-        readinessScore: latestAnalysis ? latestAnalysis.readinessScore : 94,
-        summary: latestAnalysis ? latestAnalysis.executiveSummary : 'Verified distributed caching project with 92% test coverage.',
-        blockerAsk: blocker
+        studentName: prof.name || 'Aman Sharma',
+        studentBranch: prof.branch || "B.Tech CSE '26",
+        cgpa,
+        targetCompany,
+        alumnusName,
+        repoUrl,
+        readinessScore: githubScore,
+        capabilityScore,
+        resumeScore,
+        githubScore,
+        skills,
+        resumeSummary,
+        summary: latestAnalysis ? (latestAnalysis.executiveSummary || latestAnalysis.architecturalHighlight) : 'Verified distributed caching project with 92.4% test coverage and consistent-hashing ring.',
+        blockerAsk
       })
     });
 
     if (res.ok) {
       await fetchReferralsFromAPI();
       triggerConfetti();
-      showToast(`Dossier dispatched to ${company} Alumnus Decision Inbox! Switch to Alumnus role to view.`);
+      showToast(`🚀 Dispatched to ${alumnusName} (${targetCompany})! Switch to Alumnus role to review & refer with Capability Score ${capabilityScore}/100.`);
     }
   } catch (err) {
     showToast("Referral dossier dispatched!");
@@ -1053,7 +1176,7 @@ function renderReferrals(items) {
   if (items.length === 0) {
     container.innerHTML = `
       <div class="glass-card rounded-2xl p-8 text-center text-slate-400 space-y-2">
-        <i data-lucide="inbox" class="w-8 h-8 mx-auto text-pink-400"></i>
+        <i data-lucide="inbox" class="w-8 h-8 mx-auto text-sky-400"></i>
         <p class="text-xs">No pending student dossiers in inbox.</p>
       </div>
     `;
@@ -1063,65 +1186,107 @@ function renderReferrals(items) {
 
   container.innerHTML = items.map(ref => {
     const isReferred = ref.status === 'referred';
+    const capScore = ref.capabilityScore || 95;
+    const resScore = ref.resumeScore || 93;
+    const gitScore = ref.githubScore || 96;
+    const cgpa = ref.cgpa || "8.92";
+    const skills = ref.skills || ["Go", "Distributed Systems", "Redis", "Docker"];
     return `
-      <div class="glass-card rounded-2xl p-6 border ${isReferred ? 'border-pink-500/40 bg-purple-950/20' : 'border-purple-900/50 bg-[#0e0720]/80'} space-y-4 transition">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-purple-900/40 pb-3">
+      <div class="glass-card rounded-2xl p-6 border ${isReferred ? 'border-emerald-500/40 bg-emerald-950/20' : 'border-slate-800 bg-[#080e1c]/80'} space-y-4 transition">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600/30 via-pink-600/30 to-blue-600/30 border border-pink-500/40 text-pink-300 font-bold flex items-center justify-center text-sm">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 border border-sky-400/30 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-blue-500/20">
               AS
             </div>
             <div>
               <div class="flex items-center space-x-2">
                 <h4 class="text-sm font-bold text-white">${ref.studentName}</h4>
-                <span class="text-[10px] bg-pink-500/10 text-pink-300 px-2 py-0.5 rounded border border-pink-500/20 font-medium">${ref.studentBranch}</span>
+                <span class="text-[10px] bg-sky-500/10 text-sky-300 px-2 py-0.5 rounded border border-sky-500/20 font-medium">${ref.studentBranch}</span>
+                <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/20 font-mono font-medium">CGPA ${cgpa}</span>
               </div>
-              <p class="text-xs text-purple-300/70 mt-0.5">Target: <b>${ref.targetCompany}</b> • Repository: <a href="${ref.repoUrl}" target="_blank" class="text-pink-400 underline font-mono">${ref.repoUrl}</a></p>
+              <p class="text-xs text-slate-400 mt-0.5">Target: <b>${ref.targetCompany}</b> • Repository: <a href="${ref.repoUrl}" target="_blank" class="text-sky-400 underline font-mono">${ref.repoUrl}</a></p>
             </div>
           </div>
 
           <div class="flex items-center space-x-3">
             <div class="text-right">
-              <span class="text-xs font-black text-pink-400">${ref.readinessScore}/100</span>
-              <div class="text-[10px] text-purple-300/70 font-mono">Code Score</div>
+              <span class="text-xs font-black text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2.5 py-1 rounded-lg font-mono">${capScore}/100</span>
+              <div class="text-[9px] text-slate-400 font-mono mt-0.5">Capability Index</div>
             </div>
             ${isReferred 
-              ? `<span class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-lg text-xs font-bold border border-pink-500/30 flex items-center space-x-1">
-                   <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              ? `<span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg text-xs font-bold border border-emerald-500/30 flex items-center space-x-1">
+                   <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
                    <span>REFERRED</span>
                  </span>`
-              : `<span class="px-2.5 py-1 bg-purple-500/20 text-purple-300 rounded-lg text-xs font-semibold border border-purple-500/30">PENDING REVIEW</span>`
+              : `<span class="px-2.5 py-1 bg-amber-500/15 text-amber-300 rounded-lg text-xs font-semibold border border-amber-500/30">PENDING REVIEW</span>`
             }
           </div>
         </div>
 
-        <div class="bg-[#070314]/90 border border-purple-900/50 rounded-xl p-3.5 text-xs text-slate-300 space-y-2">
-          <div class="flex items-center space-x-1.5 font-semibold text-pink-300">
-            <i data-lucide="cpu" class="w-3.5 h-3.5 text-pink-400"></i>
+        <!-- Capability Sub-scores Bar -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
+            <div class="text-slate-400 text-[10px]">Resume ATS</div>
+            <div class="text-sky-300 font-bold mt-0.5">${resScore}% Match</div>
+          </div>
+          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
+            <div class="text-slate-400 text-[10px]">GitHub PoW</div>
+            <div class="text-indigo-300 font-bold mt-0.5">${gitScore}% Rigor</div>
+          </div>
+          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
+            <div class="text-slate-400 text-[10px]">Test Coverage</div>
+            <div class="text-cyan-300 font-bold mt-0.5">92.4% Unit Tests</div>
+          </div>
+          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
+            <div class="text-slate-400 text-[10px]">Academic CGPA</div>
+            <div class="text-amber-300 font-bold mt-0.5">${cgpa} / 10.0</div>
+          </div>
+        </div>
+
+        <!-- Verified Skills Tags -->
+        <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+          <span class="text-[11px] text-slate-400 font-semibold mr-1">Skills:</span>
+          ${skills.map(s => `<span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] text-sky-300 font-mono">${s}</span>`).join('')}
+        </div>
+
+        <div class="bg-[#040711] border border-slate-800 rounded-xl p-3.5 text-xs text-slate-300 space-y-2">
+          <div class="flex items-center space-x-1.5 font-semibold text-sky-300">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 text-sky-400"></i>
             <span>Verified Architectural Summary:</span>
           </div>
-          <p class="leading-relaxed">${ref.summary}</p>
-          <div class="pt-2 text-[11px] text-purple-300/70 border-t border-purple-900/40">
-            <b class="text-slate-300">Student's 3-Min Question:</b> "${ref.blockerAsk}"
+          <p class="leading-relaxed text-slate-300">${ref.summary}</p>
+          <div class="pt-2 text-[11px] text-slate-400 border-t border-slate-800">
+            <b class="text-slate-200">Student's 3-Min Question:</b> "${ref.blockerAsk}"
           </div>
         </div>
 
         ${!isReferred ? `
-          <div class="flex items-center justify-between pt-1">
-            <span class="text-[11px] text-purple-300/70">Takes ~1 min to endorse directly to internal ATS</span>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1">
+            <span class="text-[11px] text-slate-400">Takes ~1 min to endorse directly to internal ATS</span>
             <div class="flex space-x-2">
-              <button onclick="handleReferralAction('${ref.id}', 'rejected')" class="px-3 py-1.5 bg-purple-950/40 hover:bg-purple-900/60 text-purple-200 rounded-xl text-xs border border-purple-800/40 transition">
-                Pass with Feedback
+              <button onclick="openCandidateResumeModal('${ref.id}')" class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white rounded-xl text-xs border border-sky-500/30 transition flex items-center space-x-1.5 shadow-sm">
+                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                <span>Inspect Full Resume</span>
               </button>
-              <button onclick="handleReferralAction('${ref.id}', 'referred')" class="px-4 py-1.5 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-md shadow-pink-600/30 flex items-center space-x-1.5 transition">
+              <button onclick="handleReferralAction('${ref.id}', 'rejected')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-xl text-xs border border-slate-800 transition">
+                Pass
+              </button>
+              <button onclick="handleReferralAction('${ref.id}', 'referred')" class="px-4 py-1.5 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-md shadow-blue-600/30 flex items-center space-x-1.5 transition">
                 <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
                 <span>1-Click Verified Referral</span>
               </button>
             </div>
           </div>
         ` : `
-          <div class="text-xs text-pink-400 flex items-center space-x-1.5 font-medium">
-            <i data-lucide="check-circle" class="w-4 h-4"></i>
-            <span>Referral submitted to ${ref.targetCompany} Internal Hiring Portal. Notification sent to student!</span>
+          <div class="flex items-center justify-between pt-1">
+            <div class="text-xs text-emerald-400 flex items-center space-x-1.5 font-medium">
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
+              <span>Referral submitted to ${ref.targetCompany} Internal Hiring Portal. Notification sent to student!</span>
+            </div>
+            <button onclick="openCandidateResumeModal('${ref.id}')" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-sky-300 rounded-lg text-xs border border-slate-800 transition flex items-center space-x-1">
+              <i data-lucide="file-text" class="w-3 h-3"></i>
+              <span>View Dossier</span>
+            </button>
           </div>
         `}
       </div>
@@ -1142,13 +1307,481 @@ async function handleReferralAction(refId, action) {
       await fetchReferralsFromAPI();
       if (action === 'referred') {
         triggerConfetti();
-        showToast("Referral approved and pushed to Company ATS!");
+        showToast("🎉 Verified ATS Referral Submitted! Student status updated.");
       } else {
         showToast("Feedback sent to candidate.");
       }
     }
   } catch (err) {
     showToast("Referral status updated.");
+  }
+}
+
+// Render real-time sent referral dispatches in the student's Pitch Lab view
+function renderStudentReferrals(items) {
+  const container = document.getElementById('student-referrals-container');
+  const countBadge = document.getElementById('student-dispatches-count');
+  if (!container) return;
+
+  const studentRefs = items.filter(r => r.studentName === 'Aman Sharma' || !r.studentName);
+  if (countBadge) {
+    countBadge.textContent = `${studentRefs.length} Active Request${studentRefs.length === 1 ? '' : 's'}`;
+  }
+
+  if (studentRefs.length === 0) {
+    container.innerHTML = `
+      <div class="p-4 rounded-xl bg-[#040711] border border-slate-800 text-center text-xs text-slate-400">
+        No active referrals dispatched yet. Analyze a repo above and click "Dispatch to Alumnus".
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = studentRefs.map(ref => {
+    const isReferred = ref.status === 'referred';
+    return `
+      <div class="p-4 rounded-xl border ${isReferred ? 'border-emerald-500/40 bg-emerald-950/20' : 'border-slate-800 bg-[#040711]'} space-y-3 transition">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-lg ${isReferred ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-sky-400 border border-slate-700'} flex items-center justify-center font-bold text-xs">
+              ${isReferred ? '✓' : 'POW'}
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-bold text-white">Target: ${ref.targetCompany}</span>
+                <span class="text-[10px] text-slate-400 font-mono">• Mentor: ${ref.alumnusName || 'Alumnus'}</span>
+              </div>
+              <a href="${ref.repoUrl}" target="_blank" class="text-[11px] text-sky-400 underline font-mono truncate block max-w-xs sm:max-w-md">${ref.repoUrl}</a>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <span class="text-xs font-mono font-bold text-sky-400">${ref.readinessScore || 94}/100 Score</span>
+            ${isReferred 
+              ? `<span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold flex items-center space-x-1 shadow-sm">
+                   <i data-lucide="check-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                   <span>1-CLICK ATS REFERRAL CONFIRMED</span>
+                 </span>`
+              : `<span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[11px] font-medium flex items-center space-x-1 animate-pulse">
+                   <i data-lucide="clock" class="w-3 h-3"></i>
+                   <span>In Alumnus Review Queue</span>
+                 </span>`
+            }
+          </div>
+        </div>
+
+        <div class="text-[11px] text-slate-300 bg-[#080d1a] p-2.5 rounded-lg border border-slate-800/80">
+          <span class="text-slate-400 font-medium">Summary:</span> "${ref.summary}"
+          ${isReferred ? `<div class="mt-1.5 text-emerald-300 font-semibold flex items-center space-x-1.5 border-t border-slate-800/60 pt-1.5"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-emerald-400"></i><span>Alumnus Endorsement: "${ref.feedback || 'Candidate endorsed for SDE-1 backend position via internal ATS.'}"</span></div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+  lucide.createIcons();
+}
+
+// ================= STUDENT CAPABILITY PROFILE & RESUME SCORER =================
+let currentStudentProfile = null;
+let currentStudentSkills = ["Go", "Distributed Systems", "Redis", "Docker", "PostgreSQL", "Kafka", "Kubernetes", "System Design"];
+let activeModalReferralId = null;
+
+async function fetchStudentProfileFromAPI() {
+  try {
+    const res = await fetch(`${API_BASE}/student/profile`);
+    if (res.ok) {
+      const data = await res.json();
+      currentStudentProfile = data.profile;
+      if (currentStudentProfile.skills && Array.isArray(currentStudentProfile.skills)) {
+        currentStudentSkills = [...currentStudentProfile.skills];
+      }
+      populateStudentProfileUI(currentStudentProfile);
+    }
+  } catch (err) {
+    console.warn("Using offline student profile fallback:", err);
+  }
+}
+
+function populateStudentProfileUI(profile) {
+  if (!profile) return;
+
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined) el.value = val;
+  };
+  const setText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el && text !== undefined) el.textContent = text;
+  };
+
+  setVal('prof-name', profile.name);
+  setVal('prof-college', profile.college);
+  setVal('prof-branch', profile.branch);
+  setVal('prof-batch', profile.batch);
+  setVal('prof-cgpa', profile.cgpa);
+  setVal('prof-target-role', profile.targetRole);
+  setVal('prof-bio', profile.bio);
+  setVal('prof-github-url', profile.githubUrl);
+  setVal('prof-leetcode-url', profile.leetcodeUrl);
+  setVal('prof-portfolio-url', profile.portfolioUrl);
+
+  if (profile.resume) {
+    setText('prof-resume-filename', profile.resume.fileName || 'Aman_Sharma_Resume_2026.pdf');
+    setText('prof-resume-meta', `${profile.resume.fileSize || '142 KB'} • Parsed & ATS Verified`);
+    if (profile.resume.rawText) {
+      setVal('prof-resume-raw', profile.resume.rawText);
+    }
+  }
+
+  renderSkillChips();
+  updateCapabilityScoreDisplays(profile.capabilityScore);
+
+  // If currently authenticated as student, also refresh the top banner
+  if (activeSessionRoleId === 'student') {
+    setText('hero-name', profile.name);
+    setText('hero-tag', `Student (${profile.branch || "CSE '26"})`);
+    setText('hero-bio', profile.bio);
+    setText('user-header-name', profile.name);
+  }
+}
+
+function renderSkillChips() {
+  const container = document.getElementById('prof-skills-container');
+  const countEl = document.getElementById('prof-skills-count');
+  if (countEl) countEl.textContent = `${currentStudentSkills.length} Skills`;
+  if (!container) return;
+
+  container.innerHTML = currentStudentSkills.map(skill => `
+    <span class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-blue-950/60 text-sky-200 border border-blue-500/30 text-xs font-medium shadow-sm transition hover:border-blue-400">
+      <span>${skill}</span>
+      <button type="button" onclick="removeSkill('${skill}')" class="text-slate-400 hover:text-rose-400 transition ml-1" title="Remove skill">
+        <i data-lucide="x" class="w-3 h-3"></i>
+      </button>
+    </span>
+  `).join('');
+
+  lucide.createIcons();
+}
+
+function handleAddCustomSkill() {
+  const input = document.getElementById('prof-skill-input');
+  if (!input) return;
+  const val = input.value.trim();
+  if (val && !currentStudentSkills.includes(val)) {
+    currentStudentSkills.push(val);
+    input.value = '';
+    renderSkillChips();
+    triggerLiveScorePreview();
+  }
+}
+
+function quickAddSkill(skill) {
+  if (!currentStudentSkills.includes(skill)) {
+    currentStudentSkills.push(skill);
+    renderSkillChips();
+    triggerLiveScorePreview();
+    showToast(`Added ${skill} to skills matrix!`);
+  }
+}
+
+function removeSkill(skill) {
+  currentStudentSkills = currentStudentSkills.filter(s => s !== skill);
+  renderSkillChips();
+  triggerLiveScorePreview();
+}
+
+function loadSampleResumeData() {
+  const rawSample = `AMAN SHARMA
+Email: aman.sharma@apex.edu | GitHub: github.com/aman-cs | LeetCode: leetcode.com/u/aman_sharma_99
+
+EDUCATION:
+Apex Institute of Technology — B.Tech Computer Science & Engineering (2022-2026) | CGPA: 8.92/10.0
+
+TECHNICAL SKILLS:
+Languages & Frameworks: Go, Python, C++, TypeScript, Node.js, FastAPI
+Systems & Databases: Distributed Systems, Redis, PostgreSQL, Kafka, Docker, Kubernetes, Linux
+Concepts: Concurrency, Consistent Hashing, Microservices Architecture, P99 Latency Optimization
+
+EXPERIENCE:
+Backend Engineering Intern — CloudNative Labs (May 2025 - July 2025)
+- Designed and implemented high-throughput Kafka ingestion consumer in Go processing 15,000 req/sec.
+- Reduced P99 response time by 35% by implementing in-memory caching and connection pooling.
+- Authored automated integration test suites achieving 92.4% test coverage.
+
+PROJECTS:
+1. Distributed Redis Caching Ring (Go, Redis, Docker)
+- Custom consistent-hashing ring with virtual nodes distributing keys across 5 cluster nodes.
+- Achieved 14ms P99 latency under simulated 10k concurrent burst requests.
+2. Async Inference Pipeline (Python, FastAPI, Celery, Docker)
+- Scalable asynchronous worker pool for ML model inferences with auto-retry mechanisms.`;
+
+  const rawEl = document.getElementById('prof-resume-raw');
+  if (rawEl) rawEl.value = rawSample;
+
+  const fnEl = document.getElementById('prof-resume-filename');
+  if (fnEl) fnEl.textContent = 'Aman_Sharma_Resume_2026.pdf';
+  const metaEl = document.getElementById('prof-resume-meta');
+  if (metaEl) metaEl.textContent = '142 KB • High-Conviction ATS Verified';
+
+  triggerLiveScorePreview();
+  showToast("Loaded high-conviction sample resume! Scoring recalculated.");
+}
+
+function handleResumeFileSelected(event) {
+  const file = event?.target?.files?.[0];
+  if (!file) return;
+
+  const fnEl = document.getElementById('prof-resume-filename');
+  if (fnEl) fnEl.textContent = file.name;
+  const metaEl = document.getElementById('prof-resume-meta');
+  if (metaEl) {
+    const sizeKb = Math.round(file.size / 1024);
+    metaEl.textContent = `${sizeKb} KB • Uploaded & Parsed`;
+  }
+
+  // If text file, read content
+  if (file.type.includes('text') || file.name.endsWith('.txt') || file.name.endsWith('.md')) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target.result;
+      const rawEl = document.getElementById('prof-resume-raw');
+      if (rawEl) rawEl.value = text;
+      triggerLiveScorePreview();
+    };
+    reader.readAsText(file);
+  } else {
+    // For PDF / Docx, synthesize structured text extraction
+    const rawEl = document.getElementById('prof-resume-raw');
+    if (rawEl) {
+      rawEl.value = `[PARSED FROM: ${file.name}]\n` + (rawEl.value || `Candidate demonstrated experience in backend engineering, distributed caching, and microservices.`);
+    }
+    triggerLiveScorePreview();
+  }
+
+  showToast(`Uploaded ${file.name}! Computing updated capability score...`);
+}
+
+function triggerLiveScorePreview() {
+  const rawResume = document.getElementById('prof-resume-raw')?.value || '';
+  const cgpa = parseFloat(document.getElementById('prof-cgpa')?.value) || 8.92;
+  const githubUrl = document.getElementById('prof-github-url')?.value || '';
+
+  let resumeScore = 88;
+  if (rawResume.length > 150) resumeScore += 2;
+  if (/(\d+%\s*(latency|improvement|reduction|increase|boost)|\d+\s*(req\/sec|users|events|records))/i.test(rawResume)) resumeScore += 4;
+  if (/(intern|engineer|lead|architect|developer|designer)/i.test(rawResume)) resumeScore += 2;
+  resumeScore = Math.min(98, Math.max(76, resumeScore));
+
+  let githubScore = 93;
+  if (githubUrl.includes('github.com')) githubScore += 3;
+  githubScore = Math.min(99, Math.max(80, githubScore));
+
+  let skillsScore = Math.min(98, 80 + Math.min(currentStudentSkills.length * 2, 16));
+  let academicScore = Math.min(98, Math.round(68 + (cgpa / 10) * 30));
+
+  const overall = Math.round(
+    resumeScore * 0.25 +
+    githubScore * 0.35 +
+    skillsScore * 0.20 +
+    academicScore * 0.20
+  );
+
+  let tier = 'Top 1% Exceptional Talent';
+  let badge = 'Tier-1 Referral Ready';
+  if (overall >= 93) {
+    tier = 'Top 1% Exceptional Talent';
+    badge = 'Verified High-Conviction';
+  } else if (overall >= 88) {
+    tier = 'Top 5% Strong Builder';
+    badge = 'Verified Production-Ready';
+  } else {
+    tier = 'Top 15% Verified Candidate';
+    badge = 'Active Candidate';
+  }
+
+  updateCapabilityScoreDisplays({
+    overall,
+    resumeScore,
+    githubScore,
+    skillsScore,
+    academicScore,
+    tier,
+    badge,
+    insights: [
+      `Production-grade architecture evaluated for ${document.getElementById('prof-target-role')?.value || 'Target Role'}.`,
+      `Resume impact metrics verified: ATS score at ${resumeScore}%.`,
+      `Solid academic foundation with ${cgpa} CGPA and verified skills matrix.`
+    ]
+  });
+}
+
+function updateCapabilityScoreDisplays(scoreData) {
+  if (!scoreData) return;
+  const { overall, resumeScore, githubScore, skillsScore, academicScore, tier, badge, insights } = scoreData;
+
+  const setText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined) el.textContent = val;
+  };
+
+  setText('header-score-number', overall);
+  setText('header-score-tier', tier || 'Top 1% Exceptional Talent');
+  setText('score-display-big', overall);
+  setText('score-tier-badge', tier || 'Top 1% Exceptional Talent');
+
+  const tabBadge = document.getElementById('profile-score-badge');
+  if (tabBadge) tabBadge.textContent = `${overall}/100`;
+
+  setText('bar-score-resume', `${resumeScore}%`);
+  const fillResume = document.getElementById('bar-fill-resume');
+  if (fillResume) fillResume.style.width = `${resumeScore}%`;
+
+  setText('bar-score-github', `${githubScore}%`);
+  const fillGithub = document.getElementById('bar-fill-github');
+  if (fillGithub) fillGithub.style.width = `${githubScore}%`;
+
+  setText('bar-score-skills', `${skillsScore}%`);
+  const fillSkills = document.getElementById('bar-fill-skills');
+  if (fillSkills) fillSkills.style.width = `${skillsScore}%`;
+
+  setText('bar-score-academic', `${academicScore}%`);
+  const fillAcademic = document.getElementById('bar-fill-academic');
+  if (fillAcademic) fillAcademic.style.width = `${academicScore}%`;
+
+  if (Array.isArray(insights) && insights.length > 0) {
+    const listEl = document.getElementById('score-insights-list');
+    if (listEl) {
+      listEl.innerHTML = insights.map(item => `
+        <li class="flex items-start space-x-1.5">
+          <span class="text-emerald-400 font-bold">✓</span>
+          <span>${item}</span>
+        </li>
+      `).join('');
+    }
+  }
+}
+
+async function handleSaveStudentProfile() {
+  const btn = document.getElementById('btn-save-profile');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i><span>Computing & Syncing Score...</span>`;
+    lucide.createIcons();
+  }
+
+  const payload = {
+    name: document.getElementById('prof-name')?.value || 'Aman Sharma',
+    college: document.getElementById('prof-college')?.value || 'Apex Institute of Technology',
+    branch: document.getElementById('prof-branch')?.value || "B.Tech CSE '26",
+    batch: document.getElementById('prof-batch')?.value || '2026',
+    cgpa: document.getElementById('prof-cgpa')?.value || '8.92',
+    targetRole: document.getElementById('prof-target-role')?.value || 'Backend Engineer / Distributed Systems SDE',
+    bio: document.getElementById('prof-bio')?.value || '',
+    skills: currentStudentSkills,
+    githubUrl: document.getElementById('prof-github-url')?.value || 'https://github.com/aman-cs/distri-cache-engine',
+    leetcodeUrl: document.getElementById('prof-leetcode-url')?.value || '',
+    portfolioUrl: document.getElementById('prof-portfolio-url')?.value || '',
+    resume: {
+      fileName: document.getElementById('prof-resume-filename')?.textContent || 'Aman_Sharma_Resume_2026.pdf',
+      rawText: document.getElementById('prof-resume-raw')?.value || '',
+      summary: `Final year student at ${document.getElementById('prof-college')?.value || 'Apex'} with ${document.getElementById('prof-cgpa')?.value || '8.92'} CGPA. Experience in ${currentStudentSkills.slice(0, 4).join(', ')}.`
+    }
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/student/profile`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      currentStudentProfile = data.profile;
+      updateCapabilityScoreDisplays(data.profile.capabilityScore);
+      await fetchReferralsFromAPI();
+      triggerConfetti();
+      showToast(`Profile & Capability Score (${data.profile.capabilityScore.overall}/100) saved and synced to Alumni & Recruiter Radar!`);
+    } else {
+      showToast("Profile saved locally!");
+    }
+  } catch (err) {
+    showToast("Profile saved and scores updated!");
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<i data-lucide="check-check" class="w-4 h-4"></i><span>Save Profile &amp; Recalculate Score</span>`;
+      lucide.createIcons();
+    }
+  }
+}
+
+// Candidate Resume & Dossier Modal for Alumni & Recruiters
+function openCandidateResumeModal(refId) {
+  const ref = referralsState.find(r => r.id === refId) || referralsState[0] || {};
+  const prof = currentStudentProfile || {};
+
+  activeModalReferralId = ref.id || refId;
+
+  const candName = ref.studentName || prof.name || 'Aman Sharma';
+  const candBranch = ref.studentBranch || prof.branch || "B.Tech CSE '26";
+  const candCgpa = ref.cgpa || prof.cgpa || "8.92";
+  const candScore = ref.capabilityScore || prof.capabilityScore?.overall || 95;
+  const candResumeScore = ref.resumeScore || prof.capabilityScore?.resumeScore || 93;
+  const candGithubScore = ref.githubScore || prof.capabilityScore?.githubScore || 96;
+  const candSkills = ref.skills || prof.skills || ["Go", "Distributed Systems", "Redis", "Docker", "PostgreSQL"];
+  const candSummary = ref.summary || prof.bio || "Candidate implemented custom consistent-hashing ring in Go to distribute cache keys across 5 Redis nodes. 92.4% test coverage.";
+  const candRepo = ref.repoUrl || prof.githubUrl || "https://github.com/aman-cs/distri-cache-engine";
+  const candResumeText = prof.resume?.rawText || `AMAN SHARMA\nB.Tech CSE '26 • CGPA: ${candCgpa}/10.0\n\nEXPERIENCE:\nBackend Engineering Intern — CloudNative Labs (May 2025 - July 2025)\n- Engineered asynchronous message ingestion pipeline using Go and Kafka, handling 15,000 events/sec.\n- Reduced P99 response time by 35% with in-memory caching.\n\nPROJECTS:\n- Distributed Redis Caching Ring (Go, Consistent Hashing, 92.4% Unit Test Coverage)\n- Async Inference Pipeline (Python, FastAPI, Celery, Docker)`;
+
+  const setText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+
+  setText('modal-cand-name', candName);
+  setText('modal-cand-sub', `${candBranch} • Apex Institute of Technology • CGPA ${candCgpa}`);
+  setText('modal-cand-score', `${candScore}/100`);
+  setText('modal-cand-resume-score', `${candResumeScore}%`);
+  setText('modal-cand-github-score', `${candGithubScore}%`);
+  setText('modal-cand-cgpa', candCgpa);
+  setText('modal-cand-res-filename', prof.resume?.fileName || 'Aman_Sharma_Resume_2026.pdf');
+  setText('modal-cand-resume-body', candResumeText);
+  setText('modal-cand-summary', candSummary);
+
+  const repoLink = document.getElementById('modal-cand-repo-link');
+  if (repoLink) {
+    repoLink.href = candRepo;
+    repoLink.textContent = candRepo.replace('https://github.com/', '');
+  }
+
+  const skillsContainer = document.getElementById('modal-cand-skills');
+  if (skillsContainer) {
+    skillsContainer.innerHTML = candSkills.map(s => `
+      <span class="px-2 py-0.5 rounded bg-[#060a14] border border-slate-800 text-[11px] text-sky-300 font-mono font-medium">${s}</span>
+    `).join('');
+  }
+
+  const referBtn = document.getElementById('modal-cand-btn-refer');
+  if (referBtn) {
+    if (ref.status === 'referred') {
+      referBtn.disabled = true;
+      referBtn.className = "px-5 py-2 bg-emerald-600/30 text-emerald-300 font-bold rounded-xl text-xs border border-emerald-500/30 flex items-center space-x-1.5 cursor-not-allowed";
+      referBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i><span>Already Referred</span>`;
+    } else {
+      referBtn.disabled = false;
+      referBtn.className = "px-5 py-2 btn-gradient-primary text-white font-bold rounded-xl text-xs shadow-md shadow-blue-600/30 flex items-center space-x-1.5 transition";
+      referBtn.innerHTML = `<i data-lucide="check-check" class="w-3.5 h-3.5"></i><span>Endorse for 1-Click Referral</span>`;
+    }
+  }
+
+  openModal('modal-candidate-resume');
+  lucide.createIcons();
+}
+
+function handleModalReferCandidate() {
+  if (activeModalReferralId) {
+    handleReferralAction(activeModalReferralId, 'referred');
+    closeModal('modal-candidate-resume');
   }
 }
 
@@ -1659,11 +2292,11 @@ function initParticleField() {
   const field = document.getElementById('particle-field');
   if (!field) return;
   const COLORS = [
-    'rgba(56, 189, 248, 0.8)',   // Electric Sky Blue
-    'rgba(236, 72, 153, 0.8)',   // Hot Neon Pink
-    'rgba(168, 85, 247, 0.8)',   // Electric Purple
-    'rgba(192, 132, 252, 0.75)', // Soft Radiant Violet
-    'rgba(244, 63, 94, 0.75)',    // Neon Rose Pink
+    'rgba(56, 189, 248, 0.85)',  // Electric Sky Blue
+    'rgba(99, 102, 241, 0.85)',  // Electric Indigo
+    'rgba(59, 130, 246, 0.85)',  // Sapphire Royal Blue
+    'rgba(14, 165, 233, 0.8)',   // Deep Cyan
+    'rgba(147, 197, 253, 0.75)', // Ice Blue
   ];
   for (let i = 0; i < 28; i++) {
     const p     = document.createElement('div');
@@ -1807,8 +2440,6 @@ function animateWorkspaceEntrance() {
 
 // ── HOOKS INTO EXISTING FUNCTIONS ──
 (function() {
-<<<<<<< HEAD
-=======
   // Workspace entrance
   const _origAuth = window.authenticateAndOpenWorkspace;
   if (typeof _origAuth === 'function') {
@@ -1817,8 +2448,6 @@ function animateWorkspaceEntrance() {
       animateWorkspaceEntrance();
     };
   }
-
->>>>>>> d561c1f72652c3b41eb662b75ae22cbeccae271d
   // Splash burst
   const _origDismiss = window.dismissSplashImmediately;
   if (typeof _origDismiss === 'function') {
@@ -1850,6 +2479,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initParticleField();
   initButtonRipples();
+
+  // Pre-load backend data
+  fetchBountiesFromAPI();
+  fetchReferralsFromAPI();
+  fetchInstitutionStats();
+
   setTimeout(() => {
     initScrollReveal();
     initStatBarObserver();
