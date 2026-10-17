@@ -363,6 +363,36 @@
 
     </div>
 
+    <!-- ================= TAB: ALUMNUS DECISION INBOX ================= -->
+    <div id="view-alumnus-inbox" class="hidden space-y-6">
+      
+      <!-- Inbox Header -->
+      <div class="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border border-emerald-500/30 rounded-2xl p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs uppercase font-extrabold tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Zero-Spam Decision Desk</span>
+              <span class="text-xs text-slate-400 font-mono">1-Minute Reviews</span>
+            </div>
+            <h2 class="text-xl font-bold text-white mt-1.5">Incoming Verified Referral Dossiers</h2>
+            <p class="text-xs text-slate-300 mt-1">
+              Every card below is backed by verified GitHub metrics, unit test coverage, and benchmark scores. No cold DMs.
+            </p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs text-slate-400">Monthly Quota:</span>
+            <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">2 / 3 Left</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Referrals Container -->
+      <div id="referrals-container" class="space-y-4">
+        <!-- Injected dynamically by JS -->
+      </div>
+
+    </div>
+
     <!-- ================= TAB 4: CAMPUS LINEAGE & NETWORK GRAPH ================= -->
     <div id="view-network-graph" class="hidden space-y-6">
       
@@ -594,9 +624,126 @@
         <button onclick="saveActiveIntent()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs">Save Intent</button>
       </div>
     </div>
+  <!-- ================= MODAL: POST NEW BOUNTY / OPPORTUNITY ================= -->
+  <div id="modal-post-bounty" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="plus-circle" class="w-5 h-5 text-indigo-400"></i>
+          <h3 class="text-base font-bold text-white">Post Campus Opportunity / Bounty</h3>
+        </div>
+        <button onclick="closeModal('modal-post-bounty')" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-post-bounty" onsubmit="handlePostBountySubmit(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Opportunity Type</label>
+          <select id="bounty-type" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+            <option value="bounty">Micro-Bounty (Paid Gig + Referral)</option>
+            <option value="referral">Referral Radar Slot</option>
+            <option value="capstone">Faculty-Alumni Research Capstone</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Title</label>
+          <input type="text" id="bounty-title" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white" placeholder="e.g. Build Real-time Redis Rate Limiter">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Reward / Compensation</label>
+            <input type="text" id="bounty-reward" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white" placeholder="₹4,000 + Summer SDE Referral">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Tags (comma separated)</label>
+            <input type="text" id="bounty-tags" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white" placeholder="Go, Redis, 48hr">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Description & Requirements</label>
+          <textarea id="bounty-desc" rows="3" required class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white" placeholder="Explain the specific deliverable and how student work will be reviewed..."></textarea>
+        </div>
+
+        <div class="flex items-center justify-end space-x-3 pt-2">
+          <button type="button" onclick="closeModal('modal-post-bounty')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs hover:bg-slate-700">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs shadow-md shadow-indigo-600/30">Publish to Network</button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <!-- Application Logic & Data Script -->
+  <!-- ================= MODAL: APPLY TO BOUNTY ================= -->
+  <div id="modal-apply-bounty" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="send" class="w-5 h-5 text-indigo-400"></i>
+          <h3 id="modal-apply-title" class="text-base font-bold text-white">Apply with Proof-of-Work</h3>
+        </div>
+        <button onclick="closeModal('modal-apply-bounty')" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-apply-bounty" onsubmit="handleApplyBountySubmit(event)" class="space-y-3">
+        <input type="hidden" id="apply-bounty-id">
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Candidate Name & Branch</label>
+          <input type="text" id="apply-candidate-name" value="Aman Sharma (CSE '26)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">GitHub Repository or Pull Request URL</label>
+          <input type="text" id="apply-repo-url" value="https://github.com/aman-cs/distri-cache-engine" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono">
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Why your proof-of-work solves this (1-2 sentences)</label>
+          <textarea id="apply-pitch" rows="3" required class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white" placeholder="Implemented custom ring buffer handling 10k RPS with 92% test coverage. Ready to adapt for your service."></textarea>
+        </div>
+
+        <div class="flex items-center justify-end space-x-3 pt-2">
+          <button type="button" onclick="closeModal('modal-apply-bounty')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs hover:bg-slate-700">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs shadow-md shadow-emerald-600/30">Submit Application</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: GEMINI / SETTINGS ================= -->
+  <div id="modal-settings" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center space-x-2">
+          <i data-lucide="settings" class="w-4 h-4 text-indigo-400"></i>
+          <span>Engine Settings</span>
+        </h3>
+        <button onclick="closeModal('modal-settings')" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Google Gemini API Key (Optional)</label>
+          <input type="password" id="settings-gemini-key" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono" placeholder="AIzaSy...">
+          <p class="text-[11px] text-slate-400 mt-1">If blank, the built-in deterministic NexusIQ analysis engine evaluates GitHub metrics with zero external API requirements.</p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end space-x-3 pt-3">
+        <button onclick="closeModal('modal-settings')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs hover:bg-slate-700">Close</button>
+        <button onclick="saveSettings()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Logic & REST Integration Script -->
   <script src="app.js"></script>
 </body>
 </html>
