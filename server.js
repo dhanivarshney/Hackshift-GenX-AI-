@@ -22,6 +22,10 @@ const DB_PATH = path.join(__dirname, 'data', 'db.json');
 
 app.use(cors());
 app.use(express.json());
+const frontendDist = path.join(__dirname, 'frontend', 'dist');
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+}
 app.use(express.static(__dirname));
 
 // Database Helpers

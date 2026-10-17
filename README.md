@@ -59,18 +59,47 @@ flowchart TD
 
 ---
 
+---
+
+## 🎨 Modern React + TailwindCSS Frontend Architecture
+
+The frontend has been upgraded to a modular **React + TailwindCSS** component structure with organized views:
+
+```
+frontend/src/ (and root src/)
+├── views/
+│   ├── Onboarding.js (.jsx)     # 1. Authentication Gateway with 6 Role Login Modals
+│   ├── Dashboard.js (.jsx)      # 2. Intent-Driven Feed, Category Filters, Suggestions & Leaderboard
+│   ├── InstitutionHub.js (.jsx) # 3. Active Institution Hub with Alumni Highlights & Recruiter Radar
+│   ├── GraphView.js (.jsx)      # 4. Interactive Lineage Graph with Canvas Physics & Neon Nodes
+│   ├── ProofOfWork.js (.jsx)    # 5. Proof-of-Work Pitch Lab with AST Readiness Scores & Dispatch
+│   ├── BountyBoard.js (.jsx)    # 6. Opportunity Exchange, Micro-Bounties & Recruiter Job Cards
+│   └── ReferralInbox.js (.jsx)  # 7. Alumnus Decision Inbox with 1-Click ATS Referral Action
+├── components/
+│   ├── Navbar.jsx               # Live network status pulse & quick demo switchers
+│   ├── Header.jsx               # Context-aware portal badges, role switcher, karma & streaks
+│   ├── IntentModal.jsx          # Broadcast active intent modal with high-signal presets
+│   └── Toast.jsx                # Reactive neon toast notifications
+├── context/
+│   └── NexusContext.jsx         # Multi-portal state engine (Auth, Roles, Feed, Repos, ATS)
+└── data/
+    └── mockData.js              # Personas, Hub Nodes, Topology Graph, Bounties, and Benchmarks
+```
+
 ## 🚀 How to Run the App
 
-Simply open `index.html` in any modern web browser:
-- Double click [index.html](file:///c:/Users/hp/Hackshift/index.html) in your file explorer, OR
-- Run a quick local server using Python or Node:
-  ```bash
-  # Python 3
-  python -m http.server 3000
-  # Or with Node
-  npx serve .
-  ```
-- Navigate to `http://localhost:3000` in your browser.
+### Option A: Full-Stack Express Server (Serves API + Frontend)
+```bash
+npm install
+npm start
+# Server and UI running live at http://localhost:3000
+```
+
+### Option B: React + Vite Development Server
+```bash
+npm run frontend:dev
+# Vite Hot-Reload dev server running at http://localhost:5173
+```
 
 ---
 
