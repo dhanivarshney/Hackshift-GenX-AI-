@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNexus } from '../context/NexusContext';
 import {
   Network,
@@ -12,7 +12,11 @@ import {
   LogOut,
   Flame,
   Award,
-  ChevronRight
+  ChevronDown,
+  Menu,
+  X,
+  Sparkles,
+  CheckCircle2
 } from 'lucide-react';
 
 export default function Header() {
@@ -28,15 +32,42 @@ export default function Header() {
     referrals
   } = useNexus();
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isPortalDropdownOpen, setIsPortalDropdownOpen] = useState(false);
+
   const pendingReferrals = referrals.filter(r => r.status === 'pending').length;
 
-  const roleBadgeStyles = {
-    indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
-    emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-    purple: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-    cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
-    rose: 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+  const roleThemeMap = {
+    indigo: {
+      badge: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30',
+      activeBtn: 'bg-indigo-600 text-white shadow-indigo-600/30',
+      dot: 'bg-indigo-400'
+    },
+    emerald: {
+      badge: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+      activeBtn: 'bg-emerald-600 text-white shadow-emerald-600/30',
+      dot: 'bg-emerald-400'
+    },
+    amber: {
+      badge: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+      activeBtn: 'bg-amber-600 text-white shadow-amber-600/30',
+      dot: 'bg-amber-400'
+    },
+    purple: {
+      badge: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+      activeBtn: 'bg-purple-600 text-white shadow-purple-600/30',
+      dot: 'bg-purple-400'
+    },
+    cyan: {
+      badge: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
+      activeBtn: 'bg-cyan-600 text-white shadow-cyan-600/30',
+      dot: 'bg-cyan-400'
+    },
+    rose: {
+      badge: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+      activeBtn: 'bg-rose-600 text-white shadow-rose-600/30',
+      dot: 'bg-rose-400'
+    }
   };
 
   const navItems = [
@@ -81,8 +112,10 @@ export default function Header() {
     }
   ];
 
+  const currentTheme = roleThemeMap[activePersona.accentColor] || roleThemeMap.indigo;
+
   return (
-    <header className="sticky top-0 z-40 bg-[#060911]/90 backdrop-blur-md border-b border-slate-800">
+    <header className="sticky top-0 z-40 bg-[#060911]/95 backdrop-blur-md border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
         
         {/* Brand Logo & Portal Tag */}
@@ -96,9 +129,7 @@ export default function Header() {
                 Nexus<span className="text-indigo-400">IQ</span>
               </span>
               <span
-                className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
-                  roleBadgeStyles[activePersona.accentColor] || roleBadgeStyles.indigo
-                }`}
+                className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border shadow-sm ${currentTheme.badge}`}
               >
                 {activePersona.portalTitle}
               </span>
@@ -109,25 +140,33 @@ export default function Header() {
           </div>
         </div>
 
-        {/* 6-Role Switcher Pills with Portal Badges */}
-        <div className="hidden xl:flex items-center bg-slate-900 border border-slate-800 rounded-xl p-1 shadow-inner">
-          <span className="text-[10px] font-bold uppercase text-slate-500 px-2.5">Portal Switch:</span>
+        {/* Context-Aware 6-Role Switcher with Portal Badges (Desktop) */}
+        <div className="hidden lg:flex items-center bg-slate-900/90 border border-slate-800 rounded-2xl p-1 shadow-inner">
+          <span className="text-[10px] font-bold uppercase text-slate-500 px-2.5 flex items-center space-x-1">
+            <span>Portal:</span>
+          </span>
           <div className="flex space-x-1 text-xs">
             {personas.map((p) => {
               const isSelected = p.id === activePersona.id;
+              const theme = roleThemeMap[p.accentColor] || roleThemeMap.indigo;
+
               return (
                 <button
                   key={p.id}
                   onClick={() => switchRole(p.id)}
-                  className={`px-2.5 py-1 rounded-lg transition text-xs whitespace-nowrap flex items-center space-x-1.5 ${
+                  className={`px-2.5 py-1 rounded-xl transition text-xs whitespace-nowrap flex items-center space-x-1.5 shadow-sm ${
                     isSelected
-                      ? 'bg-indigo-600 text-white font-bold shadow-sm'
+                      ? `${theme.activeBtn} font-bold shadow-md`
                       : 'text-slate-400 hover:text-white hover:bg-slate-800'
                   }`}
+                  title={`Switch to ${p.portalTitle} (${p.name})`}
                 >
+                  <span className={`w-1.5 h-1.5 rounded-full ${theme.dot} ${isSelected ? 'animate-pulse' : 'opacity-70'}`}></span>
                   <span>{p.roleLabel}</span>
                   {isSelected && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span className="text-[9px] bg-black/20 px-1.5 py-0.2 rounded font-mono font-medium">
+                      Active
+                    </span>
                   )}
                 </button>
               );
@@ -136,10 +175,10 @@ export default function Header() {
         </div>
 
         {/* Current User Profile, Streak, Intent & Actions */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2.5 sm:space-x-3">
           
           {/* Gamification Streak & Karma */}
-          <div className="hidden sm:flex items-center space-x-2 px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+          <div className="hidden sm:flex items-center space-x-2 px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs shadow-sm">
             <div className="flex items-center space-x-1 text-amber-400" title={`${activePersona.streak} Day Contribution Streak`}>
               <Flame className="w-3.5 h-3.5 fill-amber-400" />
               <span className="font-bold text-[11px]">{activePersona.streak}d</span>
@@ -158,18 +197,18 @@ export default function Header() {
             title="Click to edit and broadcast your active intent"
           >
             <Zap className="w-3.5 h-3.5 text-indigo-400 animate-pulse shrink-0" />
-            <span className="text-slate-300 font-medium">Intent:</span>
-            <span className="font-bold text-white max-w-[130px] truncate">{activePersona.activeIntent}</span>
+            <span className="text-slate-400 font-medium">Intent:</span>
+            <span className="font-bold text-white max-w-[120px] truncate">{activePersona.activeIntent}</span>
           </button>
 
           {/* User Profile Pill */}
           <div className="flex items-center space-x-2 pl-2 border-l border-slate-800">
-            <div className="w-8 h-8 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold flex items-center justify-center text-xs shadow-sm">
+            <div className={`w-8 h-8 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold flex items-center justify-center text-xs shadow-sm`}>
               {activePersona.avatar}
             </div>
-            <div className="hidden lg:block text-left">
+            <div className="hidden xl:block text-left">
               <div className="text-xs font-bold text-white leading-tight">{activePersona.name}</div>
-              <div className="text-[10px] text-slate-400 leading-tight truncate max-w-[120px]">
+              <div className="text-[10px] text-slate-400 leading-tight truncate max-w-[110px]">
                 {activePersona.branch || activePersona.roleLabel}
               </div>
             </div>
@@ -182,20 +221,93 @@ export default function Header() {
             </button>
           </div>
 
+          {/* Mobile Menu Hamburger Toggle */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 rounded-xl text-slate-400 hover:text-white bg-slate-900 border border-slate-800 transition"
+            title="Toggle Menu"
+          >
+            {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+          </button>
+
         </div>
 
       </div>
 
+      {/* Mobile Drawer (Visible when hamburger open) */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden border-t border-slate-800 bg-slate-950/95 px-4 py-4 space-y-4 animate-in slide-in-from-top-2 duration-150">
+          
+          {/* Mobile Role Switcher with Portal Badges */}
+          <div className="space-y-2">
+            <div className="text-[11px] font-bold uppercase text-slate-400 tracking-wider flex items-center space-x-1.5">
+              <span>Switch Active Workspace Portal:</span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {personas.map((p) => {
+                const isSelected = p.id === activePersona.id;
+                const theme = roleThemeMap[p.accentColor] || roleThemeMap.indigo;
+                return (
+                  <button
+                    key={p.id}
+                    onClick={() => {
+                      switchRole(p.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`p-2 rounded-xl border text-left text-xs transition flex flex-col justify-between ${
+                      isSelected
+                        ? `${theme.activeBtn} border-transparent font-bold shadow-md`
+                        : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold">{p.roleLabel}</span>
+                      <span className={`w-1.5 h-1.5 rounded-full ${theme.dot}`}></span>
+                    </div>
+                    <span className="text-[10px] opacity-80 truncate mt-0.5">{p.portalTitle}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Mobile Streak & Active Intent */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 pt-2 border-t border-slate-800 text-xs">
+            <div className="flex items-center space-x-2 bg-slate-900 p-2 rounded-xl border border-slate-800">
+              <Flame className="w-4 h-4 text-amber-400 fill-amber-400" />
+              <span className="font-bold text-amber-400">{activePersona.streak}d Streak</span>
+              <span className="text-slate-600">|</span>
+              <Award className="w-4 h-4 text-indigo-400" />
+              <span className="font-mono text-indigo-300">{activePersona.karma} Karma</span>
+            </div>
+            <button
+              onClick={() => {
+                setIsIntentModalOpen(true);
+                setIsMobileMenuOpen(false);
+              }}
+              className="flex items-center justify-between bg-indigo-950/60 border border-indigo-500/30 p-2 rounded-xl text-indigo-300"
+            >
+              <span className="truncate">Intent: {activePersona.activeIntent}</span>
+              <Zap className="w-3.5 h-3.5 text-indigo-400 ml-1 shrink-0" />
+            </button>
+          </div>
+
+        </div>
+      )}
+
       {/* Main Navigation Tabs */}
       <div className="border-t border-slate-800/80 bg-slate-950/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-4 sm:space-x-6 text-sm font-medium overflow-x-auto custom-scrollbar">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-3 sm:space-x-6 text-sm font-medium overflow-x-auto custom-scrollbar">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeView === item.id;
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveView(item.id)}
+                onClick={() => {
+                  setActiveView(item.id);
+                  setIsMobileMenuOpen(false);
+                }}
                 className={`py-3 border-b-2 flex items-center space-x-2 transition whitespace-nowrap text-xs sm:text-sm ${
                   isActive
                     ? 'border-indigo-500 text-indigo-400 font-semibold'

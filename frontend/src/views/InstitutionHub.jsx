@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNexus } from '../context/NexusContext';
 import {
   Landmark,
@@ -14,23 +14,52 @@ import {
   ArrowUpRight,
   ShieldCheck,
   CheckCircle2,
-  Share2
+  Share2,
+  Check,
+  Activity,
+  Award,
+  Zap,
+  ExternalLink
 } from 'lucide-react';
 
 export default function InstitutionHub() {
-  const { institutions, activeInstitutionId, setActiveInstitutionId, setActiveView, showToast } = useNexus();
+  const {
+    institutions,
+    activeInstitutionId,
+    setActiveInstitutionId,
+    setActiveView,
+    showToast,
+    triggerCelebration
+  } = useNexus();
+
+  const [rsvpEvents, setRsvpEvents] = useState({});
 
   const currentInst = institutions.find(i => i.id === activeInstitutionId) || institutions[0];
+
+  const handleToggleRsvp = (eventTitle) => {
+    const isCurrentlyRsvpd = rsvpEvents[eventTitle];
+    setRsvpEvents(prev => ({
+      ...prev,
+      [eventTitle]: !isCurrentlyRsvpd
+    }));
+
+    if (!isCurrentlyRsvpd) {
+      triggerCelebration();
+      showToast(`RSVP Confirmed for "${eventTitle}"! Added to campus calendar.`, 'success');
+    } else {
+      showToast(`Cancelled RSVP for "${eventTitle}".`, 'info');
+    }
+  };
 
   return (
     <div className="space-y-6">
       
       {/* Active Node Command Header */}
-      <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 bg-gradient-to-r from-slate-900 via-rose-950/20 to-slate-900 relative overflow-hidden">
+      <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 bg-gradient-to-r from-slate-900 via-rose-950/20 to-slate-900 relative overflow-hidden shadow-2xl">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           
           <div className="flex items-start space-x-4">
-            <div className="w-16 h-16 rounded-2xl bg-rose-600/20 border border-rose-500/30 text-rose-400 flex items-center justify-center text-2xl shadow-lg shrink-0">
+            <div className="w-16 h-16 rounded-2xl bg-rose-600/20 border border-rose-500/30 text-rose-400 flex items-center justify-center text-2xl shadow-lg shrink-0 glow-rose">
               <Landmark className="w-8 h-8" />
             </div>
             <div>
@@ -39,9 +68,9 @@ export default function InstitutionHub() {
                 <span className="text-xs px-3 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/30 font-semibold font-mono">
                   {currentInst.badge}
                 </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center space-x-1">
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center space-x-1 font-mono">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                  <span>{currentInst.status}</span>
+                  <span>Active Network Node • {currentInst.status}</span>
                 </span>
               </div>
 
@@ -49,19 +78,29 @@ export default function InstitutionHub() {
                 {currentInst.motto}
               </p>
 
-              <div className="flex items-center space-x-2 text-xs text-slate-400 mt-2">
-                <MapPin className="w-3.5 h-3.5 text-rose-400" />
-                <span>{currentInst.location}</span>
+              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mt-2.5">
+                <div className="flex items-center space-x-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-rose-400" />
+                  <span>{currentInst.location}</span>
+                </div>
                 <span>•</span>
-                <span className="text-emerald-400 font-medium">Real-Time Autonomous Sync Enabled</span>
+                <div className="flex items-center space-x-1.5 text-emerald-400 font-medium">
+                  <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+                  <span>Real-Time Autonomous Sync Enabled</span>
+                </div>
+                <span>•</span>
+                <div className="text-slate-400 font-mono text-[11px]">
+                  Node ID: 0x{currentInst.id.toUpperCase()}-NODE-2026
+                </div>
               </div>
             </div>
           </div>
 
           {/* Institution Node Switcher Pills */}
-          <div className="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end justify-between gap-3 bg-slate-950/80 border border-slate-800 p-4 rounded-2xl">
-            <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
-              Switch Network Hub Node:
+          <div className="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end justify-between gap-3 bg-slate-950/80 border border-slate-800 p-4 rounded-2xl shrink-0">
+            <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider flex items-center space-x-1.5">
+              <Share2 className="w-3 h-3 text-rose-400" />
+              <span>Switch Active Command Node:</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {institutions.map(inst => {
@@ -89,7 +128,7 @@ export default function InstitutionHub() {
               className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center space-x-1 font-medium transition"
             >
               <Share2 className="w-3.5 h-3.5" />
-              <span>Inspect Lineage Topology</span>
+              <span>Inspect in Lineage Topology Graph</span>
             </button>
           </div>
 
@@ -107,7 +146,7 @@ export default function InstitutionHub() {
           <div className="text-3xl font-black text-white">
             {currentInst.impactMetrics.activeNetworkSize}
           </div>
-          <div className="text-xs text-emerald-400 flex items-center space-x-1">
+          <div className="text-xs text-emerald-400 flex items-center space-x-1 font-medium">
             <TrendingUp className="w-3.5 h-3.5" />
             <span>{currentInst.impactMetrics.networkLift}</span>
           </div>
@@ -203,7 +242,7 @@ export default function InstitutionHub() {
                   </span>
                   <button
                     onClick={() => setActiveView('proof-of-work')}
-                    className="px-3 py-1.5 bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white rounded-lg text-xs font-semibold transition flex items-center space-x-1"
+                    className="px-3 py-1.5 bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white rounded-lg text-xs font-semibold transition flex items-center space-x-1 shadow-sm"
                   >
                     <span>Pitch Proof-of-Work</span>
                     <ArrowUpRight className="w-3 h-3" />
@@ -256,13 +295,14 @@ export default function InstitutionHub() {
 
             <button
               onClick={() => setActiveView('bounties')}
-              className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold transition text-center"
+              className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold transition text-center flex items-center justify-center space-x-1.5"
             >
-              View Recruiter Job Cards in Exchange
+              <span>View Recruiter Job Cards in Exchange</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* Upcoming Node Events */}
+          {/* Upcoming Node Events with Interactive RSVP */}
           <div className="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <div className="flex items-center space-x-2">
@@ -275,24 +315,56 @@ export default function InstitutionHub() {
             </div>
 
             <div className="space-y-3">
-              {currentInst.upcomingEvents.map((event, eIdx) => (
-                <div
-                  key={eIdx}
-                  className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-xs space-y-1.5"
-                >
-                  <div className="flex items-start justify-between">
-                    <h4 className="font-bold text-white text-xs leading-snug">{event.title}</h4>
+              {currentInst.upcomingEvents.map((event, eIdx) => {
+                const isRsvpd = rsvpEvents[event.title];
+
+                return (
+                  <div
+                    key={eIdx}
+                    className={`p-3.5 rounded-xl border text-xs space-y-2 transition ${
+                      isRsvpd
+                        ? 'bg-rose-950/20 border-rose-500/40 shadow-sm'
+                        : 'bg-slate-950/60 border-slate-800'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <h4 className="font-bold text-white text-xs leading-snug">{event.title}</h4>
+                      <span className="text-[10px] text-rose-400 font-mono bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">
+                        {event.type}
+                      </span>
+                    </div>
+
+                    <div className="text-[11px] text-slate-400 flex items-center space-x-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-indigo-400" />
+                      <span>{event.date}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="text-[10px] text-slate-400">
+                        {isRsvpd ? (
+                          <span className="text-emerald-400 font-bold flex items-center space-x-1">
+                            <Check className="w-3 h-3" />
+                            <span>You are attending!</span>
+                          </span>
+                        ) : (
+                          <span className="text-amber-400 font-medium">{event.spotsLeft}</span>
+                        )}
+                      </span>
+
+                      <button
+                        onClick={() => handleToggleRsvp(event.title)}
+                        className={`px-3 py-1 rounded-lg text-[11px] font-semibold transition ${
+                          isRsvpd
+                            ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40'
+                            : 'bg-slate-800 hover:bg-rose-600 text-slate-200 hover:text-white'
+                        }`}
+                      >
+                        {isRsvpd ? 'RSVP Confirmed' : 'RSVP Now'}
+                      </button>
+                    </div>
                   </div>
-                  <div className="text-[11px] text-slate-400 flex items-center space-x-1">
-                    <Calendar className="w-3 h-3 text-indigo-400" />
-                    <span>{event.date}</span>
-                  </div>
-                  <div className="flex items-center justify-between pt-1">
-                    <span className="text-[10px] text-indigo-300 font-mono">{event.type}</span>
-                    <span className="text-[10px] text-emerald-400 font-semibold">{event.spotsLeft}</span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

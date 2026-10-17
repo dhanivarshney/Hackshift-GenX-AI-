@@ -741,6 +741,42 @@ export const GRAPH_DATA = {
       color: '#10b981',
       width: 2,
       details: 'Shared access to high-performance computing clusters for capstone teams.'
+    },
+    {
+      source: 'p-aman',
+      target: 'inst-apex',
+      type: 'post',
+      label: 'Intent Post: Seeking Go SDE Referral',
+      color: '#818cf8',
+      width: 2.5,
+      details: 'Aman broadcasted Redis caching project milestone with Proof-of-Work dossier to Apex network.'
+    },
+    {
+      source: 'p-rohan',
+      target: 'inst-apex',
+      type: 'post',
+      label: 'Intent Post: Hiring 2 SDE Interns for Swiggy',
+      color: '#818cf8',
+      width: 2.5,
+      details: 'Rohan broadcasted mentorship and referral availability for Go backend campus engineers.'
+    },
+    {
+      source: 'p-neha',
+      target: 'inst-apex',
+      type: 'post',
+      label: 'Intent Post: ₹15,000 Micro-Bounty Launch',
+      color: '#818cf8',
+      width: 2.5,
+      details: 'Neha broadcasted ₹15,000 Next.js WebStreams micro-bounty challenge for campus builders.'
+    },
+    {
+      source: 'p-verma',
+      target: 'inst-apex',
+      type: 'post',
+      label: 'Intent Post: Seeking Capstone Alum Co-Guides',
+      color: '#818cf8',
+      width: 2.5,
+      details: 'Dr. Verma broadcasted call for industry alum co-guides for 8 final-year research capstones.'
     }
   ]
 };

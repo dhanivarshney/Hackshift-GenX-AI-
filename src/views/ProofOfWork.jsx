@@ -15,7 +15,10 @@ import {
   Layers,
   FileCode,
   Loader2,
-  Check
+  Check,
+  Gauge,
+  Timer,
+  CheckCheck
 } from 'lucide-react';
 
 export default function ProofOfWork() {
@@ -64,11 +67,11 @@ export default function ProofOfWork() {
     <div className="space-y-6">
       
       {/* Hero Header */}
-      <div className="bg-gradient-to-r from-indigo-950/70 via-slate-900 to-slate-900 border border-indigo-500/30 rounded-3xl p-6 sm:p-8 relative overflow-hidden glow-indigo">
+      <div className="bg-gradient-to-r from-indigo-950/70 via-slate-900 to-slate-900 border border-indigo-500/30 rounded-3xl p-6 sm:p-8 relative overflow-hidden glow-indigo shadow-2xl">
         <div className="max-w-2xl relative z-10 space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold">
             <Cpu className="w-3.5 h-3.5 text-indigo-400" />
-            <span>The Anti-Cold-DM Engine</span>
+            <span>The Anti-Cold-DM Engine • Proof-of-Work Pitch Lab</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
@@ -78,7 +81,7 @@ export default function ProofOfWork() {
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
             Alumni ignore 98% of cold DMs like <i>"Sir please refer me"</i>. In NexusIQ, you cannot send raw text.
             Input your GitHub repo or PR; our AST engine analyzes your actual code, computes a <b>Readiness Score</b>,
-            and packages a <b>1-Minute Executive Flash Dossier</b> for the alumnus!
+            benchmarks <b>Test Coverage & P99 Latency</b>, and packages a <b>1-Minute Executive Flash Dossier</b> for the alumnus!
           </p>
         </div>
 
@@ -208,7 +211,7 @@ export default function ProofOfWork() {
             <div className="flex items-center space-x-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                Live AI Dossier Preview
+                Glassmorphism GitHub Repo Analysis Card
               </h3>
             </div>
             <span className="text-[11px] font-mono text-indigo-400 bg-indigo-500/10 px-2.5 py-0.5 rounded-full border border-indigo-500/20">
@@ -217,10 +220,10 @@ export default function ProofOfWork() {
           </div>
 
           {analysisResult ? (
-            <div className="space-y-4">
+            <div className="space-y-4 animate-in fade-in zoom-in-95 duration-200">
               
               {/* Glassmorphic Dossier Card */}
-              <div className="bg-slate-950 border border-indigo-500/30 rounded-2xl p-5 sm:p-6 space-y-4 glow-indigo">
+              <div className="glass-card border border-indigo-500/30 rounded-2xl p-5 sm:p-6 space-y-4 glow-indigo shadow-xl">
                 
                 {/* Header with Candidate + Readiness Score */}
                 <div className="flex items-start justify-between border-b border-slate-800/80 pb-4">
@@ -238,35 +241,50 @@ export default function ProofOfWork() {
                   </div>
 
                   <div className="text-right">
-                    <div className="text-2xl font-black text-emerald-400">
-                      {analysisResult.readinessScore}
-                      <span className="text-xs text-slate-400">/100</span>
+                    <div className="text-3xl font-black text-emerald-400 flex items-center justify-end space-x-1">
+                      <Gauge className="w-6 h-6 text-emerald-400 mr-1" />
+                      <span>{analysisResult.readinessScore}</span>
+                      <span className="text-xs text-slate-400 font-normal">/100</span>
                     </div>
-                    <div className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">
-                      Code Readiness
+                    <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">
+                      Readiness Score
                     </div>
                   </div>
                 </div>
 
-                {/* 3 Metrics Chips */}
-                <div className="grid grid-cols-3 gap-3 text-center text-xs">
-                  <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5">
-                    <div className="text-slate-400 text-[10px] font-semibold">Test Coverage</div>
-                    <div className="text-emerald-400 font-bold mt-1 text-xs truncate">
+                {/* 3 Benchmark Cards: Test Coverage, Latency Benchmarks, Memory Checks */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-xs">
+                  <div className="glass-panel border border-slate-800 rounded-xl p-3">
+                    <div className="text-slate-400 text-[10px] font-semibold flex items-center justify-center space-x-1">
+                      <CheckCheck className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Test Coverage</span>
+                    </div>
+                    <div className="text-emerald-400 font-bold mt-1 text-sm">
                       {analysisResult.testCoverage}
                     </div>
+                    <div className="text-[9px] text-slate-500 mt-0.5">Unit + Integration</div>
                   </div>
-                  <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5">
-                    <div className="text-slate-400 text-[10px] font-semibold">P99 Latency</div>
-                    <div className="text-indigo-400 font-bold mt-1 text-xs truncate">
+
+                  <div className="glass-panel border border-slate-800 rounded-xl p-3">
+                    <div className="text-slate-400 text-[10px] font-semibold flex items-center justify-center space-x-1">
+                      <Timer className="w-3.5 h-3.5 text-indigo-400" />
+                      <span>Latency Benchmarks</span>
+                    </div>
+                    <div className="text-indigo-400 font-bold mt-1 text-sm">
                       {analysisResult.latencyBenchmark}
                     </div>
+                    <div className="text-[9px] text-slate-500 mt-0.5">P99 @ 10k RPS</div>
                   </div>
-                  <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5">
-                    <div className="text-slate-400 text-[10px] font-semibold">Memory Profiling</div>
-                    <div className="text-amber-400 font-bold mt-1 text-xs truncate">
+
+                  <div className="glass-panel border border-slate-800 rounded-xl p-3">
+                    <div className="text-slate-400 text-[10px] font-semibold flex items-center justify-center space-x-1">
+                      <Activity className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Memory Profile</span>
+                    </div>
+                    <div className="text-amber-400 font-bold mt-1 text-sm">
                       {analysisResult.memoryLeakCheck}
                     </div>
+                    <div className="text-[9px] text-slate-500 mt-0.5">Zero Leak Proof</div>
                   </div>
                 </div>
 
@@ -276,14 +294,17 @@ export default function ProofOfWork() {
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Verified Architecture Summary:</span>
                   </div>
-                  <p className="text-slate-300 leading-relaxed bg-slate-900/60 border border-slate-800 p-3 rounded-xl">
+                  <p className="text-slate-300 leading-relaxed bg-slate-900/60 border border-slate-800 p-3 rounded-xl font-sans">
                     "{analysisResult.executiveSummary || analysisResult.architecturalHighlight}"
                   </p>
                 </div>
 
                 {/* 3-Min Question Box */}
                 <div className="p-3 bg-indigo-950/30 border border-indigo-500/20 rounded-xl text-xs space-y-1">
-                  <span className="text-indigo-300 font-semibold">Targeted 3-Minute Alumnus Question:</span>
+                  <span className="text-indigo-300 font-semibold flex items-center space-x-1">
+                    <Zap className="w-3.5 h-3.5 text-indigo-400" />
+                    <span>Targeted 3-Minute Alumnus Question:</span>
+                  </span>
                   <p className="text-slate-300">"{analysisResult.blockerAsk}"</p>
                 </div>
 
@@ -295,10 +316,10 @@ export default function ProofOfWork() {
 
                   <button
                     onClick={handleDispatch}
-                    className="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2 transition"
+                    className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2 transition"
                   >
                     <Send className="w-4 h-4" />
-                    <span>Dispatch to Alumni Decision Inbox</span>
+                    <span>Dispatch to Alumni Inbox</span>
                   </button>
                 </div>
 

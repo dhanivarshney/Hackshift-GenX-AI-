@@ -126,6 +126,10 @@ export default function GraphView() {
 
           if (edge.type === 'referral') {
             ctx.setLineDash([6, 4]);
+          } else if (edge.type === 'collaboration') {
+            ctx.setLineDash([3, 3]);
+          } else if (edge.type === 'post') {
+            ctx.setLineDash([4, 2]);
           } else {
             ctx.setLineDash([]);
           }
@@ -134,15 +138,15 @@ export default function GraphView() {
           ctx.setLineDash([]);
           ctx.globalAlpha = 1;
 
-          // Animated particle on active referrals/bounties
-          if (edge.type === 'referral' || edge.type === 'bounty') {
+          // Animated particle on active posts, referrals, bounties, and collaborations
+          if (edge.type === 'referral' || edge.type === 'bounty' || edge.type === 'post' || edge.type === 'collaboration') {
             const time = Date.now() * 0.0015;
             const progress = (time % 1);
             const px = srcNode.x + (tgtNode.x - srcNode.x) * progress;
             const py = srcNode.y + (tgtNode.y - srcNode.y) * progress;
 
             ctx.beginPath();
-            ctx.arc(px, py, 3, 0, Math.PI * 2);
+            ctx.arc(px, py, edge.type === 'referral' || edge.type === 'bounty' ? 3.5 : 2.5, 0, Math.PI * 2);
             ctx.fillStyle = edge.color;
             ctx.shadowColor = edge.color;
             ctx.shadowBlur = 8;
@@ -319,9 +323,10 @@ export default function GraphView() {
             <span className="text-slate-500 font-bold uppercase text-[10px] mr-1">Filter Ties:</span>
             {[
               { id: 'all', label: 'All Connections' },
+              { id: 'post', label: '📢 Intent Posts', color: 'indigo' },
               { id: 'referral', label: '⚡ Verified Referrals', color: 'emerald' },
               { id: 'bounty', label: '💰 Paid Bounties', color: 'amber' },
-              { id: 'collaboration', label: '🔬 Research Capstone', color: 'purple' },
+              { id: 'collaboration', label: '🔬 Research Capstones', color: 'purple' },
               { id: 'recruitment', label: '🎯 Talent Pipelines', color: 'cyan' }
             ].map(f => (
               <button
@@ -338,7 +343,7 @@ export default function GraphView() {
             ))}
           </div>
 
-          <div className="flex items-center space-x-3 text-[11px] text-slate-400">
+          <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-400">
             <span className="flex items-center space-x-1">
               <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 ring-2 ring-indigo-500/40"></span>
               <span>Institution Hub</span>
@@ -354,6 +359,14 @@ export default function GraphView() {
             <span className="flex items-center space-x-1">
               <span className="w-2.5 h-2.5 rounded-full bg-indigo-300"></span>
               <span>Students</span>
+            </span>
+            <span className="flex items-center space-x-1">
+              <span className="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+              <span>Faculty</span>
+            </span>
+            <span className="flex items-center space-x-1">
+              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+              <span>Recruiters</span>
             </span>
           </div>
 
