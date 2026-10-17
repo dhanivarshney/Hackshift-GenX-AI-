@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import confetti from 'canvas-confetti';
 import {
   MASTER_PERSONAS,
@@ -27,6 +27,8 @@ export function NexusProvider({ children }) {
   const [activeInstitutionId, setActiveInstitutionId] = useState('apex');
   const [toasts, setToasts] = useState([]);
   const [isIntentModalOpen, setIsIntentModalOpen] = useState(false);
+  const [mentors, setMentors] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
   const activePersona = personas[currentRoleIndex] || personas[0];
   const activeInstitution = institutions.find(i => i.id === activeInstitutionId) || institutions[0];
@@ -102,16 +104,51 @@ export function NexusProvider({ children }) {
     }
   };
 
-  const showToast = (message, type = 'success') => {
+  const showToast = useCallback((message, type = 'success') => {
     const id = Date.now() + Math.random().toString(36).substring(2, 5);
     setToasts(prev => [...prev, { id, message, type }]);
     setTimeout(() => {
       setToasts(prev => prev.filter(t => t.id !== id));
     }, 4000);
-  };
+  }, []);
 
   const removeToast = (id) => {
     setToasts(prev => prev.filter(t => t.id !== id));
+  };
+
+  const loadMentorship = useCallback(async (date = '') => {
+    const headers = { 'x-linkx-persona-id': activePersona.id };
+    const [mentorResponse, bookingResponse] = await Promise.all([
+      fetch(`/api/mentors${date ? `?date=${date}` : ''}`),
+      fetch('/api/mentorship/bookings', { headers })
+    ]);
+    const mentorData = await mentorResponse.json();
+    const bookingData = await bookingResponse.json();
+    if (!mentorResponse.ok || !bookingResponse.ok) throw new Error(mentorData.error || bookingData.error || 'Could not load mentorship data.');
+    setMentors(mentorData.mentors);
+    setBookings(bookingData.bookings);
+    return mentorData.mentors;
+  }, [activePersona.id]);
+
+  const createBooking = async (booking) => {
+    const response = await fetch('/api/mentorship/bookings', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'x-linkx-persona-id': activePersona.id },
+      body: JSON.stringify(booking)
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Could not submit request.');
+    setBookings(current => [data.booking, ...current]);
+    return data.booking;
+  };
+
+  const updateBookingStatus = async (bookingId, status) => {
+    const response = await fetch(`/api/mentorship/bookings/${bookingId}/status`, {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json', 'x-linkx-persona-id': activePersona.id },
+      body: JSON.stringify({ status })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Could not update request.');
+    setBookings(current => current.map(booking => booking.id === bookingId ? data.booking : booking));
   };
 
   const loginAs = (roleId, showCelebrationToast = true) => {
@@ -156,10 +193,7 @@ export function NexusProvider({ children }) {
 
   const logout = () => {
     setIsAuthenticated(false);
-<<<<<<< HEAD
     localStorage.removeItem('linkx_session_auth');
-=======
-    localStorage.removeItem('nexusiq_session_auth');
     if (typeof window !== 'undefined' && window.history && window.history.pushState) {
       window.history.pushState(
         { view: 'onboarding', roleId: null, isAuthenticated: false },
@@ -167,7 +201,6 @@ export function NexusProvider({ children }) {
         '#onboarding'
       );
     }
->>>>>>> d561c1f72652c3b41eb662b75ae22cbeccae271d
     showToast('Signed out from workspace. Select a role gateway.', 'info');
   };
 
@@ -180,7 +213,9 @@ export function NexusProvider({ children }) {
 
     // Context-aware tab suggestion
     let nextView = activeView;
-    if (roleId === 'alumnus' && activeView !== 'referrals') {
+    if (activeView === 'mentorship') {
+      nextView = 'mentorship';
+    } else if (roleId === 'alumnus' && activeView !== 'referrals') {
       nextView = 'referrals';
       setActiveView('referrals');
     } else if (roleId === 'founder' && activeView !== 'bounties') {
@@ -359,6 +394,11 @@ export function NexusProvider({ children }) {
     <NexusContext.Provider
       value={{
         personas,
+        mentors,
+        bookings,
+        loadMentorship,
+        createBooking,
+        updateBookingStatus,
         currentRoleIndex,
         activePersona,
         isAuthenticated,

@@ -86,6 +86,16 @@ frontend/src/ (and root src/)
     └── mockData.js              # Personas, Hub Nodes, Topology Graph, Bounties, and Benchmarks
 ```
 
+## Alumni Mentorship Booking
+
+Open **Mentorship** from the main navigation to find alumni, request a future date and available slot, and track sessions. Requests remain `pending` until the intended mentor accepts or declines. For the demo workflow, use the top portal switcher to move between Student and Mentor personas; incoming requests are filtered to the selected mentor.
+
+Mentors and their listed time choices are demonstration records. Availability is recalculated for the selected date, and a pending or confirmed request blocks the same mentor slot. Booking writes are serialized within one Node process and written with an atomic file rename. The JSON store does not coordinate multiple server processes or hosts, so it is not a multi-instance transactional database.
+
+The current persona switcher is a client-side demo identity. The API validates the selected persona and request ownership, but a caller can spoof that identity; this is not secure authentication and must be replaced with verified server sessions before production use. No calendar integration is provided.
+
+Endpoints: `GET /api/mentors?date=YYYY-MM-DD`, `GET /api/mentorship/bookings`, `POST /api/mentorship/bookings`, and `PATCH /api/mentorship/bookings/:id/status`.
+
 ## 🚀 How to Run the App
 
 ### Option A: Full-Stack Express Server (Serves API + Frontend)

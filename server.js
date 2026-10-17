@@ -10,6 +10,7 @@ import { fetchGitHubRepoDetails } from './server/services/githubService.js';
 import { synthesizeDossier } from './server/services/aiService.js';
 import { getBounties, createBounty, applyToBounty } from './server/controllers/bountyController.js';
 import { getReferrals, createReferral, updateReferralAction } from './server/controllers/referralController.js';
+import { listMentors, listBookings, createBooking, updateBookingStatus } from './server/controllers/mentorshipController.js';
 
 dotenv.config();
 
@@ -40,12 +41,21 @@ function readDB() {
 
 function writeDB(data) {
   try {
-    fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
+    const temporaryPath = `${DB_PATH}.${process.pid}.tmp`;
+    fs.writeFileSync(temporaryPath, JSON.stringify(data, null, 2), 'utf-8');
+    fs.renameSync(temporaryPath, DB_PATH);
     return true;
   } catch (err) {
     return false;
   }
 }
+
+app.use((req, res, next) => {
+  req.readDB = readDB;
+  req.writeDB = writeDB;
+  req.db = readDB();
+  next();
+});
 
 // ================= REST API ROUTES =================
 
@@ -127,6 +137,11 @@ app.post('/api/referrals/:id/action', (req, res) => {
 });
 
 // 6. Institution Analytics (Owned by Member 4)
+app.get('/api/mentors', listMentors);
+app.get('/api/mentorship/bookings', listBookings);
+app.post('/api/mentorship/bookings', createBooking);
+app.patch('/api/mentorship/bookings/:id/status', updateBookingStatus);
+
 app.get('/api/institution/stats', (req, res) => {
   const db = readDB();
   const totalBounties = db.bounties.length;

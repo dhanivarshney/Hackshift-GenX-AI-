@@ -15,6 +15,7 @@ import GraphView from './views/GraphView';
 import ProofOfWork from './views/ProofOfWork';
 import BountyBoard from './views/BountyBoard';
 import ReferralInbox from './views/ReferralInbox';
+import MentorshipPage from './views/MentorshipPage';
 
 function MainWorkspace() {
   const { isAuthenticated, activeView } = useNexus();
@@ -33,6 +34,7 @@ function MainWorkspace() {
         {activeView === 'referrals' && <ReferralInbox />}
         {activeView === 'graph' && <GraphView />}
         {activeView === 'institution' && <InstitutionHub />}
+        {activeView === 'mentorship' && <MentorshipPage />}
       </main>
     </div>
   );

@@ -139,7 +139,10 @@ export const MASTER_PERSONAS = [
       placementLift: '+34%',
       alumniEndowedBounties: '₹12.4 Lakh'
     }
-  }
+  },
+  { id: 'mentor-aditi', roleLabel: 'Mentor · Aditi', portalTitle: 'Mentor Demo', name: 'Aditi Rao', avatar: 'AR', branch: 'Cloud Solutions Architect', companyOrCollege: 'Google Cloud', institutionId: 'apex', bio: 'Cloud architecture and capstone mentor.', goal: 'Mentoring students', activeIntent: 'Mentorship available', icon: 'GraduationCap', accentColor: 'indigo', badges: [], streak: 0, karma: 0, stats: {} },
+  { id: 'mentor-kunal', roleLabel: 'Mentor · Kunal', portalTitle: 'Mentor Demo', name: 'Kunal Varma', avatar: 'KV', branch: 'Platform Engineer', companyOrCollege: 'Atlassian', institutionId: 'apex', bio: 'System design and interview preparation mentor.', goal: 'Mentoring students', activeIntent: 'Mentorship available', icon: 'GraduationCap', accentColor: 'emerald', badges: [], streak: 0, karma: 0, stats: {} },
+  { id: 'mentor-david', roleLabel: 'Mentor · David', portalTitle: 'Mentor Demo', name: 'David Chen', avatar: 'DC', branch: 'Research Engineer', companyOrCollege: 'Anthropic', institutionId: 'apex', bio: 'AI research and project feedback mentor.', goal: 'Mentoring students', activeIntent: 'Mentorship available', icon: 'GraduationCap', accentColor: 'rose', badges: [], streak: 0, karma: 0, stats: {} }
 ];
 
 export const CATEGORY_FILTERS = [
