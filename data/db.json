@@ -8,7 +8,13 @@
       "branch": "B.Tech CSE '26",
       "companyOrCollege": "Apex Institute of Technology",
       "bio": "Distributed systems enthusiast • Built Redis caching engine • Solved 280+ LeetCode",
-      "skills": ["Go", "Distributed Systems", "Redis", "Docker", "PostgreSQL"],
+      "skills": [
+        "Go",
+        "Distributed Systems",
+        "Redis",
+        "Docker",
+        "PostgreSQL"
+      ],
       "goal": "Seeking Backend / Distributed Systems SDE Referral",
       "activeIntent": "Seeking SDE Referral (Backend / Go)",
       "badgeColor": "bg-indigo-500/20 text-indigo-300 border-indigo-500/30"
@@ -21,7 +27,12 @@
       "branch": "Batch '20 • SDE-2 Backend",
       "companyOrCollege": "Swiggy",
       "bio": "Scaling order routing microservices • Ex-Amazon • Passionate about clean Go code",
-      "skills": ["Go", "Kafka", "Microservices", "High-Throughput Routing"],
+      "skills": [
+        "Go",
+        "Kafka",
+        "Microservices",
+        "High-Throughput Routing"
+      ],
       "goal": "Hiring 2 Interns for High-Throughput Routing Team",
       "activeIntent": "Hiring 2 Interns for Team",
       "badgeColor": "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
@@ -34,7 +45,12 @@
       "branch": "Batch '19 • Founder & CEO",
       "companyOrCollege": "HyperScale AI (YC W24)",
       "bio": "Building autonomous developer tooling • Angel investing in campus builders ($5k - $25k)",
-      "skills": ["Next.js", "AI Agents", "Python", "System Architecture"],
+      "skills": [
+        "Next.js",
+        "AI Agents",
+        "Python",
+        "System Architecture"
+      ],
       "goal": "Funding Micro-Bounties & Sponsoring Hackathon Squads",
       "activeIntent": "Funding Campus Bounties & Startups",
       "badgeColor": "bg-amber-500/20 text-amber-300 border-amber-500/30"
@@ -47,7 +63,12 @@
       "branch": "Professor & Dean R&D",
       "companyOrCollege": "Apex Institute of Tech",
       "bio": "Cloud computing & network security researcher • Published 42 IEEE papers",
-      "skills": ["Cloud Infrastructure", "Kubernetes", "Edge Computing", "Research Mentorship"],
+      "skills": [
+        "Cloud Infrastructure",
+        "Kubernetes",
+        "Edge Computing",
+        "Research Mentorship"
+      ],
       "goal": "Connecting 8 Capstone Research Projects with Industry Alum Co-Guides",
       "activeIntent": "Seeking Industry Co-Guide for Capstone",
       "badgeColor": "bg-purple-500/20 text-purple-300 border-purple-500/30"
@@ -60,7 +81,12 @@
       "branch": "Tech Talent Partner",
       "companyOrCollege": "Razorpay",
       "bio": "Hiring 15+ Core Backend Engineers • Looking for verified GitHub proof-of-work",
-      "skills": ["Tech Talent", "Campus Recruiting", "Backend Engineering", "FinTech"],
+      "skills": [
+        "Tech Talent",
+        "Campus Recruiting",
+        "Backend Engineering",
+        "FinTech"
+      ],
       "goal": "Evaluating Vetted Students with High Alumni Endorsement Scores",
       "activeIntent": "Hiring Top 5% Builders",
       "badgeColor": "bg-cyan-500/20 text-cyan-300 border-cyan-500/30"
@@ -73,7 +99,12 @@
       "branch": "Dean of Alumni Relations",
       "companyOrCollege": "Central Campus Administration",
       "bio": "Transforming 12,000+ Alumni Directory into an Active High-Velocity Network",
-      "skills": ["Alumni Relations", "Placement Outcomes", "Accreditation", "Donations"],
+      "skills": [
+        "Alumni Relations",
+        "Placement Outcomes",
+        "Accreditation",
+        "Donations"
+      ],
       "goal": "Monitoring Real Placement Impact, Capstone Co-Mentoring & Bounty Earnings",
       "activeIntent": "Monitoring Real Placement Impact",
       "badgeColor": "bg-rose-500/20 text-rose-300 border-rose-500/30"
@@ -89,7 +120,11 @@
       "poster": "Neha Kapoor (Founder, HyperScale AI • Batch 2019)",
       "posterRole": "founder",
       "reward": "₹5,000 + Summer SDE Intern Offer",
-      "tags": ["Go / Node.js", "Kafka / Redis", "48hr Delivery"],
+      "tags": [
+        "Go / Node.js",
+        "Kafka / Redis",
+        "48hr Delivery"
+      ],
       "desc": "We need an idempotent webhook receiver handling 2,000 RPS with automated signature verification. Best code submission gets direct job offer.",
       "deadline": "2 Days Left",
       "applicants": [
@@ -99,6 +134,13 @@
           "repoUrl": "https://github.com/aman-cs/distri-cache-engine",
           "pitch": "Handled 10k RPS in benchmarks with zero dropped packets using Go channels.",
           "appliedAt": "2026-10-17T11:30:00Z"
+        },
+        {
+          "candidateName": "Aman Sharma (CSE '26)",
+          "candidateRole": "CSE '26",
+          "repoUrl": "https://github.com/aman-cs/distri-cache-engine",
+          "pitch": "s",
+          "appliedAt": "2026-10-17T10:13:31.828Z"
         }
       ]
     },
@@ -111,7 +153,11 @@
       "poster": "Rohan Mehta (SDE-2 Backend • Batch 2020)",
       "posterRole": "alumnus",
       "reward": "Direct Interview Call from Swiggy Recruiting",
-      "tags": ["Go / Java", "Distributed Caching", "LeetCode 1800+"],
+      "tags": [
+        "Go / Java",
+        "Distributed Caching",
+        "LeetCode 1800+"
+      ],
       "desc": "My team is expanding our real-time order matching infra. Submit your GitHub project with concurrency handling for a warm internal referral.",
       "deadline": "3 Referral Slots Left",
       "applicants": []
@@ -125,7 +171,11 @@
       "poster": "Aditi Rao (Google) & Dr. R.K. Verma (Dean R&D)",
       "posterRole": "faculty",
       "reward": "IEEE Conference Paper + Cloud Credits ($1,000)",
-      "tags": ["Kubernetes", "Python", "Edge Computing"],
+      "tags": [
+        "Kubernetes",
+        "Python",
+        "Edge Computing"
+      ],
       "desc": "Joint research capstone project between Apex Institute and Google Cloud mentors. Co-author an IEEE paper with production validation.",
       "deadline": "Final Year CSE / IT Only",
       "applicants": []
@@ -139,7 +189,11 @@
       "poster": "Alumni Tech Angels Syndicate (5 Alumni Backers)",
       "posterRole": "alumnus",
       "reward": "₹20,000 Travel Grant + AWS Credits",
-      "tags": ["Team of 4-6", "Hackathon Finalists", "Pitch Deck"],
+      "tags": [
+        "Team of 4-6",
+        "Hackathon Finalists",
+        "Pitch Deck"
+      ],
       "desc": "Alumni syndicate sponsoring top 3 campus teams traveling to national hackathon finals. Mentorship included prior to the grand finale.",
       "deadline": "Closes Sunday",
       "applicants": []

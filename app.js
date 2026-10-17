@@ -1140,3 +1140,348 @@ function triggerConfetti() {
     });
   }
 }
+
+// ================= FORGOT PASSWORD FLOW =================
+
+// Known demo emails (for error/success simulation)
+const KNOWN_DEMO_EMAILS = [
+  '2022cs084@apex.edu',
+  'rohan.mehta@swiggy.in',
+  'neha@hyperscale.ai',
+  'rkverma@apex.edu',
+  'vikram.seth@razorpay.com',
+  'dean.alumni@apex.edu'
+];
+
+function openForgotPasswordModal(event) {
+  if (event) event.preventDefault();
+
+  const modal = document.getElementById('modal-forgot-password');
+  const card  = document.getElementById('fp-card');
+
+  // Reset to clean state
+  _fpResetState();
+
+  modal.classList.remove('hidden');
+  // Animate card in
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      card.classList.remove('scale-95', 'opacity-0');
+      card.classList.add('scale-100', 'opacity-100');
+    });
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', _fpEscListener);
+  lucide.createIcons();
+}
+
+function closeForgotPasswordModal() {
+  const modal = document.getElementById('modal-forgot-password');
+  const card  = document.getElementById('fp-card');
+
+  card.classList.remove('scale-100', 'opacity-100');
+  card.classList.add('scale-95', 'opacity-0');
+
+  setTimeout(() => {
+    modal.classList.add('hidden');
+    _fpResetState();
+  }, 300);
+
+  document.removeEventListener('keydown', _fpEscListener);
+}
+
+function _fpEscListener(e) {
+  if (e.key === 'Escape') closeForgotPasswordModal();
+}
+
+function _fpResetState() {
+  const emailInput = document.getElementById('fp-email-input');
+  const errMsg     = document.getElementById('fp-error-msg');
+  const formState  = document.getElementById('fp-form-state');
+  const successState = document.getElementById('fp-success-state');
+  const btn        = document.getElementById('fp-submit-btn');
+
+  if (emailInput)    emailInput.value = '';
+  if (errMsg)        errMsg.classList.add('hidden');
+  if (formState)     formState.classList.remove('hidden');
+  if (successState)  successState.classList.add('hidden');
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i><span>Send Reset Link</span>';
+  }
+}
+
+async function handleForgotPasswordSubmit(event) {
+  event.preventDefault();
+
+  const emailInput = document.getElementById('fp-email-input');
+  const errMsg     = document.getElementById('fp-error-msg');
+  const btn        = document.getElementById('fp-submit-btn');
+  const sentEmail  = document.getElementById('fp-sent-email');
+
+  const email = emailInput.value.trim().toLowerCase();
+
+  // Hide any prior error
+  errMsg.classList.add('hidden');
+  emailInput.classList.remove('border-rose-500');
+
+  // Loading state
+  btn.disabled = true;
+  btn.innerHTML = `
+    <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+    </svg>
+    <span>Sending…</span>
+  `;
+
+  // Simulate async API call
+  await new Promise(r => setTimeout(r, 1400));
+
+  // Check if email is known (demo logic)
+  const isKnown = KNOWN_DEMO_EMAILS.some(e => e === email) || email.length > 5;
+
+  if (!isKnown) {
+    // Show error
+    errMsg.classList.remove('hidden');
+    emailInput.classList.add('border-rose-500');
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i><span>Send Reset Link</span>';
+    lucide.createIcons();
+    return;
+  }
+
+  // Show success state
+  if (sentEmail) sentEmail.textContent = email;
+  document.getElementById('fp-form-state').classList.add('hidden');
+  document.getElementById('fp-success-state').classList.remove('hidden');
+  lucide.createIcons();
+}
+
+// ================= RESET PASSWORD FLOW =================
+
+let _rpCountdownTimer = null;
+
+function openResetPasswordModal() {
+  // Close forgot-password modal first
+  closeForgotPasswordModal();
+
+  setTimeout(() => {
+    const modal = document.getElementById('modal-reset-password');
+    const card  = document.getElementById('rp-card');
+
+    _rpResetState();
+
+    modal.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+      });
+    });
+
+    document.addEventListener('keydown', _rpEscListener);
+    lucide.createIcons();
+  }, 350); // slight delay for smooth chained transition
+}
+
+function closeResetPasswordModal() {
+  const modal = document.getElementById('modal-reset-password');
+  const card  = document.getElementById('rp-card');
+
+  card.classList.remove('scale-100', 'opacity-100');
+  card.classList.add('scale-95', 'opacity-0');
+
+  setTimeout(() => {
+    modal.classList.add('hidden');
+    _rpResetState();
+    if (_rpCountdownTimer) clearInterval(_rpCountdownTimer);
+  }, 300);
+
+  document.removeEventListener('keydown', _rpEscListener);
+}
+
+function _rpEscListener(e) {
+  if (e.key === 'Escape') closeResetPasswordModal();
+}
+
+function _rpResetState() {
+  const newPwd  = document.getElementById('rp-new-password');
+  const confPwd = document.getElementById('rp-confirm-password');
+  const matchOk = document.getElementById('rp-match-ok');
+  const matchErr= document.getElementById('rp-match-error');
+  const genErr  = document.getElementById('rp-general-error');
+  const formState    = document.getElementById('rp-form-state');
+  const successState = document.getElementById('rp-success-state');
+  const btn = document.getElementById('rp-submit-btn');
+
+  if (newPwd)  newPwd.value  = '';
+  if (confPwd) confPwd.value = '';
+  if (matchOk)  matchOk.classList.add('hidden');
+  if (matchErr) matchErr.classList.add('hidden');
+  if (genErr)   genErr.classList.add('hidden');
+  if (formState)    formState.classList.remove('hidden');
+  if (successState) successState.classList.add('hidden');
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="shield-check" class="w-4 h-4"></i><span>Reset Password</span>';
+  }
+
+  // Clear strength bars
+  ['str-bar-1','str-bar-2','str-bar-3','str-bar-4'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.className = 'h-1 flex-1 rounded-full bg-slate-800 transition-all duration-300'; }
+  });
+  const strLabel = document.getElementById('str-label');
+  if (strLabel) strLabel.textContent = '';
+
+  if (_rpCountdownTimer) clearInterval(_rpCountdownTimer);
+}
+
+function validateResetForm() {
+  const newPwd  = document.getElementById('rp-new-password').value;
+  const confPwd = document.getElementById('rp-confirm-password').value;
+  const matchOk = document.getElementById('rp-match-ok');
+  const matchErr= document.getElementById('rp-match-error');
+
+  // Update strength meter
+  _updateStrengthMeter(newPwd);
+
+  // Match validation (only show if confirm has content)
+  if (confPwd.length > 0) {
+    if (newPwd === confPwd) {
+      matchOk.classList.remove('hidden');
+      matchErr.classList.add('hidden');
+    } else {
+      matchErr.classList.remove('hidden');
+      matchOk.classList.add('hidden');
+    }
+  } else {
+    matchOk.classList.add('hidden');
+    matchErr.classList.add('hidden');
+  }
+}
+
+function _updateStrengthMeter(pwd) {
+  const bars  = ['str-bar-1','str-bar-2','str-bar-3','str-bar-4'];
+  const label = document.getElementById('str-label');
+
+  const hasMinLen   = pwd.length >= 8;
+  const hasUpper    = /[A-Z]/.test(pwd);
+  const hasNumber   = /[0-9]/.test(pwd);
+  const hasSpecial  = /[^A-Za-z0-9]/.test(pwd);
+
+  const score = [hasMinLen, hasUpper, hasNumber, hasSpecial].filter(Boolean).length;
+
+  const levels = [
+    { color: 'bg-rose-500',   text: 'Too weak',   textColor: 'text-rose-400'   },
+    { color: 'bg-amber-500',  text: 'Weak',        textColor: 'text-amber-400'  },
+    { color: 'bg-yellow-400', text: 'Fair',        textColor: 'text-yellow-400' },
+    { color: 'bg-emerald-500',text: 'Strong',      textColor: 'text-emerald-400'},
+    { color: 'bg-emerald-400',text: 'Very strong', textColor: 'text-emerald-300'},
+  ];
+
+  bars.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (pwd.length === 0) {
+      el.className = 'h-1 flex-1 rounded-full bg-slate-800 transition-all duration-300';
+    } else if (i < score) {
+      el.className = `h-1 flex-1 rounded-full ${levels[score - 1].color} transition-all duration-300`;
+    } else {
+      el.className = 'h-1 flex-1 rounded-full bg-slate-800 transition-all duration-300';
+    }
+  });
+
+  if (label) {
+    if (pwd.length === 0) {
+      label.textContent = '';
+      label.className = 'text-[10px] text-slate-500';
+    } else {
+      label.textContent = levels[score - 1]?.text || '';
+      label.className = `text-[10px] ${levels[score - 1]?.textColor || 'text-slate-500'}`;
+    }
+  }
+}
+
+function togglePasswordVisibility(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon  = document.getElementById(iconId);
+  if (!input) return;
+
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (icon) {
+      icon.setAttribute('data-lucide', 'eye-off');
+      lucide.createIcons();
+    }
+  } else {
+    input.type = 'password';
+    if (icon) {
+      icon.setAttribute('data-lucide', 'eye');
+      lucide.createIcons();
+    }
+  }
+}
+
+async function handleResetPasswordSubmit(event) {
+  event.preventDefault();
+
+  const newPwd   = document.getElementById('rp-new-password').value;
+  const confPwd  = document.getElementById('rp-confirm-password').value;
+  const genErr   = document.getElementById('rp-general-error');
+  const genErrTxt= document.getElementById('rp-general-error-text');
+  const btn      = document.getElementById('rp-submit-btn');
+
+  // Hide prior errors
+  genErr.classList.add('hidden');
+
+  // Validate minimum length
+  if (newPwd.length < 8) {
+    genErrTxt.textContent = 'Password must be at least 8 characters long.';
+    genErr.classList.remove('hidden');
+    lucide.createIcons();
+    return;
+  }
+
+  // Validate match
+  if (newPwd !== confPwd) {
+    genErrTxt.textContent = 'Passwords do not match. Please try again.';
+    genErr.classList.remove('hidden');
+    lucide.createIcons();
+    return;
+  }
+
+  // Loading state
+  btn.disabled = true;
+  btn.innerHTML = `
+    <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+    </svg>
+    <span>Updating…</span>
+  `;
+
+  // Simulate async API call
+  await new Promise(r => setTimeout(r, 1600));
+
+  // Show success
+  document.getElementById('rp-form-state').classList.add('hidden');
+  document.getElementById('rp-success-state').classList.remove('hidden');
+  lucide.createIcons();
+
+  // Countdown & auto-redirect to login
+  let secs = 3;
+  const countdownEl = document.getElementById('rp-countdown-val');
+  _rpCountdownTimer = setInterval(() => {
+    secs--;
+    if (countdownEl) countdownEl.textContent = secs;
+    if (secs <= 0) {
+      clearInterval(_rpCountdownTimer);
+      closeResetPasswordModal();
+      showToast('Password updated! Please sign in with your new credentials.');
+    }
+  }, 1000);
+}
+
