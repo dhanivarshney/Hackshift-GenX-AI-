@@ -103,36 +103,74 @@ export function findBridgePaths(db, query = {}) {
 }
 
 export function requestBridgeIntroduction(db, body, writeDB) {
-  const { pathId, studentName = 'Aman Sharma', targetAlumnus = 'Rohan Mehta', targetCompany = 'Swiggy', intermediary = 'Dr. R.K. Verma', note } = body;
+  const {
+    pathId,
+    studentId = 'student',
+    studentName = 'Aman Sharma',
+    targetAlumnus = 'Rohan Mehta',
+    targetCompany = 'Swiggy',
+    intermediary = 'Dr. R.K. Verma',
+    targetRole = 'Backend SDE',
+    note
+  } = body;
 
   db.introductions ||= [];
   
+  // Check for duplicate pending requests
+  const isDuplicate = db.introductions.some(i =>
+    (i.studentId === studentId || i.studentName === studentName) &&
+    i.targetAlumnus === targetAlumnus &&
+    (i.status === 'Pending' || i.status === 'Pending Consent' || i.status === 'pending_intermediary_consent')
+  );
+
+  if (isDuplicate) {
+    throw new Error(`A pending warm introduction request to ${targetAlumnus} (${targetCompany}) is already in review.`);
+  }
+
   const introRequest = {
     id: `intro-${Date.now()}`,
     pathId,
+    studentId,
     studentName,
     intermediary,
     targetAlumnus,
     targetCompany,
+    targetRole,
     note: note || 'Requesting warm endorsement based on verified distributed caching proof-of-work.',
-    status: 'pending_intermediary_consent',
+    status: 'Pending',
     createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     statusHistory: [
-      { status: 'pending_intermediary_consent', timestamp: new Date().toISOString(), message: `Intro request dispatched to ${intermediary} for consent.` }
+      {
+        status: 'Pending',
+        timestamp: new Date().toISOString(),
+        message: `Consent request dispatched to academic intermediary ${intermediary}.`
+      }
     ]
   };
 
   db.introductions.unshift(introRequest);
   
-  // Also create a notification for the intermediary
+  // Create notifications for intermediary (faculty) and target alumnus
   db.notifications ||= [];
   db.notifications.unshift({
-    id: `notif-${Date.now()}`,
+    id: `notif-${Date.now()}-fac`,
     recipient: 'faculty',
     type: 'bridge_introduction',
     title: `Bridge Introduction Request from ${studentName}`,
     message: `${studentName} requested an introduction to alumnus ${targetAlumnus} at ${targetCompany}.`,
-    actionUrl: '#bridge-finder',
+    actionUrl: '#faculty-dashboard',
+    read: false,
+    createdAt: new Date().toISOString()
+  });
+
+  db.notifications.unshift({
+    id: `notif-${Date.now()}-alum`,
+    recipient: 'alumnus',
+    type: 'bridge_introduction',
+    title: `Incoming Warm Intro from ${intermediary}`,
+    message: `${intermediary} is routing an introduction request for student builder ${studentName} (${targetRole}).`,
+    actionUrl: '#alumni-mentorship',
     read: false,
     createdAt: new Date().toISOString()
   });
@@ -141,22 +179,50 @@ export function requestBridgeIntroduction(db, body, writeDB) {
   return introRequest;
 }
 
-export function listIntroductions(db, roleId = 'student') {
+export function listIntroductions(db, query = {}) {
   db.introductions ||= [];
+  const role = typeof query === 'string' ? query : (query.role || query.studentId || '');
+  
+  if (role === 'student') {
+    return db.introductions;
+  } else if (role === 'faculty') {
+    return db.introductions.filter(i => i.intermediary?.toLowerCase().includes('verma') || i.intermediary?.toLowerCase().includes('faculty') || true);
+  } else if (role === 'alumnus') {
+    return db.introductions.filter(i => i.targetAlumnus?.toLowerCase().includes('rohan') || i.targetAlumnus?.toLowerCase().includes('mehta') || true);
+  }
   return db.introductions;
 }
 
-export function updateIntroductionStatus(db, introId, action, writeDB) {
+export function updateIntroductionStatus(db, introId, action, reason = '', writeDB) {
   db.introductions ||= [];
   const intro = db.introductions.find(i => i.id === introId);
   if (!intro) throw new Error('Introduction request not found.');
 
-  intro.status = action; // 'approved', 'declined', 'withdrawn'
+  let normalized = action;
+  if (/accept|approve/i.test(action)) normalized = 'Accepted';
+  else if (/decline|reject/i.test(action)) normalized = 'Declined';
+  else if (/cancel|withdraw/i.test(action)) normalized = 'Cancelled';
+
+  intro.status = normalized;
+  intro.updatedAt = new Date().toISOString();
   intro.statusHistory ||= [];
   intro.statusHistory.push({
-    status: action,
+    status: normalized,
     timestamp: new Date().toISOString(),
-    message: `Introduction was ${action}.`
+    message: reason || `Introduction request was marked as ${normalized}.`
+  });
+
+  // Notify student of outcome
+  db.notifications ||= [];
+  db.notifications.unshift({
+    id: `notif-${Date.now()}-stu`,
+    recipient: intro.studentId || 'student',
+    type: 'bridge_status_update',
+    title: `Warm Intro Status: ${normalized}`,
+    message: `Your introduction request to ${intro.targetAlumnus} (${intro.targetCompany}) via ${intro.intermediary} has been marked as ${normalized}.${reason ? ` Note: ${reason}` : ''}`,
+    actionUrl: '#bridge-finder',
+    read: false,
+    createdAt: new Date().toISOString()
   });
 
   writeDB(db);

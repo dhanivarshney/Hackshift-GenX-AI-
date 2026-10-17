@@ -2204,7 +2204,7 @@
                 <i data-lucide="life-buoy" class="w-4 h-4"></i>
                 <span>Opportunity Rescue</span>
               </button>
-              <button onclick="openModal('modal-new-mission')" class="px-3.5 py-2 btn-gradient-primary rounded-xl text-xs font-bold text-white flex items-center space-x-1.5 shadow-md">
+              <button onclick="openUpdateCareerGoalModal()" class="px-3.5 py-2 btn-gradient-primary rounded-xl text-xs font-bold text-white flex items-center space-x-1.5 shadow-md">
                 <i data-lucide="sparkles" class="w-4 h-4"></i>
                 <span>Update Career Goal</span>
               </button>
@@ -2412,6 +2412,136 @@
             <span>Scheduled &amp; Pending Sessions</span>
           </h3>
           <div id="mentorship-bookings-list" class="space-y-2.5 text-xs">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 11B. VIEW: DEDICATED ALUMNI IMPACT EXCHANGE & MENTORSHIP ================= -->
+      <div id="view-alumni-mentorship" class="hidden space-y-6">
+        <!-- Alumni Mentorship Command Banner -->
+        <div class="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 font-mono">Alumni Contribution Desk</span>
+                <span class="text-xs text-slate-400">• Impact Exchange &amp; Mentoring</span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-black text-white mt-1">Share Expertise, Guide Juniors &amp; Endorse Builders</h2>
+              <p class="text-xs text-slate-300 max-w-2xl mt-0.5">Manage your active mentoring offers, review student 1:1 guidance requests, track upcoming commitments, and give structured code feedback.</p>
+            </div>
+            <div class="flex items-center space-x-3 shrink-0">
+              <button onclick="openAlumniOfferModal()" class="px-3.5 py-2 btn-gradient-primary rounded-xl text-xs font-bold text-white flex items-center space-x-1.5 shadow-md">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                <span>Create Contribution Offer</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Real Alumni Contribution KPI Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="glass-panel rounded-2xl p-4 border border-slate-800">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Active Offers</div>
+            <div id="alumni-stat-offers" class="text-2xl font-black text-white mt-1">2</div>
+            <div class="text-[10px] text-emerald-400 mt-1">Live in student catalog</div>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-4 border border-slate-800">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pending Requests</div>
+            <div id="alumni-stat-pending" class="text-2xl font-black text-amber-400 mt-1">1</div>
+            <div class="text-[10px] text-amber-300/80 mt-1">Awaiting your response</div>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-4 border border-slate-800">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Upcoming Sessions</div>
+            <div id="alumni-stat-upcoming" class="text-2xl font-black text-sky-400 mt-1">0</div>
+            <div class="text-[10px] text-slate-400 mt-1">Confirmed commitments</div>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-4 border border-slate-800">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Completed Sessions</div>
+            <div id="alumni-stat-completed" class="text-2xl font-black text-purple-400 mt-1">1</div>
+            <div class="text-[10px] text-purple-300/80 mt-1">5.0 ⭐ average rating</div>
+          </div>
+        </div>
+
+        <!-- Manage Contribution Offers Section -->
+        <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+                <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
+                <span>Your Active Expertise &amp; Mentoring Offers</span>
+              </h3>
+              <p class="text-[11px] text-slate-400 mt-0.5">Students discover and book these available guidance slots directly through LinkX.</p>
+            </div>
+            <button onclick="openAlumniOfferModal()" class="text-xs text-emerald-400 hover:text-emerald-300 font-semibold flex items-center space-x-1">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>Add Offer</span>
+            </button>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="alumni-offers-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- 2 Columns: Incoming Requests & Upcoming Commitments -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left: Incoming Student Requests -->
+          <div class="lg:col-span-7 glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+                <i data-lucide="inbox" class="w-4 h-4 text-amber-400"></i>
+                <span>Incoming Student Mentoring Requests</span>
+              </h3>
+              <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 font-bold">Action Needed</span>
+            </div>
+            <div class="space-y-3" id="alumni-incoming-requests">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Right: Upcoming Confirmed Commitments -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+                  <i data-lucide="calendar" class="w-4 h-4 text-sky-400"></i>
+                  <span>Upcoming Confirmed Sessions</span>
+                </h3>
+              </div>
+              <div class="space-y-3" id="alumni-upcoming-sessions">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Consent-Based Warm Introduction Requests -->
+            <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+                <h3 class="text-xs font-bold text-white flex items-center space-x-2">
+                  <i data-lucide="git-merge" class="w-3.5 h-3.5 text-purple-400"></i>
+                  <span>Warm Introduction Requests</span>
+                </h3>
+                <span class="text-[10px] text-purple-300 font-mono">Mutual Consent</span>
+              </div>
+              <div class="space-y-2 text-xs" id="alumni-bridge-queue">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contribution History -->
+        <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+              <i data-lucide="award" class="w-4 h-4 text-emerald-400"></i>
+              <span>Your Completed Mentoring Contributions &amp; Endorsements</span>
+            </h3>
+            <span class="text-xs text-slate-400">Verified Campus Lineage</span>
+          </div>
+          <div class="space-y-2.5" id="alumni-contribution-history">
             <!-- Dynamically populated -->
           </div>
         </div>
@@ -3441,15 +3571,49 @@
 
       <!-- Sign In Form -->
       <form id="form-auth-signin" onsubmit="handleAuthSignInSubmit(event)" class="space-y-3 text-xs">
+        <!-- Error message box (hidden by default) -->
+        <div id="auth-signin-error" class="hidden px-3 py-2 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-[11px]"></div>
+
         <div>
           <label class="block font-medium text-slate-300 mb-1">Email Address</label>
-          <input type="email" id="auth-signin-email" required placeholder="aman@apex.edu" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-sky-500">
+          <input type="email" id="auth-signin-email" required placeholder="aman@apex.edu"
+            class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-sky-500">
         </div>
+
         <div>
-          <label class="block font-medium text-slate-300 mb-1">Password</label>
-          <input type="password" id="auth-signin-password" required placeholder="••••••••" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-sky-500">
+          <label class="block font-medium text-slate-300 mb-1">Sign In As (Role)</label>
+          <select id="auth-signin-role" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-sky-500">
+            <option value="student">Student</option>
+            <option value="alumnus">Alumnus</option>
+            <option value="faculty">Faculty</option>
+            <option value="founder">Founder</option>
+            <option value="recruiter">Recruiter</option>
+            <option value="institution">Institution Admin</option>
+          </select>
         </div>
-        <button type="submit" class="w-full py-2.5 btn-gradient-primary text-white font-bold rounded-xl shadow-md">Sign In to LinkX</button>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-300">Password</label>
+            <button type="button" onclick="openForgotPasswordModal()"
+              class="text-sky-400 hover:text-sky-300 transition text-[11px] font-medium">
+              Forgot Password?
+            </button>
+          </div>
+          <div class="relative">
+            <input type="password" id="auth-signin-password" required placeholder="••••••••"
+              class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2.5 pr-10 text-white focus:outline-none focus:border-sky-500">
+            <button type="button" onclick="togglePasswordVisibility('auth-signin-password', 'pw-toggle-icon')"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition">
+              <i id="pw-toggle-icon" data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 btn-gradient-primary text-white font-bold rounded-xl shadow-md flex items-center justify-center space-x-2">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span>Sign In to LinkX</span>
+        </button>
       </form>
 
       <!-- Register Form (Hidden by default) -->
@@ -3494,15 +3658,29 @@
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
         <div class="flex items-center space-x-2">
           <i data-lucide="compass" class="w-5 h-5 text-sky-400"></i>
-          <h3 class="text-base font-bold text-white">Generate AI Career Mission Roadmap</h3>
+          <h3 class="text-base font-bold text-white">Update Career Goal &amp; Roadmap</h3>
         </div>
         <button onclick="closeModal('modal-new-mission')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
-      <form id="form-new-mission" onsubmit="handleGenerateMissionSubmit(event)" class="space-y-3 text-xs">
+      <form id="form-new-mission" onsubmit="handleUpdateCareerGoalSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Target Engineering Role</label>
+          <input type="text" id="mission-target-role" required placeholder="e.g. Distributed Systems SDE-1" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-sky-500">
+        </div>
         <div>
           <label class="block font-medium text-slate-300 mb-1">Your Ambitious Career Goal</label>
-          <textarea id="mission-goal-input" rows="3" required placeholder="e.g. Land a Distributed Systems SDE role at Swiggy, or build an autonomous AI agent for YC startup..." class="w-full bg-[#040711] border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-sky-500"></textarea>
+          <textarea id="mission-goal-input" rows="2" required placeholder="e.g. Secure Backend / Distributed Systems SDE Role at High-Scale Tech Company" class="w-full bg-[#040711] border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-sky-500"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-slate-300 mb-1">Primary Interests</label>
+            <input type="text" id="mission-interests-input" placeholder="e.g. Caching, Raft Consensus, LevelDB" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-sky-500">
+          </div>
+          <div>
+            <label class="block font-medium text-slate-300 mb-1">Skills to Develop</label>
+            <input type="text" id="mission-skills-input" placeholder="e.g. Kafka, Docker, Go, eBPF" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-sky-500">
+          </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -3514,13 +3692,24 @@
             </select>
           </div>
           <div>
-            <label class="block font-medium text-slate-300 mb-1">Core Tech Stack</label>
-            <input type="text" id="mission-stack-input" value="Go, Distributed Systems, Redis, Kafka" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none">
+            <label class="block font-medium text-slate-300 mb-1">Priority Track</label>
+            <select id="mission-priority-select" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none">
+              <option value="Industry Referral">Alumni ATS Referral</option>
+              <option value="Startup Bounty">Startup Paid Bounty</option>
+              <option value="Research Capstone">Faculty IEEE Capstone</option>
+            </select>
           </div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/20 text-[11px] text-sky-300">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 inline mr-1 -mt-0.5 text-sky-400"></i>
+          Your roadmap phases, verified task proofs, and completion history will be safely preserved.
         </div>
         <div class="flex justify-end space-x-3 pt-2">
           <button type="button" onclick="closeModal('modal-new-mission')" class="px-4 py-2 bg-slate-900 text-slate-300 rounded-xl hover:bg-slate-800">Cancel</button>
-          <button type="submit" class="px-5 py-2 btn-gradient-primary text-white font-bold rounded-xl shadow-md">Generate Roadmap</button>
+          <button type="submit" id="btn-save-career-goal" class="px-5 py-2 btn-gradient-primary text-white font-bold rounded-xl shadow-md flex items-center space-x-1.5">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>Save Career Goal</span>
+          </button>
         </div>
       </form>
     </div>
@@ -3528,28 +3717,70 @@
 
   <!-- ================= MODAL: OPPORTUNITY RESCUE ================= -->
   <div id="modal-opportunity-rescue" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-[#080d1a] border border-slate-800 rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-2xl">
+    <div class="bg-[#080d1a] border border-slate-800 rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
         <div class="flex items-center space-x-2">
           <i data-lucide="life-buoy" class="w-5 h-5 text-amber-400"></i>
-          <h3 class="text-base font-bold text-white">LinkX Opportunity Rescue Plan</h3>
+          <h3 class="text-base font-bold text-white">LinkX Opportunity Rescue Contingency</h3>
         </div>
         <button onclick="closeModal('modal-opportunity-rescue')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
-      <div class="text-xs space-y-3">
-        <p class="text-slate-300">Automated backup contingency activated. When a target company pipeline freezes or a mentor is unavailable, LinkX provisions verified alternatives immediately:</p>
-        
-        <div class="space-y-2" id="rescue-alternatives-container">
-          <!-- Dynamically populated -->
+      <!-- Loading State -->
+      <div id="rescue-loading-state" class="py-12 text-center space-y-3">
+        <div class="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <p class="text-xs text-slate-300">Diagnosing obstacle &amp; computing verified real-time pivot options...</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="rescue-error-state" class="hidden py-8 text-center space-y-3">
+        <i data-lucide="alert-circle" class="w-8 h-8 text-rose-400 mx-auto"></i>
+        <p id="rescue-error-msg" class="text-xs text-rose-300">Unable to load opportunity rescue plan.</p>
+        <button onclick="triggerOpportunityRescue()" class="px-4 py-2 bg-slate-900 border border-slate-800 text-xs font-bold text-white rounded-xl hover:bg-slate-800">Retry Diagnosis</button>
+      </div>
+
+      <!-- Content State -->
+      <div id="rescue-content-state" class="hidden text-xs space-y-4">
+        <!-- Diagnosed Obstacle Card -->
+        <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 space-y-1">
+          <div class="flex items-center space-x-2 text-amber-400 font-bold uppercase tracking-wider text-[10px]">
+            <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+            <span>Diagnosed Pipeline Bottleneck</span>
+          </div>
+          <div id="rescue-obstacle-text" class="text-slate-200 font-semibold leading-relaxed">
+            <!-- Injected by JS -->
+          </div>
+          <div class="text-[10px] text-amber-300/80 pt-0.5">
+            Target Goal: <span id="rescue-goal-text" class="text-white font-mono"></span>
+          </div>
         </div>
 
-        <div id="rescue-sprint-container" class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 space-y-1">
+        <!-- 3 Verified Parallel Pivot Options -->
+        <div class="space-y-2">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+            <span>Verified Actionable Contingencies</span>
+            <span class="text-[10px] text-emerald-400 font-mono">3 Active Routes</span>
+          </div>
+          <div class="space-y-2.5" id="rescue-pivots-container">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <!-- Rapid Skill Sprint Card -->
+        <div id="rescue-sprint-container" class="p-3.5 rounded-xl bg-[#050916] border border-slate-800 space-y-1.5">
           <!-- Injected sprint recommendation -->
+        </div>
+
+        <!-- Strategic Insights -->
+        <div class="p-3 rounded-xl bg-[#040814] border border-slate-800 space-y-1">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Why These Pivots Work</div>
+          <ul id="rescue-insights-list" class="space-y-1 text-[11px] text-slate-400 list-disc list-inside">
+            <!-- Injected by JS -->
+          </ul>
         </div>
       </div>
 
-      <div class="flex justify-end pt-2">
+      <div class="flex justify-end pt-2 border-t border-slate-800/80">
         <button type="button" onclick="closeModal('modal-opportunity-rescue')" class="px-4 py-2 bg-slate-900 text-slate-300 rounded-xl text-xs hover:bg-slate-800 border border-slate-800">Close</button>
       </div>
     </div>
@@ -3947,6 +4178,106 @@
         <div class="flex justify-end space-x-3 pt-2">
           <button type="button" onclick="closeModal('modal-institution-add-dept')" class="px-4 py-2 bg-slate-900 text-slate-300 rounded-xl hover:bg-slate-800">Cancel</button>
           <button type="submit" class="px-5 py-2 btn-gradient-primary text-white font-bold rounded-xl shadow-md">Create Department</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: CREATE / EDIT ALUMNI MENTORING OFFER ================= -->
+  <div id="modal-alumni-offer" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-[#080d1a] border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="sparkles" class="w-5 h-5 text-emerald-400"></i>
+          <h3 id="modal-alumni-offer-title" class="text-base font-bold text-white">Offer Mentoring &amp; Expertise</h3>
+        </div>
+        <button onclick="closeModal('modal-alumni-offer')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form id="form-alumni-offer" onsubmit="handleSaveAlumniOfferSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="alumni-offer-edit-id">
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Offer Title</label>
+          <input type="text" id="alumni-offer-title-input" required placeholder="e.g. High-Throughput Go Systems Architecture &amp; Code Review" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-emerald-500 focus:outline-none">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-slate-300 mb-1">Contribution Type</label>
+            <select id="alumni-offer-type-select" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-emerald-500 focus:outline-none">
+              <option value="Code &amp; Architecture Review">Code &amp; Architecture Review</option>
+              <option value="Mock Interview">Mock Interview &amp; ATS Feedback</option>
+              <option value="Career &amp; Project Guidance">Career &amp; Project Guidance</option>
+              <option value="Skill Mentoring">Skill-Specific Mentoring</option>
+              <option value="Warm Introduction">Consent-Based Warm Intro</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium text-slate-300 mb-1">Session Duration</label>
+            <select id="alumni-offer-duration-select" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-emerald-500 focus:outline-none">
+              <option value="30 min">30 Minutes (Recommended)</option>
+              <option value="45 min">45 Minutes</option>
+              <option value="60 min">60 Minutes</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-slate-300 mb-1">Max Sessions per Month</label>
+            <input type="number" id="alumni-offer-max-sessions" min="1" max="10" value="3" required class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white font-mono focus:border-emerald-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-medium text-slate-300 mb-1">Preferred Days &amp; Windows</label>
+            <input type="text" id="alumni-offer-days-input" placeholder="e.g. Tue/Thu 6-8 PM IST" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-emerald-500 focus:outline-none">
+          </div>
+        </div>
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Key Topics &amp; Focus Tags (comma-separated)</label>
+          <input type="text" id="alumni-offer-topics-input" placeholder="e.g. Go Concurrency, Caching, P99 Latencies, Raft" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-emerald-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Detailed Guidance Scope &amp; Expectations</label>
+          <textarea id="alumni-offer-desc-input" rows="2" placeholder="Explain what students should prepare prior to booking (e.g. GitHub repo link, system design diagram)..." class="w-full bg-[#040711] border border-slate-800 rounded-xl p-3 text-white focus:border-emerald-500 focus:outline-none"></textarea>
+        </div>
+        <div class="flex justify-end space-x-3 pt-2">
+          <button type="button" onclick="closeModal('modal-alumni-offer')" class="px-4 py-2 bg-slate-900 text-slate-300 rounded-xl hover:bg-slate-800">Cancel</button>
+          <button type="submit" id="btn-save-alumni-offer" class="px-5 py-2 btn-gradient-primary text-white font-bold rounded-xl shadow-md">Publish Offer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: COMPLETE ALUMNI MENTORSHIP SESSION ================= -->
+  <div id="modal-alumni-complete-session" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-[#080d1a] border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
+          <h3 class="text-base font-bold text-white">Record Completed Session</h3>
+        </div>
+        <button onclick="closeModal('modal-alumni-complete-session')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form id="form-alumni-complete-session" onsubmit="handleCompleteAlumniSessionSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="alumni-complete-booking-id">
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Student &amp; Session Topic</label>
+          <input type="text" id="alumni-complete-title-disp" readonly class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white font-medium focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Student Capability Score / Rating</label>
+          <select id="alumni-complete-rating" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-emerald-500 focus:outline-none">
+            <option value="5">⭐⭐⭐⭐⭐ 5.0 - Exceptional (Direct Referral Recommended)</option>
+            <option value="4">⭐⭐⭐⭐ 4.0 - Strong (Minor Refinements Needed)</option>
+            <option value="3">⭐⭐⭐ 3.0 - Satisfactory</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Feedback &amp; Next Steps for Student</label>
+          <textarea id="alumni-complete-feedback" rows="3" required placeholder="Provide actionable feedback on architecture, code quality, and interview readiness..." class="w-full bg-[#040711] border border-slate-800 rounded-xl p-3 text-white focus:border-emerald-500 focus:outline-none"></textarea>
+        </div>
+        <div class="flex justify-end space-x-3 pt-2">
+          <button type="button" onclick="closeModal('modal-alumni-complete-session')" class="px-4 py-2 bg-slate-900 text-slate-300 rounded-xl hover:bg-slate-800">Cancel</button>
+          <button type="submit" class="px-5 py-2 btn-gradient-primary text-white font-bold rounded-xl shadow-md">Complete &amp; Endorse</button>
         </div>
       </form>
     </div>

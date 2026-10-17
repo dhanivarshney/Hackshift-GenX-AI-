@@ -97,7 +97,7 @@ export function registerUser(db, body, writeDB) {
 }
 
 export function loginUser(db, body, writeDB) {
-  const { email, password, personaId } = body;
+  const { email, password, personaId, role } = body;
   db.users ||= [];
 
   let user = null;
@@ -119,6 +119,16 @@ export function loginUser(db, body, writeDB) {
     throw new Error('Invalid email or credentials.');
   }
 
+  // Server-side role authorization check
+  if (role) {
+    const userRoles = Array.isArray(user.roles) ? user.roles : [user.role, user.personaId].filter(Boolean);
+    const hasRole = userRoles.includes(role) || user.role === role || user.personaId === role;
+    if (!hasRole) {
+      const formattedRole = role.charAt(0).toUpperCase() + role.slice(1);
+      throw new Error(`Account (${user.email}) is not authorized for the ${formattedRole} role.`);
+    }
+  }
+
   // If password was provided and not persona-instant login
   if (password && user.passwordHash) {
     const calculated = hashPassword(password, user.salt);
@@ -127,13 +137,14 @@ export function loginUser(db, body, writeDB) {
     }
   }
 
+  const activeSessionRole = role || user.role;
   const token = `token-${user.id}-${Date.now()}`;
   db.sessions ||= {};
-  db.sessions[token] = { userId: user.id, role: user.role, expiresAt: Date.now() + 7 * 86400000 };
+  db.sessions[token] = { userId: user.id, role: activeSessionRole, expiresAt: Date.now() + 7 * 86400000 };
   writeDB(db);
 
   const { salt: _, passwordHash: __, ...safeUser } = user;
-  return { user: safeUser, token };
+  return { user: { ...safeUser, role: activeSessionRole }, token };
 }
 
 export function getCurrentUser(db, req) {

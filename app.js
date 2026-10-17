@@ -458,7 +458,7 @@ const ROLE_TABS = {
   ],
   alumnus: [
     { id: 'alumnus-inbox', label: 'Referral Requests', icon: 'inbox', badge: '1 Pending', badgeId: 'referrals-count-badge' },
-    { id: 'mentorship', label: 'Impact Exchange & Mentoring', icon: 'calendar', badge: 'Active' },
+    { id: 'alumni-mentorship', label: 'Impact Exchange & Mentoring', icon: 'calendar', badge: 'Active' },
     { id: 'legacy-graph', label: 'Share Legacy Lessons', icon: 'book-open', badge: 'Repository' },
     { id: 'bounties', label: 'Post Bounties & Gigs', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
     { id: 'intent-radar', label: 'Explore Students', icon: 'compass', badge: '14 Students' },
@@ -468,8 +468,7 @@ const ROLE_TABS = {
     { id: 'hiring-copilot', label: 'LinkX Hiring Copilot', icon: 'sparkles', badge: 'AI Matcher' },
     { id: 'bounties', label: 'Startup Gigs & Bounties', icon: 'briefcase', badge: 'Escrow Gigs', badgeId: 'bounties-count-badge' },
     { id: 'intent-radar', label: 'Find Builders', icon: 'compass', badge: 'Top Builders' },
-    { id: 'legacy-graph', label: 'Founder Lessons', icon: 'book-open' },
-    { id: 'network-graph', label: 'Ecosystem Network', icon: 'share-2' }
+    { id: 'legacy-graph', label: 'Founder Lessons', icon: 'book-open' }
   ],
   faculty: [
     { id: 'faculty-dashboard', label: 'Faculty Dashboard', icon: 'layout-dashboard', badge: 'Active' },
@@ -633,7 +632,9 @@ function switchTab(tabId, pushHistory = true) {
     // Dedicated Faculty Views
     'faculty-dashboard', 'faculty-students', 'faculty-supervision', 'faculty-collaborations', 'faculty-profile',
     // Dedicated Institution Views
-    'institution-overview', 'institution-intelligence', 'institution-departments', 'institution-outcomes', 'institution-governance'
+    'institution-overview', 'institution-intelligence', 'institution-departments', 'institution-outcomes', 'institution-governance',
+    // Dedicated Alumni Mentorship View
+    'alumni-mentorship'
   ];
   
   // In-app navigation history tracking for Back button
@@ -692,6 +693,12 @@ function switchTab(tabId, pushHistory = true) {
 
   // Route to the appropriate view data fetchers
   if (tabId === 'network-graph') {
+    // Founders no longer have Ecosystem Network — redirect gracefully
+    if (activeSessionRoleId === 'founder') {
+      showToast('Ecosystem Network has been removed. Redirecting to Hiring Copilot.', 'info');
+      setTimeout(() => switchTab('hiring-copilot', false), 150);
+      return;
+    }
     setupLineageCanvas();
   } else if (tabId === 'alumnus-inbox') {
     fetchReferralsFromAPI();
@@ -707,6 +714,8 @@ function switchTab(tabId, pushHistory = true) {
     fetchBridgePaths();
   } else if (tabId === 'mentorship') {
     fetchMentorshipHub();
+  } else if (tabId === 'alumni-mentorship') {
+    fetchAlumniMentorshipDashboard();
   } else if (tabId === 'legacy-graph') {
     fetchLegacyGraph();
   } else if (tabId === 'faculty-challenges') {
@@ -2875,44 +2884,199 @@ async function handleGenerateMissionSubmit(event) {
 }
 
 async function triggerOpportunityRescue() {
+  // Show modal immediately with loading state
+  openModal('modal-opportunity-rescue');
+  const loadingEl  = document.getElementById('rescue-loading-state');
+  const errorEl    = document.getElementById('rescue-error-state');
+  const contentEl  = document.getElementById('rescue-content-state');
+  if (loadingEl)  { loadingEl.classList.remove('hidden'); }
+  if (errorEl)    { errorEl.classList.add('hidden'); }
+  if (contentEl)  { contentEl.classList.add('hidden'); }
+
   try {
-    const res = await fetch(`${API_BASE}/student/rescue`, {
+    const res = await fetch(`${API_BASE}/student/opportunity-rescue`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ reason: 'Target pipeline buffer active', currentRole: 'Backend SDE', missingSkill: 'Kafka' })
+      body: JSON.stringify({ studentId: activeSessionRoleId || 'student' })
     });
     const data = await res.json();
-    if (data.success) {
-      const container = document.getElementById('rescue-alternatives-container');
-      if (container) {
-        container.innerHTML = `
-          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Verified Parallel Pipelines</div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            ${(data.availableMentors || []).map(m => `
-              <div class="p-2.5 rounded-xl bg-[#040711] border border-slate-800 space-y-1">
-                <div class="font-bold text-white">${m.name} (${m.company})</div>
-                <div class="text-[10px] text-emerald-400">${m.openSlotsCount} open slots available</div>
-                <div class="text-[10px] text-slate-400">${m.reason}</div>
+
+    if (!data.success) throw new Error(data.error || 'Failed to fetch rescue plan');
+
+    // Hide loading, show content
+    if (loadingEl) loadingEl.classList.add('hidden');
+    if (contentEl) contentEl.classList.remove('hidden');
+
+    // Diagnosed obstacle
+    const obstacleEl = document.getElementById('rescue-obstacle-text');
+    if (obstacleEl) obstacleEl.textContent = (data.rescuePlan && data.rescuePlan.diagnosedObstacle) ? data.rescuePlan.diagnosedObstacle : 'No active pipeline bottleneck detected.';
+    const goalEl = document.getElementById('rescue-goal-text');
+    if (goalEl) goalEl.textContent = (data.rescuePlan && data.rescuePlan.studentGoal) ? data.rescuePlan.studentGoal : (data.studentGoal || 'Career Goal not set.');
+
+    // 3 Actionable pivots
+    const pivotsContainer = document.getElementById('rescue-pivots-container');
+    if (pivotsContainer) {
+      const pivots = (data.rescuePlan && data.rescuePlan.pivotOptions) ? data.rescuePlan.pivotOptions : (data.pivots || []);
+      if (pivots.length === 0) {
+        pivotsContainer.innerHTML = `<p class="text-slate-400 italic text-xs">No pivot options available at this time.</p>`;
+      } else {
+        pivotsContainer.innerHTML = pivots.map(p => {
+          const actionColors = {
+            'book-mentor': 'border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/15',
+            'claim-bounty': 'border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/15',
+            'apply-capstone': 'border-sky-500/40 bg-sky-500/10 hover:bg-sky-500/15'
+          };
+          const actionIcons = {
+            'book-mentor': 'users',
+            'claim-bounty': 'briefcase',
+            'apply-capstone': 'graduation-cap'
+          };
+          const colorClass = actionColors[p.actionType] || 'border-slate-700 bg-slate-800/50 hover:bg-slate-800';
+          const iconName = actionIcons[p.actionType] || 'arrow-right';
+          return `
+            <div class="p-3.5 rounded-xl border ${colorClass} transition space-y-2">
+              <div class="flex items-start justify-between gap-3">
+                <div class="space-y-0.5 flex-1">
+                  <div class="flex items-center space-x-2">
+                    <i data-lucide="${iconName}" class="w-4 h-4 text-slate-300 shrink-0"></i>
+                    <span class="font-bold text-white text-xs">${escapeHTML(p.title)}</span>
+                  </div>
+                  <p class="text-[11px] text-slate-300 leading-relaxed pl-6">${escapeHTML(p.rationale || p.description || '')}</p>
+                  ${p.badge ? `<span class="ml-6 inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-slate-900 text-sky-300 border border-sky-500/20">${escapeHTML(p.badge)}</span>` : ''}
+                </div>
+                <button onclick="handleRescuePivotAction('${p.actionType}', '${escapeHTML(p.refId || '')}')"
+                  class="shrink-0 px-3 py-1.5 btn-gradient-primary rounded-xl text-xs font-bold text-white shadow-md whitespace-nowrap">
+                  ${p.actionType === 'book-mentor' ? 'Book Session' : p.actionType === 'claim-bounty' ? 'Claim Bounty' : 'Apply Now'}
+                </button>
               </div>
-            `).join('')}
-          </div>
-        `;
+            </div>
+          `;
+        }).join('');
       }
-      const sprintBox = document.getElementById('rescue-sprint-container');
-      if (sprintBox && data.recommendedPracticeAction) {
-        sprintBox.innerHTML = `
-          <div class="font-bold text-amber-300">${data.recommendedPracticeAction.title}</div>
-          <p class="text-[11px] text-slate-300">${data.recommendedPracticeAction.description}</p>
-          <div class="pt-1 text-[10px] font-mono text-amber-400">Target Deliverable: ${data.recommendedPracticeAction.targetBounty}</div>
-        `;
-      }
-      openModal('modal-opportunity-rescue');
     }
+
+    // Rapid skill sprint
+    const sprintBox = document.getElementById('rescue-sprint-container');
+    const sprint = data.recommendedPracticeAction || data.skillSprint;
+    if (sprintBox && sprint) {
+      sprintBox.innerHTML = `
+        <div class="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1">Recommended Skill Sprint</div>
+        <div class="font-bold text-amber-300 text-xs">${escapeHTML(sprint.title)}</div>
+        <p class="text-[11px] text-slate-300">${escapeHTML(sprint.description)}</p>
+        <div class="pt-1 text-[10px] font-mono text-amber-400">Target Deliverable: ${escapeHTML(sprint.targetBounty || sprint.targetDeliverable || '')}</div>
+      `;
+    }
+
+    // Strategic insights
+    const insightsList = document.getElementById('rescue-insights-list');
+    if (insightsList && data.insights && data.insights.length) {
+      insightsList.innerHTML = data.insights.map(i => `<li>${escapeHTML(i)}</li>`).join('');
+    }
+
+    lucide.createIcons();
+
   } catch (err) {
-    showToast('Generating rescue contingency plan...');
-    openModal('modal-opportunity-rescue');
+    if (loadingEl) loadingEl.classList.add('hidden');
+    if (errorEl) {
+      errorEl.classList.remove('hidden');
+      const errMsg = document.getElementById('rescue-error-msg');
+      if (errMsg) errMsg.textContent = err.message || 'Unable to load opportunity rescue plan.';
+    }
   }
 }
+
+function handleRescuePivotAction(actionType, refId) {
+  closeModal('modal-opportunity-rescue');
+  if (actionType === 'book-mentor') {
+    switchTab('mentorship', true);
+    showToast('Navigated to Alumni Impact Exchange to book a mentorship session.');
+  } else if (actionType === 'claim-bounty') {
+    switchTab('bounties', true);
+    showToast('Navigated to Bounties — find and claim a relevant paid gig.');
+  } else if (actionType === 'apply-capstone') {
+    switchTab('career-shadow', true);
+    showToast('Navigated to Career Shadow — explore capstone and simulation paths.');
+  }
+}
+
+// ================= UPDATE CAREER GOAL MODAL =================
+function openUpdateCareerGoalModal() {
+  // Pre-fill from current mission data if available
+  const mission = currentMissions[0];
+  if (mission) {
+    const roleEl = document.getElementById('mission-target-role');
+    if (roleEl) roleEl.value = mission.targetRole || '';
+
+    const goalEl = document.getElementById('mission-goal-input');
+    if (goalEl) goalEl.value = mission.goal || '';
+
+    const interestsEl = document.getElementById('mission-interests-input');
+    if (interestsEl) interestsEl.value = (mission.interests || []).join(', ');
+
+    const skillsEl = document.getElementById('mission-skills-input');
+    if (skillsEl) skillsEl.value = (mission.skillsToDevelop || []).join(', ');
+
+    const timelineEl = document.getElementById('mission-timeline-select');
+    if (timelineEl && mission.timeline) {
+      for (const opt of timelineEl.options) {
+        if (opt.value === mission.timeline) { opt.selected = true; break; }
+      }
+    }
+
+    const priorityEl = document.getElementById('mission-priority-select');
+    if (priorityEl && mission.priority) {
+      for (const opt of priorityEl.options) {
+        if (opt.value === mission.priority) { opt.selected = true; break; }
+      }
+    }
+  }
+  openModal('modal-new-mission');
+}
+
+async function handleUpdateCareerGoalSubmit(event) {
+  event.preventDefault();
+  const btn = document.getElementById('btn-save-career-goal');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
+  const targetRole = document.getElementById('mission-target-role')?.value?.trim();
+  const goal       = document.getElementById('mission-goal-input')?.value?.trim();
+  const interests  = document.getElementById('mission-interests-input')?.value?.trim();
+  const skills     = document.getElementById('mission-skills-input')?.value?.trim();
+  const timeline   = document.getElementById('mission-timeline-select')?.value;
+  const priority   = document.getElementById('mission-priority-select')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/student/missions/goal`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        studentId: activeSessionRoleId || 'student',
+        targetRole,
+        goal,
+        interests: interests ? interests.split(',').map(s => s.trim()).filter(Boolean) : [],
+        skillsToDevelop: skills ? skills.split(',').map(s => s.trim()).filter(Boolean) : [],
+        timeline,
+        priority
+      })
+    });
+    const data = await res.json();
+    if (data.success && data.mission) {
+      closeModal('modal-new-mission');
+      // Refresh current missions
+      currentMissions = [data.mission, ...currentMissions.slice(1)];
+      renderMissionRoadmap(data.mission);
+      showToast('Career goal updated! Your roadmap progress has been preserved.');
+    } else {
+      showToast(data.error || 'Failed to update career goal.', 'error');
+    }
+  } catch (err) {
+    showToast('Network error — please try again.', 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i><span>Save Career Goal</span>'; lucide.createIcons(); }
+  }
+}
+
+
 
 // ================= CAREER SHADOW AI =================
 let currentShadowScenarios = [];
@@ -3144,22 +3308,55 @@ async function fetchBridgeIntroductions() {
     if (!list) return;
 
     if (data.success && data.introductions && data.introductions.length > 0) {
-      list.innerHTML = data.introductions.map(i => `
-        <div class="p-3 rounded-xl bg-[#040711] border border-slate-800 flex items-center justify-between">
-          <div>
-            <div class="font-bold text-white">Intro to ${i.targetAlumnus} (${i.targetCompany})</div>
-            <div class="text-[10px] text-slate-400">Intermediary: ${i.intermediary} • ${i.note}</div>
+      list.innerHTML = data.introductions.map(i => {
+        const statusColors = {
+          'Pending':   'bg-amber-500/10 text-amber-400 border-amber-500/20',
+          'Accepted':  'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+          'Declined':  'bg-rose-500/10 text-rose-400 border-rose-500/20',
+          'Cancelled': 'bg-slate-800 text-slate-500 border-slate-700',
+        };
+        const statusClass = statusColors[i.status] || 'bg-slate-800 text-slate-400 border-slate-700';
+        const canCancel = activeSessionRoleId === 'student' && i.status === 'Pending';
+        return `
+          <div class="p-3 rounded-xl bg-[#040711] border border-slate-800 flex items-start justify-between gap-3">
+            <div class="space-y-0.5 flex-1 min-w-0">
+              <div class="font-bold text-white text-xs truncate">Intro to ${escapeHTML(i.targetAlumnus || '')} (${escapeHTML(i.targetCompany || '')})</div>
+              <div class="text-[10px] text-slate-400 truncate">Via: ${escapeHTML(i.intermediary || '')} • ${escapeHTML(i.note || '')}</div>
+              ${i.reason ? `<div class="text-[10px] text-slate-500 italic">${escapeHTML(i.reason)}</div>` : ''}
+            </div>
+            <div class="flex items-center space-x-2 shrink-0">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${statusClass}">${i.status}</span>
+              ${canCancel ? `<button onclick="cancelBridgeIntroduction('${i.id}')" class="px-2.5 py-1 bg-slate-900 border border-rose-500/30 text-rose-400 text-[10px] font-bold rounded-lg hover:bg-rose-500/10 transition">Cancel</button>` : ''}
+            </div>
           </div>
-          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${i.status.includes('approved') ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'} border border-amber-500/20">
-            ${i.status.replace(/_/g, ' ')}
-          </span>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     } else {
-      list.innerHTML = `<div class="text-slate-500 italic">No introduction requests in progress.</div>`;
+      list.innerHTML = `<div class="text-slate-500 italic text-xs">No introduction requests in progress.</div>`;
     }
   } catch (err) {}
 }
+
+async function cancelBridgeIntroduction(introId) {
+  try {
+    const res = await fetch(`${API_BASE}/bridge/introductions/${introId}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'Cancelled', reason: 'Cancelled by student' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Introduction request cancelled.');
+      fetchBridgeIntroductions();
+    } else {
+      showToast(data.error || 'Failed to cancel request.', 'error');
+    }
+  } catch (err) {
+    showToast('Network error cancelling request.', 'error');
+  }
+}
+
+
 
 // ================= ALUMNI IMPACT EXCHANGE & MENTORSHIP =================
 async function fetchMentorshipHub() {
@@ -4749,5 +4946,419 @@ async function saveInstitutionGovernance(event) {
     }
   } catch (err) {
     showToast('Network error saving governance policy', 'error');
+  }
+}
+
+// ================= ALUMNI MENTORSHIP CONTRIBUTION DESK =================
+let currentAlumniMentorshipOfferId = null; // track edit vs create
+
+async function fetchAlumniMentorshipDashboard() {
+  try {
+    const res = await fetch(`${API_BASE}/alumni/mentorship/dashboard?alumniId=${activeSessionRoleId || 'alumnus'}`);
+    const data = await res.json();
+    if (!data.success) { console.warn('Alumni mentorship fetch failed:', data.error); return; }
+    renderAlumniMentorshipDashboard(data);
+  } catch (err) {
+    console.warn('Alumni mentorship fetch error:', err);
+  }
+}
+
+function renderAlumniMentorshipDashboard(data) {
+  const d = data.dashboard || {};
+
+  // KPI cards — IDs match HTML element IDs in view-alumni-mentorship
+  const kpiMap = {
+    'alumni-stat-offers':    d.stats?.activeOffers ?? 0,
+    'alumni-stat-pending':   d.stats?.pendingRequests ?? 0,
+    'alumni-stat-upcoming':  d.stats?.confirmedSessions ?? 0,
+    'alumni-stat-completed': d.stats?.completedSessions ?? 0
+  };
+  Object.entries(kpiMap).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  });
+
+  // Active offers grid
+  const offersGrid = document.getElementById('alumni-offers-grid');
+  if (offersGrid) {
+    const offers = d.offers || [];
+    if (offers.length === 0) {
+      offersGrid.innerHTML = `<div class="col-span-full text-slate-500 italic text-xs text-center py-6">No active offers yet. Click "Post New Offer" to create your first contribution.</div>`;
+    } else {
+      offersGrid.innerHTML = offers.map(o => `
+        <div class="glass-card rounded-2xl p-4 border border-slate-800 space-y-3 flex flex-col justify-between">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 font-mono">${escapeHTML(o.type || 'Mentoring')}</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${o.status === 'active' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25' : 'bg-slate-800 text-slate-500 border-slate-700'}">
+                ${o.status === 'active' ? 'Active' : 'Paused'}
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white leading-tight">${escapeHTML(o.title)}</h4>
+            <p class="text-[11px] text-slate-400 leading-relaxed">${escapeHTML(o.description || '')}</p>
+            ${o.slots ? `<div class="text-[10px] text-sky-300 font-mono">${o.slotsUsed || 0}/${o.slots} slots used</div>` : ''}
+          </div>
+          <div class="flex items-center space-x-2 pt-2 border-t border-slate-800">
+            <button onclick="openAlumniOfferModal('${o.id}')"
+              class="flex-1 py-1.5 bg-slate-900 border border-slate-800 text-slate-300 text-[11px] font-bold rounded-lg hover:bg-slate-800 transition">
+              Edit
+            </button>
+            <button onclick="handleToggleAlumniOfferStatus('${o.id}', '${o.status}')"
+              class="flex-1 py-1.5 ${o.status === 'active' ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'} border text-[11px] font-bold rounded-lg hover:opacity-80 transition">
+              ${o.status === 'active' ? 'Pause' : 'Activate'}
+            </button>
+            <button onclick="handleDeleteAlumniOffer('${o.id}')"
+              class="py-1.5 px-2.5 bg-rose-500/10 border border-rose-500/30 text-rose-400 text-[11px] font-bold rounded-lg hover:bg-rose-500/20 transition">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Incoming student requests
+  const requestsList = document.getElementById('alumni-incoming-requests');
+  if (requestsList) {
+    const requests = d.incomingRequests || [];
+    if (requests.length === 0) {
+      requestsList.innerHTML = `<div class="text-slate-500 italic text-xs py-4 text-center">No pending student requests.</div>`;
+    } else {
+      requestsList.innerHTML = requests.map(r => `
+        <div class="p-3.5 rounded-xl bg-[#040711] border border-slate-800 space-y-2.5">
+          <div class="flex items-start justify-between gap-3">
+            <div class="space-y-0.5 flex-1">
+              <div class="font-bold text-white text-xs">${escapeHTML(r.studentName || 'Student')}</div>
+              <div class="text-[11px] text-slate-300">${escapeHTML(r.offerTitle || 'Mentorship Request')}</div>
+              <div class="text-[10px] text-slate-400">${escapeHTML(r.studentNote || '')}</div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">${r.status || 'Pending'}</span>
+          </div>
+          ${r.status === 'Pending' ? `
+          <div class="flex items-center space-x-2">
+            <button onclick="handleAlumniRequestRespond('${r.id}', 'Accepted')"
+              class="flex-1 py-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold rounded-lg hover:bg-emerald-500/20 transition">
+              Accept
+            </button>
+            <button onclick="handleAlumniRequestRespond('${r.id}', 'Declined')"
+              class="flex-1 py-1.5 bg-rose-500/10 border border-rose-500/30 text-rose-400 text-[11px] font-bold rounded-lg hover:bg-rose-500/20 transition">
+              Decline
+            </button>
+          </div>` : ''}
+        </div>
+      `).join('');
+    }
+  }
+
+  // Upcoming sessions
+  const sessionsList = document.getElementById('alumni-upcoming-sessions');
+  if (sessionsList) {
+    const sessions = d.upcomingSessions || [];
+    if (sessions.length === 0) {
+      sessionsList.innerHTML = `<div class="text-slate-500 italic text-xs py-4 text-center">No confirmed upcoming sessions.</div>`;
+    } else {
+      sessionsList.innerHTML = sessions.map(s => `
+        <div class="p-3.5 rounded-xl bg-[#040711] border border-slate-800 flex items-start justify-between gap-3">
+          <div class="space-y-0.5 flex-1">
+            <div class="font-bold text-white text-xs">${escapeHTML(s.studentName || 'Student')}</div>
+            <div class="text-[11px] text-sky-300">${escapeHTML(s.offerTitle || '')}</div>
+            <div class="text-[10px] text-slate-400">${s.scheduledAt ? new Date(s.scheduledAt).toLocaleString() : 'TBD'}</div>
+          </div>
+          <button onclick="openAlumniCompleteSessionModal('${s.id}')"
+            class="px-3 py-1.5 btn-gradient-primary rounded-xl text-xs font-bold text-white shadow-md shrink-0">
+            Complete
+          </button>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Warm intro review queue
+  const introList = document.getElementById('alumni-bridge-queue');
+  if (introList) {
+    const intros = d.pendingIntroReviews || [];
+    if (intros.length === 0) {
+      introList.innerHTML = `<div class="text-slate-500 italic text-xs py-4 text-center">No pending introduction review requests.</div>`;
+    } else {
+      introList.innerHTML = intros.map(i => `
+        <div class="p-3.5 rounded-xl bg-[#040711] border border-slate-800 space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="space-y-0.5 flex-1">
+              <div class="font-bold text-white text-xs">${escapeHTML(i.requesterName || 'Student')}</div>
+              <div class="text-[11px] text-slate-300">Wants intro to: ${escapeHTML(i.targetAlumnus || '')}</div>
+              <div class="text-[10px] text-slate-400 italic">"${escapeHTML(i.note || '')}"</div>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">Needs Review</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="handleAlumniIntroReview('${i.id}', 'Accepted')"
+              class="flex-1 py-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold rounded-lg hover:bg-emerald-500/20 transition">
+              Facilitate Intro
+            </button>
+            <button onclick="handleAlumniIntroReview('${i.id}', 'Declined')"
+              class="flex-1 py-1.5 bg-rose-500/10 border border-rose-500/30 text-rose-400 text-[11px] font-bold rounded-lg hover:bg-rose-500/20 transition">
+              Decline
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Completed history
+  const historyList = document.getElementById('alumni-contribution-history');
+  if (historyList) {
+    const history = d.completedSessions || [];
+    if (history.length === 0) {
+      historyList.innerHTML = `<div class="text-slate-500 italic text-xs py-4 text-center">No completed sessions yet.</div>`;
+    } else {
+      historyList.innerHTML = history.map(h => `
+        <div class="p-3 rounded-xl bg-[#040711] border border-slate-800 flex items-start justify-between gap-3">
+          <div class="space-y-0.5 flex-1">
+            <div class="font-bold text-white text-xs">${escapeHTML(h.studentName || 'Student')}</div>
+            <div class="text-[11px] text-emerald-400">${escapeHTML(h.offerTitle || '')}</div>
+            ${h.notes ? `<div class="text-[10px] text-slate-400 italic">${escapeHTML(h.notes)}</div>` : ''}
+            <div class="text-[10px] text-slate-500">${h.completedAt ? new Date(h.completedAt).toLocaleDateString() : ''}</div>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">Completed</span>
+        </div>
+      `).join('');
+    }
+  }
+
+  lucide.createIcons();
+}
+
+function openAlumniOfferModal(offerId = null) {
+  currentAlumniMentorshipOfferId = offerId;
+  const titleEl = document.getElementById('modal-alumni-offer-title');
+  const form = document.getElementById('form-alumni-offer');
+  if (titleEl) titleEl.textContent = offerId ? 'Edit Mentoring Offer' : 'Offer Mentoring & Expertise';
+
+  // Clear form
+  if (form) form.reset();
+
+  // Pre-fill if editing
+  if (offerId) {
+    fetch(`${API_BASE}/alumni/mentorship/offers?alumniId=${activeSessionRoleId || 'alumnus'}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          const offer = (data.offers || []).find(o => o.id === offerId);
+          if (offer) {
+            const f = id => document.getElementById(id);
+            if (f('alumni-offer-title-input')) f('alumni-offer-title-input').value = offer.title || '';
+            if (f('alumni-offer-type-select')) f('alumni-offer-type-select').value = offer.type || 'Code & Architecture Review';
+            if (f('alumni-offer-desc-input')) f('alumni-offer-desc-input').value = offer.description || '';
+            if (f('alumni-offer-max-sessions')) f('alumni-offer-max-sessions').value = offer.slots || 3;
+          }
+        }
+      })
+      .catch(() => {});
+  }
+  openModal('modal-alumni-offer');
+}
+
+async function handleSaveAlumniOfferSubmit(event) {
+  event.preventDefault();
+  const btn = document.getElementById('btn-save-alumni-offer');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
+  const title       = document.getElementById('alumni-offer-title-input')?.value?.trim();
+  const type        = document.getElementById('alumni-offer-type-select')?.value;
+  const description = document.getElementById('alumni-offer-desc-input')?.value?.trim();
+  const slots       = parseInt(document.getElementById('alumni-offer-max-sessions')?.value || '3', 10);
+
+  try {
+    const method = currentAlumniMentorshipOfferId ? 'PUT' : 'POST';
+    const url = currentAlumniMentorshipOfferId
+      ? `${API_BASE}/alumni/mentorship/offers/${currentAlumniMentorshipOfferId}`
+      : `${API_BASE}/alumni/mentorship/offers`;
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ alumniId: activeSessionRoleId || 'alumnus', title, type, description, slots })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-alumni-offer');
+      showToast(currentAlumniMentorshipOfferId ? 'Mentoring offer updated!' : 'Mentoring offer published!');
+      currentAlumniMentorshipOfferId = null;
+      fetchAlumniMentorshipDashboard();
+    } else {
+      showToast(data.error || 'Failed to save offer.', 'error');
+    }
+  } catch (err) {
+    showToast('Network error saving offer.', 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Publish Offer'; }
+  }
+}
+
+async function handleToggleAlumniOfferStatus(offerId, currentStatus) {
+  const newStatus = currentStatus === 'active' ? 'paused' : 'active';
+  try {
+    const res = await fetch(`${API_BASE}/alumni/mentorship/offers/${offerId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ alumniId: activeSessionRoleId || 'alumnus', status: newStatus })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Offer ${newStatus === 'active' ? 'activated' : 'paused'}.`);
+      fetchAlumniMentorshipDashboard();
+    } else {
+      showToast(data.error || 'Failed to update offer status.', 'error');
+    }
+  } catch (err) {
+    showToast('Network error updating offer status.', 'error');
+  }
+}
+
+async function handleDeleteAlumniOffer(offerId) {
+  if (!confirm('Delete this mentoring offer? This cannot be undone.')) return;
+  try {
+    const res = await fetch(`${API_BASE}/alumni/mentorship/offers/${offerId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ alumniId: activeSessionRoleId || 'alumnus' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Mentoring offer deleted.');
+      fetchAlumniMentorshipDashboard();
+    } else {
+      showToast(data.error || 'Failed to delete offer.', 'error');
+    }
+  } catch (err) {
+    showToast('Network error deleting offer.', 'error');
+  }
+}
+
+async function handleAlumniRequestRespond(bookingId, action) {
+  try {
+    const res = await fetch(`${API_BASE}/alumni/mentorship/requests/${bookingId}/respond`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ alumniId: activeSessionRoleId || 'alumnus', action })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Request ${action.toLowerCase()}!`);
+      fetchAlumniMentorshipDashboard();
+    } else {
+      showToast(data.error || `Failed to ${action.toLowerCase()} request.`, 'error');
+    }
+  } catch (err) {
+    showToast('Network error responding to request.', 'error');
+  }
+}
+
+async function handleAlumniIntroReview(introId, action) {
+  try {
+    const res = await fetch(`${API_BASE}/bridge/introductions/${introId}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: action, reason: action === 'Declined' ? 'Alumni chose not to facilitate' : '' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(action === 'Accepted' ? 'Introduction facilitated!' : 'Introduction declined.');
+      fetchAlumniMentorshipDashboard();
+    } else {
+      showToast(data.error || 'Failed to process introduction.', 'error');
+    }
+  } catch (err) {
+    showToast('Network error processing introduction.', 'error');
+  }
+}
+
+let currentAlumniSessionId = null;
+function openAlumniCompleteSessionModal(sessionId) {
+  currentAlumniSessionId = sessionId;
+  const form = document.getElementById('form-alumni-complete-session');
+  if (form) form.reset();
+  openModal('modal-alumni-complete-session');
+}
+
+async function handleCompleteAlumniSessionSubmit(event) {
+  event.preventDefault();
+  const notes   = document.getElementById('alumni-complete-feedback')?.value?.trim();
+  const outcome = document.getElementById('alumni-complete-rating')?.value;
+  const endorse = true; // completing always implies endorsement in this modal
+
+  try {
+    const res = await fetch(`${API_BASE}/alumni/mentorship/sessions/${currentAlumniSessionId}/complete`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ alumniId: activeSessionRoleId || 'alumnus', notes, outcome, endorse })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-alumni-complete-session');
+      showToast('Session completed and recorded!');
+      triggerConfetti();
+      currentAlumniSessionId = null;
+      fetchAlumniMentorshipDashboard();
+    } else {
+      showToast(data.error || 'Failed to complete session.', 'error');
+    }
+  } catch (err) {
+    showToast('Network error completing session.', 'error');
+  }
+}
+
+// ================= PASSWORD SHOW / HIDE TOGGLE =================
+function togglePasswordVisibility(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon  = document.getElementById(iconId);
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (icon) { icon.setAttribute('data-lucide', 'eye-off'); lucide.createIcons(); }
+  } else {
+    input.type = 'password';
+    if (icon) { icon.setAttribute('data-lucide', 'eye'); lucide.createIcons(); }
+  }
+}
+
+// ================= ENHANCED AUTH SIGN-IN (Role-Validated) =================
+async function handleAuthSignInSubmit(event) {
+  event.preventDefault();
+  const email    = document.getElementById('auth-signin-email')?.value?.trim();
+  const password = document.getElementById('auth-signin-password')?.value;
+  const roleEl   = document.getElementById('auth-signin-role');
+  const role     = roleEl?.value || '';
+  const btn      = event.target.querySelector('[type="submit"]');
+  const errBox   = document.getElementById('auth-signin-error');
+
+  if (errBox) errBox.classList.add('hidden');
+  if (btn)   { btn.disabled = true; btn.textContent = 'Signing in…'; }
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, role })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-auth-dialog');
+      const userRole = data.user?.roles?.[0] || role || 'student';
+      authenticateAndOpenWorkspace(userRole, true, true);
+    } else {
+      if (errBox) {
+        errBox.textContent = data.error || 'Invalid credentials.';
+        errBox.classList.remove('hidden');
+      } else {
+        showToast(data.error || 'Invalid credentials.', 'error');
+      }
+    }
+  } catch (err) {
+    const msg = 'Network error — please try again.';
+    if (errBox) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+    else showToast(msg, 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Sign In to LinkX'; }
   }
 }

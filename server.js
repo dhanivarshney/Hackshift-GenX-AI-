@@ -12,7 +12,7 @@ import { getBounties, createBounty, applyToBounty } from './server/controllers/b
 import { getReferrals, createReferral, updateReferralAction } from './server/controllers/referralController.js';
 import { listMentors, listBookings, createBooking, updateBookingStatus } from './server/controllers/mentorshipController.js';
 import { registerUser, loginUser, getCurrentUser, forgotPassword, resetPassword, updateUserSettings, ensureInitialUsers } from './server/controllers/authController.js';
-import { getStudentMissions, generateCareerMission, updateMissionTask, getOpportunityRescuePlan } from './server/controllers/missionController.js';
+import { getStudentMissions, generateCareerMission, updateMissionTask, getOpportunityRescuePlan, updateCareerGoal } from './server/controllers/missionController.js';
 import { listCareerShadowScenarios, getScenarioDetail, evaluateSimulationStep, getStudentShadowHistory } from './server/controllers/shadowController.js';
 import { findBridgePaths, requestBridgeIntroduction, listIntroductions, updateIntroductionStatus } from './server/controllers/bridgeController.js';
 import { getLegacyPosts, createLegacyPost, upvoteLegacyPost, ensureInitialLegacyPosts } from './server/controllers/legacyController.js';
@@ -44,6 +44,15 @@ import {
   updateInstitutionGovernance,
   getInstitutionAuditLogs
 } from './server/controllers/institutionController.js';
+import {
+  ensureAlumniMentorshipData,
+  getAlumniMentorshipDashboard,
+  createAlumniMentorshipOffer,
+  updateAlumniMentorshipOffer,
+  deleteAlumniMentorshipOffer,
+  respondToAlumniMentorshipRequest,
+  completeAlumniMentorshipSession
+} from './server/controllers/alumniMentorshipController.js';
 
 dotenv.config();
 
@@ -227,6 +236,96 @@ app.post('/api/alumni/mentorship/status', (req, res) => {
     booking.updatedAt = new Date().toISOString();
     req.writeDB(db);
     res.json({ success: true, booking });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+// ================= DEDICATED ALUMNI IMPACT EXCHANGE & MENTORSHIP ROUTES =================
+app.get('/api/alumni/mentorship/dashboard', (req, res) => {
+  try {
+    const db = req.readDB();
+    const alumnusId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || 'alumnus';
+    const data = getAlumniMentorshipDashboard(db, alumnusId);
+    res.json(data);
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+app.get('/api/alumni/mentorship/offers', (req, res) => {
+  try {
+    const db = req.readDB();
+    const alumnusId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || 'alumnus';
+    const data = getAlumniMentorshipDashboard(db, alumnusId);
+    res.json({ success: true, offers: data.offers });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/alumni/mentorship/offers', (req, res) => {
+  try {
+    const db = req.readDB();
+    const alumnusId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || 'alumnus';
+    const offer = createAlumniMentorshipOffer(db, alumnusId, req.body, req.writeDB);
+    res.status(201).json({ success: true, offer, message: 'Mentoring contribution offer created successfully.' });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+app.put('/api/alumni/mentorship/offers/:id', (req, res) => {
+  try {
+    const db = req.readDB();
+    const alumnusId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || 'alumnus';
+    const offer = updateAlumniMentorshipOffer(db, alumnusId, req.params.id, req.body, req.writeDB);
+    res.json({ success: true, offer, message: 'Mentoring offer updated successfully.' });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+app.delete('/api/alumni/mentorship/offers/:id', (req, res) => {
+  try {
+    const db = req.readDB();
+    const alumnusId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || 'alumnus';
+    deleteAlumniMentorshipOffer(db, alumnusId, req.params.id, req.writeDB);
+    res.json({ success: true, message: 'Mentoring offer withdrawn successfully.' });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+app.get('/api/alumni/mentorship/requests', (req, res) => {
+  try {
+    const db = req.readDB();
+    const alumnusId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || 'alumnus';
+    const data = getAlumniMentorshipDashboard(db, alumnusId);
+    res.json({ success: true, pendingRequests: data.pendingRequests, upcomingSessions: data.upcomingSessions });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/alumni/mentorship/requests/:id/respond', (req, res) => {
+  try {
+    const db = req.readDB();
+    const alumnusId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || 'alumnus';
+    const { action, notes } = req.body;
+    const booking = respondToAlumniMentorshipRequest(db, alumnusId, req.params.id, action, notes, req.writeDB);
+    res.json({ success: true, booking, message: `Mentorship request has been ${booking.status.toLowerCase()}.` });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/alumni/mentorship/sessions/:id/complete', (req, res) => {
+  try {
+    const db = req.readDB();
+    const alumnusId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || 'alumnus';
+    const booking = completeAlumniMentorshipSession(db, alumnusId, req.params.id, req.body, req.writeDB);
+    res.json({ success: true, booking, message: 'Mentorship session marked as completed.' });
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
   }
@@ -426,6 +525,7 @@ try {
   ensureInitialChallenges(initDb, writeDB);
   ensureFacultyData(initDb, writeDB);
   ensureInstitutionData(initDb, writeDB);
+  ensureAlumniMentorshipData(initDb, writeDB);
 } catch (e) {
   console.warn('Initial seeding notice:', e.message);
 }
@@ -547,10 +647,25 @@ app.post('/api/student/missions/tasks/toggle', (req, res) => {
   }
 });
 
+const handleUpdateCareerGoal = (req, res) => {
+  try {
+    const db = req.readDB();
+    const studentId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || req.body.studentId || 'student';
+    const payload = { ...req.body, studentId };
+    const mission = updateCareerGoal(db, payload, req.writeDB);
+    res.json({ success: true, mission, message: 'Career goal and roadmap updated successfully.' });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+};
+app.put('/api/student/missions/goal', handleUpdateCareerGoal);
+app.post('/api/student/missions/goal', handleUpdateCareerGoal);
+
 const handleOpportunityRescue = (req, res) => {
   try {
     const db = req.readDB();
-    const plan = getOpportunityRescuePlan(db, req.body);
+    const studentId = req.headers['x-linkx-persona-id'] || req.headers['x-user-role'] || req.body.studentId || 'student';
+    const plan = getOpportunityRescuePlan(db, { ...req.body, studentId });
     res.json(plan);
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
@@ -611,7 +726,8 @@ app.get('/api/bridge/introductions', (req, res) => {
 app.patch('/api/bridge/introductions/:id/status', (req, res) => {
   try {
     const db = req.readDB();
-    const updated = updateIntroductionStatus(db, req.params.id, req.body.status, req.writeDB);
+    const reason = req.body.reason || req.body.notes || '';
+    const updated = updateIntroductionStatus(db, req.params.id, req.body.status, reason, req.writeDB);
     res.json({ success: true, introduction: updated, request: updated });
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
@@ -622,7 +738,8 @@ app.post('/api/bridge/status', (req, res) => {
   try {
     const db = req.readDB();
     const id = req.body.requestId || req.body.id || req.body.introductionId;
-    const updated = updateIntroductionStatus(db, id, req.body.status, req.writeDB);
+    const reason = req.body.reason || req.body.notes || '';
+    const updated = updateIntroductionStatus(db, id, req.body.status, reason, req.writeDB);
     res.json({ success: true, introduction: updated, request: updated });
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
