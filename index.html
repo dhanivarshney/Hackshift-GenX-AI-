@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NexusIQ — Professional Campus & Alumni Intent Network</title>
+  <title>NexusIQ — Building a Network, Not a Directory</title>
   
-  <!-- Tailwind CSS CDN with configuration -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -14,7 +14,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -24,15 +24,6 @@
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
-          },
-          colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-            }
           }
         }
       }
@@ -41,52 +32,135 @@
 
   <style>
     body {
-      background-color: #060911;
+      background-color: #040711;
       color: #f8fafc;
       font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
     }
     .glass-panel {
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(13, 19, 36, 0.82);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.09);
     }
     .glass-card {
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
     }
     .glass-card-hover {
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glass-card-hover:hover {
-      border-color: rgba(99, 102, 241, 0.4);
+      border-color: rgba(99, 102, 241, 0.45);
       transform: translateY(-2px);
-      box-shadow: 0 12px 35px -10px rgba(99, 102, 241, 0.25);
+      box-shadow: 0 14px 40px -10px rgba(99, 102, 241, 0.28);
     }
     .mesh-gradient {
-      background: radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
-                  radial-gradient(circle at 85% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%),
-                  radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+      background: radial-gradient(circle at 10% 15%, rgba(99, 102, 241, 0.16) 0%, transparent 45%),
+                  radial-gradient(circle at 90% 85%, rgba(16, 185, 129, 0.12) 0%, transparent 45%),
+                  radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 55%);
     }
     .glow-indigo {
-      box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 0 45px -5px rgba(99, 102, 241, 0.4);
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 5px;
       height: 5px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #090d16;
+      background: #060911;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background: #334155;
       border-radius: 9999px;
     }
+
+    /* 3-Second Cinematic Splash Animations */
+    #splash-screen {
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .splash-ring {
+      animation: spin 10s linear infinite;
+    }
+    .splash-pulse {
+      animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes ping-slow {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 0.4; }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
+    .progress-bar-fill {
+      transition: width 3s linear;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col mesh-gradient selection:bg-indigo-500 selection:text-white">
 
-  <!-- ================= TOP STATUS BAR ================= -->
+  <!-- ================= 3-SECOND CINEMATIC INTRO SPLASH SCREEN ================= -->
+  <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#040711] select-none">
+    
+    <!-- Cyber Background Rings -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+      <div class="w-[500px] h-[500px] rounded-full border border-indigo-500/10 splash-pulse"></div>
+      <div class="w-[700px] h-[700px] rounded-full border border-purple-500/5"></div>
+      <div class="w-[900px] h-[900px] rounded-full border border-emerald-500/5"></div>
+    </div>
+
+    <!-- Center Grand Brand Reveal -->
+    <div class="relative z-10 flex flex-col items-center text-center space-y-6 px-4 max-w-xl">
+      
+      <!-- Glowing Animated Emblem -->
+      <div class="relative w-24 h-24 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-emerald-500 blur-xl opacity-70 animate-pulse"></div>
+        <div class="absolute -inset-1 rounded-3xl border border-indigo-400/40 splash-ring"></div>
+        <div class="relative w-20 h-20 rounded-2xl bg-slate-950 border border-indigo-500/50 flex items-center justify-center shadow-2xl">
+          <i data-lucide="network" class="w-10 h-10 text-indigo-400"></i>
+        </div>
+      </div>
+
+      <!-- Project Title with Letter Glow -->
+      <div class="space-y-2">
+        <h1 class="text-5xl sm:text-6xl font-black tracking-tight text-white">
+          Nexus<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400">IQ</span>
+        </h1>
+        <p class="text-sm sm:text-base font-semibold text-indigo-300 tracking-wider uppercase font-mono">
+          Building a Network, Not a Directory
+        </p>
+      </div>
+
+      <p class="text-xs text-slate-400 max-w-md leading-relaxed">
+        Autonomous Intent & Proof-of-Work Exchange connecting Students, Alumni, Founders, Faculty & Institutions.
+      </p>
+
+      <!-- 3-Second Loading Bar Indicator -->
+      <div class="w-64 space-y-2 pt-4">
+        <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+          <span class="flex items-center space-x-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>Initializing Engine</span>
+          </span>
+          <span id="splash-timer-text">3s</span>
+        </div>
+        <div class="w-full bg-slate-900 border border-slate-800 h-1.5 rounded-full overflow-hidden">
+          <div id="splash-progress" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-400 h-full w-0 progress-bar-fill"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Skip Button in Bottom Right -->
+    <button onclick="dismissSplashImmediately()" class="absolute bottom-6 right-6 text-xs text-slate-500 hover:text-indigo-400 font-mono flex items-center space-x-1.5 bg-slate-900/60 hover:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800 transition">
+      <span>Skip Intro</span>
+      <i data-lucide="fast-forward" class="w-3.5 h-3.5"></i>
+    </button>
+  </div>
+
+  <!-- ================= TOP STATUS BAR (ACTIVE AFTER SPLASH) ================= -->
   <div class="bg-slate-950/80 border-b border-slate-800/80 px-4 py-2 text-xs flex items-center justify-between text-slate-300">
     <div class="flex items-center space-x-2.5">
       <span class="flex h-2 w-2 relative">
@@ -101,12 +175,13 @@
     <!-- Quick Switcher for Hackathon Judges -->
     <div class="flex items-center space-x-3">
       <div id="quick-demo-pills" class="hidden md:flex items-center space-x-1.5 text-[11px] font-medium bg-slate-900 border border-slate-800 rounded-lg p-1">
-        <span class="text-slate-500 px-1.5 font-bold uppercase text-[9px]">Demo Switch:</span>
-        <button onclick="loginAs('student')" class="px-2 py-0.5 rounded text-indigo-300 hover:bg-slate-800">Student</button>
-        <button onclick="loginAs('alumnus')" class="px-2 py-0.5 rounded text-emerald-300 hover:bg-slate-800">Alumnus</button>
-        <button onclick="loginAs('founder')" class="px-2 py-0.5 rounded text-amber-300 hover:bg-slate-800">Founder</button>
-        <button onclick="loginAs('faculty')" class="px-2 py-0.5 rounded text-purple-300 hover:bg-slate-800">Faculty</button>
-        <button onclick="loginAs('institution')" class="px-2 py-0.5 rounded text-rose-300 hover:bg-slate-800">Institution</button>
+        <span class="text-slate-500 px-1.5 font-bold uppercase text-[9px]">Judge Demo Switch:</span>
+        <button onclick="directAuthenticateAs('student')" class="px-2 py-0.5 rounded text-indigo-300 hover:bg-slate-800">Student</button>
+        <button onclick="directAuthenticateAs('alumnus')" class="px-2 py-0.5 rounded text-emerald-300 hover:bg-slate-800">Alumnus</button>
+        <button onclick="directAuthenticateAs('founder')" class="px-2 py-0.5 rounded text-amber-300 hover:bg-slate-800">Founder</button>
+        <button onclick="directAuthenticateAs('faculty')" class="px-2 py-0.5 rounded text-purple-300 hover:bg-slate-800">Faculty</button>
+        <button onclick="directAuthenticateAs('recruiter')" class="px-2 py-0.5 rounded text-cyan-300 hover:bg-slate-800">Recruiter</button>
+        <button onclick="directAuthenticateAs('institution')" class="px-2 py-0.5 rounded text-rose-300 hover:bg-slate-800">Institution</button>
       </div>
 
       <button onclick="triggerConfetti()" class="flex items-center space-x-1 px-2.5 py-1 bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 rounded border border-indigo-500/40 text-[11px] font-semibold transition">
@@ -116,143 +191,123 @@
     </div>
   </div>
 
-  <!-- ================= AUTH GATEWAY (SHOWN WHEN LOGGED OUT) ================= -->
-  <section id="auth-gateway" class="flex-1 flex flex-col justify-center items-center px-4 py-12 max-w-6xl mx-auto w-full">
+  <!-- ================= SCREEN 1: THE GRAND HERO LOGIN INTERFACE ================= -->
+  <section id="hero-login-screen" class="flex-1 flex flex-col justify-center items-center px-4 py-8 sm:py-12 max-w-5xl mx-auto w-full">
     
-    <!-- Hero Header -->
-    <div class="text-center max-w-2xl mx-auto space-y-3 mb-10">
+    <!-- Hero Title & Tagline -->
+    <div class="text-center max-w-2xl mx-auto space-y-3 mb-8">
       <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold">
-        <i data-lucide="zap" class="w-3.5 h-3.5 text-indigo-400"></i>
-        <span>Intent-Driven Ecosystem</span>
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-400"></i>
+        <span>Anti-Directory Intent Engine</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white">
-        Building a Network, <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400">Not a Directory.</span>
-      </h1>
-      <p class="text-sm text-slate-300 leading-relaxed">
-        Connect students, alumni, faculty, founders, recruiters, and institutions based on <b>verified expertise, active intent, and real opportunities</b>.
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white">
+        Select Your Portal & <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400">Sign In</span>
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-300">
+        Choose your role below. Each portal has tailored workflows, proof-of-work generators, and instant demo access.
       </p>
     </div>
 
-    <!-- 6 Role Portals Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
+    <!-- Interactive 6-Role Switcher Bar -->
+    <div class="w-full max-w-4xl bg-slate-900/90 border border-slate-800 rounded-2xl p-1.5 mb-6 shadow-xl flex items-center overflow-x-auto custom-scrollbar">
+      <div id="hero-role-tabs" class="flex space-x-1 w-full text-xs font-bold">
+        <!-- Injected dynamically by JS -->
+      </div>
+    </div>
 
-      <!-- 1. Student Portal -->
-      <div onclick="openLoginModal('student')" class="glass-panel glass-card-hover rounded-2xl p-6 cursor-pointer border border-slate-800/80 hover:border-indigo-500/50 transition relative overflow-hidden group">
-        <div class="w-12 h-12 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-4 group-hover:scale-110 transition">
-          <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+    <!-- The Split Interactive Login Card -->
+    <div class="glass-panel rounded-3xl border border-slate-800 w-full grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-2xl">
+      
+      <!-- Left Column: Role Value Proposition & Visual Hero -->
+      <div id="hero-side-banner" class="lg:col-span-5 p-8 flex flex-col justify-between bg-gradient-to-br from-indigo-950/80 via-slate-900 to-slate-950 border-b lg:border-b-0 lg:border-r border-slate-800 relative">
+        <div class="space-y-4">
+          <div id="hero-side-icon-box" class="w-14 h-14 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+            <i id="hero-side-icon" data-lucide="graduation-cap" class="w-7 h-7"></i>
+          </div>
+
+          <div>
+            <span id="hero-side-badge" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+              Verified Student Access
+            </span>
+            <h3 id="hero-side-title" class="text-2xl font-black text-white mt-2">Student Builder Gateway</h3>
+            <p id="hero-side-desc" class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Connect directly with alumni in your target companies without cold DMs. Showcase real code, solve startup bounties, and secure high-conviction job referrals.
+            </p>
+          </div>
+
+          <!-- Role Benefits Bullet Points -->
+          <div id="hero-side-bullets" class="space-y-2.5 pt-2">
+            <!-- Injected by JS -->
+          </div>
         </div>
-        <div class="flex items-center justify-between">
-          <h3 class="text-base font-bold text-white group-hover:text-indigo-400 transition">Student Portal</h3>
-          <span class="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">Aman Sharma</span>
-        </div>
-        <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-          Submit GitHub proof-of-work, generate AI-verified referral dossiers, and claim paid startup bounties.
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-indigo-400 font-semibold">
-          <span>Sign In as Student</span>
-          <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+
+        <div class="pt-6 border-t border-slate-800/80 mt-6 flex items-center justify-between text-[11px] text-slate-400">
+          <span>Apex Institute Node #402</span>
+          <span class="text-emerald-400 flex items-center space-x-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>Auth Active</span>
+          </span>
         </div>
       </div>
 
-      <!-- 2. Alumni Portal -->
-      <div onclick="openLoginModal('alumnus')" class="glass-panel glass-card-hover rounded-2xl p-6 cursor-pointer border border-slate-800/80 hover:border-emerald-500/50 transition relative overflow-hidden group">
-        <div class="w-12 h-12 rounded-xl bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition">
-          <i data-lucide="briefcase" class="w-6 h-6"></i>
+      <!-- Right Column: Interactive Login Form -->
+      <div class="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-center space-y-6">
+        
+        <div>
+          <h3 id="hero-form-heading" class="text-xl font-bold text-white">Sign In to Student Portal</h3>
+          <p id="hero-form-subheading" class="text-xs text-slate-400 mt-1">Use your campus credentials or instant 1-click hackathon bypass.</p>
         </div>
-        <div class="flex items-center justify-between">
-          <h3 class="text-base font-bold text-white group-hover:text-emerald-400 transition">Alumni Portal</h3>
-          <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Rohan @ Swiggy</span>
-        </div>
-        <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-          Zero-spam 1-minute candidate review desk. 1-click verified internal referrals backed by code benchmarks.
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-emerald-400 font-semibold">
-          <span>Sign In as Alumnus</span>
-          <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-        </div>
-      </div>
 
-      <!-- 3. Founder Portal -->
-      <div onclick="openLoginModal('founder')" class="glass-panel glass-card-hover rounded-2xl p-6 cursor-pointer border border-slate-800/80 hover:border-amber-500/50 transition relative overflow-hidden group">
-        <div class="w-12 h-12 rounded-xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition">
-          <i data-lucide="rocket" class="w-6 h-6"></i>
+        <!-- ⚡ Fast Hackathon Instant Sign-In Box -->
+        <div class="p-4 rounded-2xl bg-slate-900 border border-indigo-500/30 space-y-3 glow-indigo">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xs font-bold text-white">Judges Fast-Track Demo Pass</span>
+            </div>
+            <span class="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">Pre-Verified</span>
+          </div>
+          <p id="hero-demo-text" class="text-xs text-slate-300">
+            Sign in instantly as <b>Aman Sharma</b> (CSE '26 • Distributed Systems Builder) with pre-loaded GitHub data and intent.
+          </p>
+          <button onclick="executeHeroLogin()" class="w-full py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2 transition">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+            <span>1-Click Instant Sign In</span>
+          </button>
         </div>
-        <div class="flex items-center justify-between">
-          <h3 class="text-base font-bold text-white group-hover:text-amber-400 transition">Founder Portal</h3>
-          <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">Neha @ YC W24</span>
-        </div>
-        <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-          Post micro-bounties (\$50–\$200) for MVPs, sponsor hackathon travel squads, and hire vetted builders.
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-amber-400 font-semibold">
-          <span>Sign In as Founder</span>
-          <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-        </div>
-      </div>
 
-      <!-- 4. Faculty Portal -->
-      <div onclick="openLoginModal('faculty')" class="glass-panel glass-card-hover rounded-2xl p-6 cursor-pointer border border-slate-800/80 hover:border-purple-500/50 transition relative overflow-hidden group">
-        <div class="w-12 h-12 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition">
-          <i data-lucide="book-open" class="w-6 h-6"></i>
-        </div>
-        <div class="flex items-center justify-between">
-          <h3 class="text-base font-bold text-white group-hover:text-purple-400 transition">Faculty Portal</h3>
-          <span class="text-[10px] font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">Dr. Verma (Dean R&D)</span>
-        </div>
-        <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-          Connect final-year capstone projects with industry alumni co-guides at Google, AWS, and Tier-1 labs.
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-purple-400 font-semibold">
-          <span>Sign In as Faculty</span>
-          <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-        </div>
-      </div>
+        <!-- Alternative Form Fields -->
+        <form onsubmit="handleHeroLoginSubmit(event)" class="space-y-4 pt-2">
+          
+          <div id="hero-dynamic-fields" class="space-y-3 text-xs">
+            <!-- Injected by JS according to selected role -->
+          </div>
 
-      <!-- 5. Recruiter Portal -->
-      <div onclick="openLoginModal('recruiter')" class="glass-panel glass-card-hover rounded-2xl p-6 cursor-pointer border border-slate-800/80 hover:border-cyan-500/50 transition relative overflow-hidden group">
-        <div class="w-12 h-12 rounded-xl bg-cyan-600/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
-          <i data-lucide="target" class="w-6 h-6"></i>
-        </div>
-        <div class="flex items-center justify-between">
-          <h3 class="text-base font-bold text-white group-hover:text-cyan-400 transition">Recruiter Radar</h3>
-          <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">Vikram @ Razorpay</span>
-        </div>
-        <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-          Source top 5% campus talent vetted by peer alumni endorsements, verified commits, and hackathon wins.
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-cyan-400 font-semibold">
-          <span>Sign In as Recruiter</span>
-          <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-        </div>
-      </div>
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" checked class="rounded bg-slate-900 border-slate-700 text-indigo-600">
+              <span>Remember session</span>
+            </label>
+            <a href="#" class="text-indigo-400 hover:underline">Forgot password?</a>
+          </div>
 
-      <!-- 6. Institution Admin Portal -->
-      <div onclick="openLoginModal('institution')" class="glass-panel glass-card-hover rounded-2xl p-6 cursor-pointer border border-slate-800/80 hover:border-rose-500/50 transition relative overflow-hidden group">
-        <div class="w-12 h-12 rounded-xl bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-rose-400 mb-4 group-hover:scale-110 transition">
-          <i data-lucide="landmark" class="w-6 h-6"></i>
-        </div>
-        <div class="flex items-center justify-between">
-          <h3 class="text-base font-bold text-white group-hover:text-rose-400 transition">Institution Portal</h3>
-          <span class="text-[10px] font-mono text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">Dean Sharma</span>
-        </div>
-        <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-          Campus command desk tracking real placement conversion, alumni geo density, and capstone collaborations.
-        </p>
-        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-rose-400 font-semibold">
-          <span>Sign In as Institution</span>
-          <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-        </div>
+          <button type="submit" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl text-xs border border-slate-700 transition flex items-center justify-center space-x-2">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            <span>Sign In with Credentials</span>
+          </button>
+        </form>
+
       </div>
 
     </div>
 
   </section>
 
-  <!-- ================= AUTHENTICATED APPLICATION WORKSPACE ================= -->
+  <!-- ================= SCREEN 2: AUTHENTICATED APPLICATION WORKSPACE ================= -->
   <div id="authenticated-workspace" class="hidden flex-1 flex flex-col">
     
     <!-- Workspace Top Header -->
-    <header class="sticky top-0 z-40 bg-[#060911]/90 backdrop-blur-md border-b border-slate-800">
+    <header class="sticky top-0 z-40 bg-[#040711]/90 backdrop-blur-md border-b border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
         
         <!-- Brand Logo & Portal Tag -->
@@ -272,7 +327,7 @@
         <!-- 6-Role Switcher Pills for Instant Demo -->
         <div class="hidden lg:flex items-center bg-slate-900 border border-slate-800 rounded-xl p-1 shadow-inner">
           <span class="text-[10px] font-bold uppercase text-slate-400 px-2.5">Switch View:</span>
-          <div id="role-pill-container" class="flex space-x-1 text-xs">
+          <div id="workspace-role-pills" class="flex space-x-1 text-xs">
             <!-- Injected by JS -->
           </div>
         </div>
@@ -672,56 +727,6 @@
 
     </main>
 
-  </div>
-
-  <!-- ================= AUTHENTICATION MODAL (ROLE-SPECIFIC LOGIN) ================= -->
-  <div id="modal-login" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl relative overflow-hidden">
-      
-      <button onclick="closeModal('modal-login')" class="absolute top-5 right-5 text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <!-- Modal Role Brand Header -->
-      <div class="text-center space-y-2">
-        <div id="login-modal-icon-container" class="w-14 h-14 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center mx-auto text-indigo-400">
-          <i id="login-modal-icon" data-lucide="graduation-cap" class="w-7 h-7"></i>
-        </div>
-        <h3 id="login-modal-title" class="text-xl font-bold text-white">Sign In to Student Portal</h3>
-        <p id="login-modal-desc" class="text-xs text-slate-400">Enter with institutional identity or demo bypass.</p>
-      </div>
-
-      <!-- Quick Demo One-Click Sign In -->
-      <div class="p-3.5 bg-indigo-950/40 border border-indigo-500/20 rounded-2xl text-xs space-y-2">
-        <div class="flex items-center justify-between text-indigo-300 font-semibold">
-          <span>⚡ One-Click Demo Credentials:</span>
-          <span class="text-[10px] bg-indigo-500/20 px-1.5 py-0.5 rounded font-mono">Judges Instant</span>
-        </div>
-        <div class="text-[11px] text-slate-300">
-          User: <b id="demo-user-name" class="text-white">Aman Sharma</b> • Role: <span id="demo-user-role" class="text-emerald-400">Student</span>
-        </div>
-        <button onclick="executeDemoLogin()" class="w-full py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-xl text-xs shadow-md transition flex items-center justify-center space-x-1.5">
-          <i data-lucide="zap" class="w-3.5 h-3.5"></i>
-          <span>Instant One-Click Login</span>
-        </button>
-      </div>
-
-      <!-- Standard Form Alternative -->
-      <form onsubmit="handleStandardLogin(event)" class="space-y-3 pt-2 border-t border-slate-800">
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Email / Institutional SSO ID</label>
-          <input type="email" id="login-input-email" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white" placeholder="name@apex.edu">
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Password</label>
-          <input type="password" id="login-input-pass" value="password123" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-        </div>
-        <button type="submit" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl text-xs border border-slate-700 transition">
-          Sign In with Password
-        </button>
-      </form>
-
-    </div>
   </div>
 
   <!-- ================= MODAL: POST NEW BOUNTY / OPPORTUNITY ================= -->

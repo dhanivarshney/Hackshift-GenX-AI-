@@ -1,22 +1,13 @@
-// NexusIQ — Professional UI State Store & Multi-Portal Authentication Engine
+// NexusIQ — Cinematic Splash, Unified Hero Login Engine & Role-Specific Dashboard Workspace
 // Track 1: Alumni Network & Professional Connections (Building a Network, Not a Directory)
 
 const API_BASE = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
   ? `${window.location.origin}/api`
   : '/api';
 
-// ================= GLOBAL STATE =================
-let personasState = [];
-let currentRoleIndex = 0;
-let bountiesState = [];
-let referralsState = [];
-let latestAnalysis = null;
-let activeModalRoleId = 'student';
-let isAuthenticated = false;
-
-// Default Personas Master Roster
-const MASTER_PERSONAS = [
-  {
+// ================= MASTER 6-ROLE CONFIGURATIONS =================
+const ROLE_CONFIGS = {
+  student: {
     id: 'student',
     roleLabel: 'Student',
     portalTitle: 'Student Portal',
@@ -28,9 +19,25 @@ const MASTER_PERSONAS = [
     goal: "Seeking Backend / Distributed Systems SDE Referral",
     activeIntent: "Seeking SDE Referral (Backend / Go)",
     icon: 'graduation-cap',
-    accentColor: 'indigo'
+    accentColor: 'indigo',
+    bannerTitle: 'Student Builder Gateway',
+    bannerBadge: 'Verified Student Access',
+    bannerDesc: 'Connect directly with alumni in your target companies without cold DMs. Showcase real code, solve startup bounties, and secure high-conviction job referrals.',
+    demoText: 'Sign in instantly as <b>Aman Sharma</b> (CSE \'26 • Go / Distributed Systems Builder) with pre-loaded GitHub data and active referral requests.',
+    defaultTab: 'intent-radar',
+    bullets: [
+      { icon: 'shield-check', title: 'Zero Cold DMs', text: 'Reach alumni with verified code readiness, not generic text.' },
+      { icon: 'zap', title: 'Earn Startup Bounties', text: 'Solve real micro-tasks (\$50–\$200) funded by alumni founders.' },
+      { icon: 'compass', title: 'Intent Matchmaking', text: 'Direct match with seniors hiring in your exact tech stack.' }
+    ],
+    fields: [
+      { label: 'College Roll Number / Student Email', type: 'text', placeholder: '2022CS084@apex.edu', value: '2022CS084@apex.edu' },
+      { label: 'Branch & Graduation Year', type: 'text', placeholder: 'CSE - 2026', value: 'B.Tech CSE — Class of 2026' },
+      { label: 'GitHub Profile URL', type: 'text', placeholder: 'https://github.com/username', value: 'https://github.com/aman-cs' },
+      { label: 'Password', type: 'password', placeholder: '••••••••', value: 'password123' }
+    ]
   },
-  {
+  alumnus: {
     id: 'alumnus',
     roleLabel: 'Alumnus',
     portalTitle: 'Alumni Portal',
@@ -42,9 +49,25 @@ const MASTER_PERSONAS = [
     goal: "Hiring 2 Interns for High-Throughput Routing Team",
     activeIntent: "Hiring 2 Interns for Team",
     icon: 'briefcase',
-    accentColor: 'emerald'
+    accentColor: 'emerald',
+    bannerTitle: 'Alumni Mentorship & Referral Desk',
+    bannerBadge: 'Verified Alumni Network',
+    bannerDesc: 'Help passionate college juniors without drowning in spam. Review 1-minute executive dossiers, endorse verified talent, and manage your monthly referral quota.',
+    demoText: 'Sign in instantly as <b>Rohan Mehta</b> (SDE-2 Backend @ Swiggy • Batch \'20) with active intern referral slots and candidate queue.',
+    defaultTab: 'alumnus-inbox',
+    bullets: [
+      { icon: 'inbox', title: '1-Minute Review Cards', text: 'No 5-page resumes. Review concise code benchmarks and test coverage.' },
+      { icon: 'check-check', title: '1-Click ATS Referral', text: 'Auto-generate verified endorsement blurbs for your internal company portal.' },
+      { icon: 'clock', title: 'Quota Protection', text: 'Strict limit of 3 reviews/month so your time is always respected.' }
+    ],
+    fields: [
+      { label: 'Work Corporate Email', type: 'email', placeholder: 'rohan.mehta@swiggy.in', value: 'rohan.mehta@swiggy.in' },
+      { label: 'College Graduation Batch', type: 'text', placeholder: 'Batch 2020', value: 'Apex CSE — Batch of 2020' },
+      { label: 'Current Company & Designation', type: 'text', placeholder: 'Swiggy - SDE-2', value: 'Swiggy — SDE-2 Backend' },
+      { label: 'Password', type: 'password', placeholder: '••••••••', value: 'password123' }
+    ]
   },
-  {
+  founder: {
     id: 'founder',
     roleLabel: 'Founder',
     portalTitle: 'Founder Portal',
@@ -56,9 +79,25 @@ const MASTER_PERSONAS = [
     goal: "Funding Micro-Bounties & Sponsoring Hackathon Squads",
     activeIntent: "Funding Campus Bounties & Startups",
     icon: 'rocket',
-    accentColor: 'amber'
+    accentColor: 'amber',
+    bannerTitle: 'Founder Opportunity & Bounty Hub',
+    bannerBadge: 'Alumni Founder Syndicate',
+    bannerDesc: 'Get MVPs and micro-services built rapidly by hungry campus builders. Sponsor hackathon squads, fund bounties, and hire pre-vetted interns.',
+    demoText: 'Sign in instantly as <b>Neha Kapoor</b> (Founder & CEO @ HyperScale AI • YC W24) with active micro-bounties and escrow funding.',
+    defaultTab: 'bounties',
+    bullets: [
+      { icon: 'coins', title: 'Escrow-Backed Bounties', text: 'Post ₹3,000 to ₹10,000 tasks and get clean production code in 48 hours.' },
+      { icon: 'trophy', title: 'Hackathon Squad Grants', text: 'Sponsor travel and cloud credits for top college finalist teams.' },
+      { icon: 'user-check', title: 'Direct Founder Hiring', text: 'Hire students based on real pull requests, skipping recruitment agencies.' }
+    ],
+    fields: [
+      { label: 'Founder Work Email', type: 'email', placeholder: 'neha@hyperscale.ai', value: 'neha@hyperscale.ai' },
+      { label: 'Startup Name & Stage', type: 'text', placeholder: 'HyperScale AI (YC W24)', value: 'HyperScale AI (YC W24)' },
+      { label: 'AngelList / Company Website', type: 'text', placeholder: 'https://hyperscale.ai', value: 'https://hyperscale.ai' },
+      { label: 'Password', type: 'password', placeholder: '••••••••', value: 'password123' }
+    ]
   },
-  {
+  faculty: {
     id: 'faculty',
     roleLabel: 'Faculty',
     portalTitle: 'Faculty Portal',
@@ -70,9 +109,25 @@ const MASTER_PERSONAS = [
     goal: "Connecting 8 Capstone Research Projects with Industry Alum Co-Guides",
     activeIntent: "Seeking Industry Co-Guide for Capstone",
     icon: 'book-open',
-    accentColor: 'purple'
+    accentColor: 'purple',
+    bannerTitle: 'Faculty Capstone & Research Desk',
+    bannerBadge: 'Academic & Industry Linkage',
+    bannerDesc: 'Supercharge student final-year capstone projects by pairing them with industry alumni mentors at Google, AWS, and tier-1 research labs.',
+    demoText: 'Sign in instantly as <b>Dr. R.K. Verma</b> (Professor & Dean R&D) managing 64 industry-mentored research capstones.',
+    defaultTab: 'intent-radar',
+    bullets: [
+      { icon: 'git-merge', title: 'Industry Co-Guides', text: 'Pair student research teams with alumni engineers for real-world validation.' },
+      { icon: 'file-text', title: 'Conference Papers', text: 'Publish joint IEEE/ACM conference papers co-authored with industry alumni.' },
+      { icon: 'award', title: 'Project Incubation', text: 'Fast-track promising capstone projects into university patents and startup grants.' }
+    ],
+    fields: [
+      { label: 'Institutional .edu Email', type: 'email', placeholder: 'rkverma@apex.edu', value: 'rkverma@apex.edu' },
+      { label: 'Department / Faculty Designation', type: 'text', placeholder: 'Dean R&D - CSE Dept', value: 'Computer Science & Engineering — Dean R&D' },
+      { label: 'Research Domain', type: 'text', placeholder: 'Cloud & Distributed Systems', value: 'Cloud Computing, Edge AI & Distributed Systems' },
+      { label: 'Password', type: 'password', placeholder: '••••••••', value: 'password123' }
+    ]
   },
-  {
+  recruiter: {
     id: 'recruiter',
     roleLabel: 'Recruiter',
     portalTitle: 'Recruiter Radar',
@@ -84,9 +139,25 @@ const MASTER_PERSONAS = [
     goal: "Evaluating Vetted Students with High Alumni Endorsement Scores",
     activeIntent: "Hiring Top 5% Builders",
     icon: 'target',
-    accentColor: 'cyan'
+    accentColor: 'cyan',
+    bannerTitle: 'Verified Campus Talent Radar',
+    bannerBadge: 'Corporate Talent Acquisition',
+    bannerDesc: 'Source high-velocity campus engineers vetted by alumni endorsements, verified commit history, and code readiness scores (0–100).',
+    demoText: 'Sign in instantly as <b>Vikram Seth</b> (Tech Talent Partner @ Razorpay) with access to top 5% campus backend builders.',
+    defaultTab: 'intent-radar',
+    bullets: [
+      { icon: 'bar-chart-3', title: 'Code Readiness Benchmarks', text: 'Filter by test coverage, latency benchmarks, and algorithmic depth.' },
+      { icon: 'badge-check', title: 'Alumni Staked Trust', text: 'Prioritize students vetted and endorsed by alumni currently in your company.' },
+      { icon: 'calendar', title: 'Fast-Track Scheduling', text: 'Schedule 1st round interviews in 1-click without resume screening lag.' }
+    ],
+    fields: [
+      { label: 'Corporate Recruiter Email', type: 'email', placeholder: 'vikram.seth@razorpay.com', value: 'vikram.seth@razorpay.com' },
+      { label: 'Company Name & Hiring Team', type: 'text', placeholder: 'Razorpay - Core Payments', value: 'Razorpay — Core Payments & Infrastructure' },
+      { label: 'Open Requisition ID', type: 'text', placeholder: 'REQ-2026-ENG-44', value: 'REQ-2026-SDE-BACKEND' },
+      { label: 'Password', type: 'password', placeholder: '••••••••', value: 'password123' }
+    ]
   },
-  {
+  institution: {
     id: 'institution',
     roleLabel: 'Institution',
     portalTitle: 'Institution Command',
@@ -98,10 +169,34 @@ const MASTER_PERSONAS = [
     goal: "Monitoring Real Placement Impact, Capstone Co-Mentoring & Bounty Earnings",
     activeIntent: "Monitoring Real Placement Impact",
     icon: 'landmark',
-    accentColor: 'rose'
+    accentColor: 'rose',
+    bannerTitle: 'Institution Impact & Outcome Command',
+    bannerBadge: 'University Executive Desk',
+    bannerDesc: 'Transform your college alumni directory from a dead phonebook into an active economic network. Track placement conversions, alumni density, and bounty earnings.',
+    demoText: 'Sign in instantly as <b>Dean Sharma</b> (Alumni Relations Administration) monitoring campus placement ROI and network velocity.',
+    defaultTab: 'institution',
+    bullets: [
+      { icon: 'activity', title: 'Real Outcome Metrics', text: 'Track verified referrals, conversion to offers, and student bounty payouts.' },
+      { icon: 'map', title: 'Alumni Geographic Mapping', text: 'Interactive geo-density across tech hubs: Bangalore, Gurgaon, SF, London.' },
+      { icon: 'landmark', title: 'Accreditation Ready', text: 'Instant institutional reports for NAAC / NBA showing active alumni engagement.' }
+    ],
+    fields: [
+      { label: 'Dean / Administrator Email', type: 'email', placeholder: 'dean.alumni@apex.edu', value: 'dean.alumni@apex.edu' },
+      { label: 'Campus Accreditation Code', type: 'text', placeholder: 'APEX-UNIV-NAAC-A++', value: 'APEX-UNIV-NAAC-A++' },
+      { label: '2FA Administrative Security Key', type: 'text', placeholder: '••••-••••-••••', value: 'SEC-KEY-9942' },
+      { label: 'Master Password', type: 'password', placeholder: '••••••••', value: 'password123' }
+    ]
   }
-];
+};
 
+let currentHeroRoleId = 'student';
+let activeSessionRoleId = null;
+let bountiesState = [];
+let referralsState = [];
+let latestAnalysis = null;
+let splashTimer = null;
+
+// ================= MATCH RADAR DATA =================
 const MATCH_RADAR_ITEMS = [
   {
     id: 'match-1',
@@ -195,22 +290,18 @@ const MATCH_RADAR_ITEMS = [
   }
 ];
 
-// ================= INITIALIZATION =================
+// ================= INITIALIZATION & 3-SECOND SPLASH =================
 document.addEventListener('DOMContentLoaded', async () => {
-  personasState = [...MASTER_PERSONAS];
-  renderRolePills();
+  renderHeroRoleTabs();
+  renderHeroRoleView(currentHeroRoleId);
   renderRadarCards(MATCH_RADAR_ITEMS);
   setupLineageCanvas();
 
-  // Check if session previously active
-  const savedRole = localStorage.getItem('nexusiq_active_session_role');
-  if (savedRole) {
-    loginAs(savedRole, false);
-  }
+  // Run 3-second cinematic intro splash
+  startSplashCountdown();
 
-  // Fetch backend data
+  // Load backend data in background
   await Promise.all([
-    fetchPersonasFromAPI(),
     fetchBountiesFromAPI(),
     fetchReferralsFromAPI()
   ]);
@@ -218,121 +309,183 @@ document.addEventListener('DOMContentLoaded', async () => {
   lucide.createIcons();
 });
 
-// ================= AUTHENTICATION & PORTAL FLOW =================
-function openLoginModal(roleId) {
-  activeModalRoleId = roleId;
-  const p = MASTER_PERSONAS.find(x => x.id === roleId) || MASTER_PERSONAS[0];
-
-  document.getElementById('login-modal-title').textContent = `Sign In to ${p.portalTitle}`;
-  document.getElementById('demo-user-name').textContent = p.name;
-  document.getElementById('demo-user-role').textContent = `${p.roleLabel} (${p.companyOrCollege})`;
-  document.getElementById('login-input-email').value = `${roleId}@apex.edu`;
-
-  // Update modal icon
-  const iconEl = document.getElementById('login-modal-icon');
-  iconEl.setAttribute('data-lucide', p.icon);
-
-  openModal('modal-login');
-  lucide.createIcons();
-}
-
-function executeDemoLogin() {
-  closeModal('modal-login');
-  loginAs(activeModalRoleId, true);
-}
-
-function handleStandardLogin(event) {
-  event.preventDefault();
-  closeModal('modal-login');
-  loginAs(activeModalRoleId, true);
-}
-
-function loginAs(roleId, showWelcomeToast = true) {
-  const targetIndex = personasState.findIndex(p => p.id === roleId);
-  if (targetIndex === -1) return;
-
-  currentRoleIndex = targetIndex;
-  const p = personasState[currentRoleIndex];
-  isAuthenticated = true;
-
-  localStorage.setItem('nexusiq_active_session_role', roleId);
-
-  // Transition UI from Gateway to Authenticated Workspace
-  document.getElementById('auth-gateway').classList.add('hidden');
-  document.getElementById('authenticated-workspace').classList.remove('hidden');
-
-  // Update Top Profile
-  document.getElementById('current-portal-badge').textContent = p.portalTitle;
-  document.getElementById('user-header-avatar').textContent = p.avatar;
-  document.getElementById('user-header-name').textContent = p.name;
-  document.getElementById('user-header-role').textContent = `${p.roleLabel} • ${p.companyOrCollege}`;
-
-  // Update Hero Banner
-  document.getElementById('hero-avatar').textContent = p.avatar;
-  document.getElementById('hero-name').textContent = p.name;
-  document.getElementById('hero-tag').textContent = `${p.roleLabel} (${p.branch})`;
-  document.getElementById('hero-bio').textContent = p.bio;
-  document.getElementById('hero-goal').innerHTML = `<i data-lucide="target" class="w-3.5 h-3.5"></i><span>${p.goal}</span>`;
-
-  // Update Active Intent badge
-  document.getElementById('active-intent-text').textContent = p.activeIntent;
-
-  renderRolePills();
-
-  // Context-aware default tab for each role
-  if (p.id === 'alumnus') {
-    switchTab('alumnus-inbox');
-  } else if (p.id === 'founder') {
-    switchTab('bounties');
-  } else if (p.id === 'institution') {
-    switchTab('institution');
-  } else {
-    switchTab('intent-radar');
+function startSplashCountdown() {
+  const progressBar = document.getElementById('splash-progress');
+  const timerText = document.getElementById('splash-timer-text');
+  
+  if (progressBar) {
+    // Trigger smooth fill
+    setTimeout(() => {
+      progressBar.style.width = '100%';
+    }, 50);
   }
 
+  let remaining = 3;
+  splashTimer = setInterval(() => {
+    remaining--;
+    if (timerText) timerText.textContent = `${remaining}s`;
+
+    if (remaining <= 0) {
+      clearInterval(splashTimer);
+      dismissSplashImmediately();
+    }
+  }, 1000);
+}
+
+function dismissSplashImmediately() {
+  if (splashTimer) clearInterval(splashTimer);
+  const splash = document.getElementById('splash-screen');
+  if (splash) {
+    splash.style.opacity = '0';
+    splash.style.transform = 'scale(1.04)';
+    setTimeout(() => {
+      splash.style.display = 'none';
+    }, 800);
+  }
+}
+
+// ================= HERO LOGIN ROLE SWITCHER =================
+function renderHeroRoleTabs() {
+  const container = document.getElementById('hero-role-tabs');
+  if (!container) return;
+
+  const roles = Object.keys(ROLE_CONFIGS);
+  container.innerHTML = roles.map(key => {
+    const isSelected = key === currentHeroRoleId;
+    const cfg = ROLE_CONFIGS[key];
+    const activeClass = isSelected
+      ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
+      : 'text-slate-400 hover:text-white hover:bg-slate-800/80';
+    return `
+      <button onclick="renderHeroRoleView('${key}')" class="flex-1 py-2 px-3 rounded-xl transition text-center whitespace-nowrap flex items-center justify-center space-x-1.5 ${activeClass}">
+        <i data-lucide="${cfg.icon}" class="w-3.5 h-3.5"></i>
+        <span>${cfg.roleLabel}</span>
+      </button>
+    `;
+  }).join('');
+}
+
+function renderHeroRoleView(roleId) {
+  currentHeroRoleId = roleId;
+  const cfg = ROLE_CONFIGS[roleId] || ROLE_CONFIGS.student;
+
+  renderHeroRoleTabs();
+
+  // Side Banner Updates
+  document.getElementById('hero-side-icon').setAttribute('data-lucide', cfg.icon);
+  document.getElementById('hero-side-badge').textContent = cfg.bannerBadge;
+  document.getElementById('hero-side-title').textContent = cfg.bannerTitle;
+  document.getElementById('hero-side-desc').textContent = cfg.bannerDesc;
+
+  // Bullets
+  const bulletsEl = document.getElementById('hero-side-bullets');
+  bulletsEl.innerHTML = cfg.bullets.map(b => `
+    <div class="flex items-start space-x-2.5">
+      <div class="p-1 rounded-lg bg-indigo-500/10 text-indigo-400 mt-0.5">
+        <i data-lucide="${b.icon}" class="w-3.5 h-3.5"></i>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold text-white">${b.title}</h4>
+        <p class="text-[11px] text-slate-400 leading-tight">${b.text}</p>
+      </div>
+    </div>
+  `).join('');
+
+  // Form Headings & Demo Info
+  document.getElementById('hero-form-heading').textContent = `Sign In to ${cfg.portalTitle}`;
+  document.getElementById('hero-form-subheading').textContent = `Enter as ${cfg.roleLabel.toLowerCase()} or use 1-click hackathon bypass.`;
+  document.getElementById('hero-demo-text').innerHTML = cfg.demoText;
+
+  // Dynamic Input Fields
+  const fieldsEl = document.getElementById('hero-dynamic-fields');
+  fieldsEl.innerHTML = cfg.fields.map(f => `
+    <div>
+      <label class="block text-xs font-medium text-slate-300 mb-1">${f.label}</label>
+      <input type="${f.type}" value="${f.value}" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500" placeholder="${f.placeholder}">
+    </div>
+  `).join('');
+
+  lucide.createIcons();
+}
+
+function executeHeroLogin() {
+  authenticateAndOpenWorkspace(currentHeroRoleId, true);
+}
+
+function handleHeroLoginSubmit(event) {
+  event.preventDefault();
+  authenticateAndOpenWorkspace(currentHeroRoleId, true);
+}
+
+function directAuthenticateAs(roleId) {
+  dismissSplashImmediately();
+  authenticateAndOpenWorkspace(roleId, true);
+}
+
+// ================= AUTHENTICATION & WORKSPACE ACTIVATION =================
+function authenticateAndOpenWorkspace(roleId, showConfetti = true) {
+  const cfg = ROLE_CONFIGS[roleId] || ROLE_CONFIGS.student;
+  activeSessionRoleId = roleId;
+  currentHeroRoleId = roleId;
+
+  // Hide login hero screen, reveal authenticated workspace
+  document.getElementById('hero-login-screen').classList.add('hidden');
+  document.getElementById('authenticated-workspace').classList.remove('hidden');
+
+  // Update Top Profile & Portal Tag
+  document.getElementById('current-portal-badge').textContent = cfg.portalTitle;
+  document.getElementById('user-header-avatar').textContent = cfg.avatar;
+  document.getElementById('user-header-name').textContent = cfg.name;
+  document.getElementById('user-header-role').textContent = `${cfg.roleLabel} • ${cfg.companyOrCollege}`;
+
+  // Update Hero Banner
+  document.getElementById('hero-avatar').textContent = cfg.avatar;
+  document.getElementById('hero-name').textContent = cfg.name;
+  document.getElementById('hero-tag').textContent = `${cfg.roleLabel} (${cfg.branch})`;
+  document.getElementById('hero-bio').textContent = cfg.bio;
+  document.getElementById('hero-goal').innerHTML = `<i data-lucide="target" class="w-3.5 h-3.5"></i><span>${cfg.goal}</span>`;
+
+  // Update Active Intent badge
+  document.getElementById('active-intent-text').textContent = cfg.activeIntent;
+
+  renderWorkspaceRolePills();
+
+  // Navigate directly to the most powerful tab for this role!
+  switchTab(cfg.defaultTab || 'intent-radar');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   lucide.createIcons();
 
-  if (showWelcomeToast) {
+  if (showConfetti) {
     triggerConfetti();
-    showToast(`Welcome, ${p.name}! Authenticated to ${p.portalTitle}.`);
+    showToast(`Welcome back, ${cfg.name}! Authenticated to ${cfg.portalTitle}.`);
   }
 }
 
 function handleLogout() {
-  isAuthenticated = false;
-  localStorage.removeItem('nexusiq_active_session_role');
-
+  activeSessionRoleId = null;
   document.getElementById('authenticated-workspace').classList.add('hidden');
-  document.getElementById('auth-gateway').classList.remove('hidden');
-
-  showToast("Signed out. Select a portal to enter.");
-  lucide.createIcons();
+  document.getElementById('hero-login-screen').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showToast("Logged out successfully.");
 }
 
-// ================= ROLE SWITCHER PILLS =================
-function renderRolePills() {
-  const container = document.getElementById('role-pill-container');
+function renderWorkspaceRolePills() {
+  const container = document.getElementById('workspace-role-pills');
   if (!container) return;
 
-  let html = '';
-  personasState.forEach((p, idx) => {
-    const isSelected = idx === currentRoleIndex;
+  const roles = Object.keys(ROLE_CONFIGS);
+  container.innerHTML = roles.map(key => {
+    const isSelected = key === activeSessionRoleId;
     const activeClass = isSelected
       ? 'bg-indigo-600 text-white font-bold shadow-sm'
       : 'text-slate-400 hover:text-white hover:bg-slate-800';
-    html += `
-      <button onclick="switchRole(${idx})" class="px-2.5 py-1 rounded-lg transition text-xs whitespace-nowrap ${activeClass}">
-        ${p.roleLabel}
+    return `
+      <button onclick="authenticateAndOpenWorkspace('${key}', true)" class="px-2.5 py-1 rounded-lg transition text-xs whitespace-nowrap ${activeClass}">
+        ${ROLE_CONFIGS[key].roleLabel}
       </button>
     `;
-  });
-
-  container.innerHTML = html;
-}
-
-function switchRole(index) {
-  const p = personasState[index];
-  loginAs(p.id, true);
+  }).join('');
 }
 
 // ================= NAVIGATION TABS =================
@@ -367,20 +520,7 @@ function switchTab(tabId) {
   lucide.createIcons();
 }
 
-// ================= API REST INTEGRATION =================
-async function fetchPersonasFromAPI() {
-  try {
-    const res = await fetch(`${API_BASE}/personas`);
-    if (res.ok) {
-      const data = await res.json();
-      if (data.personas && data.personas.length > 0) {
-        personasState = data.personas;
-        renderRolePills();
-      }
-    }
-  } catch (e) {}
-}
-
+// ================= REST API FETCHERS =================
 async function fetchBountiesFromAPI() {
   try {
     const res = await fetch(`${API_BASE}/bounties`);
@@ -678,7 +818,7 @@ async function handlePostBountySubmit(event) {
   const tagsStr = document.getElementById('bounty-tags').value;
   const desc = document.getElementById('bounty-desc').value;
 
-  const currentPoster = personasState[currentRoleIndex];
+  const currentPoster = ROLE_CONFIGS[activeSessionRoleId || 'founder'];
   const tags = tagsStr.split(',').map(s => s.trim()).filter(Boolean);
 
   try {
@@ -953,7 +1093,7 @@ async function saveActiveIntent() {
   const selected = document.querySelector('input[name="intent-choice"]:checked');
   if (selected) {
     const newIntent = selected.value;
-    const currentP = personasState[currentRoleIndex];
+    const currentP = ROLE_CONFIGS[activeSessionRoleId || 'student'];
 
     try {
       await fetch(`${API_BASE}/intent`, {
