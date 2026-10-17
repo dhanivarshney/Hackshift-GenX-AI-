@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkX — Official Pitch Deck</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #030611;
+      color: #f8fafc;
+      overflow: hidden;
+      user-select: none;
+    }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* Mesh Gradient Background */
+    .slide-bg {
+      background: 
+        radial-gradient(circle at 10% 15%, rgba(37, 99, 235, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 90% 20%, rgba(236, 72, 153, 0.10) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 55%),
+        radial-gradient(circle at 80% 85%, rgba(56, 189, 248, 0.09) 0%, transparent 45%),
+        #040714;
+    }
+
+    .slide {
+      display: none;
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .glass-card {
+      background: rgba(12, 19, 38, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card-glow {
+      box-shadow: 0 0 30px -5px rgba(99, 102, 241, 0.25), 0 0 15px -3px rgba(236, 72, 153, 0.15);
+    }
+
+    /* Print styles for exporting as PDF */
+    @media print {
+      body { overflow: visible !important; }
+      .no-print { display: none !important; }
+      .slide {
+        display: flex !important;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always;
+        height: 100vh !important;
+        width: 100vw !important;
+      }
+    }
+  </style>
+</head>
+<body class="h-screen w-screen flex flex-col justify-between slide-bg relative">
+
+  <!-- ================= TOP TOOLBAR ================= -->
+  <header class="no-print h-14 border-b border-slate-800/80 bg-[#040816]/90 px-6 flex items-center justify-between z-30 backdrop-blur-md">
+    <div class="flex items-center space-x-3">
+      <a href="/" class="flex items-baseline space-x-1 hover:opacity-80 transition">
+        <span class="text-lg font-black text-white">Link</span>
+        <span class="text-xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-pink-400">X</span>
+      </a>
+      <span class="text-slate-600">|</span>
+      <span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Official Pitch Deck</span>
+    </div>
+
+    <!-- Slide Indicators -->
+    <div class="flex items-center space-x-2 text-xs font-mono text-slate-400">
+      <span id="slide-num-current" class="text-sky-400 font-bold text-sm">1</span>
+      <span>/</span>
+      <span id="slide-num-total" class="text-slate-500 font-semibold">10</span>
+    </div>
+
+    <div class="flex items-center space-x-3">
+      <a href="/LinkX_Pitch_Deck.pptx" download class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700/80 text-xs font-semibold text-sky-300 hover:text-white hover:border-sky-500 transition flex items-center space-x-1.5 shadow-sm">
+        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+        <span>Download .PPTX</span>
+      </a>
+      <button onclick="toggleFullScreen()" class="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition" title="Toggle Fullscreen (F)">
+        <i data-lucide="maximize" class="w-4 h-4"></i>
+      </button>
+      <a href="/" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-xs font-bold text-white hover:opacity-90 transition flex items-center space-x-1.5 shadow-md shadow-purple-950/40">
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        <span>Live App</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ================= SLIDE CONTAINER ================= -->
+  <main class="flex-1 flex items-center justify-center p-4 sm:p-8 relative overflow-hidden z-10">
+
+    <!-- ----------------- SLIDE 1: COVER ----------------- -->
+    <section class="slide active w-full max-w-5xl h-full flex-col justify-center items-center text-center space-y-6">
+      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-950/60 via-purple-950/50 to-pink-950/40 border border-purple-500/30 text-xs font-semibold uppercase tracking-wider text-slate-200 shadow-xl">
+        <span class="w-2 h-2 rounded-full bg-pink-400 animate-ping"></span>
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pink-400"></i>
+        <span class="bg-gradient-to-r from-sky-300 via-indigo-200 to-pink-300 bg-clip-text text-transparent font-bold">Hackathon Track 1 • Alumni Network &amp; Professional Connections</span>
+      </div>
+
+      <div class="relative py-4">
+        <div class="absolute -inset-6 bg-gradient-to-r from-blue-600/20 via-purple-600/25 to-pink-500/20 blur-3xl -z-10 rounded-full scale-125"></div>
+        <h1 class="text-7xl sm:text-8xl md:text-9xl font-black tracking-tight text-white flex items-baseline justify-center select-none leading-none">
+          <span>Link</span>
+          <span class="text-8xl sm:text-9xl md:text-[10rem] font-black italic text-transparent bg-clip-text bg-gradient-to-tr from-sky-400 via-indigo-400 via-purple-400 to-pink-500 ml-2 inline-block pr-6 pl-1 drop-shadow-[0_0_40px_rgba(56,189,248,0.5)]">X</span>
+        </h1>
+      </div>
+
+      <div class="space-y-2 max-w-3xl">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          Building a <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-purple-300 to-pink-400">Living Network</span>, Not a Dead Directory.
+        </h2>
+        <p class="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          The Autonomous Campus &amp; Alumni Intent Exchange connecting Students, Alumni, Founders, Faculty &amp; Institutions with verified GitHub proof-of-work and 1-click ATS referrals.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-4 text-xs font-semibold">
+        <span class="px-4 py-2 rounded-xl bg-blue-950/40 border border-blue-500/30 text-sky-200 flex items-center space-x-1.5">
+          <i data-lucide="shield-check" class="w-4 h-4 text-sky-400"></i>
+          <span>Zero Cold DMs</span>
+        </span>
+        <span class="px-4 py-2 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-200 flex items-center space-x-1.5">
+          <i data-lucide="git-pull-request" class="w-4 h-4 text-indigo-400"></i>
+          <span>Verified GitHub Staking</span>
+        </span>
+        <span class="px-4 py-2 rounded-xl bg-purple-950/40 border border-purple-500/30 text-purple-200 flex items-center space-x-1.5">
+          <i data-lucide="zap" class="w-4 h-4 text-purple-400"></i>
+          <span>1-Click Warm Referrals</span>
+        </span>
+        <span class="px-4 py-2 rounded-xl bg-pink-950/40 border border-pink-500/30 text-pink-200 flex items-center space-x-1.5">
+          <i data-lucide="coins" class="w-4 h-4 text-pink-400"></i>
+          <span>Escrow-Backed Bounties</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- ----------------- SLIDE 2: THE PROBLEM ----------------- -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center space-y-6">
+      <div class="space-y-1">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-pink-400">01 / The Core Dilemma</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">Why Traditional Alumni Portals Fail</h2>
+        <p class="text-xs sm:text-sm text-slate-400">Traditional college portals list 10,000+ names, but have ZERO daily active users.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card rounded-2xl p-6 border-pink-500/30 space-y-4 hover:border-pink-400/60 transition shadow-lg shadow-pink-950/10">
+          <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400">
+            <i data-lucide="mail-x" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white">The Cold-DM Spam Crisis</h3>
+          <span class="inline-block text-[11px] font-mono font-semibold text-pink-300 bg-pink-500/10 px-2 py-0.5 rounded">98% Message Drop Rate</span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Students spam alumni on LinkedIn with begging texts (<i>"Sir please refer me"</i>). Busy engineers at Google &amp; Swiggy have 0 time to read 5-page resumes, so they close their inboxes.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-sky-500/30 space-y-4 hover:border-sky-400/60 transition shadow-lg shadow-sky-950/10">
+          <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+            <i data-lucide="book-open-check" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white">Directory vs. Network</h3>
+          <span class="inline-block text-[11px] font-mono font-semibold text-sky-300 bg-sky-500/10 px-2 py-0.5 rounded">Dead Phonebook Syndrome</span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            A directory only lists <i>where</i> people work. A true network pairs people when their <b>Intent and Expertise align</b>. Existing portals have zero reciprocity mechanisms.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-purple-500/30 space-y-4 hover:border-purple-400/60 transition shadow-lg shadow-purple-950/10">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+            <i data-lucide="network" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white">Siloed Campus Ecosystem</h3>
+          <span class="inline-block text-[11px] font-mono font-semibold text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded">Zero Telemetry</span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Alumni founders can't find fast campus builders for MVPs; faculty lack industry co-guides for student capstones; and college administrations have zero live data on placement conversions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------- SLIDE 3: THE 6-ROLE SOLUTION ----------------- -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center space-y-6">
+      <div class="space-y-1">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-sky-400">02 / The Solution</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">The LinkX 6-Role Reciprocity Engine</h2>
+        <p class="text-xs sm:text-sm text-slate-400">Every campus stakeholder gets a dedicated gateway designed for high-signal action.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-xl p-4 border border-blue-500/20 space-y-2">
+          <div class="flex items-center space-x-2 text-sky-400">
+            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+            <h4 class="text-sm font-bold text-white">🎓 Student Gateway</h4>
+          </div>
+          <p class="text-[11px] text-slate-300">Proof-of-Work Pitch Lab. No cold DMs. Attaches GitHub repos to auto-generate a 1-minute executive dossier.</p>
+        </div>
+
+        <div class="glass-card rounded-xl p-4 border border-emerald-500/20 space-y-2">
+          <div class="flex items-center space-x-2 text-emerald-400">
+            <i data-lucide="briefcase" class="w-5 h-5"></i>
+            <h4 class="text-sm font-bold text-white">💼 Alumnus Desk</h4>
+          </div>
+          <p class="text-[11px] text-slate-300">1-Minute Decision Radar. Reviews pre-screened AST code metrics and dispatches 1-Click ATS referrals.</p>
+        </div>
+
+        <div class="glass-card rounded-xl p-4 border border-amber-500/20 space-y-2">
+          <div class="flex items-center space-x-2 text-amber-400">
+            <i data-lucide="rocket" class="w-5 h-5"></i>
+            <h4 class="text-sm font-bold text-white">🚀 Founder Exchange</h4>
+          </div>
+          <p class="text-[11px] text-slate-300">Micro-Bounties Hub. Posts ₹5k–₹25k feature tickets with escrow protection; hires verified builders in hours.</p>
+        </div>
+
+        <div class="glass-card rounded-xl p-4 border border-purple-500/20 space-y-2">
+          <div class="flex items-center space-x-2 text-purple-400">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+            <h4 class="text-sm font-bold text-white">🏛️ Faculty Hub</h4>
+          </div>
+          <p class="text-[11px] text-slate-300">Industry Capstone Co-Guides. Connects student academic capstones with alumni leads at Google &amp; Swiggy.</p>
+        </div>
+
+        <div class="glass-card rounded-xl p-4 border border-cyan-500/20 space-y-2">
+          <div class="flex items-center space-x-2 text-cyan-400">
+            <i data-lucide="target" class="w-5 h-5"></i>
+            <h4 class="text-sm font-bold text-white">🎯 Recruiter Radar</h4>
+          </div>
+          <p class="text-[11px] text-slate-300">Vetted Campus Talent. Filters candidates by verified test coverage, latency benchmarks, and code readiness.</p>
+        </div>
+
+        <div class="glass-card rounded-xl p-4 border border-rose-500/20 space-y-2">
+          <div class="flex items-center space-x-2 text-rose-400">
+            <i data-lucide="landmark" class="w-5 h-5"></i>
+            <h4 class="text-sm font-bold text-white">🏫 Institution Command</h4>
+          </div>
+          <p class="text-[11px] text-slate-300">Accreditation Telemetry. Live analytics on referral conversions, bounty earnings, and alumni density for NIRF/NAAC.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------- SLIDE 4: PITCH LAB & AST SCANNER ----------------- -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center space-y-6">
+      <div class="space-y-1">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-pink-400">03 / Key Innovation</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">Anti-Cold-DM "Proof-of-Work" Pitch Lab</h2>
+        <p class="text-xs sm:text-sm text-slate-400">Transforming unvetted begging messages into an AST-analyzed 1-Minute Executive Dossier.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        <div class="glass-card rounded-2xl p-6 border-blue-500/30 space-y-4">
+          <h3 class="text-base font-bold text-white flex items-center space-x-2">
+            <i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>
+            <span>The 4-Step Verification Workflow</span>
+          </h3>
+          <ul class="space-y-3 text-xs text-slate-300">
+            <li class="flex items-start space-x-2">
+              <span class="w-5 h-5 rounded-full bg-sky-500/20 text-sky-300 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">1</span>
+              <span><b>Zero Raw Text Allowed:</b> Students cannot initiate cold DMs or paste generic resume text.</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">2</span>
+              <span><b>GitHub Staking:</b> Student submits an active repository or PR solving a concrete technical problem.</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">3</span>
+              <span><b>AST Code Analysis:</b> Scans test suites, cyclomatic complexity, memory leaks, and concurrency primitives.</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="w-5 h-5 rounded-full bg-pink-500/20 text-pink-300 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">4</span>
+              <span><b>Executive Dossier Packaging:</b> AI synthesizes a 60-second flash card ready for 1-click alumnus review.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-purple-500/30 bg-[#090f22]/90 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="file-check-2" class="w-4 h-4 text-pink-400"></i>
+              <span class="text-xs font-bold text-white">Generated 1-Minute Executive Dossier</span>
+            </div>
+            <span class="text-[10px] font-mono text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/25">ATS Ready</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
+              <span class="text-[10px] text-slate-400">Readiness Score</span>
+              <p class="text-lg font-black text-sky-400">94 / 100</p>
+            </div>
+            <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
+              <span class="text-[10px] text-slate-400">Unit Test Coverage</span>
+              <p class="text-lg font-black text-emerald-400">92.4%</p>
+            </div>
+            <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
+              <span class="text-[10px] text-slate-400">P99 Latency</span>
+              <p class="text-lg font-black text-purple-400">14ms @ 10k RPS</p>
+            </div>
+            <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
+              <span class="text-[10px] text-slate-400">Memory Integrity</span>
+              <p class="text-lg font-black text-pink-400">Zero Leaks</p>
+            </div>
+          </div>
+
+          <p class="text-[11px] text-slate-300 leading-relaxed bg-[#050814] p-2.5 rounded-xl border border-slate-800/80">
+            <b>Architectural Highlight:</b> Robust consistent-hashing ring in Go distributing keys across Redis nodes with automated failover and zero key drop.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------- SLIDE 5: ALUMNUS 1-CLICK REFERRALS ----------------- -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center space-y-6">
+      <div class="space-y-1">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">04 / Alumnus Experience</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">Alumnus Referral Radar: Zero-Lag Decisions</h2>
+        <p class="text-xs sm:text-sm text-slate-400">Respecting alumni time while unlocking company referral bonuses without reputational risk.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass-card rounded-2xl p-6 border-emerald-500/30 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <i data-lucide="zap" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">1-Click Verified Referral Action</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            The alumnus reviews the 1-minute dossier and clicks <b>"1-Click Verified Referral"</b>. LinkX generates an authenticated candidate package formatted directly for internal company ATS pipelines (Workday, Greenhouse, Lever).
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-sky-500/30 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+            <i data-lucide="message-square-code" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">Constructive Code Feedback Loop</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            If the code isn't ready for a referral yet, the alumnus provides 2 structured lines of technical guidance (e.g. <i>"Add mutex lock on cache rebalance"</i>). The student refactors code and can re-submit without spamming.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-purple-500/30 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">Reputation Staking &amp; Zero Risk</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Engineers at top tech firms protect their internal reputation. Because LinkX guarantees verified AST scores and passing unit tests, alumni refer with 100% conviction.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-pink-500/30 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400">
+            <i data-lucide="gift" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">Referral Bonus Incentives</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Alumni unlock internal company referral bonuses (ranging from ₹50,000 to ₹2,00,000) while actively mentoring junior builders from their own alma mater.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------- SLIDE 6: OPPORTUNITY EXCHANGE ----------------- -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center space-y-6">
+      <div class="space-y-1">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">05 / Economic Marketplace</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">Opportunity Exchange: Bounties &amp; Capstones</h2>
+        <p class="text-xs sm:text-sm text-slate-400">Connecting campus coders with live startup stipends and alumni-mentored research.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card rounded-2xl p-6 border-amber-500/30 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+            <i data-lucide="coins" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">Startup Micro-Bounties</h3>
+          <span class="text-[10px] font-mono font-semibold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded">₹5k – ₹25k Payouts</span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Alumni founders post real production issues (webhook handlers, caching layers, SDK integrations). Campus students solve them in 48-72 hours, earn money, and prove job-readiness.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-purple-500/30 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+            <i data-lucide="book-open-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">Industry-Mentored Capstones</h3>
+          <span class="text-[10px] font-mono font-semibold text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded">Semester Projects</span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Faculty co-create final-year engineering projects with alumni leads from Google, Swiggy, and Microsoft. Eliminates trivial copy-pasted college projects in favor of production software.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-cyan-500/30 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+            <i data-lucide="briefcase" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">Targeted Campus Requisitions</h3>
+          <span class="text-[10px] font-mono font-semibold text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded">Fast-Track Hiring</span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Corporate talent acquisition teams post urgent campus roles specifically filtered for students with high AST Code Readiness scores (>90) and active alumni endorsements.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------- SLIDE 7: INSTITUTION IMPACT ----------------- -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center space-y-6">
+      <div class="space-y-1">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-rose-400">06 / Institutional Value</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">Institution Command: Live Accreditation Telemetry</h2>
+        <p class="text-xs sm:text-sm text-slate-400">Turning alumni relations from dead donation appeals to audit-ready NAAC &amp; NIRF outcome metrics.</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="glass-card rounded-2xl p-5 border-blue-500/30">
+          <p class="text-3xl font-black text-sky-400">342+</p>
+          <span class="text-xs font-bold text-white mt-1 block">Verified Referrals</span>
+          <span class="text-[10px] text-slate-400">Tracked in real-time</span>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-pink-500/30">
+          <p class="text-3xl font-black text-pink-400">₹4.2L+</p>
+          <span class="text-xs font-bold text-white mt-1 block">Student Bounty Earnings</span>
+          <span class="text-[10px] text-slate-400">Paid to campus coders</span>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-purple-500/30">
+          <p class="text-3xl font-black text-purple-400">78%</p>
+          <span class="text-xs font-bold text-white mt-1 block">Referral Conversion</span>
+          <span class="text-[10px] text-slate-400">Screen to 1st round</span>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-emerald-500/30">
+          <p class="text-3xl font-black text-emerald-400">1,240+</p>
+          <span class="text-xs font-bold text-white mt-1 block">Active Campus Builders</span>
+          <span class="text-[10px] text-slate-400">Verified GitHub profiles</span>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6 border-slate-800 space-y-2">
+        <h4 class="text-sm font-bold text-white flex items-center space-x-2">
+          <i data-lucide="award" class="w-4 h-4 text-pink-400"></i>
+          <span>Why Universities Pay for LinkX:</span>
+        </h4>
+        <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+          <li><b>Audit-Ready NIRF &amp; NAAC Metrics:</b> Instant exportable telemetry on student placements, alumni mentorship, and industry capstone collaboration.</li>
+          <li><b>Alumni Geographic Mapping:</b> Live cluster heatmaps across Bangalore, Gurgaon, San Francisco, and London for targeted alumni chapters.</li>
+          <li><b>Elevated Campus Placement Rates:</b> Directly increases high-paying Tier-1 placements by up to 3x compared to generic campus placement drives.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ----------------- SLIDE 8: TECH ARCHITECTURE ----------------- -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center space-y-6">
+      <div class="space-y-1">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-400">07 / Engineering</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">Full-Stack Production Architecture</h2>
+        <p class="text-xs sm:text-sm text-slate-400">High-velocity, sub-50ms DOM updates with zero bundle bloat and complete modularity.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card rounded-2xl p-6 border-blue-500/30 space-y-3">
+          <div class="flex items-center space-x-2 text-sky-400">
+            <i data-lucide="layout" class="w-5 h-5"></i>
+            <h3 class="text-base font-bold text-white">Frontend Engine</h3>
+          </div>
+          <span class="text-[11px] font-mono text-sky-300 bg-sky-500/10 px-2 py-0.5 rounded">Modern ES6+ / React 19</span>
+          <ul class="text-xs text-slate-300 space-y-2 pt-1">
+            <li>• Tailwind CSS Cyber Obsidian design tokens</li>
+            <li>• Hardware-accelerated CSS mesh gradients &amp; orbs</li>
+            <li>• Lucide icons &amp; responsive RBAC layout views</li>
+            <li>• Sub-50ms DOM updates &amp; zero bundle lag</li>
+          </ul>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-purple-500/30 space-y-3">
+          <div class="flex items-center space-x-2 text-purple-400">
+            <i data-lucide="server" class="w-5 h-5"></i>
+            <h3 class="text-base font-bold text-white">Backend &amp; REST API</h3>
+          </div>
+          <span class="text-[11px] font-mono text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded">Node.js &amp; Express REST</span>
+          <ul class="text-xs text-slate-300 space-y-2 pt-1">
+            <li>• ES Modules architecture with clean controller routing</li>
+            <li>• Role-Based Access Control (RBAC) across 6 personas</li>
+            <li>• Persistent JSON datastore with ACID-safe writes</li>
+            <li>• High-throughput endpoints with CORS &amp; rate-limiting</li>
+          </ul>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-pink-500/30 space-y-3">
+          <div class="flex items-center space-x-2 text-pink-400">
+            <i data-lucide="cpu" class="w-5 h-5"></i>
+            <h3 class="text-base font-bold text-white">Analysis &amp; Intelligence</h3>
+          </div>
+          <span class="text-[11px] font-mono text-pink-300 bg-pink-500/10 px-2 py-0.5 rounded">GitHub API &amp; AST Engine</span>
+          <ul class="text-xs text-slate-300 space-y-2 pt-1">
+            <li>• GitHub REST API v3 repo tree &amp; commit parsing</li>
+            <li>• AST heuristic code readiness scanner (0–100)</li>
+            <li>• Google Gemini LLM candidate flash dossier summarizer</li>
+            <li>• Graceful fallback simulation engine for offline demos</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------- SLIDE 9: BUSINESS MODEL ----------------- -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center space-y-6">
+      <div class="space-y-1">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-pink-400">08 / Commercial Strategy</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white">Business Model &amp; Monetization</h2>
+        <p class="text-xs sm:text-sm text-slate-400">A multi-sided marketplace monetizing institutions, recruiters, and startup founders.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card rounded-2xl p-6 border-blue-500/30 space-y-3">
+          <span class="text-2xl font-black text-sky-400">₹3L – ₹10L</span>
+          <h3 class="text-base font-bold text-white">1. University SaaS License</h3>
+          <span class="text-[10px] font-mono text-sky-300 bg-sky-500/10 px-2 py-0.5 rounded">Annual B2B Contract</span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Universities pay an annual SaaS subscription for branded alumni portals, outcome tracking, NIRF/NAAC audit telemetry, and alumni donation chapter management.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-pink-500/30 space-y-3">
+          <span class="text-2xl font-black text-pink-400">₹15,000 / mo</span>
+          <h3 class="text-base font-bold text-white">2. Corporate Recruiter Pass</h3>
+          <span class="text-[10px] font-mono text-pink-300 bg-pink-500/10 px-2 py-0.5 rounded">Subscription Pipeline</span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Tech recruiters subscribe to access the vetted talent radar, bypassing traditional campus placement bureau lag and hiring pre-vetted engineers directly.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-purple-500/30 space-y-3">
+          <span class="text-2xl font-black text-purple-400">5% – 8%</span>
+          <h3 class="text-base font-bold text-white">3. Escrow Bounty Take-Rate</h3>
+          <span class="text-[10px] font-mono text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded">Marketplace Transaction Fee</span>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Platform takes a standard marketplace fee on all successfully completed freelance micro-bounties and sponsored industry capstone disbursements.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------- SLIDE 10: CONCLUSION ----------------- -->
+    <section class="slide w-full max-w-5xl h-full flex-col justify-center items-center text-center space-y-6">
+      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-xs font-semibold uppercase tracking-wider text-pink-300">
+        <i data-lucide="trophy" class="w-4 h-4 text-pink-400"></i>
+        <span>The Winning Conclusion</span>
+      </div>
+
+      <div class="space-y-3 max-w-3xl">
+        <h2 class="text-4xl sm:text-5xl font-black text-white leading-tight">
+          LinkX Turns Dead Directories Into <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-purple-300 to-pink-400">Living Economies</span>.
+        </h2>
+        <p class="text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          We don't list alumni names; we actively match live <b>Intent</b> with verified <b>Proof-of-Work</b>.
+        </p>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6 border-purple-500/30 max-w-2xl w-full text-left space-y-2 text-xs text-slate-300">
+        <div class="flex items-center space-x-2 text-white font-bold text-sm border-b border-slate-800 pb-2">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+          <span>Summary for Judges:</span>
+        </div>
+        <p>• <b>Alumni Time Protected:</b> Zero spam DMs. Replaced by 1-minute executive dossiers.</p>
+        <p>• <b>Merit-Based Placement:</b> Students secure 1-click ATS referrals based on code, not begging.</p>
+        <p>• <b>Continuous Engagement:</b> Startup bounties &amp; industry capstones keep alumni active year-round.</p>
+        <p>• <b>Accreditation Proof:</b> Universities get verifiable placement &amp; referral telemetry.</p>
+      </div>
+
+      <div class="pt-4 flex items-center justify-center space-x-4">
+        <a href="/" class="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold text-xs uppercase tracking-wider hover:opacity-95 transition shadow-xl shadow-purple-950/40 flex items-center space-x-2">
+          <i data-lucide="play" class="w-4 h-4"></i>
+          <span>Explore Live Demo Interface</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= BOTTOM NAVIGATION BAR ================= -->
+  <footer class="no-print h-16 border-t border-slate-800/80 bg-[#040816]/90 px-6 flex items-center justify-between z-30 backdrop-blur-md">
+    <div class="flex items-center space-x-2">
+      <button onclick="prevSlide()" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center space-x-1 text-xs font-semibold">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Prev (Left Arrow)</span>
+      </button>
+      <button onclick="nextSlide()" class="p-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90 transition flex items-center space-x-1 text-xs font-bold shadow-md shadow-purple-950/30">
+        <span class="hidden sm:inline">Next (Right Arrow / Space)</span>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Slide Dot Jumpers -->
+    <div id="slide-dots" class="flex items-center space-x-1.5">
+      <!-- Injected by JS -->
+    </div>
+
+    <div class="text-[11px] font-mono text-slate-500 hidden sm:block">
+      Keyboard: <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">←</kbd> <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">→</kbd> <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">Space</kbd> <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">F</kbd>
+    </div>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+
+    const currentEl = document.getElementById('slide-num-current');
+    const totalEl = document.getElementById('slide-num-total');
+    const dotsContainer = document.getElementById('slide-dots');
+
+    totalEl.textContent = totalSlides;
+
+    // Build Dots
+    dotsContainer.innerHTML = Array.from({ length: totalSlides }).map((_, i) => `
+      <button onclick="goToSlide(${i})" class="w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-sky-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}" title="Slide ${i + 1}"></button>
+    `).join('');
+
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        if (idx === currentSlide) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+      currentEl.textContent = currentSlide + 1;
+
+      // Update dots
+      const dots = dotsContainer.children;
+      Array.from(dots).forEach((dot, idx) => {
+        if (idx === currentSlide) {
+          dot.className = 'w-6 h-2.5 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 transition-all duration-300 shadow-sm';
+        } else {
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all duration-300';
+        }
+      });
+
+      lucide.createIcons();
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(idx) {
+      if (idx >= 0 && idx < totalSlides) {
+        currentSlide = idx;
+        updateSlide();
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => console.error(err));
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Home') {
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        goToSlide(totalSlides - 1);
+      }
+    });
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>
