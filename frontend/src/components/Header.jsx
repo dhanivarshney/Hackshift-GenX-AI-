@@ -125,8 +125,9 @@ export default function Header() {
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-lg font-black tracking-tight text-white">
-                Nexus<span className="text-indigo-400">IQ</span>
+              <span className="text-lg font-black tracking-tight text-white flex items-baseline">
+                <span>Link</span>
+                <span className="text-xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-purple-300 ml-0.5">X</span>
               </span>
               <span
                 className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border shadow-sm ${currentTheme.badge}`}
