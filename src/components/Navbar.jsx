@@ -1,13 +1,24 @@
 import React from 'react';
 import { useNexus } from '../context/NexusContext';
-import { Sparkles, Network, Activity } from 'lucide-react';
+import { Sparkles, Network, Activity, ArrowLeft } from 'lucide-react';
 
 export default function Navbar() {
-  const { personas, activePersona, switchRole, triggerCelebration, isAuthenticated } = useNexus();
+  const { personas, activePersona, switchRole, triggerCelebration, isAuthenticated, goBack } = useNexus();
 
   return (
     <div className="bg-slate-950/90 border-b border-slate-800/80 px-4 py-2 text-xs flex items-center justify-between text-slate-300">
       <div className="flex items-center space-x-2.5">
+        <button
+          onClick={goBack}
+          className="neon-back-btn group relative shrink-0 py-1 px-2.5 text-[11px]"
+          title="Go Back"
+          aria-label="Go Back"
+        >
+          <span className="neon-ripple-container"><span className="neon-ripple"></span></span>
+          <ArrowLeft className="w-3.5 h-3.5 text-[#00ffff] transition-transform duration-200 group-hover:-translate-x-1" />
+          <span>Back</span>
+          <span className="neon-tooltip">Go Back</span>
+        </button>
         <span className="flex h-2 w-2 relative">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>

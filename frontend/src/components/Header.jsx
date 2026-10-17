@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNexus } from '../context/NexusContext';
 import {
+  ArrowLeft,
   Network,
   Compass,
   Cpu,
@@ -27,6 +28,7 @@ export default function Header() {
     setActiveView,
     switchRole,
     logout,
+    goBack,
     setIsIntentModalOpen,
     bounties,
     referrals
@@ -118,6 +120,7 @@ export default function Header() {
     <header className="sticky top-0 z-40 bg-[#060911]/95 backdrop-blur-md border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
         
+<<<<<<< HEAD
         {/* Brand Logo & Portal Tag */}
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 shrink-0">
@@ -134,10 +137,41 @@ export default function Header() {
               >
                 {activePersona.portalTitle}
               </span>
+=======
+        {/* Top-Left Back Button & Brand Logo */}
+        <div className="flex items-center space-x-3 sm:space-x-4">
+          <button
+            onClick={goBack}
+            className="neon-back-btn group relative shrink-0"
+            title="Go Back"
+            aria-label="Go Back"
+          >
+            <span className="neon-ripple-container"><span className="neon-ripple"></span></span>
+            <ArrowLeft className="w-4 h-4 text-[#00ffff] transition-transform duration-200 group-hover:-translate-x-1" />
+            <span className="hidden xs:inline sm:inline">Back</span>
+            <span className="neon-tooltip">Go Back</span>
+          </button>
+
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 shrink-0">
+              <Network className="w-5 h-5 text-white" />
             </div>
-            <p className="text-[11px] text-slate-400 -mt-0.5 hidden sm:block">
-              {activePersona.companyOrCollege} • Network Node
-            </p>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="text-lg font-black tracking-tight text-white">
+                  Nexus<span className="text-indigo-400">IQ</span>
+                </span>
+                <span
+                  className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border shadow-sm ${currentTheme.badge}`}
+                >
+                  {activePersona.portalTitle}
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400 -mt-0.5 hidden sm:block">
+                {activePersona.companyOrCollege} • Network Node
+              </p>
+>>>>>>> d561c1f72652c3b41eb662b75ae22cbeccae271d
+            </div>
           </div>
         </div>
 

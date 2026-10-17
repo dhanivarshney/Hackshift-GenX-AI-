@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Toast from './components/Toast';
 import IntentModal from './components/IntentModal';
+import Footer from './components/Footer';
+import MobileBackButton from './components/MobileBackButton';
 
 // Views
 import Onboarding from './views/Onboarding';
@@ -42,6 +44,8 @@ export default function App() {
       <div className="min-h-screen flex flex-col mesh-gradient text-slate-100 selection:bg-indigo-500 selection:text-white">
         <Navbar />
         <MainWorkspace />
+        <Footer />
+        <MobileBackButton />
         <IntentModal />
         <Toast />
       </div>

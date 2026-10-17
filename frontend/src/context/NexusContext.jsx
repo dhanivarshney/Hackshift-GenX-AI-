@@ -31,18 +31,65 @@ export function NexusProvider({ children }) {
   const activePersona = personas[currentRoleIndex] || personas[0];
   const activeInstitution = institutions.find(i => i.id === activeInstitutionId) || institutions[0];
 
-  // Load saved session on mount
+  // Load saved session on mount & sync history
   useEffect(() => {
     const savedRole = localStorage.getItem('linkx_session_role');
     const savedAuth = localStorage.getItem('linkx_session_auth');
     if (savedAuth === 'true' && savedRole) {
-      const idx = personas.findIndex(p => p.id === savedRole);
+      const idx = MASTER_PERSONAS.findIndex(p => p.id === savedRole);
       if (idx !== -1) {
         setCurrentRoleIndex(idx);
         setIsAuthenticated(true);
       }
     }
+
+    if (typeof window !== 'undefined' && window.history && !window.history.state) {
+      window.history.replaceState(
+        { view: 'onboarding', roleId: savedRole || 'student', isAuthenticated: savedAuth === 'true' },
+        '',
+        window.location.pathname
+      );
+    }
   }, []);
+
+  // Listen to popstate for browser history navigation
+  useEffect(() => {
+    const handlePopState = (e) => {
+      const state = e.state;
+      if (!state || state.isAuthenticated === false || state.view === 'onboarding') {
+        setIsAuthenticated(false);
+      } else if (state.isAuthenticated) {
+        setIsAuthenticated(true);
+        if (state.roleId) {
+          const idx = personas.findIndex(p => p.id === state.roleId);
+          if (idx !== -1) setCurrentRoleIndex(idx);
+        }
+        if (state.view) {
+          setActiveView(state.view);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [personas]);
+
+  const goBack = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (typeof window !== 'undefined' && window.history && window.history.length > 1) {
+      window.history.back();
+    } else {
+      if (isAuthenticated) {
+        if (activeView !== 'dashboard') {
+          setActiveView('dashboard');
+        } else {
+          logout();
+        }
+      } else {
+        showToast('Already at the initial screen.', 'info');
+      }
+    }
+  };
 
   const triggerCelebration = () => {
     if (typeof confetti === 'function') {
@@ -79,16 +126,26 @@ export function NexusProvider({ children }) {
     const targetPersona = personas[targetIdx];
 
     // Context-aware default views for each role
+    let targetView = 'dashboard';
     if (roleId === 'alumnus') {
-      setActiveView('referrals');
+      targetView = 'referrals';
     } else if (roleId === 'founder') {
-      setActiveView('bounties');
+      targetView = 'bounties';
     } else if (roleId === 'institution') {
-      setActiveView('institution');
+      targetView = 'institution';
     } else if (roleId === 'recruiter') {
-      setActiveView('bounties');
+      targetView = 'bounties';
     } else {
-      setActiveView('dashboard');
+      targetView = 'dashboard';
+    }
+    setActiveView(targetView);
+
+    if (typeof window !== 'undefined' && window.history && window.history.pushState) {
+      window.history.pushState(
+        { view: targetView, roleId, isAuthenticated: true },
+        '',
+        '#' + targetView
+      );
     }
 
     if (showCelebrationToast) {
@@ -99,7 +156,18 @@ export function NexusProvider({ children }) {
 
   const logout = () => {
     setIsAuthenticated(false);
+<<<<<<< HEAD
     localStorage.removeItem('linkx_session_auth');
+=======
+    localStorage.removeItem('nexusiq_session_auth');
+    if (typeof window !== 'undefined' && window.history && window.history.pushState) {
+      window.history.pushState(
+        { view: 'onboarding', roleId: null, isAuthenticated: false },
+        '',
+        '#onboarding'
+      );
+    }
+>>>>>>> d561c1f72652c3b41eb662b75ae22cbeccae271d
     showToast('Signed out from workspace. Select a role gateway.', 'info');
   };
 
@@ -111,12 +179,24 @@ export function NexusProvider({ children }) {
     const target = personas[targetIdx];
 
     // Context-aware tab suggestion
+    let nextView = activeView;
     if (roleId === 'alumnus' && activeView !== 'referrals') {
+      nextView = 'referrals';
       setActiveView('referrals');
     } else if (roleId === 'founder' && activeView !== 'bounties') {
+      nextView = 'bounties';
       setActiveView('bounties');
     } else if (roleId === 'institution' && activeView !== 'institution') {
+      nextView = 'institution';
       setActiveView('institution');
+    }
+
+    if (typeof window !== 'undefined' && window.history && window.history.pushState) {
+      window.history.pushState(
+        { view: nextView, roleId, isAuthenticated: true },
+        '',
+        '#' + nextView
+      );
     }
 
     showToast(`Switched view to ${target.portalTitle} (${target.name})`, 'info');
@@ -297,6 +377,7 @@ export function NexusProvider({ children }) {
         setIsIntentModalOpen,
         leaderboard: GAMIFICATION_LEADERBOARD,
         badgesCatalog: BADGES_CATALOG,
+        goBack,
         loginAs,
         logout,
         switchRole,
