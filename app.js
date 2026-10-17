@@ -1,4 +1,4 @@
-// NexusIQ — Full-Stack REST Client & Interactive State Management
+// NexusIQ — Professional UI State Store & Multi-Portal Authentication Engine
 // Track 1: Alumni Network & Professional Connections (Building a Network, Not a Directory)
 
 const API_BASE = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
@@ -7,17 +7,19 @@ const API_BASE = window.location.origin.includes('localhost') || window.location
 
 // ================= GLOBAL STATE =================
 let personasState = [];
-let currentRoleIndex = 0; // Starts as Student (Aman Sharma)
+let currentRoleIndex = 0;
 let bountiesState = [];
 let referralsState = [];
 let latestAnalysis = null;
-let geminiApiKey = localStorage.getItem('nexusiq_gemini_key') || '';
+let activeModalRoleId = 'student';
+let isAuthenticated = false;
 
-// Default Fallback Seed Data (guarantees offline/file-protocol reliability)
-const FALLBACK_PERSONAS = [
+// Default Personas Master Roster
+const MASTER_PERSONAS = [
   {
     id: 'student',
     roleLabel: 'Student',
+    portalTitle: 'Student Portal',
     name: 'Aman Sharma',
     avatar: 'AS',
     branch: "B.Tech CSE '26",
@@ -25,11 +27,13 @@ const FALLBACK_PERSONAS = [
     bio: "Distributed systems enthusiast • Built Redis caching engine • Solved 280+ LeetCode",
     goal: "Seeking Backend / Distributed Systems SDE Referral",
     activeIntent: "Seeking SDE Referral (Backend / Go)",
-    badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30"
+    icon: 'graduation-cap',
+    accentColor: 'indigo'
   },
   {
     id: 'alumnus',
     roleLabel: 'Alumnus',
+    portalTitle: 'Alumni Portal',
     name: 'Rohan Mehta',
     avatar: 'RM',
     branch: "Batch '20 • SDE-2 Backend",
@@ -37,11 +41,13 @@ const FALLBACK_PERSONAS = [
     bio: "Scaling order routing microservices • Ex-Amazon • Passionate about clean Go code",
     goal: "Hiring 2 Interns for High-Throughput Routing Team",
     activeIntent: "Hiring 2 Interns for Team",
-    badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+    icon: 'briefcase',
+    accentColor: 'emerald'
   },
   {
     id: 'founder',
     roleLabel: 'Founder',
+    portalTitle: 'Founder Portal',
     name: 'Neha Kapoor',
     avatar: 'NK',
     branch: "Batch '19 • Founder & CEO",
@@ -49,11 +55,13 @@ const FALLBACK_PERSONAS = [
     bio: "Building autonomous developer tooling • Angel investing in campus builders ($5k - $25k)",
     goal: "Funding Micro-Bounties & Sponsoring Hackathon Squads",
     activeIntent: "Funding Campus Bounties & Startups",
-    badgeColor: "bg-amber-500/20 text-amber-300 border-amber-500/30"
+    icon: 'rocket',
+    accentColor: 'amber'
   },
   {
     id: 'faculty',
     roleLabel: 'Faculty',
+    portalTitle: 'Faculty Portal',
     name: 'Dr. R.K. Verma',
     avatar: 'RV',
     branch: "Professor & Dean R&D",
@@ -61,11 +69,13 @@ const FALLBACK_PERSONAS = [
     bio: "Cloud computing & network security researcher • Published 42 IEEE papers",
     goal: "Connecting 8 Capstone Research Projects with Industry Alum Co-Guides",
     activeIntent: "Seeking Industry Co-Guide for Capstone",
-    badgeColor: "bg-purple-500/20 text-purple-300 border-purple-500/30"
+    icon: 'book-open',
+    accentColor: 'purple'
   },
   {
     id: 'recruiter',
     roleLabel: 'Recruiter',
+    portalTitle: 'Recruiter Radar',
     name: 'Vikram Seth',
     avatar: 'VS',
     branch: "Tech Talent Partner",
@@ -73,19 +83,22 @@ const FALLBACK_PERSONAS = [
     bio: "Hiring 15+ Core Backend Engineers • Looking for verified GitHub proof-of-work",
     goal: "Evaluating Vetted Students with High Alumni Endorsement Scores",
     activeIntent: "Hiring Top 5% Builders",
-    badgeColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30"
+    icon: 'target',
+    accentColor: 'cyan'
   },
   {
     id: 'institution',
     roleLabel: 'Institution',
-    name: 'Apex Institute of Tech',
-    avatar: 'AIT',
+    portalTitle: 'Institution Command',
+    name: 'Dean Sharma',
+    avatar: 'DS',
     branch: "Dean of Alumni Relations",
-    companyOrCollege: 'Central Campus Administration',
+    companyOrCollege: 'Apex Central Campus Administration',
     bio: "Transforming 12,000+ Alumni Directory into an Active High-Velocity Network",
     goal: "Monitoring Real Placement Impact, Capstone Co-Mentoring & Bounty Earnings",
     activeIntent: "Monitoring Real Placement Impact",
-    badgeColor: "bg-rose-500/20 text-rose-300 border-rose-500/30"
+    icon: 'landmark',
+    accentColor: 'rose'
   }
 ];
 
@@ -184,86 +197,123 @@ const MATCH_RADAR_ITEMS = [
 
 // ================= INITIALIZATION =================
 document.addEventListener('DOMContentLoaded', async () => {
-  personasState = [...FALLBACK_PERSONAS];
+  personasState = [...MASTER_PERSONAS];
   renderRolePills();
   renderRadarCards(MATCH_RADAR_ITEMS);
   setupLineageCanvas();
 
-  // Load live data from Backend API
+  // Check if session previously active
+  const savedRole = localStorage.getItem('nexusiq_active_session_role');
+  if (savedRole) {
+    loginAs(savedRole, false);
+  }
+
+  // Fetch backend data
   await Promise.all([
     fetchPersonasFromAPI(),
     fetchBountiesFromAPI(),
-    fetchReferralsFromAPI(),
-    fetchInstitutionStatsFromAPI()
+    fetchReferralsFromAPI()
   ]);
 
   lucide.createIcons();
 });
 
-// ================= API HELPERS =================
-async function fetchPersonasFromAPI() {
-  try {
-    const res = await fetch(`${API_BASE}/personas`);
-    if (res.ok) {
-      const data = await res.json();
-      if (data.personas && data.personas.length > 0) {
-        personasState = data.personas;
-        renderRolePills();
-      }
-    }
-  } catch (e) {
-    console.log('Using local personas cache.');
+// ================= AUTHENTICATION & PORTAL FLOW =================
+function openLoginModal(roleId) {
+  activeModalRoleId = roleId;
+  const p = MASTER_PERSONAS.find(x => x.id === roleId) || MASTER_PERSONAS[0];
+
+  document.getElementById('login-modal-title').textContent = `Sign In to ${p.portalTitle}`;
+  document.getElementById('demo-user-name').textContent = p.name;
+  document.getElementById('demo-user-role').textContent = `${p.roleLabel} (${p.companyOrCollege})`;
+  document.getElementById('login-input-email').value = `${roleId}@apex.edu`;
+
+  // Update modal icon
+  const iconEl = document.getElementById('login-modal-icon');
+  iconEl.setAttribute('data-lucide', p.icon);
+
+  openModal('modal-login');
+  lucide.createIcons();
+}
+
+function executeDemoLogin() {
+  closeModal('modal-login');
+  loginAs(activeModalRoleId, true);
+}
+
+function handleStandardLogin(event) {
+  event.preventDefault();
+  closeModal('modal-login');
+  loginAs(activeModalRoleId, true);
+}
+
+function loginAs(roleId, showWelcomeToast = true) {
+  const targetIndex = personasState.findIndex(p => p.id === roleId);
+  if (targetIndex === -1) return;
+
+  currentRoleIndex = targetIndex;
+  const p = personasState[currentRoleIndex];
+  isAuthenticated = true;
+
+  localStorage.setItem('nexusiq_active_session_role', roleId);
+
+  // Transition UI from Gateway to Authenticated Workspace
+  document.getElementById('auth-gateway').classList.add('hidden');
+  document.getElementById('authenticated-workspace').classList.remove('hidden');
+
+  // Update Top Profile
+  document.getElementById('current-portal-badge').textContent = p.portalTitle;
+  document.getElementById('user-header-avatar').textContent = p.avatar;
+  document.getElementById('user-header-name').textContent = p.name;
+  document.getElementById('user-header-role').textContent = `${p.roleLabel} • ${p.companyOrCollege}`;
+
+  // Update Hero Banner
+  document.getElementById('hero-avatar').textContent = p.avatar;
+  document.getElementById('hero-name').textContent = p.name;
+  document.getElementById('hero-tag').textContent = `${p.roleLabel} (${p.branch})`;
+  document.getElementById('hero-bio').textContent = p.bio;
+  document.getElementById('hero-goal').innerHTML = `<i data-lucide="target" class="w-3.5 h-3.5"></i><span>${p.goal}</span>`;
+
+  // Update Active Intent badge
+  document.getElementById('active-intent-text').textContent = p.activeIntent;
+
+  renderRolePills();
+
+  // Context-aware default tab for each role
+  if (p.id === 'alumnus') {
+    switchTab('alumnus-inbox');
+  } else if (p.id === 'founder') {
+    switchTab('bounties');
+  } else if (p.id === 'institution') {
+    switchTab('institution');
+  } else {
+    switchTab('intent-radar');
+  }
+
+  lucide.createIcons();
+
+  if (showWelcomeToast) {
+    triggerConfetti();
+    showToast(`Welcome, ${p.name}! Authenticated to ${p.portalTitle}.`);
   }
 }
 
-async function fetchBountiesFromAPI() {
-  try {
-    const res = await fetch(`${API_BASE}/bounties`);
-    if (res.ok) {
-      const data = await res.json();
-      bountiesState = data.bounties || [];
-      renderBounties(bountiesState);
-      const badge = document.getElementById('bounties-count-badge');
-      if (badge) badge.textContent = `${bountiesState.length} Live`;
-    }
-  } catch (e) {
-    console.log('Using local bounties cache.');
-  }
+function handleLogout() {
+  isAuthenticated = false;
+  localStorage.removeItem('nexusiq_active_session_role');
+
+  document.getElementById('authenticated-workspace').classList.add('hidden');
+  document.getElementById('auth-gateway').classList.remove('hidden');
+
+  showToast("Signed out. Select a portal to enter.");
+  lucide.createIcons();
 }
 
-async function fetchReferralsFromAPI() {
-  try {
-    const res = await fetch(`${API_BASE}/referrals`);
-    if (res.ok) {
-      const data = await res.json();
-      referralsState = data.referrals || [];
-      renderReferrals(referralsState);
-      const pendingCount = referralsState.filter(r => r.status === 'pending').length;
-      const badge = document.getElementById('referrals-count-badge');
-      if (badge) badge.textContent = `${pendingCount} Pending`;
-    }
-  } catch (e) {
-    console.log('Using local referrals cache.');
-  }
-}
-
-async function fetchInstitutionStatsFromAPI() {
-  try {
-    const res = await fetch(`${API_BASE}/institution/stats`);
-    if (res.ok) {
-      const data = await res.json();
-      // Stats updated dynamically
-    }
-  } catch (e) {
-    // Graceful fallback
-  }
-}
-
-// ================= ROLE SWITCHER SYSTEM =================
+// ================= ROLE SWITCHER PILLS =================
 function renderRolePills() {
   const container = document.getElementById('role-pill-container');
-  const mobileContainer = document.getElementById('mobile-role-pills');
-  
+  if (!container) return;
+
   let html = '';
   personasState.forEach((p, idx) => {
     const isSelected = idx === currentRoleIndex;
@@ -277,40 +327,12 @@ function renderRolePills() {
     `;
   });
 
-  if (container) container.innerHTML = html;
-  if (mobileContainer) mobileContainer.innerHTML = html;
+  container.innerHTML = html;
 }
 
 function switchRole(index) {
-  currentRoleIndex = index;
   const p = personasState[index];
-
-  // Update Hero elements
-  document.getElementById('hero-avatar').textContent = p.avatar;
-  document.getElementById('hero-name').textContent = p.name;
-  document.getElementById('hero-tag').textContent = `${p.roleLabel} (${p.branch})`;
-  document.getElementById('hero-bio').textContent = p.bio;
-  document.getElementById('hero-goal').innerHTML = `<i data-lucide="target" class="w-3.5 h-3.5"></i><span>${p.goal}</span>`;
-
-  // Update Active Intent badge
-  document.getElementById('active-intent-text').textContent = p.activeIntent;
-
-  renderRolePills();
-  lucide.createIcons();
-
-  if (p.id === 'alumnus') {
-    switchTab('alumnus-inbox');
-    showToast(`Switched to Alumnus View (${p.name} @ ${p.companyOrCollege}). Referral Decision Inbox opened!`);
-  } else if (p.id === 'founder') {
-    switchTab('bounties');
-    showToast(`Switched to Founder View (${p.name}). Opportunity Board active!`);
-  } else if (p.id === 'institution') {
-    switchTab('institution');
-    showToast(`Switched to Institution Desk (Dean Sharma). Real impact metrics active.`);
-  } else if (p.id === 'student') {
-    switchTab('intent-radar');
-    showToast(`Switched to Student View (${p.name}). Intent match radar ready.`);
-  }
+  loginAs(p.id, true);
 }
 
 // ================= NAVIGATION TABS =================
@@ -343,6 +365,47 @@ function switchTab(tabId) {
     fetchBountiesFromAPI();
   }
   lucide.createIcons();
+}
+
+// ================= API REST INTEGRATION =================
+async function fetchPersonasFromAPI() {
+  try {
+    const res = await fetch(`${API_BASE}/personas`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.personas && data.personas.length > 0) {
+        personasState = data.personas;
+        renderRolePills();
+      }
+    }
+  } catch (e) {}
+}
+
+async function fetchBountiesFromAPI() {
+  try {
+    const res = await fetch(`${API_BASE}/bounties`);
+    if (res.ok) {
+      const data = await res.json();
+      bountiesState = data.bounties || [];
+      renderBounties(bountiesState);
+      const badge = document.getElementById('bounties-count-badge');
+      if (badge) badge.textContent = `${bountiesState.length} Live`;
+    }
+  } catch (e) {}
+}
+
+async function fetchReferralsFromAPI() {
+  try {
+    const res = await fetch(`${API_BASE}/referrals`);
+    if (res.ok) {
+      const data = await res.json();
+      referralsState = data.referrals || [];
+      renderReferrals(referralsState);
+      const pendingCount = referralsState.filter(r => r.status === 'pending').length;
+      const badge = document.getElementById('referrals-count-badge');
+      if (badge) badge.textContent = `${pendingCount} Pending`;
+    }
+  } catch (e) {}
 }
 
 // ================= MATCH RADAR =================
@@ -424,7 +487,7 @@ function handleRadarAction(itemId, actionType) {
   }
 }
 
-// ================= REAL GITHUB & AI PROOF-OF-WORK GENERATOR =================
+// ================= GITHUB PROOF-OF-WORK GENERATOR =================
 async function generateProofOfWorkDossier() {
   const company = document.getElementById('pow-target-company').value;
   const repo = document.getElementById('pow-repo-url').value;
@@ -444,7 +507,7 @@ async function generateProofOfWorkDossier() {
     const res = await fetch(`${API_BASE}/analyze-repo`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ repoUrl: repo, geminiKey: geminiApiKey })
+      body: JSON.stringify({ repoUrl: repo })
     });
 
     const data = await res.json();
@@ -454,8 +517,6 @@ async function generateProofOfWorkDossier() {
     triggerConfetti();
     showToast(`Verified repository! Code Readiness: ${latestAnalysis.readinessScore}/100`);
   } catch (err) {
-    console.error('Analysis error:', err);
-    // Fallback local display
     const mock = {
       source: 'NexusIQ Heuristic Analyzer',
       readinessScore: 94,
@@ -480,8 +541,6 @@ function renderDossierOutput(analysis, company, blocker) {
   const outputEl = document.getElementById('pow-card-content');
   outputEl.innerHTML = `
     <div class="bg-slate-950 border border-indigo-500/30 rounded-2xl p-5 space-y-4 glow-indigo">
-      
-      <!-- Header -->
       <div class="flex items-start justify-between border-b border-slate-800/80 pb-3">
         <div>
           <div class="flex items-center space-x-2">
@@ -496,7 +555,6 @@ function renderDossierOutput(analysis, company, blocker) {
         </div>
       </div>
 
-      <!-- Technical Metrics Grid -->
       <div class="grid grid-cols-3 gap-2 text-center text-xs">
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-2">
           <div class="text-slate-400 text-[10px]">Test Coverage</div>
@@ -512,7 +570,6 @@ function renderDossierOutput(analysis, company, blocker) {
         </div>
       </div>
 
-      <!-- Executive Summary -->
       <div class="space-y-1.5 text-xs">
         <div class="font-semibold text-slate-300 flex items-center space-x-1.5">
           <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
@@ -523,13 +580,11 @@ function renderDossierOutput(analysis, company, blocker) {
         </p>
       </div>
 
-      <!-- Specific Blocker Ask -->
       <div class="p-3 bg-indigo-950/30 border border-indigo-500/20 rounded-xl text-xs space-y-1">
         <span class="text-indigo-300 font-semibold">Targeted 3-Minute Alumnus Question:</span>
         <p class="text-slate-300">"${blocker}"</p>
       </div>
 
-      <!-- Dispatch to Alum Inbox -->
       <div class="flex items-center justify-between pt-2">
         <span class="text-[11px] text-slate-400 font-mono">Zero cold DMs • Verified Proof of Work</span>
         <button onclick="dispatchReferralToAlum('${company}', '${blocker}')" class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white font-semibold rounded-xl text-xs shadow-md shadow-emerald-600/30 flex items-center space-x-1.5 transition">
@@ -537,7 +592,6 @@ function renderDossierOutput(analysis, company, blocker) {
           <span>Dispatch to Alumnus Decision Inbox</span>
         </button>
       </div>
-
     </div>
   `;
   lucide.createIcons();
@@ -880,7 +934,7 @@ function reseedGraph() {
   showToast("Re-clustered campus lineage graph nodes!");
 }
 
-// ================= MODAL HELPERS & SETTINGS =================
+// ================= MODAL HELPERS =================
 function openModal(id) {
   const el = document.getElementById(id);
   if (el) el.classList.remove('hidden');
@@ -913,16 +967,6 @@ async function saveActiveIntent() {
     document.getElementById('active-intent-text').textContent = newIntent;
     closeModal('modal-intent');
     showToast(`Active Intent updated to: "${newIntent}"`);
-  }
-}
-
-function saveSettings() {
-  const keyInput = document.getElementById('settings-gemini-key');
-  if (keyInput) {
-    geminiApiKey = keyInput.value.trim();
-    localStorage.setItem('nexusiq_gemini_key', geminiApiKey);
-    closeModal('modal-settings');
-    showToast(geminiApiKey ? "Gemini API Key saved!" : "Using built-in deterministic analysis engine.");
   }
 }
 
