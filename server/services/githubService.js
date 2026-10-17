@@ -14,7 +14,7 @@ export async function fetchGitHubRepoDetails(repoUrl) {
   const repo = match[2].replace(/\.git$/, '');
 
   const headers = {
-    'User-Agent': 'NexusIQ-Alumni-Engine/1.0',
+    'User-Agent': 'LinkX-Alumni-Engine/1.0',
     'Accept': 'application/vnd.github.v3+json'
   };
 

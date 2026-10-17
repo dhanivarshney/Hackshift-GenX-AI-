@@ -14,7 +14,7 @@ export default function Navbar() {
         </span>
         <span className="font-bold text-white tracking-wide flex items-center space-x-1.5">
           <Network className="w-3.5 h-3.5 text-indigo-400" />
-          <span>NexusIQ Network Engine</span>
+          <span>LinkX Network Engine</span>
         </span>
         <span className="text-slate-600 hidden sm:inline">|</span>
         <span className="text-slate-400 hidden sm:inline">

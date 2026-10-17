@@ -79,7 +79,7 @@ export default function ProofOfWork() {
           </h2>
 
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Alumni ignore 98% of cold DMs like <i>"Sir please refer me"</i>. In NexusIQ, you cannot send raw text.
+            Alumni ignore 98% of cold DMs like <i>"Sir please refer me"</i>. In LinkX, you cannot send raw text.
             Input your GitHub repo or PR; our AST engine analyzes your actual code, computes a <b>Readiness Score</b>,
             benchmarks <b>Test Coverage & P99 Latency</b>, and packages a <b>1-Minute Executive Flash Dossier</b> for the alumnus!
           </p>
@@ -169,7 +169,7 @@ export default function ProofOfWork() {
               <FileCode className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
             </div>
             <p className="text-[10px] text-slate-400 mt-1">
-              NexusIQ reads project structure, unit test ratios, and benchmark profiles.
+              LinkX reads project structure, unit test ratios, and benchmark profiles.
             </p>
           </div>
 

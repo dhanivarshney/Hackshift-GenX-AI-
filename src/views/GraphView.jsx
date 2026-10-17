@@ -500,7 +500,7 @@ export default function GraphView() {
             </div>
 
             <div className="pt-3 border-t border-slate-800 text-[11px] text-slate-500 font-mono">
-              NexusIQ Lineage Protocol • Real Graph Weights
+              LinkX Lineage Protocol • Real Graph Weights
             </div>
           </div>
         </div>

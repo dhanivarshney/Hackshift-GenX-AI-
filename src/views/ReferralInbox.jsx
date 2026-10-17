@@ -225,7 +225,7 @@ export default function ReferralInbox() {
             </div>
 
             <p className="text-xs text-slate-400">
-              NexusIQ encourages constructive feedback so students can refactor code and re-apply when ready.
+              LinkX encourages constructive feedback so students can refactor code and re-apply when ready.
             </p>
 
             <textarea

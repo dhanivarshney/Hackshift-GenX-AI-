@@ -1,4 +1,4 @@
-# 🚀 NexusIQ: Campus & Alumni Intent Network
+# 🚀 LinkX: Campus & Alumni Intent Network
 > **Track 1:** Alumni Network & Professional Connections  
 > **Theme:** *Building a Network, Not a Directory*  
 > **Mission:** Connecting students, alumni, faculty, founders, recruiters, and institutions based on **Expertise**, **Intent**, and **Opportunities**.
@@ -13,22 +13,22 @@ Traditional alumni portals and LinkedIn directories are **dead digital graveyard
 
 ---
 
-## ⚡ The NexusIQ Solution
+## ⚡ The LinkX Solution
 
 ```mermaid
 flowchart TD
-    subgraph NexusIQ["🧠 NexusIQ Intent & Semantic Match Engine"]
+    subgraph LinkX["🧠 LinkX Intent & Semantic Match Engine"]
         Matcher["Mutual Intent & Skill Overlap"]
         AntiSpam["AI Proof-of-Work Synthesizer"]
         Bounties["Escrow-Backed Opportunity Hub"]
     end
 
-    Student["🎓 Student (Proof-of-Work)"] <--> NexusIQ
-    Alum["💼 Alumnus (1-Click Referrals)"] <--> NexusIQ
-    Founder["🚀 Founder (Micro-Bounties)"] <--> NexusIQ
-    Faculty["🏛️ Faculty (Industry Capstones)"] <--> NexusIQ
-    Recruiter["🎯 Recruiter (Vetted Talent)"] <--> NexusIQ
-    Institution["🏫 Institution (Outcome Analytics)"] <--> NexusIQ
+    Student["🎓 Student (Proof-of-Work)"] <--> LinkX
+    Alum["💼 Alumnus (1-Click Referrals)"] <--> LinkX
+    Founder["🚀 Founder (Micro-Bounties)"] <--> LinkX
+    Faculty["🏛️ Faculty (Industry Capstones)"] <--> LinkX
+    Recruiter["🎯 Recruiter (Vetted Talent)"] <--> LinkX
+    Institution["🏫 Institution (Outcome Analytics)"] <--> LinkX
 ```
 
 ---
@@ -106,7 +106,7 @@ npm run frontend:dev
 ## 🏆 2-Minute Hackathon Demo Script (How to Win Over Judges)
 
 1. **The Hook (15 seconds):**
-   > *"Judges, every university has an alumni portal with 10,000 names, and exactly zero people log into it. Why? Because it's a directory, not a network. NexusIQ is an active intent exchange."*
+   > *"Judges, every university has an alumni portal with 10,000 names, and exactly zero people log into it. Why? Because it's a directory, not a network. LinkX is an active intent exchange."*
 2. **Show Student Screen & Anti-Cold-DM Engine (45 seconds):**
    > *"Show Tab 2: 'Proof-of-Work Pitch Lab'. Click 'Analyze Code & Generate Dossier'. Notice how the student's raw repo is turned into a 94/100 Code Readiness card with verified test coverage. No begging, just proof."*
 3. **Switch to Alumnus View (20 seconds):**

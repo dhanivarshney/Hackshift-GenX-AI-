@@ -1,4 +1,4 @@
-# 👥 NexusIQ: 4-Member Hackathon Team Architecture & Git Guide
+# 👥 LinkX: 4-Member Hackathon Team Architecture & Git Guide
 > **Goal:** High-velocity collaboration without Git merge conflicts. Each member has dedicated files and clear boundaries.
 
 ---

@@ -66,7 +66,7 @@ Synthesize a 1-page executive technical summary in strictly valid JSON:
   }
 
   return {
-    source: isSimulated ? 'NexusIQ Heuristic Analyzer (Simulated)' : 'NexusIQ GitHub Verified Analysis',
+    source: isSimulated ? 'LinkX AI Analyzer (Simulated)' : 'LinkX GitHub Verified Analysis',
     owner, repo, stars, forks, primaryLang, recentCommitMsg,
     readinessScore: score,
     primaryStack: primaryLang,

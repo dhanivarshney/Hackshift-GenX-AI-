@@ -1,4 +1,4 @@
-// NexusIQ — Cinematic Splash, Unified Hero Login Engine & Role-Specific Dashboard Workspace
+// LinkX — Cinematic Splash, Unified Hero Login Engine & Role-Specific Dashboard Workspace
 // Track 1: Alumni Network & Professional Connections (Building a Network, Not a Directory)
 
 const API_BASE = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
@@ -354,8 +354,8 @@ function renderHeroRoleTabs() {
     const isSelected = key === currentHeroRoleId;
     const cfg = ROLE_CONFIGS[key];
     const activeClass = isSelected
-      ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-      : 'text-slate-400 hover:text-white hover:bg-slate-800/80';
+      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/30 font-semibold border border-blue-400/30'
+      : 'text-slate-400 hover:text-white hover:bg-slate-800/60';
     return `
       <button onclick="renderHeroRoleView('${key}')" class="flex-1 py-2 px-3 rounded-xl transition text-center whitespace-nowrap flex items-center justify-center space-x-1.5 ${activeClass}">
         <i data-lucide="${cfg.icon}" class="w-3.5 h-3.5"></i>
@@ -381,7 +381,7 @@ function renderHeroRoleView(roleId) {
   const bulletsEl = document.getElementById('hero-side-bullets');
   bulletsEl.innerHTML = cfg.bullets.map(b => `
     <div class="flex items-start space-x-2.5">
-      <div class="p-1 rounded-lg bg-indigo-500/10 text-indigo-400 mt-0.5">
+      <div class="p-1.5 rounded-lg bg-sky-500/10 text-sky-400 mt-0.5 border border-sky-500/20">
         <i data-lucide="${b.icon}" class="w-3.5 h-3.5"></i>
       </div>
       <div>
@@ -401,7 +401,7 @@ function renderHeroRoleView(roleId) {
   fieldsEl.innerHTML = cfg.fields.map(f => `
     <div>
       <label class="block text-xs font-medium text-slate-300 mb-1">${f.label}</label>
-      <input type="${f.type}" value="${f.value}" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500" placeholder="${f.placeholder}">
+      <input type="${f.type}" value="${f.value}" required class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition" placeholder="${f.placeholder}">
     </div>
   `).join('');
 
@@ -422,6 +422,74 @@ function directAuthenticateAs(roleId) {
   authenticateAndOpenWorkspace(roleId, true);
 }
 
+// ================= ROLE-SPECIFIC NAVIGATION CONFIGURATIONS =================
+const ROLE_TABS = {
+  student: [
+    { id: 'intent-radar', label: 'Alumni Match Radar', icon: 'compass', badge: '14 Matches' },
+    { id: 'proof-of-work', label: 'Proof-of-Work Pitch Lab', icon: 'cpu', badge: 'Anti-Spam' },
+    { id: 'bounties', label: 'Student Bounty Board', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
+    { id: 'network-graph', label: 'Campus Lineage Graph', icon: 'share-2' }
+  ],
+  alumnus: [
+    { id: 'alumnus-inbox', label: 'Decision Inbox (Warm Referrals)', icon: 'inbox', badge: '1 Pending', badgeId: 'referrals-count-badge' },
+    { id: 'intent-radar', label: 'Talent Scouting Radar', icon: 'compass', badge: '14 Students' },
+    { id: 'bounties', label: 'Post & Sponsor Bounties', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
+    { id: 'network-graph', label: 'Alumni Lineage Graph', icon: 'share-2' }
+  ],
+  founder: [
+    { id: 'bounties', label: 'Startup Bounties & Tasks', icon: 'briefcase', badge: 'Escrow Gigs', badgeId: 'bounties-count-badge' },
+    { id: 'intent-radar', label: 'Founder Talent Radar', icon: 'compass', badge: 'Top Builders' },
+    { id: 'network-graph', label: 'Founder Ecosystem Graph', icon: 'share-2' }
+  ],
+  faculty: [
+    { id: 'intent-radar', label: 'Industry Co-Guide Radar', icon: 'compass', badge: '8 Capstones' },
+    { id: 'network-graph', label: 'Department Lineage Graph', icon: 'share-2' },
+    { id: 'institution', label: 'Academic & Outcomes Desk', icon: 'landmark', badge: 'NAAC A++' }
+  ],
+  recruiter: [
+    { id: 'intent-radar', label: 'Vetted Talent Pipeline', icon: 'compass', badge: 'Top 5%' },
+    { id: 'alumnus-inbox', label: 'Alumni-Endorsed Queue', icon: 'inbox', badge: 'Verified ATS' },
+    { id: 'bounties', label: 'Company Requisitions', icon: 'briefcase' }
+  ],
+  institution: [
+    { id: 'institution', label: 'Institution Impact Command', icon: 'landmark', badge: 'NAAC A++' },
+    { id: 'network-graph', label: 'Full Campus Lineage Graph', icon: 'share-2' },
+    { id: 'bounties', label: 'Campus Bounty Outcomes', icon: 'briefcase' }
+  ]
+};
+
+const ROLE_NODE_STATUS = {
+  student: 'Student Sandbox Node #402',
+  alumnus: 'Alumni Verified Node #108 (Swiggy)',
+  founder: 'Founder Syndicate Node #214 (YC W24)',
+  faculty: 'Academic R&D Node #005',
+  recruiter: 'Talent Acquisition Gateway #089',
+  institution: 'Executive Command Node #001'
+};
+
+function renderWorkspaceTabs(roleId) {
+  const container = document.getElementById('workspace-tabs-container');
+  if (!container) return;
+
+  const tabs = ROLE_TABS[roleId] || ROLE_TABS.student;
+
+  container.innerHTML = tabs.map(tab => {
+    const badgeAttr = tab.badgeId ? `id="${tab.badgeId}"` : '';
+    const badgeHtml = tab.badge 
+      ? `<span ${badgeAttr} class="bg-sky-500/10 text-sky-300 border border-sky-500/20 text-[10px] px-2 py-0.5 rounded-full font-mono font-medium">${tab.badge}</span>`
+      : '';
+    return `
+      <button onclick="switchTab('${tab.id}')" id="tab-${tab.id}" class="tab-btn py-3 border-b-2 border-transparent text-slate-400 hover:text-white flex items-center space-x-2 transition font-medium text-xs sm:text-sm whitespace-nowrap">
+        <i data-lucide="${tab.icon}" class="w-4 h-4"></i>
+        <span>${tab.label}</span>
+        ${badgeHtml}
+      </button>
+    `;
+  }).join('');
+
+  lucide.createIcons();
+}
+
 // ================= AUTHENTICATION & WORKSPACE ACTIVATION =================
 function authenticateAndOpenWorkspace(roleId, showConfetti = true) {
   const cfg = ROLE_CONFIGS[roleId] || ROLE_CONFIGS.student;
@@ -431,6 +499,28 @@ function authenticateAndOpenWorkspace(roleId, showConfetti = true) {
   // Hide login hero screen, reveal authenticated workspace
   document.getElementById('hero-login-screen').classList.add('hidden');
   document.getElementById('authenticated-workspace').classList.remove('hidden');
+
+  // Hide quick demo pills in top bar during authenticated session to prevent direct role switching
+  const quickDemo = document.getElementById('quick-demo-pills');
+  if (quickDemo) quickDemo.classList.add('hidden');
+
+  // Display active session pill in top bar
+  const sessionStatus = document.getElementById('top-bar-session-pill');
+  if (sessionStatus) {
+    sessionStatus.innerHTML = `
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="text-slate-400">Authenticated:</span>
+      <span class="font-bold text-white">${cfg.name}</span>
+      <span class="text-sky-300 font-mono text-[10px] bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20">${cfg.roleLabel}</span>
+    `;
+    sessionStatus.classList.remove('hidden');
+  }
+
+  // Update Node status text
+  const nodeStatus = document.getElementById('workspace-node-status');
+  if (nodeStatus) {
+    nodeStatus.textContent = ROLE_NODE_STATUS[roleId] || 'Verified Node';
+  }
 
   // Update Top Profile & Portal Tag
   document.getElementById('current-portal-badge').textContent = cfg.portalTitle;
@@ -448,9 +538,10 @@ function authenticateAndOpenWorkspace(roleId, showConfetti = true) {
   // Update Active Intent badge
   document.getElementById('active-intent-text').textContent = cfg.activeIntent;
 
-  renderWorkspaceRolePills();
+  // Render role-specific navigation tabs strictly for this role
+  renderWorkspaceTabs(roleId);
 
-  // Navigate directly to the most powerful tab for this role!
+  // Navigate directly to the most relevant tab for this role!
   switchTab(cfg.defaultTab || 'intent-radar');
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -458,7 +549,7 @@ function authenticateAndOpenWorkspace(roleId, showConfetti = true) {
 
   if (showConfetti) {
     triggerConfetti();
-    showToast(`Welcome back, ${cfg.name}! Authenticated to ${cfg.portalTitle}.`);
+    showToast(`Welcome, ${cfg.name}! Authenticated to ${cfg.portalTitle}.`);
   }
 }
 
@@ -466,26 +557,16 @@ function handleLogout() {
   activeSessionRoleId = null;
   document.getElementById('authenticated-workspace').classList.add('hidden');
   document.getElementById('hero-login-screen').classList.remove('hidden');
+
+  // Restore quick demo switcher on login screen
+  const quickDemo = document.getElementById('quick-demo-pills');
+  if (quickDemo) quickDemo.classList.remove('hidden');
+
+  const sessionStatus = document.getElementById('top-bar-session-pill');
+  if (sessionStatus) sessionStatus.classList.add('hidden');
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  showToast("Logged out successfully.");
-}
-
-function renderWorkspaceRolePills() {
-  const container = document.getElementById('workspace-role-pills');
-  if (!container) return;
-
-  const roles = Object.keys(ROLE_CONFIGS);
-  container.innerHTML = roles.map(key => {
-    const isSelected = key === activeSessionRoleId;
-    const activeClass = isSelected
-      ? 'bg-indigo-600 text-white font-bold shadow-sm'
-      : 'text-slate-400 hover:text-white hover:bg-slate-800';
-    return `
-      <button onclick="authenticateAndOpenWorkspace('${key}', true)" class="px-2.5 py-1 rounded-lg transition text-xs whitespace-nowrap ${activeClass}">
-        ${ROLE_CONFIGS[key].roleLabel}
-      </button>
-    `;
-  }).join('');
+  showToast("Logged out. Please select a portal to sign in.");
 }
 
 // ================= NAVIGATION TABS =================
@@ -497,7 +578,7 @@ function switchTab(tabId) {
     const tabBtn = document.getElementById(`tab-${v}`);
     if (el) el.classList.add('hidden');
     if (tabBtn) {
-      tabBtn.classList.remove('border-indigo-500', 'text-indigo-400');
+      tabBtn.classList.remove('border-sky-500', 'text-sky-400', 'border-pink-500', 'text-pink-400', 'border-indigo-500', 'text-indigo-400');
       tabBtn.classList.add('border-transparent', 'text-slate-400');
     }
   });
@@ -506,7 +587,7 @@ function switchTab(tabId) {
   const activeTabBtn = document.getElementById(`tab-${tabId}`);
   if (activeView) activeView.classList.remove('hidden');
   if (activeTabBtn) {
-    activeTabBtn.classList.add('border-indigo-500', 'text-indigo-400');
+    activeTabBtn.classList.add('border-sky-500', 'text-sky-400');
     activeTabBtn.classList.remove('border-transparent', 'text-slate-400');
   }
 
@@ -554,11 +635,11 @@ function renderRadarCards(items) {
   if (!container) return;
 
   container.innerHTML = items.map(item => `
-    <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-800 transition flex flex-col justify-between space-y-4">
+    <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-800 bg-[#080e1c]/80 transition flex flex-col justify-between space-y-4">
       <div>
         <div class="flex items-start justify-between">
           <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-xl ${item.avatarBg} text-white font-bold flex items-center justify-center text-sm shadow-md">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-blue-500/20">
               ${item.avatar}
             </div>
             <div>
@@ -567,26 +648,26 @@ function renderRadarCards(items) {
             </div>
           </div>
           <div class="text-right">
-            <div class="text-sm font-black text-emerald-400">${item.matchScore}%</div>
+            <div class="text-sm font-black text-sky-400">${item.matchScore}%</div>
             <div class="text-[10px] text-slate-500 font-mono">Synergy Score</div>
           </div>
         </div>
 
-        <div class="mt-3.5 inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs">
-          <i data-lucide="zap" class="w-3.5 h-3.5 text-indigo-400"></i>
+        <div class="mt-3.5 inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs">
+          <i data-lucide="zap" class="w-3.5 h-3.5 text-sky-400"></i>
           <span class="font-semibold">${item.intentBadge}</span>
         </div>
 
         <p class="text-xs text-slate-300 mt-2.5 line-clamp-2">${item.intentDesc}</p>
 
-        <div class="mt-3 p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-[11px] text-slate-400">
-          <span class="text-indigo-400 font-semibold">Why you match:</span> ${item.synergy}
+        <div class="mt-3 p-2.5 rounded-xl bg-[#040711] border border-slate-800 text-[11px] text-slate-300">
+          <span class="text-sky-400 font-semibold">Why you match:</span> ${item.synergy}
         </div>
       </div>
 
       <div>
-        <button onclick="handleRadarAction('${item.id}', '${item.actionType}')" class="w-full py-2 bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white rounded-xl text-xs font-semibold border border-slate-700 hover:border-indigo-500 transition flex items-center justify-center space-x-1.5 shadow-sm">
-          <i data-lucide="${item.actionType === 'bounty' ? 'briefcase' : (item.actionType === 'capstone' ? 'landmark' : 'arrow-up-right')}" class="w-3.5 h-3.5"></i>
+        <button onclick="handleRadarAction('${item.id}', '${item.actionType}')" class="w-full py-2 bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white rounded-xl text-xs font-semibold border border-slate-800 hover:border-slate-700 transition flex items-center justify-center space-x-1.5 shadow-sm">
+          <i data-lucide="${item.actionType === 'bounty' ? 'briefcase' : (item.actionType === 'capstone' ? 'landmark' : 'arrow-up-right')}" class="w-3.5 h-3.5 text-sky-400"></i>
           <span>${item.actionLabel}</span>
         </button>
       </div>
@@ -598,11 +679,9 @@ function renderRadarCards(items) {
 function filterRadar(category) {
   document.querySelectorAll('.radar-filter-btn').forEach(btn => {
     if (btn.getAttribute('data-filter') === category) {
-      btn.classList.add('bg-indigo-600', 'text-white');
-      btn.classList.remove('bg-slate-800', 'text-slate-300');
+      btn.className = 'radar-filter-btn px-3 py-1 text-xs rounded-lg bg-blue-600 text-white font-medium shadow-md shadow-blue-600/20';
     } else {
-      btn.classList.remove('bg-indigo-600', 'text-white');
-      btn.classList.add('bg-slate-800', 'text-slate-300');
+      btn.className = 'radar-filter-btn px-3 py-1 text-xs rounded-lg bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-medium';
     }
   });
 
@@ -658,7 +737,7 @@ async function generateProofOfWorkDossier() {
     showToast(`Verified repository! Code Readiness: ${latestAnalysis.readinessScore}/100`);
   } catch (err) {
     const mock = {
-      source: 'NexusIQ Heuristic Analyzer',
+      source: 'LinkX AI Analyzer',
       readinessScore: 94,
       primaryStack: 'Go / Distributed Systems',
       testCoverage: '92.4% Unit Tests',
@@ -680,54 +759,54 @@ async function generateProofOfWorkDossier() {
 function renderDossierOutput(analysis, company, blocker) {
   const outputEl = document.getElementById('pow-card-content');
   outputEl.innerHTML = `
-    <div class="bg-slate-950 border border-indigo-500/30 rounded-2xl p-5 space-y-4 glow-indigo">
-      <div class="flex items-start justify-between border-b border-slate-800/80 pb-3">
+    <div class="bg-[#080e1c] border border-slate-800 rounded-2xl p-5 space-y-4">
+      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
         <div>
           <div class="flex items-center space-x-2">
             <span class="text-sm font-bold text-white">Aman Sharma</span>
-            <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/30 font-medium">Verified Student</span>
+            <span class="text-[10px] bg-sky-500/10 text-sky-300 px-2 py-0.5 rounded border border-sky-500/20 font-medium">Verified Student</span>
           </div>
-          <p class="text-xs text-slate-400 mt-0.5">Target: <b>${company}</b> • Engine: <span class="text-emerald-400 font-mono text-[10px]">${analysis.source}</span></p>
+          <p class="text-xs text-slate-400 mt-0.5">Target: <b>${company}</b> • Engine: <span class="text-sky-400 font-mono text-[10px]">${analysis.source}</span></p>
         </div>
         <div class="text-right">
-          <div class="text-xl font-black text-emerald-400">${analysis.readinessScore}<span class="text-xs text-slate-400">/100</span></div>
-          <div class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Code Readiness</div>
+          <div class="text-xl font-black text-sky-400">${analysis.readinessScore}<span class="text-xs text-slate-400">/100</span></div>
+          <div class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Code Readiness</div>
         </div>
       </div>
 
       <div class="grid grid-cols-3 gap-2 text-center text-xs">
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-2">
+        <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
           <div class="text-slate-400 text-[10px]">Test Coverage</div>
-          <div class="text-emerald-400 font-bold mt-0.5">${analysis.testCoverage}</div>
+          <div class="text-sky-300 font-bold mt-0.5">${analysis.testCoverage}</div>
         </div>
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-2">
+        <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
           <div class="text-slate-400 text-[10px]">P99 Latency</div>
-          <div class="text-indigo-400 font-bold mt-0.5">${analysis.latencyBenchmark}</div>
+          <div class="text-blue-400 font-bold mt-0.5">${analysis.latencyBenchmark}</div>
         </div>
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-2">
+        <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
           <div class="text-slate-400 text-[10px]">Primary Stack</div>
-          <div class="text-amber-400 font-bold mt-0.5">${analysis.primaryStack}</div>
+          <div class="text-indigo-300 font-bold mt-0.5">${analysis.primaryStack}</div>
         </div>
       </div>
 
       <div class="space-y-1.5 text-xs">
-        <div class="font-semibold text-slate-300 flex items-center space-x-1.5">
-          <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+        <div class="font-semibold text-slate-200 flex items-center space-x-1.5">
+          <i data-lucide="check-circle" class="w-3.5 h-3.5 text-sky-400"></i>
           <span>Verified Architecture Summary:</span>
         </div>
-        <p class="text-slate-300 leading-relaxed bg-slate-900/60 border border-slate-800 p-3 rounded-xl">
+        <p class="text-slate-300 leading-relaxed bg-[#040711] border border-slate-800 p-3 rounded-xl">
           "${analysis.executiveSummary || analysis.architecturalHighlight}"
         </p>
       </div>
 
-      <div class="p-3 bg-indigo-950/30 border border-indigo-500/20 rounded-xl text-xs space-y-1">
-        <span class="text-indigo-300 font-semibold">Targeted 3-Minute Alumnus Question:</span>
+      <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs space-y-1">
+        <span class="text-sky-300 font-semibold">Targeted 3-Minute Alumnus Question:</span>
         <p class="text-slate-300">"${blocker}"</p>
       </div>
 
       <div class="flex items-center justify-between pt-2">
         <span class="text-[11px] text-slate-400 font-mono">Zero cold DMs • Verified Proof of Work</span>
-        <button onclick="dispatchReferralToAlum('${company}', '${blocker}')" class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white font-semibold rounded-xl text-xs shadow-md shadow-emerald-600/30 flex items-center space-x-1.5 transition">
+        <button onclick="dispatchReferralToAlum('${company}', '${blocker}')" class="px-4 py-2 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-md shadow-blue-600/30 flex items-center space-x-1.5 transition">
           <i data-lucide="send" class="w-4 h-4"></i>
           <span>Dispatch to Alumnus Decision Inbox</span>
         </button>
@@ -769,7 +848,7 @@ function renderBounties(items) {
   if (!container) return;
 
   container.innerHTML = items.map(opp => `
-    <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-800 transition flex flex-col justify-between space-y-4">
+    <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-800 bg-[#080e1c]/80 transition flex flex-col justify-between space-y-4">
       <div>
         <div class="flex items-start justify-between">
           <span class="text-[11px] font-semibold px-2 py-0.5 rounded border ${opp.badgeClass}">${opp.typeLabel}</span>
@@ -777,22 +856,22 @@ function renderBounties(items) {
         </div>
 
         <h4 class="text-sm font-bold text-white mt-2">${opp.title}</h4>
-        <p class="text-xs text-indigo-400 mt-0.5 font-medium">${opp.poster}</p>
+        <p class="text-xs text-sky-400 mt-0.5 font-medium">${opp.poster}</p>
 
-        <div class="mt-2.5 p-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-emerald-400">
+        <div class="mt-2.5 p-2 rounded-xl bg-[#040711] border border-slate-800 text-xs font-semibold text-emerald-300">
           💰 Reward: ${opp.reward}
         </div>
 
         <p class="text-xs text-slate-300 mt-2.5 leading-relaxed">${opp.desc}</p>
 
         <div class="flex flex-wrap gap-1.5 mt-3">
-          ${opp.tags.map(t => `<span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">${t}</span>`).join('')}
+          ${opp.tags.map(t => `<span class="text-[10px] px-2 py-0.5 rounded bg-slate-900 text-slate-300 border border-slate-800">${t}</span>`).join('')}
         </div>
       </div>
 
       <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
         <span class="text-[11px] text-slate-400">${opp.applicants ? opp.applicants.length : 0} builders applied</span>
-        <button onclick="openApplyBountyModal('${opp.id}', '${escapeQuotes(opp.title)}')" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold shadow-md shadow-indigo-600/20 transition flex items-center space-x-1">
+        <button onclick="openApplyBountyModal('${opp.id}', '${escapeQuotes(opp.title)}')" class="px-3.5 py-1.5 btn-gradient-primary text-white rounded-xl text-xs font-semibold shadow-md shadow-blue-600/20 transition flex items-center space-x-1">
           <i data-lucide="send" class="w-3.5 h-3.5"></i>
           <span>Apply with Proof-of-Work</span>
         </button>
@@ -887,7 +966,7 @@ function renderReferrals(items) {
   if (items.length === 0) {
     container.innerHTML = `
       <div class="glass-card rounded-2xl p-8 text-center text-slate-400 space-y-2">
-        <i data-lucide="inbox" class="w-8 h-8 mx-auto text-slate-500"></i>
+        <i data-lucide="inbox" class="w-8 h-8 mx-auto text-pink-400"></i>
         <p class="text-xs">No pending student dossiers in inbox.</p>
       </div>
     `;
@@ -898,62 +977,62 @@ function renderReferrals(items) {
   container.innerHTML = items.map(ref => {
     const isReferred = ref.status === 'referred';
     return `
-      <div class="glass-card rounded-2xl p-6 border ${isReferred ? 'border-emerald-500/40 bg-emerald-950/20' : 'border-slate-800'} space-y-4 transition">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+      <div class="glass-card rounded-2xl p-6 border ${isReferred ? 'border-pink-500/40 bg-purple-950/20' : 'border-purple-900/50 bg-[#0e0720]/80'} space-y-4 transition">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-purple-900/40 pb-3">
           <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-xl bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold flex items-center justify-center text-sm">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600/30 via-pink-600/30 to-blue-600/30 border border-pink-500/40 text-pink-300 font-bold flex items-center justify-center text-sm">
               AS
             </div>
             <div>
               <div class="flex items-center space-x-2">
                 <h4 class="text-sm font-bold text-white">${ref.studentName}</h4>
-                <span class="text-[10px] bg-indigo-500/10 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/20 font-medium">${ref.studentBranch}</span>
+                <span class="text-[10px] bg-pink-500/10 text-pink-300 px-2 py-0.5 rounded border border-pink-500/20 font-medium">${ref.studentBranch}</span>
               </div>
-              <p class="text-xs text-slate-400 mt-0.5">Target: <b>${ref.targetCompany}</b> • Repository: <a href="${ref.repoUrl}" target="_blank" class="text-indigo-400 underline font-mono">${ref.repoUrl}</a></p>
+              <p class="text-xs text-purple-300/70 mt-0.5">Target: <b>${ref.targetCompany}</b> • Repository: <a href="${ref.repoUrl}" target="_blank" class="text-pink-400 underline font-mono">${ref.repoUrl}</a></p>
             </div>
           </div>
 
           <div class="flex items-center space-x-3">
             <div class="text-right">
-              <span class="text-xs font-black text-emerald-400">${ref.readinessScore}/100</span>
-              <div class="text-[10px] text-slate-500 font-mono">Code Score</div>
+              <span class="text-xs font-black text-pink-400">${ref.readinessScore}/100</span>
+              <div class="text-[10px] text-purple-300/70 font-mono">Code Score</div>
             </div>
             ${isReferred 
-              ? `<span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg text-xs font-bold border border-emerald-500/30 flex items-center space-x-1">
+              ? `<span class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-lg text-xs font-bold border border-pink-500/30 flex items-center space-x-1">
                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
                    <span>REFERRED</span>
                  </span>`
-              : `<span class="px-2.5 py-1 bg-amber-500/20 text-amber-300 rounded-lg text-xs font-semibold border border-amber-500/30">PENDING REVIEW</span>`
+              : `<span class="px-2.5 py-1 bg-purple-500/20 text-purple-300 rounded-lg text-xs font-semibold border border-purple-500/30">PENDING REVIEW</span>`
             }
           </div>
         </div>
 
-        <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-3.5 text-xs text-slate-300 space-y-2">
-          <div class="flex items-center space-x-1.5 font-semibold text-indigo-300">
-            <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+        <div class="bg-[#070314]/90 border border-purple-900/50 rounded-xl p-3.5 text-xs text-slate-300 space-y-2">
+          <div class="flex items-center space-x-1.5 font-semibold text-pink-300">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 text-pink-400"></i>
             <span>Verified Architectural Summary:</span>
           </div>
           <p class="leading-relaxed">${ref.summary}</p>
-          <div class="pt-2 text-[11px] text-slate-400 border-t border-slate-800">
+          <div class="pt-2 text-[11px] text-purple-300/70 border-t border-purple-900/40">
             <b class="text-slate-300">Student's 3-Min Question:</b> "${ref.blockerAsk}"
           </div>
         </div>
 
         ${!isReferred ? `
           <div class="flex items-center justify-between pt-1">
-            <span class="text-[11px] text-slate-400">Takes ~1 min to endorse directly to internal ATS</span>
+            <span class="text-[11px] text-purple-300/70">Takes ~1 min to endorse directly to internal ATS</span>
             <div class="flex space-x-2">
-              <button onclick="handleReferralAction('${ref.id}', 'rejected')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition">
+              <button onclick="handleReferralAction('${ref.id}', 'rejected')" class="px-3 py-1.5 bg-purple-950/40 hover:bg-purple-900/60 text-purple-200 rounded-xl text-xs border border-purple-800/40 transition">
                 Pass with Feedback
               </button>
-              <button onclick="handleReferralAction('${ref.id}', 'referred')" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs shadow-md shadow-emerald-600/30 flex items-center space-x-1.5 transition">
+              <button onclick="handleReferralAction('${ref.id}', 'referred')" class="px-4 py-1.5 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-md shadow-pink-600/30 flex items-center space-x-1.5 transition">
                 <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
                 <span>1-Click Verified Referral</span>
               </button>
             </div>
           </div>
         ` : `
-          <div class="text-xs text-emerald-400 flex items-center space-x-1.5 font-medium">
+          <div class="text-xs text-pink-400 flex items-center space-x-1.5 font-medium">
             <i data-lucide="check-circle" class="w-4 h-4"></i>
             <span>Referral submitted to ${ref.targetCompany} Internal Hiring Portal. Notification sent to student!</span>
           </div>
@@ -1002,10 +1081,10 @@ function setupLineageCanvas() {
   const height = rect.height;
 
   const nodeTypes = [
-    { type: 'student', color: '#818cf8', radius: 6 },
-    { type: 'alumni', color: '#34d399', radius: 8 },
-    { type: 'founder', color: '#fbbf24', radius: 9 },
-    { type: 'faculty', color: '#c084fc', radius: 8 }
+    { type: 'student', color: '#38bdf8', radius: 6 }, // Electric Sky Blue
+    { type: 'alumni', color: '#f472b6', radius: 8 },  // Hot Neon Pink
+    { type: 'founder', color: '#c084fc', radius: 9 }, // Electric Purple
+    { type: 'faculty', color: '#fb7185', radius: 8 }  // Neon Coral Pink
   ];
 
   const nodes = [];
@@ -1037,7 +1116,7 @@ function setupLineageCanvas() {
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
           const alpha = 1 - dist / 110;
-          ctx.strokeStyle = `rgba(99, 102, 241, ${alpha * 0.25})`;
+          ctx.strokeStyle = `rgba(192, 132, 252, ${alpha * 0.35})`;
           ctx.lineWidth = 1;
           ctx.stroke();
         }
@@ -1112,15 +1191,15 @@ async function saveActiveIntent() {
 
 // ================= UTILITIES: TOAST & CONFETTI =================
 function showToast(msg) {
-  const existing = document.getElementById('nexus-toast');
+  const existing = document.getElementById('linkx-toast');
   if (existing) existing.remove();
 
   const toast = document.createElement('div');
-  toast.id = 'nexus-toast';
-  toast.className = 'fixed bottom-5 right-5 z-50 bg-slate-900 border border-indigo-500/50 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center space-x-2 transition transform translate-y-0';
+  toast.id = 'linkx-toast';
+  toast.className = 'fixed bottom-5 right-5 z-50 bg-[#080d1a]/95 border border-slate-700/80 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center space-x-2 transition transform translate-y-0 shadow-sky-950/40';
   toast.innerHTML = `
-    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
-    <span>${msg}</span>
+    <i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>
+    <span class="text-slate-100 font-medium">${msg}</span>
   `;
   document.body.appendChild(toast);
   lucide.createIcons();
@@ -1493,8 +1572,11 @@ function initParticleField() {
   const field = document.getElementById('particle-field');
   if (!field) return;
   const COLORS = [
-    'rgba(99,102,241,0.7)', 'rgba(168,85,247,0.6)',
-    'rgba(16,185,129,0.5)', 'rgba(139,92,246,0.6)', 'rgba(59,130,246,0.5)',
+    'rgba(56, 189, 248, 0.8)',   // Electric Sky Blue
+    'rgba(236, 72, 153, 0.8)',   // Hot Neon Pink
+    'rgba(168, 85, 247, 0.8)',   // Electric Purple
+    'rgba(192, 132, 252, 0.75)', // Soft Radiant Violet
+    'rgba(244, 63, 94, 0.75)',    // Neon Rose Pink
   ];
   for (let i = 0; i < 28; i++) {
     const p     = document.createElement('div');
@@ -1591,46 +1673,28 @@ function initCounterObserver() {
   els.forEach(c => { c.dataset.observed = '1'; obs.observe(c); });
 }
 
-// ── 6. SCROLL REVEAL ──
+// ── 6. SAFE SCROLL REVEAL (Never hides elements with opacity 0) ──
 function initScrollReveal() {
-  const sel = '.glass-card:not([data-revealed]), .glass-panel:not([data-revealed])';
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        el.dataset.revealed = '1';
-        el.style.transition = 'opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1)';
-        const siblings = el.parentElement ? [...el.parentElement.children].filter(c => c.dataset.revealed) : [];
-        setTimeout(() => {
-          el.style.opacity   = '1';
-          el.style.transform = 'translateY(0)';
-        }, Math.min(siblings.length * 55, 280) + 40);
-        obs.unobserve(el);
-      }
-    });
-  }, { threshold: 0.07 });
+  const sel = '.glass-card, .glass-panel';
   document.querySelectorAll(sel).forEach(el => {
-    el.style.opacity   = '0';
-    el.style.transform = 'translateY(16px)';
-    obs.observe(el);
+    el.style.opacity = '1';
+    el.style.transform = 'none';
   });
 }
 
-// ── 7. CARD STAGGER ──
+// ── 7. CARD STAGGER (Safe entrance without hiding) ──
 function applyCardStagger(container) {
   if (!container) return;
-  [...container.children].forEach((card, i) => {
-    card.style.opacity   = '0';
-    card.style.transform = 'translateY(18px)';
-    card.style.transition = 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1)';
-    setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, i * 85 + 80);
+  [...container.children].forEach((card) => {
+    card.style.opacity = '1';
+    card.style.transform = 'none';
   });
 }
 
 // ── 8. TAB ACTIVE INDICATOR ──
 function updateTabIndicators() {
   document.querySelectorAll('.tab-btn').forEach(btn => {
-    if (btn.classList.contains('border-indigo-500')) btn.classList.add('active-tab');
+    if (btn.classList.contains('border-pink-500') || btn.classList.contains('border-indigo-500')) btn.classList.add('active-tab');
     else btn.classList.remove('active-tab');
   });
 }
@@ -1638,7 +1702,7 @@ function updateTabIndicators() {
 // ── 9. SPLASH EXIT BURST ──
 function splashExitBurst() {
   if (typeof confetti === 'function') {
-    confetti({ particleCount:35, spread:55, origin:{x:0.5,y:0.45}, colors:['#6366f1','#a855f7','#34d399'], scalar:0.7, disableForReducedMotion:true });
+    confetti({ particleCount: 45, spread: 65, origin: { x: 0.5, y: 0.45 }, colors: ['#3b82f6', '#a855f7', '#ec4899', '#f43f5e', '#60a5fa'], scalar: 0.8, disableForReducedMotion: true });
   }
 }
 
@@ -1646,29 +1710,16 @@ function splashExitBurst() {
 function animateWorkspaceEntrance() {
   const heroBanner = document.querySelector('#authenticated-workspace > section');
   if (heroBanner) {
-    heroBanner.style.opacity   = '0';
-    heroBanner.style.transform = 'translateY(-10px)';
-    heroBanner.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    setTimeout(() => { heroBanner.style.opacity='1'; heroBanner.style.transform='translateY(0)'; }, 180);
+    heroBanner.style.opacity = '1';
+    heroBanner.style.transform = 'none';
   }
-  setTimeout(() => {
-    initStatBarObserver();
-    initCounterObserver();
-    applyCardStagger(document.getElementById('radar-cards-container'));
-  }, 300);
+  initStatBarObserver();
+  initCounterObserver();
+  applyCardStagger(document.getElementById('radar-cards-container'));
 }
 
 // ── HOOKS INTO EXISTING FUNCTIONS ──
 (function() {
-  // Workspace entrance
-  const _origAuth = window.authenticateAndOpenWorkspace;
-  if (typeof _origAuth === 'function') {
-    window.authenticateAndOpenWorkspace = function(roleId, sc) {
-      _origAuth(roleId, sc);
-      animateWorkspaceEntrance();
-    };
-  }
-
   // Splash burst
   const _origDismiss = window.dismissSplashImmediately;
   if (typeof _origDismiss === 'function') {
@@ -1678,21 +1729,15 @@ function animateWorkspaceEntrance() {
     };
   }
 
-  // Tab switch stagger
+  // Tab switch update
   const _origSwitch = window.switchTab;
   if (typeof _origSwitch === 'function') {
     window.switchTab = function(tabId) {
       _origSwitch(tabId);
       setTimeout(() => {
-        initScrollReveal();
         initStatBarObserver();
         initCounterObserver();
         updateTabIndicators();
-        const view = document.getElementById('view-' + tabId);
-        if (view) {
-          const grid = view.querySelector('.grid, .space-y-4, .space-y-6');
-          if (grid) applyCardStagger(grid);
-        }
       }, 60);
     };
   }
@@ -1701,12 +1746,11 @@ function animateWorkspaceEntrance() {
 // ── BOOT ──
 document.addEventListener('DOMContentLoaded', () => {
   initParticleField();
-  initCardTilt();
   initButtonRipples();
   setTimeout(() => {
     initScrollReveal();
     initStatBarObserver();
     initCounterObserver();
     updateTabIndicators();
-  }, 600);
+  }, 300);
 });

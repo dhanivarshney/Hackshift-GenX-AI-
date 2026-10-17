@@ -33,8 +33,8 @@ export function NexusProvider({ children }) {
 
   // Load saved session on mount
   useEffect(() => {
-    const savedRole = localStorage.getItem('nexusiq_session_role');
-    const savedAuth = localStorage.getItem('nexusiq_session_auth');
+    const savedRole = localStorage.getItem('linkx_session_role');
+    const savedAuth = localStorage.getItem('linkx_session_auth');
     if (savedAuth === 'true' && savedRole) {
       const idx = personas.findIndex(p => p.id === savedRole);
       if (idx !== -1) {
@@ -73,8 +73,8 @@ export function NexusProvider({ children }) {
 
     setCurrentRoleIndex(targetIdx);
     setIsAuthenticated(true);
-    localStorage.setItem('nexusiq_session_role', roleId);
-    localStorage.setItem('nexusiq_session_auth', 'true');
+    localStorage.setItem('linkx_session_role', roleId);
+    localStorage.setItem('linkx_session_auth', 'true');
 
     const targetPersona = personas[targetIdx];
 
@@ -99,7 +99,7 @@ export function NexusProvider({ children }) {
 
   const logout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('nexusiq_session_auth');
+    localStorage.removeItem('linkx_session_auth');
     showToast('Signed out from workspace. Select a role gateway.', 'info');
   };
 
@@ -107,7 +107,7 @@ export function NexusProvider({ children }) {
     const targetIdx = personas.findIndex(p => p.id === roleId);
     if (targetIdx === -1) return;
     setCurrentRoleIndex(targetIdx);
-    localStorage.setItem('nexusiq_session_role', roleId);
+    localStorage.setItem('linkx_session_role', roleId);
     const target = personas[targetIdx];
 
     // Context-aware tab suggestion
@@ -159,7 +159,7 @@ export function NexusProvider({ children }) {
       title: postData.title,
       content: postData.content,
       intentBadge: postData.intentBadge || activePersona.activeIntent,
-      tags: postData.tags || ['Community', 'NexusIQ'],
+      tags: postData.tags || ['Community', 'LinkX'],
       timestamp: 'Just now',
       upvotes: 1,
       commentsCount: 0,
@@ -245,7 +245,7 @@ export function NexusProvider({ children }) {
       reward: bountyData.reward,
       deadline: 'Active for 7 Days',
       desc: bountyData.desc,
-      tags: bountyData.tags || ['Bounty', 'NexusIQ'],
+      tags: bountyData.tags || ['Bounty', 'LinkX'],
       applicants: []
     };
 

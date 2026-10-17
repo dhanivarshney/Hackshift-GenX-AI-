@@ -245,7 +245,7 @@ export default function Onboarding() {
         </h1>
         
         <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-          NexusIQ connects students, alumni, faculty, founders, recruiters, and institutions through
+          LinkX connects students, alumni, faculty, founders, recruiters, and institutions through
           <b className="text-white"> verified GitHub proof-of-work, active reciprocation intent, and direct opportunity exchange</b>.
         </p>
 

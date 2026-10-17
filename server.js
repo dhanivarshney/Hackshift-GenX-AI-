@@ -156,7 +156,7 @@ app.get('/api/institution/stats', (req, res) => {
 
 function startServer(port) {
   const server = app.listen(port, () => {
-    console.log(`🚀 NexusIQ Full-Stack Engine running live at http://localhost:${port}`);
+    console.log(`🚀 LinkX Full-Stack Engine running live at http://localhost:${port}`);
   });
 
   server.on('error', (err) => {

@@ -1,4 +1,4 @@
-// NexusIQ — Master Mock Data Store & Semantic Graph Definitions
+// LinkX — Master Mock Data Store & Semantic Graph Definitions
 // Track 1: Alumni Network & Professional Connections (Building a Network, Not a Directory)
 
 export const MASTER_PERSONAS = [
@@ -789,7 +789,7 @@ export const SAMPLE_REPOS = [
     companyTarget: 'Swiggy',
     blockerAsk: 'Optimizing consistent-hashing ring re-allocation under high-churn node failures.',
     metrics: {
-      source: 'NexusIQ Deep AST Code Engine',
+      source: 'LinkX Deep AST Code Engine',
       readinessScore: 94,
       testCoverage: '92.4% Unit & Integration',
       latencyBenchmark: '14ms P99 Latency (10k RPS)',
@@ -807,7 +807,7 @@ export const SAMPLE_REPOS = [
     companyTarget: 'HyperScale AI',
     blockerAsk: 'Preventing client-side backpressure choking on 200+ concurrent LLM token streams.',
     metrics: {
-      source: 'NexusIQ Deep AST Code Engine',
+      source: 'LinkX Deep AST Code Engine',
       readinessScore: 96,
       testCoverage: '95.1% Automated Tests',
       latencyBenchmark: '8ms Internal Queue Time',
@@ -825,7 +825,7 @@ export const SAMPLE_REPOS = [
     companyTarget: 'Google Cloud',
     blockerAsk: 'Evaluating Prometheus custom metric query latency against edge node clock drift.',
     metrics: {
-      source: 'NexusIQ Deep AST Code Engine',
+      source: 'LinkX Deep AST Code Engine',
       readinessScore: 91,
       testCoverage: '88.5% Integration Suites',
       latencyBenchmark: '22ms Reconcile Loop',
