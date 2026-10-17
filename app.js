@@ -354,8 +354,8 @@ function renderHeroRoleTabs() {
     const isSelected = key === currentHeroRoleId;
     const cfg = ROLE_CONFIGS[key];
     const activeClass = isSelected
-      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/30 font-semibold border border-blue-400/30'
-      : 'text-slate-400 hover:text-white hover:bg-slate-800/60';
+      ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-lg shadow-purple-600/40 font-bold border border-pink-400/40 scale-[1.02]'
+      : 'text-slate-400 hover:text-white hover:bg-slate-800/60 font-medium';
     return `
       <button onclick="renderHeroRoleView('${key}')" class="flex-1 py-2 px-3 rounded-xl transition text-center whitespace-nowrap flex items-center justify-center space-x-1.5 ${activeClass}">
         <i data-lucide="${cfg.icon}" class="w-3.5 h-3.5"></i>
@@ -381,7 +381,7 @@ function renderHeroRoleView(roleId) {
   const bulletsEl = document.getElementById('hero-side-bullets');
   bulletsEl.innerHTML = cfg.bullets.map(b => `
     <div class="flex items-start space-x-2.5">
-      <div class="p-1.5 rounded-lg bg-sky-500/10 text-sky-400 mt-0.5 border border-sky-500/20">
+      <div class="p-1.5 rounded-lg bg-gradient-to-br from-sky-500/15 via-purple-500/15 to-pink-500/15 text-sky-300 mt-0.5 border border-purple-500/25 shadow-sm">
         <i data-lucide="${b.icon}" class="w-3.5 h-3.5"></i>
       </div>
       <div>
