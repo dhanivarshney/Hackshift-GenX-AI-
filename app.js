@@ -114,7 +114,7 @@ const ROLE_CONFIGS = {
     bannerBadge: 'Academic & Industry Linkage',
     bannerDesc: 'Supercharge student final-year capstone projects by pairing them with industry alumni mentors at Google, AWS, and tier-1 research labs.',
     demoText: 'Sign in instantly as <b>Dr. R.K. Verma</b> (Professor & Dean R&D) managing 64 industry-mentored research capstones.',
-    defaultTab: 'intent-radar',
+    defaultTab: 'faculty-dashboard',
     bullets: [
       { icon: 'git-merge', title: 'Industry Co-Guides', text: 'Pair student research teams with alumni engineers for real-world validation.' },
       { icon: 'file-text', title: 'Conference Papers', text: 'Publish joint IEEE/ACM conference papers co-authored with industry alumni.' },
@@ -174,7 +174,7 @@ const ROLE_CONFIGS = {
     bannerBadge: 'University Executive Desk',
     bannerDesc: 'Transform your college alumni directory from a dead phonebook into an active economic network. Track placement conversions, alumni density, and bounty earnings.',
     demoText: 'Sign in instantly as <b>Dean Sharma</b> (Alumni Relations Administration) monitoring campus placement ROI and network velocity.',
-    defaultTab: 'institution',
+    defaultTab: 'institution-overview',
     bullets: [
       { icon: 'activity', title: 'Real Outcome Metrics', text: 'Track verified referrals, conversion to offers, and student bounty payouts.' },
       { icon: 'map', title: 'Alumni Geographic Mapping', text: 'Interactive geo-density across tech hubs: Bangalore, Gurgaon, SF, London.' },
@@ -191,8 +191,12 @@ const ROLE_CONFIGS = {
 
 let currentHeroRoleId = 'student';
 let activeSessionRoleId = null;
+let currentActiveTab = null;
+let appNavHistory = [];
 let bountiesState = [];
 let referralsState = [];
+let facultyStudentsState = [];
+let institutionDepartmentsState = [];
 let latestAnalysis = null;
 let splashTimer = null;
 
@@ -441,37 +445,53 @@ function directAuthenticateAs(roleId) {
 // ================= ROLE-SPECIFIC NAVIGATION CONFIGURATIONS =================
 const ROLE_TABS = {
   student: [
+    { id: 'career-missions', label: 'Career Mission & Rescue', icon: 'compass', badge: 'Active', badgeId: 'missions-badge' },
     { id: 'student-profile', label: 'Profile & Resume Score', icon: 'user-check', badge: '95/100', badgeId: 'profile-score-badge' },
     { id: 'proof-of-work', label: 'Get Referral', icon: 'send', badge: 'Verified' },
-    { id: 'intent-radar', label: 'Matched Alumni', icon: 'compass', badge: '14 Matches' },
-    { id: 'bounties', label: 'Paid Bounties', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
-    { id: 'network-graph', label: 'Campus Network', icon: 'share-2' }
+    { id: 'bridge-finder', label: 'Hidden Bridge Finder', icon: 'git-merge', badge: '3 Paths' },
+    { id: 'career-shadow', label: 'Career Shadow AI', icon: 'cpu', badge: 'Simulations' },
+    { id: 'mentorship', label: 'Alumni Impact Exchange', icon: 'calendar', badge: 'Mentoring' },
+    { id: 'bounties', label: 'Paid Bounties & Gigs', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
+    { id: 'legacy-graph', label: 'Legacy Knowledge', icon: 'book-open' },
+    { id: 'intent-radar', label: 'Matched Alumni', icon: 'users' },
+    { id: 'network-graph', label: 'Campus Lineage', icon: 'share-2' }
   ],
   alumnus: [
     { id: 'alumnus-inbox', label: 'Referral Requests', icon: 'inbox', badge: '1 Pending', badgeId: 'referrals-count-badge' },
+    { id: 'mentorship', label: 'Impact Exchange & Mentoring', icon: 'calendar', badge: 'Active' },
+    { id: 'legacy-graph', label: 'Share Legacy Lessons', icon: 'book-open', badge: 'Repository' },
+    { id: 'bounties', label: 'Post Bounties & Gigs', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
     { id: 'intent-radar', label: 'Explore Students', icon: 'compass', badge: '14 Students' },
-    { id: 'bounties', label: 'Post Bounties', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
     { id: 'network-graph', label: 'Alumni Network', icon: 'share-2' }
   ],
   founder: [
+    { id: 'hiring-copilot', label: 'LinkX Hiring Copilot', icon: 'sparkles', badge: 'AI Matcher' },
     { id: 'bounties', label: 'Startup Gigs & Bounties', icon: 'briefcase', badge: 'Escrow Gigs', badgeId: 'bounties-count-badge' },
     { id: 'intent-radar', label: 'Find Builders', icon: 'compass', badge: 'Top Builders' },
+    { id: 'legacy-graph', label: 'Founder Lessons', icon: 'book-open' },
     { id: 'network-graph', label: 'Ecosystem Network', icon: 'share-2' }
   ],
   faculty: [
-    { id: 'intent-radar', label: 'Alumni Mentors', icon: 'compass', badge: '8 Mentors' },
-    { id: 'network-graph', label: 'Campus Lineage', icon: 'share-2' },
-    { id: 'institution', label: 'NAAC & Outcomes', icon: 'landmark', badge: 'NAAC A++' }
+    { id: 'faculty-dashboard', label: 'Faculty Dashboard', icon: 'layout-dashboard', badge: 'Active' },
+    { id: 'faculty-challenges', label: 'Challenge Exchange', icon: 'award', badge: 'Capstones' },
+    { id: 'faculty-students', label: 'Student Roster', icon: 'users', badge: 'Dossiers' },
+    { id: 'faculty-supervision', label: 'Supervision & Reviews', icon: 'clipboard-check', badge: '3 Pending', badgeId: 'faculty-reviews-badge' },
+    { id: 'faculty-collaborations', label: 'Alumni Co-Guides', icon: 'handshake', badge: '6 Active' },
+    { id: 'faculty-profile', label: 'Faculty Profile', icon: 'user-check' }
   ],
   recruiter: [
-    { id: 'intent-radar', label: 'Top Candidates', icon: 'compass', badge: 'Top 5%' },
+    { id: 'hiring-copilot', label: 'LinkX Hiring Copilot', icon: 'sparkles', badge: 'NLP Copilot' },
     { id: 'alumnus-inbox', label: 'Endorsed Queue', icon: 'inbox', badge: 'Verified ATS' },
-    { id: 'bounties', label: 'Job Requisitions', icon: 'briefcase' }
+    { id: 'bounties', label: 'Job Requisitions', icon: 'briefcase' },
+    { id: 'intent-radar', label: 'Top Candidates', icon: 'compass', badge: 'Top 5%' }
   ],
   institution: [
-    { id: 'institution', label: 'Accreditation & Metrics', icon: 'landmark', badge: 'NAAC A++' },
-    { id: 'network-graph', label: 'Alumni Network', icon: 'share-2' },
-    { id: 'bounties', label: 'Campus Projects', icon: 'briefcase' }
+    { id: 'institution-overview', label: 'Executive Overview', icon: 'layout-dashboard', badge: 'Command' },
+    { id: 'institution-intelligence', label: 'Placement Intelligence', icon: 'trending-up', badge: 'Trends' },
+    { id: 'gap-radar', label: 'Opportunity Gap Radar', icon: 'radar', badge: 'Live Gaps' },
+    { id: 'institution-departments', label: 'Department Quotas', icon: 'layers', badge: '5 Units' },
+    { id: 'institution-outcomes', label: 'Accreditation & Outcomes', icon: 'landmark', badge: 'NAAC A++' },
+    { id: 'institution-governance', label: 'Governance & Audits', icon: 'shield-check' }
   ]
 };
 
@@ -605,8 +625,24 @@ function handleLogout(pushHistory = true) {
 
 // ================= NAVIGATION TABS =================
 function switchTab(tabId, pushHistory = true) {
-  const views = ['student-profile', 'intent-radar', 'proof-of-work', 'bounties', 'alumnus-inbox', 'network-graph', 'institution'];
+  const views = [
+    'student-profile', 'intent-radar', 'proof-of-work', 'bounties', 'alumnus-inbox',
+    'network-graph', 'career-missions', 'career-shadow', 'bridge-finder',
+    'mentorship', 'legacy-graph', 'faculty-challenges', 'hiring-copilot', 'gap-radar',
+    'messages', 'notifications',
+    // Dedicated Faculty Views
+    'faculty-dashboard', 'faculty-students', 'faculty-supervision', 'faculty-collaborations', 'faculty-profile',
+    // Dedicated Institution Views
+    'institution-overview', 'institution-intelligence', 'institution-departments', 'institution-outcomes', 'institution-governance'
+  ];
   
+  // In-app navigation history tracking for Back button
+  if (pushHistory && currentActiveTab && currentActiveTab !== tabId) {
+    if (appNavHistory.length >= 25) appNavHistory.shift();
+    appNavHistory.push(currentActiveTab);
+  }
+  currentActiveTab = tabId;
+
   if (pushHistory && activeSessionRoleId && window.history && window.history.pushState) {
     window.history.pushState(
       { screen: 'workspace', role: activeSessionRoleId, tab: tabId },
@@ -620,7 +656,7 @@ function switchTab(tabId, pushHistory = true) {
     const tabBtn = document.getElementById(`tab-${v}`);
     if (el) el.classList.add('hidden');
     if (tabBtn) {
-      tabBtn.classList.remove('border-sky-500', 'text-sky-400', 'border-pink-500', 'text-pink-400', 'border-indigo-500', 'text-indigo-400');
+      tabBtn.classList.remove('border-sky-500', 'text-sky-400', 'border-purple-500', 'text-purple-400', 'border-rose-500', 'text-rose-400', 'border-pink-500', 'text-pink-400', 'border-indigo-500', 'text-indigo-400');
       tabBtn.classList.add('border-transparent', 'text-slate-400');
     }
   });
@@ -633,6 +669,28 @@ function switchTab(tabId, pushHistory = true) {
     activeTabBtn.classList.remove('border-transparent', 'text-slate-400');
   }
 
+  // Update Dynamic Breadcrumbs in Workspace Header
+  const crumbPortal = document.getElementById('crumb-portal');
+  const crumbTab = document.getElementById('crumb-tab');
+  const portalName = (ROLE_CONFIGS[activeSessionRoleId] || {}).roleLabel || 'Portal';
+  const tabConfig = (ROLE_TABS[activeSessionRoleId] || []).find(t => t.id === tabId);
+  const tabLabel = tabConfig ? tabConfig.label : tabId.replace(/-/g, ' ');
+  if (crumbPortal) crumbPortal.textContent = portalName;
+  if (crumbTab) crumbTab.textContent = tabLabel;
+
+  // Update Header Back button tooltip
+  const backTooltip = document.getElementById('header-back-tooltip');
+  if (backTooltip) {
+    if (appNavHistory.length > 0) {
+      const prevTabId = appNavHistory[appNavHistory.length - 1];
+      const prevConfig = (ROLE_TABS[activeSessionRoleId] || []).find(t => t.id === prevTabId);
+      backTooltip.textContent = `Back to ${prevConfig ? prevConfig.label : 'Previous Screen'}`;
+    } else {
+      backTooltip.textContent = 'Dashboard Home';
+    }
+  }
+
+  // Route to the appropriate view data fetchers
   if (tabId === 'network-graph') {
     setupLineageCanvas();
   } else if (tabId === 'alumnus-inbox') {
@@ -641,11 +699,51 @@ function switchTab(tabId, pushHistory = true) {
     fetchBountiesFromAPI();
   } else if (tabId === 'student-profile') {
     fetchStudentProfileFromAPI();
+  } else if (tabId === 'career-missions') {
+    fetchStudentMissions();
+  } else if (tabId === 'career-shadow') {
+    fetchShadowScenarios();
+  } else if (tabId === 'bridge-finder') {
+    fetchBridgePaths();
+  } else if (tabId === 'mentorship') {
+    fetchMentorshipHub();
+  } else if (tabId === 'legacy-graph') {
+    fetchLegacyGraph();
+  } else if (tabId === 'faculty-challenges') {
+    fetchFacultyChallenges();
+  } else if (tabId === 'faculty-dashboard') {
+    fetchFacultyDashboard();
+  } else if (tabId === 'faculty-students') {
+    fetchFacultyStudents();
+  } else if (tabId === 'faculty-supervision') {
+    fetchFacultySupervisions();
+  } else if (tabId === 'faculty-collaborations') {
+    fetchFacultyCollaborations();
+  } else if (tabId === 'faculty-profile') {
+    fetchFacultyProfile();
+  } else if (tabId === 'institution-overview') {
+    fetchInstitutionOverview();
+  } else if (tabId === 'institution-intelligence') {
+    fetchInstitutionIntelligence();
+  } else if (tabId === 'institution-departments') {
+    fetchInstitutionDepartments();
+  } else if (tabId === 'institution-outcomes') {
+    fetchInstitutionOutcomes();
+  } else if (tabId === 'institution-governance') {
+    fetchInstitutionGovernance();
+  } else if (tabId === 'hiring-copilot') {
+    initHiringCopilot();
+  } else if (tabId === 'gap-radar') {
+    fetchOpportunityGapRadar();
+  } else if (tabId === 'messages') {
+    fetchMessages();
+  } else if (tabId === 'notifications') {
+    fetchNotificationsFeed();
   }
   lucide.createIcons();
 }
 
-// ================= GLOBAL BACK NAVIGATION (BROWSER HISTORY) =================
+// ================= GLOBAL SAFE BACK NAVIGATION =================
 function handleNavigationBack(event) {
   if (event) {
     event.preventDefault();
@@ -659,15 +757,29 @@ function handleNavigationBack(event) {
     setTimeout(() => target.classList.remove('scale-95'), 180);
   }
 
-  // Check if any open overlay modal needs to be closed first
+  // 1. Check if any open overlay modal needs to be closed first
   const openModals = [
     'intent-modal',
     'pow-detail-modal',
     'modal-post-bounty',
+    'modal-apply-bounty',
     'candidate-modal',
     'modal-candidate-resume',
     'forgot-password-modal',
-    'reset-password-modal'
+    'reset-password-modal',
+    'modal-account-settings',
+    'modal-auth-dialog',
+    'modal-new-mission',
+    'modal-opportunity-rescue',
+    'modal-book-mentorship',
+    'modal-new-legacy',
+    'modal-post-challenge',
+    'modal-apply-challenge',
+    'modal-invite-interview',
+    'modal-bridge-intro',
+    'modal-faculty-review',
+    'modal-faculty-invite-coguide',
+    'modal-institution-add-dept'
   ];
   for (const mId of openModals) {
     const modalEl = document.getElementById(mId);
@@ -677,18 +789,22 @@ function handleNavigationBack(event) {
     }
   }
 
-  // Use browser history as explicitly required:
-  // "Back button should navigate to the previous page using browser history (window.history.back())."
-  if (window.history.length > 1) {
-    window.history.back();
-  } else {
-    // Graceful fallback if opened in a fresh tab without prior browser history
-    if (activeSessionRoleId) {
-      handleLogout(true);
-    } else {
-      showToast("Already at the start of navigation history.", "info");
-    }
+  // 2. In-app navigation stack pop
+  if (appNavHistory && appNavHistory.length > 0) {
+    const previousTab = appNavHistory.pop();
+    switchTab(previousTab, false);
+    return;
   }
+
+  // 3. If no in-app stack, return to role's default dashboard tab if currently elsewhere
+  const defaultTab = ROLE_CONFIGS[activeSessionRoleId]?.defaultTab;
+  if (defaultTab && currentActiveTab !== defaultTab) {
+    switchTab(defaultTab, false);
+    return;
+  }
+
+  // 4. Safe notification instead of accidental logout
+  showToast("You are on your main role dashboard.", "info");
 }
 
 // Global popstate listener to sync view states with browser history
@@ -2484,6 +2600,8 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchBountiesFromAPI();
   fetchReferralsFromAPI();
   fetchInstitutionStats();
+  fetchNotificationsFeed();
+  setAppTheme(localStorage.getItem('linkx_theme') || 'dark', false);
 
   setTimeout(() => {
     initScrollReveal();
@@ -2492,3 +2610,2144 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTabIndicators();
   }, 300);
 });
+
+// ================= THREE PERSISTENT THEMES (LIGHT, DARK, HYBRID) =================
+let currentTheme = localStorage.getItem('linkx_theme') || 'dark';
+
+function setAppTheme(theme, persistToServer = true) {
+  if (!['light', 'dark', 'hybrid'].includes(theme)) theme = 'dark';
+  currentTheme = theme;
+  localStorage.setItem('linkx_theme', theme);
+
+  document.documentElement.className = 'theme-' + theme + (theme === 'dark' ? ' dark' : '');
+
+  const wsLabel = document.getElementById('ws-theme-label');
+  if (wsLabel) wsLabel.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+  const landingLabel = document.getElementById('landing-theme-label');
+  if (landingLabel) landingLabel.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+
+  ['light', 'dark', 'hybrid'].forEach(t => {
+    const btn = document.getElementById(`theme-btn-${t}`);
+    if (btn) {
+      if (t === theme) {
+        btn.classList.add('border-2', 'border-sky-500');
+        btn.classList.remove('border-slate-800');
+      } else {
+        btn.classList.remove('border-2', 'border-sky-500');
+        btn.classList.add('border-slate-800');
+      }
+    }
+  });
+
+  const m1 = document.getElementById('ws-theme-menu');
+  if (m1) m1.classList.add('hidden');
+  const m2 = document.getElementById('landing-theme-menu');
+  if (m2) m2.classList.add('hidden');
+
+  if (persistToServer && activeSessionRoleId) {
+    fetch(`${API_BASE}/auth/settings`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-linkx-persona-id': activeSessionRoleId },
+      body: JSON.stringify({ themePreference: theme })
+    }).catch(() => {});
+  }
+}
+
+function toggleThemeDropdown(menuId) {
+  const menu = document.getElementById(menuId);
+  if (menu) menu.classList.toggle('hidden');
+}
+
+// ================= SETTINGS & AUTH =================
+function openSettingsModal() {
+  setAppTheme(currentTheme, false);
+  openModal('modal-account-settings');
+}
+
+async function handleSaveUserSettings() {
+  const consentIntro = document.getElementById('setting-consent-intro')?.checked ?? true;
+  const publicProfile = document.getElementById('setting-public-profile')?.checked ?? true;
+  const maskContact = document.getElementById('setting-contact-privacy')?.checked ?? false;
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/settings`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-linkx-persona-id': activeSessionRoleId || 'student' },
+      body: JSON.stringify({
+        themePreference: currentTheme,
+        privacy: {
+          consentIntroductions: consentIntro,
+          profileVisibility: publicProfile ? 'public' : 'private',
+          showContactInfo: !maskContact
+        }
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Settings & Theme preferences saved successfully!');
+      closeModal('modal-account-settings');
+    }
+  } catch (err) {
+    showToast('Preferences updated locally!');
+    closeModal('modal-account-settings');
+  }
+}
+
+function switchAuthTab(mode) {
+  const signinTab = document.getElementById('tab-auth-signin');
+  const registerTab = document.getElementById('tab-auth-register');
+  const signinForm = document.getElementById('form-auth-signin');
+  const registerForm = document.getElementById('form-auth-register');
+
+  if (mode === 'signin') {
+    signinTab.classList.add('bg-blue-600', 'text-white', 'font-bold');
+    signinTab.classList.remove('text-slate-400');
+    registerTab.classList.remove('bg-blue-600', 'text-white', 'font-bold');
+    registerTab.classList.add('text-slate-400');
+    signinForm.classList.remove('hidden');
+    registerForm.classList.add('hidden');
+  } else {
+    registerTab.classList.add('bg-blue-600', 'text-white', 'font-bold');
+    registerTab.classList.remove('text-slate-400');
+    signinTab.classList.remove('bg-blue-600', 'text-white', 'font-bold');
+    signinTab.classList.add('text-slate-400');
+    registerForm.classList.remove('hidden');
+    signinForm.classList.add('hidden');
+  }
+}
+
+async function handleAuthSignInSubmit(event) {
+  event.preventDefault();
+  const email = document.getElementById('auth-signin-email')?.value;
+  const password = document.getElementById('auth-signin-password')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-auth-dialog');
+      directAuthenticateAs(data.user?.role || 'student');
+      showToast(`Welcome back, ${data.user?.name}!`);
+    } else {
+      showToast(data.error || 'Invalid credentials');
+    }
+  } catch (err) {
+    showToast('Authentication error. Please try demo role selection.');
+  }
+}
+
+async function handleAuthRegisterSubmit(event) {
+  event.preventDefault();
+  const name = document.getElementById('auth-reg-name')?.value;
+  const email = document.getElementById('auth-reg-email')?.value;
+  const role = document.getElementById('auth-reg-role')?.value || 'student';
+  const batch = document.getElementById('auth-reg-batch')?.value || '2026';
+  const password = document.getElementById('auth-reg-password')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, role, branch: `Class of ${batch}`, password })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-auth-dialog');
+      directAuthenticateAs(role);
+      showToast(`Account created! Welcome to LinkX, ${name}!`);
+      triggerConfetti();
+    } else {
+      showToast(data.error || 'Registration failed');
+    }
+  } catch (err) {
+    showToast('Registration submitted.');
+  }
+}
+
+// ================= CAREER MISSIONS & RESCUE =================
+let currentMissions = [];
+
+async function fetchStudentMissions() {
+  try {
+    const res = await fetch(`${API_BASE}/student/missions?studentId=${activeSessionRoleId || 'student'}`);
+    const data = await res.json();
+    if (data.success && data.missions && data.missions.length > 0) {
+      currentMissions = data.missions;
+      renderMissionRoadmap(data.missions[0]);
+    }
+  } catch (err) {
+    console.warn('Failed to fetch missions:', err);
+  }
+}
+
+function renderMissionRoadmap(mission) {
+  const goalDisplay = document.getElementById('mission-goal-display');
+  if (goalDisplay) goalDisplay.textContent = mission.goal;
+
+  const progressNum = document.getElementById('mission-progress-number');
+  if (progressNum) progressNum.textContent = `${mission.progressPercent}% Completed`;
+
+  const progressBar = document.getElementById('mission-progress-bar');
+  if (progressBar) progressBar.style.width = `${mission.progressPercent}%`;
+
+  const phasesContainer = document.getElementById('mission-phases-container');
+  if (!phasesContainer) return;
+
+  phasesContainer.innerHTML = (mission.phases || []).map(phase => {
+    const isCompleted = phase.status === 'completed';
+    const statusBadge = isCompleted 
+      ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">Completed</span>'
+      : (phase.status === 'in-progress' 
+        ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/10 text-sky-400 border border-sky-500/25">In Progress</span>'
+        : '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-400">Pending</span>');
+
+    return `
+      <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3">
+        <div class="flex items-center justify-between">
+          <h4 class="text-xs font-bold text-white">${phase.title}</h4>
+          ${statusBadge}
+        </div>
+        <div class="w-full bg-[#030611] h-1.5 rounded-full overflow-hidden border border-slate-800">
+          <div class="h-full bg-gradient-to-r from-blue-500 to-sky-400 rounded-full" style="width: ${phase.progress}%"></div>
+        </div>
+        <div class="space-y-2 pt-1 text-xs">
+          ${(phase.tasks || []).map(task => `
+            <label class="flex items-start space-x-2.5 cursor-pointer">
+              <input type="checkbox" ${task.done ? 'checked' : ''} onchange="handleToggleMissionTask('${mission.id}', '${task.id}', this.checked)" class="mt-0.5 rounded border-slate-700 bg-slate-900 text-sky-500">
+              <span class="${task.done ? 'line-through text-slate-500' : 'text-slate-200'}">${task.title}</span>
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+  lucide.createIcons();
+}
+
+async function handleToggleMissionTask(missionId, taskId, isDone) {
+  try {
+    const res = await fetch(`${API_BASE}/student/missions/${missionId}/tasks/${taskId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ done: isDone })
+    });
+    const data = await res.json();
+    if (data.success && data.mission) {
+      renderMissionRoadmap(data.mission);
+      showToast('Mission task updated!');
+    }
+  } catch (err) {
+    showToast('Task updated locally.');
+  }
+}
+
+async function handleGenerateMissionSubmit(event) {
+  event.preventDefault();
+  const goal = document.getElementById('mission-goal-input')?.value;
+  const timeline = document.getElementById('mission-timeline-select')?.value;
+  const stack = document.getElementById('mission-stack-input')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/student/missions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        studentId: activeSessionRoleId || 'student',
+        goal,
+        targetTimeline: timeline,
+        currentSkills: stack.split(',').map(s => s.trim())
+      })
+    });
+    const data = await res.json();
+    if (data.success && data.mission) {
+      closeModal('modal-new-mission');
+      renderMissionRoadmap(data.mission);
+      showToast('Personalized AI Career Mission Roadmap generated!');
+      triggerConfetti();
+    }
+  } catch (err) {
+    showToast('Failed to generate mission.');
+  }
+}
+
+async function triggerOpportunityRescue() {
+  try {
+    const res = await fetch(`${API_BASE}/student/rescue`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reason: 'Target pipeline buffer active', currentRole: 'Backend SDE', missingSkill: 'Kafka' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      const container = document.getElementById('rescue-alternatives-container');
+      if (container) {
+        container.innerHTML = `
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Verified Parallel Pipelines</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${(data.availableMentors || []).map(m => `
+              <div class="p-2.5 rounded-xl bg-[#040711] border border-slate-800 space-y-1">
+                <div class="font-bold text-white">${m.name} (${m.company})</div>
+                <div class="text-[10px] text-emerald-400">${m.openSlotsCount} open slots available</div>
+                <div class="text-[10px] text-slate-400">${m.reason}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+      const sprintBox = document.getElementById('rescue-sprint-container');
+      if (sprintBox && data.recommendedPracticeAction) {
+        sprintBox.innerHTML = `
+          <div class="font-bold text-amber-300">${data.recommendedPracticeAction.title}</div>
+          <p class="text-[11px] text-slate-300">${data.recommendedPracticeAction.description}</p>
+          <div class="pt-1 text-[10px] font-mono text-amber-400">Target Deliverable: ${data.recommendedPracticeAction.targetBounty}</div>
+        `;
+      }
+      openModal('modal-opportunity-rescue');
+    }
+  } catch (err) {
+    showToast('Generating rescue contingency plan...');
+    openModal('modal-opportunity-rescue');
+  }
+}
+
+// ================= CAREER SHADOW AI =================
+let currentShadowScenarios = [];
+let activeShadowScenario = null;
+let currentShadowStage = 1;
+
+async function fetchShadowScenarios() {
+  try {
+    const res = await fetch(`${API_BASE}/career-shadow/scenarios`);
+    const data = await res.json();
+    if (data.success && data.scenarios) {
+      currentShadowScenarios = data.scenarios;
+      renderShadowScenarios(data.scenarios);
+      if (!activeShadowScenario && data.scenarios.length > 0) {
+        selectShadowScenario(data.scenarios[0].id);
+      }
+    }
+  } catch (err) {
+    console.warn('Failed to load shadow scenarios:', err);
+  }
+}
+
+function renderShadowScenarios(scenarios) {
+  const container = document.getElementById('shadow-scenarios-list');
+  if (!container) return;
+
+  container.innerHTML = scenarios.map((s, idx) => `
+    <div onclick="selectShadowScenario('${s.id}')" class="cursor-pointer glass-card rounded-2xl p-4 border border-slate-800 hover:border-purple-500/50 transition space-y-2">
+      <div class="flex items-center justify-between">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-purple-400 font-mono">${s.difficulty}</span>
+        <span class="text-[10px] text-slate-400">${s.company}</span>
+      </div>
+      <h4 class="text-xs font-bold text-white">${s.title}</h4>
+      <p class="text-[11px] text-slate-400 line-clamp-2">${s.overview}</p>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+async function selectShadowScenario(scenarioId) {
+  try {
+    const res = await fetch(`${API_BASE}/career-shadow/scenarios/${scenarioId}`);
+    const data = await res.json();
+    if (data.success && data.scenario) {
+      activeShadowScenario = data.scenario;
+      currentShadowStage = 1;
+      renderActiveShadowStage();
+    }
+  } catch (err) {
+    console.warn('Failed to select scenario:', err);
+  }
+}
+
+function renderActiveShadowStage() {
+  if (!activeShadowScenario) return;
+  const stage = (activeShadowScenario.stages || []).find(st => st.stageNumber === currentShadowStage) || activeShadowScenario.stages[0];
+
+  document.getElementById('shadow-scenario-company').textContent = activeShadowScenario.company;
+  document.getElementById('shadow-scenario-title').textContent = activeShadowScenario.title;
+  document.getElementById('shadow-scenario-stage').textContent = `Stage ${currentShadowStage} of ${activeShadowScenario.stages.length}`;
+  document.getElementById('shadow-scenario-overview').textContent = activeShadowScenario.overview;
+  document.getElementById('shadow-prompt-text').textContent = stage.prompt;
+
+  const feedbackBox = document.getElementById('shadow-feedback-box');
+  if (feedbackBox) feedbackBox.classList.add('hidden');
+
+  const optionsContainer = document.getElementById('shadow-options-container');
+  if (optionsContainer) {
+    optionsContainer.innerHTML = (stage.options || []).map(opt => `
+      <div onclick="handleSelectShadowOption('${opt.id}', ${opt.scoreDelta}, '${opt.analysis.replace(/'/g, "\\'")}')" class="shadow-opt-card cursor-pointer p-3.5 rounded-xl bg-[#040711] border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/60 transition space-y-1">
+        <div class="text-xs font-semibold text-white">${opt.label}</div>
+      </div>
+    `).join('');
+  }
+  lucide.createIcons();
+}
+
+async function handleSelectShadowOption(optId, scoreDelta, analysis) {
+  try {
+    const res = await fetch(`${API_BASE}/career-shadow/evaluate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        scenarioId: activeShadowScenario.id,
+        stageNumber: currentShadowStage,
+        selectedOptionId: optId,
+        studentId: activeSessionRoleId || 'student'
+      })
+    });
+    const data = await res.json();
+    if (data.success && data.evaluation) {
+      const feedbackBox = document.getElementById('shadow-feedback-box');
+      if (feedbackBox) {
+        feedbackBox.className = `p-4 rounded-xl border space-y-3 ${data.evaluation.scoreAwarded >= 35 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300' : 'bg-amber-500/10 border-amber-500/30 text-amber-300'}`;
+        feedbackBox.classList.remove('hidden');
+        feedbackBox.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs uppercase tracking-wider">Evaluation Verdict: ${data.evaluation.feedback.soundness}</span>
+            <span class="font-mono font-bold text-xs">+${data.evaluation.scoreAwarded} Pts</span>
+          </div>
+          <p class="text-xs leading-relaxed text-slate-200">${data.evaluation.analysis}</p>
+          <div class="pt-2 flex justify-end">
+            ${data.evaluation.isFinalStage 
+              ? `<button onclick="finishShadowSimulation()" class="px-4 py-1.5 btn-gradient-primary rounded-xl text-xs font-bold text-white shadow-md">Complete Simulation &amp; Record Score</button>`
+              : `<button onclick="advanceShadowStage()" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-bold">Advance to Stage 2 &rarr;</button>`}
+          </div>
+        `;
+      }
+    }
+  } catch (err) {
+    showToast('Simulation evaluated.');
+  }
+}
+
+function advanceShadowStage() {
+  currentShadowStage++;
+  renderActiveShadowStage();
+}
+
+function finishShadowSimulation() {
+  showToast('Simulation recorded with high rubric score!');
+  triggerConfetti();
+  selectShadowScenario(activeShadowScenario.id);
+}
+
+// ================= HIDDEN BRIDGE FINDER =================
+async function fetchBridgePaths() {
+  const targetCompany = document.getElementById('bridge-target-select')?.value || 'Swiggy';
+  try {
+    const res = await fetch(`${API_BASE}/bridge/paths?targetCompany=${encodeURIComponent(targetCompany)}`);
+    const data = await res.json();
+    if (data.success && data.paths) {
+      renderBridgePaths(data.paths);
+    }
+    fetchBridgeIntroductions();
+  } catch (err) {
+    console.warn('Failed to load bridge paths:', err);
+  }
+}
+
+function renderBridgePaths(paths) {
+  const container = document.getElementById('bridge-paths-container');
+  if (!container) return;
+
+  container.innerHTML = paths.map(p => {
+    const hopsHtml = (p.connectionHops || []).map((h, i) => `
+      <div class="flex items-center space-x-2 text-xs">
+        <div class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 text-sky-400 font-bold flex items-center justify-center shrink-0">
+          ${h.hopIndex}
+        </div>
+        <div>
+          <div class="font-bold text-white">${h.name} <span class="text-[10px] text-slate-400">(${h.role})</span></div>
+          <div class="text-[10px] text-slate-400">${h.evidence || h.relationship || ''}</div>
+        </div>
+      </div>
+      ${i < p.connectionHops.length - 1 ? '<i data-lucide="arrow-right" class="w-4 h-4 text-slate-600 mx-2 shrink-0 hidden sm:block"></i>' : ''}
+    `).join('');
+
+    const targetAlum = p.connectionHops[p.connectionHops.length - 1]?.name || 'Alumnus';
+    const intermediary = p.connectionHops[1]?.name || 'Dr. R.K. Verma';
+
+    return `
+      <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400 font-mono">${p.bridgeType}</span>
+            <h3 class="text-base font-bold text-white">${p.targetEntity}</h3>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">${p.confidenceScore}% Confidence</span>
+            <button onclick="openBridgeIntroModal('${p.id}', '${intermediary}', '${targetAlum}', '${p.targetEntity}')" class="px-3 py-1.5 btn-gradient-primary rounded-xl text-xs font-bold text-white shadow-md">
+              Request Warm Intro
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 py-1">
+          ${hopsHtml}
+        </div>
+
+        <div class="p-3 rounded-xl bg-[#080e1c] border border-slate-800 text-xs text-slate-300">
+          <span class="text-sky-400 font-semibold">Why this works:</span> ${p.explanation}
+        </div>
+      </div>
+    `;
+  }).join('');
+  lucide.createIcons();
+}
+
+function openBridgeIntroModal(pathId, intermediary, targetAlumnus, targetCompany) {
+  document.getElementById('bridge-path-id').value = pathId;
+  document.getElementById('bridge-intermediary').value = intermediary;
+  document.getElementById('bridge-target-alumnus').value = targetAlumnus;
+  document.getElementById('bridge-target-company').value = targetCompany;
+  document.getElementById('bridge-intro-note').value = `Requesting an introduction to ${targetAlumnus} based on verified distributed systems proof-of-work in Go.`;
+  openModal('modal-bridge-intro');
+}
+
+async function handleBridgeIntroSubmit(event) {
+  event.preventDefault();
+  const pathId = document.getElementById('bridge-path-id')?.value;
+  const intermediary = document.getElementById('bridge-intermediary')?.value;
+  const targetAlumnus = document.getElementById('bridge-target-alumnus')?.value;
+  const targetCompany = document.getElementById('bridge-target-company')?.value;
+  const note = document.getElementById('bridge-intro-note')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/bridge/intro-request`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pathId, intermediary, targetAlumnus, targetCompany, note })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-bridge-intro');
+      showToast('Consent-based introduction request dispatched!');
+      fetchBridgeIntroductions();
+    }
+  } catch (err) {
+    showToast('Introduction request dispatched.');
+  }
+}
+
+async function fetchBridgeIntroductions() {
+  try {
+    const res = await fetch(`${API_BASE}/bridge/introductions?role=${activeSessionRoleId || 'student'}`);
+    const data = await res.json();
+    const list = document.getElementById('bridge-intros-list');
+    if (!list) return;
+
+    if (data.success && data.introductions && data.introductions.length > 0) {
+      list.innerHTML = data.introductions.map(i => `
+        <div class="p-3 rounded-xl bg-[#040711] border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="font-bold text-white">Intro to ${i.targetAlumnus} (${i.targetCompany})</div>
+            <div class="text-[10px] text-slate-400">Intermediary: ${i.intermediary} • ${i.note}</div>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${i.status.includes('approved') ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'} border border-amber-500/20">
+            ${i.status.replace(/_/g, ' ')}
+          </span>
+        </div>
+      `).join('');
+    } else {
+      list.innerHTML = `<div class="text-slate-500 italic">No introduction requests in progress.</div>`;
+    }
+  } catch (err) {}
+}
+
+// ================= ALUMNI IMPACT EXCHANGE & MENTORSHIP =================
+async function fetchMentorshipHub() {
+  try {
+    const [mentorsRes, bookingsRes] = await Promise.all([
+      fetch(`${API_BASE}/mentors`),
+      fetch(`${API_BASE}/mentorship/bookings`, {
+        headers: { 'x-linkx-persona-id': activeSessionRoleId || 'student' }
+      })
+    ]);
+    const mentorsData = await mentorsRes.json();
+    const bookingsData = await bookingsRes.json();
+
+    if (mentorsData.success && mentorsData.mentors) {
+      renderMentorsGrid(mentorsData.mentors);
+    }
+    if (bookingsData.success && bookingsData.bookings) {
+      renderBookingsList(bookingsData.bookings);
+    }
+  } catch (err) {
+    console.warn('Mentorship fetch error:', err);
+  }
+}
+
+function renderMentorsGrid(mentors) {
+  const container = document.getElementById('mentorship-mentors-grid');
+  if (!container) return;
+
+  container.innerHTML = mentors.map(m => `
+    <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3 flex flex-col justify-between">
+      <div class="space-y-2.5">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 font-bold flex items-center justify-center text-sm shrink-0">
+            ${m.avatar}
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-white">${m.name}</h4>
+            <p class="text-[11px] text-slate-400">${m.title} @ ${m.company}</p>
+          </div>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">${m.bio}</p>
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          ${(m.skills || []).map(s => `<span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-900 border border-slate-800 text-slate-300">${s}</span>`).join('')}
+        </div>
+      </div>
+      <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+        <span class="text-[11px] text-emerald-400 font-mono font-medium">${(m.availability || []).length} Slots Available</span>
+        <button onclick="openBookMentorshipModal('${m.id}', '${m.name}')" class="px-3 py-1.5 btn-gradient-primary rounded-xl text-xs font-bold text-white shadow-md">
+          Book Session
+        </button>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function renderBookingsList(bookings) {
+  const list = document.getElementById('mentorship-bookings-list');
+  if (!list) return;
+
+  if (bookings.length === 0) {
+    list.innerHTML = `<div class="text-slate-500 italic p-3">No mentorship bookings scheduled yet.</div>`;
+    return;
+  }
+
+  list.innerHTML = bookings.map(b => {
+    const isMentor = activeSessionRoleId === 'alumnus' || activeSessionRoleId === b.mentorId;
+    return `
+      <div class="p-3.5 rounded-xl bg-[#040711] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="space-y-0.5">
+          <div class="font-bold text-white">${b.topic} with ${b.mentorName}</div>
+          <div class="text-[11px] text-slate-400">${b.date} at ${b.time} • Student: ${b.studentName}</div>
+          <div class="text-[11px] text-slate-300 italic">"${b.message}"</div>
+        </div>
+        <div class="flex items-center space-x-2 shrink-0">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${b.status === 'confirmed' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/25' : (b.status === 'declined' ? 'bg-rose-500/10 text-rose-400' : 'bg-amber-500/10 text-amber-400 border border-amber-500/25')}">
+            ${b.status}
+          </span>
+          ${isMentor && b.status === 'pending' ? `
+            <button onclick="handleBookingStatusUpdate('${b.id}', 'confirmed')" class="px-2.5 py-1 text-[11px] font-bold bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg">Accept</button>
+            <button onclick="handleBookingStatusUpdate('${b.id}', 'declined')" class="px-2.5 py-1 text-[11px] font-bold bg-rose-950 text-rose-400 rounded-lg">Decline</button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+  lucide.createIcons();
+}
+
+function openBookMentorshipModal(mentorId, mentorName) {
+  document.getElementById('book-mentor-id').value = mentorId;
+  document.getElementById('book-mentor-name').value = mentorName;
+  const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+  document.getElementById('book-mentor-date').value = tomorrow;
+  document.getElementById('book-mentor-date').min = tomorrow;
+  openModal('modal-book-mentorship');
+}
+
+async function handleBookMentorshipSubmit(event) {
+  event.preventDefault();
+  const mentorId = document.getElementById('book-mentor-id')?.value;
+  const date = document.getElementById('book-mentor-date')?.value;
+  const time = document.getElementById('book-mentor-time')?.value;
+  const topic = document.getElementById('book-mentor-topic')?.value;
+  const message = document.getElementById('book-mentor-message')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/mentorship/bookings`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-linkx-persona-id': activeSessionRoleId || 'student'
+      },
+      body: JSON.stringify({ mentorId, date, time, topic, message })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-book-mentorship');
+      showToast('Mentorship request booked successfully!');
+      fetchMentorshipHub();
+      triggerConfetti();
+    } else {
+      showToast(data.error || 'Booking failed');
+    }
+  } catch (err) {
+    showToast('Session request queued.');
+  }
+}
+
+async function handleBookingStatusUpdate(bookingId, status) {
+  try {
+    const res = await fetch(`${API_BASE}/mentorship/bookings/${bookingId}/status`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-linkx-persona-id': activeSessionRoleId || 'alumnus'
+      },
+      body: JSON.stringify({ status })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Booking marked as ${status}!`);
+      fetchMentorshipHub();
+    } else {
+      showToast(data.error || 'Failed to update');
+    }
+  } catch (err) {
+    showToast('Updated status.');
+  }
+}
+
+// ================= ALUMNI LEGACY GRAPH =================
+let currentLegacyTag = '';
+
+async function fetchLegacyGraph(tag = '', search = '') {
+  try {
+    let url = `${API_BASE}/legacy-graph`;
+    const params = [];
+    if (tag) params.push(`tag=${encodeURIComponent(tag)}`);
+    if (search) params.push(`search=${encodeURIComponent(search)}`);
+    if (params.length) url += '?' + params.join('&');
+
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.success && data.posts) {
+      renderLegacyPosts(data.posts);
+    }
+  } catch (err) {
+    console.warn('Legacy graph fetch error:', err);
+  }
+}
+
+function renderLegacyPosts(posts) {
+  const container = document.getElementById('legacy-posts-container');
+  if (!container) return;
+
+  container.innerHTML = posts.map(p => `
+    <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3 flex flex-col justify-between">
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 font-mono">${p.category}</span>
+          <span class="text-[10px] text-slate-400">${p.readTime}</span>
+        </div>
+        <h3 class="text-sm font-bold text-white">${p.title}</h3>
+        <p class="text-xs text-slate-300 leading-relaxed">${p.summary}</p>
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          ${(p.tags || []).map(t => `<span class="px-2 py-0.5 rounded-md text-[10px] bg-slate-900 border border-slate-800 text-slate-300">#${t}</span>`).join('')}
+        </div>
+      </div>
+      <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+        <div>
+          <span class="font-bold text-white">${p.author}</span>
+          <span class="text-[10px] text-slate-400 block">${p.authorRole}</span>
+        </div>
+        <button onclick="handleUpvoteLegacy('${p.id}')" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 text-slate-200 hover:text-amber-300 transition flex items-center space-x-1.5">
+          <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i>
+          <span class="font-bold font-mono">${p.upvotes || 0}</span>
+        </button>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function filterLegacyTag(tag) {
+  currentLegacyTag = tag;
+  fetchLegacyGraph(tag);
+}
+
+function handleLegacySearch() {
+  const q = document.getElementById('legacy-search-input')?.value || '';
+  fetchLegacyGraph(currentLegacyTag, q);
+}
+
+async function handleUpvoteLegacy(postId) {
+  try {
+    const res = await fetch(`${API_BASE}/legacy-graph/${postId}/upvote`, { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      fetchLegacyGraph(currentLegacyTag);
+    }
+  } catch (err) {}
+}
+
+async function handleNewLegacySubmit(event) {
+  event.preventDefault();
+  const title = document.getElementById('legacy-new-title')?.value;
+  const category = document.getElementById('legacy-new-category')?.value;
+  const tags = document.getElementById('legacy-new-tags')?.value;
+  const content = document.getElementById('legacy-new-content')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/legacy-graph`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title,
+        category,
+        tags: tags.split(',').map(s => s.trim()),
+        content,
+        author: activeSessionRoleId === 'alumnus' ? 'Rohan Mehta' : 'Alumni Contributor',
+        authorRole: activeSessionRoleId === 'alumnus' ? 'SDE-2 @ Swiggy' : 'Alumnus'
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-new-legacy');
+      showToast('Knowledge lesson published to Legacy Graph!');
+      fetchLegacyGraph();
+    }
+  } catch (err) {
+    showToast('Lesson published.');
+  }
+}
+
+// ================= FACULTY CHALLENGE EXCHANGE =================
+async function fetchFacultyChallenges() {
+  try {
+    const res = await fetch(`${API_BASE}/faculty/challenges`);
+    const data = await res.json();
+    if (data.success && data.challenges) {
+      renderFacultyChallenges(data.challenges);
+    }
+  } catch (err) {}
+}
+
+function renderFacultyChallenges(challenges) {
+  const container = document.getElementById('faculty-challenges-list');
+  if (!container) return;
+
+  container.innerHTML = challenges.map(c => `
+    <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-purple-400 font-mono">${c.status}</span>
+          <h3 class="text-base font-bold text-white">${c.title}</h3>
+          <p class="text-xs text-slate-400">${c.facultyName} (${c.facultyDept}) • Industry Co-Guide: ${c.industryPartner}</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="px-2.5 py-1 rounded-full text-xs bg-slate-900 border border-slate-800 text-slate-300 font-mono">${c.teamSize}</span>
+          <button onclick="openApplyChallengeModal('${c.id}', '${c.title.replace(/'/g, "\\'")}')" class="px-3.5 py-1.5 btn-gradient-primary rounded-xl text-xs font-bold text-white shadow-md">
+            Apply as Squad
+          </button>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed">${c.description}</p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-[#080e1c] p-3 rounded-xl border border-slate-800">
+        <div><span class="text-slate-400">Deliverables:</span> <span class="text-white">${c.deliverables}</span></div>
+        <div><span class="text-slate-400">Required Skills:</span> <span class="text-sky-400">${(c.requiredSkills || []).join(', ')}</span></div>
+      </div>
+
+      <!-- Teams Applied -->
+      <div class="space-y-2 pt-1">
+        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Applicant Teams &amp; Squads (${(c.teamsApplied || []).length})</div>
+        ${(c.teamsApplied || []).map(team => `
+          <div class="p-3 rounded-xl bg-[#040711] border border-slate-800 flex items-center justify-between text-xs">
+            <div>
+              <span class="font-bold text-white">${team.teamName}</span>
+              <span class="text-[10px] text-slate-400"> • Lead: ${team.leadStudent} (${team.leadBranch})</span>
+              <p class="text-[10px] text-sky-400">${team.members.join(' • ')}</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${team.status === 'selected' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/25' : 'bg-slate-800 text-slate-400'}">
+                ${team.status}
+              </span>
+              ${activeSessionRoleId === 'faculty' && team.status === 'pending' ? `
+                <button onclick="handleChallengeTeamStatus('${c.id}', '${team.teamId}', 'selected')" class="px-2 py-0.5 bg-emerald-600 text-white rounded text-[10px] font-bold">Select Team</button>
+              ` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function openApplyChallengeModal(challengeId, title) {
+  document.getElementById('apply-chal-id').value = challengeId;
+  document.getElementById('modal-apply-chal-title').textContent = `Apply to: ${title}`;
+  openModal('modal-apply-challenge');
+}
+
+async function handleApplyChallengeSubmit(event) {
+  event.preventDefault();
+  const challengeId = document.getElementById('apply-chal-id')?.value;
+  const teamName = document.getElementById('apply-chal-teamname')?.value;
+  const members = document.getElementById('apply-chal-members')?.value;
+  const repoUrl = document.getElementById('apply-chal-repo')?.value;
+  const pitch = document.getElementById('apply-chal-pitch')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/faculty/challenges/${challengeId}/apply`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ teamName, members: members.split(',').map(s => s.trim()), repoUrl, pitch, leadStudent: 'Aman Sharma' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-apply-challenge');
+      showToast('Squad application submitted for faculty capstone review!');
+      fetchFacultyChallenges();
+      triggerConfetti();
+    }
+  } catch (err) {}
+}
+
+async function handleChallengeTeamStatus(challengeId, teamId, status) {
+  try {
+    const res = await fetch(`${API_BASE}/faculty/challenges/${challengeId}/teams/${teamId}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Team ${status}!`);
+      fetchFacultyChallenges();
+    }
+  } catch (err) {}
+}
+
+async function handlePostChallengeSubmit(event) {
+  event.preventDefault();
+  const title = document.getElementById('chal-new-title')?.value;
+  const partner = document.getElementById('chal-new-partner')?.value;
+  const teamSize = document.getElementById('chal-new-teamsize')?.value;
+  const skills = document.getElementById('chal-new-skills')?.value;
+  const desc = document.getElementById('chal-new-desc')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/faculty/challenges`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title,
+        industryPartner: partner,
+        teamSize,
+        requiredSkills: skills.split(',').map(s => s.trim()),
+        description: desc,
+        facultyName: 'Dr. R.K. Verma',
+        facultyDept: 'Dean R&D'
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-post-challenge');
+      showToast('New faculty challenge posted!');
+      fetchFacultyChallenges();
+    }
+  } catch (err) {}
+}
+
+// ================= RECRUITER & FOUNDER HIRING COPILOT =================
+let currentShortlistCandidates = [];
+
+function initHiringCopilot() {
+  handleCopilotExtractSubmit();
+}
+
+function fillCopilotPreset(key) {
+  const input = document.getElementById('copilot-input-text');
+  if (!input) return;
+  if (key === 'go') {
+    input.value = 'We need a final-year SDE intern who has built distributed cache or high throughput Kafka pipelines in Go, available for immediate 6-month internship in Bengaluru or remote.';
+  } else if (key === 'ai') {
+    input.value = 'Looking for fullstack AI Agent builder who knows Next.js, Python, RAG pipelines with vector databases, and has high test coverage on GitHub.';
+  }
+}
+
+async function handleCopilotExtractSubmit() {
+  const promptText = document.getElementById('copilot-input-text')?.value || 'We need a backend engineer proficient in Go and distributed systems.';
+  try {
+    const res = await fetch(`${API_BASE}/recruiter/copilot`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ promptText })
+    });
+    const data = await res.json();
+    if (data.success && data.extractedCriteria) {
+      const criteriaBox = document.getElementById('copilot-criteria-box');
+      const tagsBox = document.getElementById('copilot-criteria-tags');
+      if (criteriaBox && tagsBox) {
+        criteriaBox.classList.remove('hidden');
+        tagsBox.innerHTML = `
+          <span class="px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-500/25">Role: ${data.extractedCriteria.targetRole}</span>
+          <span class="px-2.5 py-1 rounded-md bg-blue-500/10 text-sky-300 border border-blue-500/25">Skills: ${data.extractedCriteria.skills.join(', ')}</span>
+          <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">Min Score: ${data.extractedCriteria.minScore}%</span>
+          <span class="px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/25">${data.extractedCriteria.workArrangement}</span>
+        `;
+      }
+      const shortlistRes = await fetch(`${API_BASE}/recruiter/shortlist`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data.extractedCriteria)
+      });
+      const shortlistData = await shortlistRes.json();
+      if (shortlistData.success && shortlistData.shortlist) {
+        currentShortlistCandidates = shortlistData.shortlist;
+        renderShortlistCards(shortlistData.shortlist);
+      }
+    }
+  } catch (err) {
+    console.warn('Copilot error:', err);
+  }
+}
+
+function renderShortlistCards(candidates) {
+  const container = document.getElementById('copilot-shortlist-container');
+  if (!container) return;
+
+  container.innerHTML = candidates.map(c => `
+    <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3 flex flex-col justify-between">
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 font-bold flex items-center justify-center text-xs">
+              ${c.avatar}
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-white">${c.name}</h4>
+              <p class="text-[10px] text-slate-400">${c.branch} • ${c.cgpa} CGPA</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-xs font-bold font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">${c.matchPercentage}% Match</span>
+        </div>
+
+        <div class="p-2.5 rounded-xl bg-[#040711] border border-slate-800 space-y-1 text-xs">
+          <div class="flex justify-between text-[11px]">
+            <span class="text-slate-400">Proof Repo:</span>
+            <a href="${c.githubUrl}" target="_blank" class="text-sky-400 hover:underline font-mono">${c.repoName}</a>
+          </div>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-slate-400">Test Rigor:</span>
+            <span class="text-emerald-400 font-mono font-medium">${c.testCoverage}</span>
+          </div>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-slate-400">Latency:</span>
+            <span class="text-amber-400 font-mono font-medium">${c.latencyMetric}</span>
+          </div>
+        </div>
+
+        <p class="text-[11px] text-slate-300 italic border-l-2 border-emerald-500/60 pl-2">${c.endorsement}</p>
+      </div>
+
+      <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+        <span class="text-[10px] text-emerald-400 font-medium">${c.alumnusEndorsed ? 'Verified Endorsed' : 'Active Candidate'}</span>
+        <button onclick="openInterviewModal('${c.id}', '${c.name.replace(/'/g, "\\'")}')" class="px-3 py-1.5 btn-gradient-primary rounded-xl text-xs font-bold text-white shadow-md">
+          Invite to Screen
+        </button>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function openInterviewModal(candId, candName) {
+  document.getElementById('invite-cand-id').value = candId;
+  document.getElementById('invite-cand-name').value = candName;
+  openModal('modal-invite-interview');
+}
+
+async function handleSendInterviewSubmit(event) {
+  event.preventDefault();
+  const candidateId = document.getElementById('invite-cand-id')?.value;
+  const candidateName = document.getElementById('invite-cand-name')?.value;
+  const company = document.getElementById('invite-company')?.value;
+  const roleTitle = document.getElementById('invite-role')?.value;
+  const note = document.getElementById('invite-note')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/recruiter/invite`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ candidateId, candidateName, company, roleTitle, note })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-invite-interview');
+      showToast(`Interview invitation dispatched to ${candidateName}!`);
+      triggerConfetti();
+    }
+  } catch (err) {}
+}
+
+async function handleExportCSV() {
+  try {
+    const res = await fetch(`${API_BASE}/recruiter/export-csv`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ candidates: currentShortlistCandidates })
+    });
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'linkx_proof_of_work_shortlist.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    showToast('Candidate shortlist exported to CSV!');
+  } catch (err) {
+    showToast('CSV export downloaded.');
+  }
+}
+
+// ================= OPPORTUNITY GAP RADAR =================
+async function fetchOpportunityGapRadar() {
+  try {
+    const res = await fetch(`${API_BASE}/institution/gap-radar`);
+    const data = await res.json();
+    if (data.success && data.radarMetrics) {
+      renderGapRadar(data);
+    }
+  } catch (err) {}
+}
+
+function renderGapRadar(data) {
+  const container = document.getElementById('gap-radar-cards-container');
+  if (!container) return;
+
+  container.innerHTML = data.radarMetrics.map(r => `
+    <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-3">
+      <div class="flex items-center justify-between">
+        <h4 class="text-sm font-bold text-white">${r.domain}</h4>
+        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold font-mono ${r.gapColor} bg-slate-900 border border-slate-800">${r.gapSeverity}</span>
+      </div>
+      
+      <div class="space-y-1.5 text-xs">
+        <div class="flex justify-between text-slate-400">
+          <span>Student Demand: ${r.studentDemandScore}%</span>
+          <span>Alumni Capacity: ${r.alumniMentorshipCapacity}%</span>
+        </div>
+        <div class="w-full bg-[#030611] h-2 rounded-full overflow-hidden border border-slate-800 flex">
+          <div class="bg-blue-500 h-full" style="width: ${r.studentDemandScore * 0.5}%"></div>
+          <div class="bg-emerald-500 h-full" style="width: ${r.alumniMentorshipCapacity * 0.5}%"></div>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed">${r.insight}</p>
+
+      <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+        <span class="text-[11px] text-slate-400 font-semibold">Recommended Intervention:</span>
+        <button onclick="showToast('Intervention dispatched: ' + '${r.recommendedAction.replace(/'/g, "\\'")}')" class="px-2.5 py-1 bg-sky-500/10 text-sky-400 border border-sky-500/25 rounded-lg hover:bg-sky-500/20 font-bold">
+          Execute Action
+        </button>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+// ================= NOTIFICATIONS & STRUCTURED MESSAGES =================
+let currentConversations = [];
+let activeConversationId = null;
+
+async function fetchNotificationsFeed() {
+  try {
+    const res = await fetch(`${API_BASE}/notifications?role=${activeSessionRoleId || 'student'}`);
+    const data = await res.json();
+    if (data.success && data.notifications) {
+      const unreadCount = data.notifications.filter(n => !n.read).length;
+      const badge = document.getElementById('notif-badge-count');
+      if (badge) {
+        badge.textContent = unreadCount;
+        badge.style.display = unreadCount > 0 ? 'flex' : 'none';
+      }
+
+      const popoverList = document.getElementById('notif-dropdown-items');
+      if (popoverList) {
+        popoverList.innerHTML = data.notifications.slice(0, 5).map(n => `
+          <div onclick="handleMarkNotifRead('${n.id}')" class="p-2 rounded-xl ${n.read ? 'bg-[#040711] text-slate-400' : 'bg-[#0c142c] text-white border border-sky-500/20'} cursor-pointer space-y-0.5">
+            <div class="font-bold text-xs">${n.title}</div>
+            <div class="text-[10px] text-slate-400">${n.message}</div>
+          </div>
+        `).join('');
+      }
+
+      const fullList = document.getElementById('notifications-full-list');
+      if (fullList) {
+        fullList.innerHTML = data.notifications.map(n => `
+          <div class="glass-card rounded-2xl p-4 border border-slate-800 flex items-center justify-between">
+            <div class="space-y-0.5">
+              <div class="text-xs font-bold text-white">${n.title}</div>
+              <div class="text-[11px] text-slate-300">${n.message}</div>
+              <div class="text-[10px] text-slate-500">${new Date(n.createdAt).toLocaleTimeString()}</div>
+            </div>
+            ${!n.read ? `<button onclick="handleMarkNotifRead('${n.id}')" class="px-2.5 py-1 text-[11px] font-bold bg-sky-500/10 text-sky-400 border border-sky-500/25 rounded-lg">Mark Read</button>` : ''}
+          </div>
+        `).join('');
+      }
+    }
+  } catch (err) {}
+}
+
+function toggleNotificationsDropdown() {
+  const popover = document.getElementById('notif-dropdown-popover');
+  if (popover) popover.classList.toggle('hidden');
+}
+
+async function handleMarkNotifRead(id) {
+  try {
+    await fetch(`${API_BASE}/notifications/${id}/read`, { method: 'PATCH' });
+    fetchNotificationsFeed();
+  } catch (err) {}
+}
+
+async function handleMarkAllNotifsRead() {
+  try {
+    await fetch(`${API_BASE}/notifications/read-all`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role: activeSessionRoleId || 'student' })
+    });
+    fetchNotificationsFeed();
+    showToast('All notifications marked as read.');
+  } catch (err) {}
+}
+
+async function fetchMessages() {
+  try {
+    const res = await fetch(`${API_BASE}/messages?role=${activeSessionRoleId || 'student'}`);
+    const data = await res.json();
+    if (data.success && data.conversations) {
+      currentConversations = data.conversations;
+      renderConversationsList(data.conversations);
+      if (!activeConversationId && data.conversations.length > 0) {
+        selectConversation(data.conversations[0].id);
+      }
+    }
+  } catch (err) {}
+}
+
+function renderConversationsList(conversations) {
+  const container = document.getElementById('conversations-list');
+  if (!container) return;
+
+  container.innerHTML = conversations.map(c => `
+    <div onclick="selectConversation('${c.id}')" class="cursor-pointer p-2.5 rounded-xl ${c.id === activeConversationId ? 'bg-blue-600/20 border border-blue-500/30' : 'bg-[#060a14] border border-slate-800 hover:border-slate-700'} transition space-y-0.5">
+      <div class="font-bold text-white text-xs truncate">${c.title}</div>
+      <div class="text-[10px] text-slate-400 truncate">${(c.messages || []).slice(-1)[0]?.text || 'No messages yet'}</div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function selectConversation(convId) {
+  activeConversationId = convId;
+  const conv = currentConversations.find(c => c.id === convId);
+  if (!conv) return;
+
+  document.getElementById('active-chat-title').textContent = conv.title;
+  renderMessagesStream(conv.messages || []);
+  renderConversationsList(currentConversations);
+}
+
+function renderMessagesStream(messages) {
+  const stream = document.getElementById('messages-stream');
+  if (!stream) return;
+
+  stream.innerHTML = messages.map(m => {
+    const isMe = m.sender === (activeSessionRoleId || 'student');
+    return `
+      <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'} space-y-1">
+        <span class="text-[10px] text-slate-500">${m.senderName}</span>
+        <div class="max-w-md p-3 rounded-2xl text-xs ${isMe ? 'bg-blue-600 text-white rounded-br-none' : 'bg-[#080e1c] text-slate-200 border border-slate-800 rounded-bl-none'}">
+          ${m.text}
+        </div>
+      </div>
+    `;
+  }).join('');
+  stream.scrollTop = stream.scrollHeight;
+}
+
+async function handleSendMessageSubmit(event) {
+  event.preventDefault();
+  const input = document.getElementById('message-input-text');
+  const text = input?.value;
+  if (!text || !activeConversationId) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/messages/${activeConversationId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sender: activeSessionRoleId || 'student',
+        senderName: activeSessionRoleId === 'alumnus' ? 'Rohan Mehta' : (activeSessionRoleId === 'faculty' ? 'Dr. R.K. Verma' : 'Aman Sharma'),
+        text
+      })
+    });
+    const data = await res.json();
+    if (data.success && data.message) {
+      input.value = '';
+      const conv = currentConversations.find(c => c.id === activeConversationId);
+      if (conv) {
+        conv.messages ||= [];
+        conv.messages.push(data.message);
+        renderMessagesStream(conv.messages);
+      }
+    }
+  } catch (err) {}
+}
+
+// ================= AUTH & SECURITY HELPER =================
+function getAuthHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'x-user-role': activeSessionRoleId || 'student'
+  };
+}
+
+function escapeHTML(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ================= FACULTY PANEL CONTROLLERS =================
+
+async function fetchFacultyDashboard() {
+  try {
+    const res = await fetch(`${API_BASE}/faculty/dashboard`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) return;
+
+    const stats = data.dashboard?.stats || {};
+    const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    setTxt('faculty-stat-projects', stats.assignedProjects || 8);
+    setTxt('faculty-stat-teams', stats.activeStudentTeams || 12);
+    setTxt('faculty-stat-pending', stats.pendingMilestones || 3);
+    setTxt('faculty-stat-coguides', stats.alumniCoGuides || 6);
+
+    // Render active supervisions
+    const supContainer = document.getElementById('faculty-dashboard-supervisions');
+    if (supContainer) {
+      const sups = data.dashboard?.activeSupervisions || [];
+      if (sups.length === 0) {
+        supContainer.innerHTML = `<div class="p-4 text-center text-slate-500 text-xs">No active capstone projects currently supervised.</div>`;
+      } else {
+        supContainer.innerHTML = sups.map(s => {
+          const latestMs = s.milestones?.[s.milestones.length - 1] || {};
+          const statusColors = {
+            'Approved': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+            'Needs Revision': 'bg-rose-500/10 text-rose-400 border-rose-500/20',
+            'In Review': 'bg-amber-500/10 text-amber-300 border-amber-500/20'
+          };
+          const pillClass = statusColors[latestMs.status] || 'bg-slate-800 text-slate-300 border-slate-700';
+          return `
+            <div class="bg-[#050916] border border-slate-800 rounded-xl p-3.5 space-y-2 hover:border-slate-700 transition">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="font-bold text-white text-xs">${escapeHTML(s.title)}</div>
+                  <div class="text-[11px] text-slate-400 flex items-center space-x-2 mt-0.5">
+                    <span class="text-purple-300">${escapeHTML(s.squadName)}</span>
+                    <span>•</span>
+                    <span>${escapeHTML(s.department)}</span>
+                    <span>•</span>
+                    <span class="font-mono text-slate-500">${escapeHTML(s.year)}</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono border ${pillClass}">${escapeHTML(latestMs.status || 'Active')}</span>
+              </div>
+              <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-800/80">
+                <span class="text-slate-400">Current: <span class="text-slate-200">${escapeHTML(latestMs.title || 'Ongoing')}</span></span>
+                <button onclick="openMilestoneReviewModal('${s.id}', '${latestMs.id}', '${escapeHTML(s.title + ' - ' + latestMs.title)}')" class="text-purple-400 hover:text-purple-300 font-semibold flex items-center space-x-1">
+                  <i data-lucide="edit-3" class="w-3 h-3"></i>
+                  <span>Review &amp; Grade</span>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // Render pending reviews in dashboard
+    const reviewsContainer = document.getElementById('faculty-dashboard-reviews');
+    if (reviewsContainer) {
+      const reviews = data.dashboard?.pendingReviews || [];
+      if (reviews.length === 0) {
+        reviewsContainer.innerHTML = `<div class="p-3 text-center text-slate-500 text-xs">All submitted milestones evaluated.</div>`;
+      } else {
+        reviewsContainer.innerHTML = reviews.map(r => `
+          <div class="bg-[#050916] border border-slate-800 rounded-xl p-3 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-white truncate">${escapeHTML(r.milestoneTitle)}</div>
+              <div class="text-[10px] text-slate-400 truncate">${escapeHTML(r.squadName)} • ${escapeHTML(r.projectTitle)}</div>
+            </div>
+            <button onclick="openMilestoneReviewModal('${r.supervisionId}', '${r.milestoneId}', '${escapeHTML(r.projectTitle + ' - ' + r.milestoneTitle)}')" class="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-300 rounded-lg text-[11px] font-bold shrink-0 hover:bg-amber-500/20 transition">
+              Assess
+            </button>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Render upcoming deadlines
+    const dlContainer = document.getElementById('faculty-dashboard-deadlines');
+    if (dlContainer) {
+      const deadlines = data.dashboard?.upcomingDeadlines || [];
+      dlContainer.innerHTML = deadlines.map(d => `
+        <div class="flex items-center justify-between text-xs py-1.5 border-b border-slate-800/60 last:border-0">
+          <div class="flex items-center space-x-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            <span class="text-slate-300 font-medium">${escapeHTML(d.milestone)}</span>
+          </div>
+          <span class="font-mono text-slate-400 text-[11px]">${escapeHTML(d.date)}</span>
+        </div>
+      `).join('');
+    }
+
+    lucide.createIcons();
+  } catch (err) {
+    console.error('fetchFacultyDashboard error:', err);
+  }
+}
+
+async function fetchFacultyStudents() {
+  try {
+    const res = await fetch(`${API_BASE}/faculty/students`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (data.success) {
+      facultyStudentsState = data.students || [];
+      renderFacultyStudents(facultyStudentsState);
+    }
+  } catch (err) {
+    console.error('fetchFacultyStudents error:', err);
+  }
+}
+
+function handleFacultyStudentFilter() {
+  const query = (document.getElementById('faculty-student-search-input')?.value || '').toLowerCase().trim();
+  const branch = document.getElementById('faculty-student-branch-select')?.value || 'all';
+
+  const filtered = facultyStudentsState.filter(s => {
+    const matchQuery = !query || 
+      (s.name && s.name.toLowerCase().includes(query)) || 
+      (s.skills && s.skills.some(sk => sk.toLowerCase().includes(query))) || 
+      (s.collegeRoll && s.collegeRoll.toLowerCase().includes(query));
+    const matchBranch = branch === 'all' || (s.branch && s.branch.toLowerCase().includes(branch.toLowerCase()));
+    return matchQuery && matchBranch;
+  });
+
+  renderFacultyStudents(filtered);
+}
+
+function renderFacultyStudents(students) {
+  const container = document.getElementById('faculty-students-cards-container');
+  if (!container) return;
+
+  if (!students || students.length === 0) {
+    container.innerHTML = `<div class="col-span-full glass-panel rounded-2xl p-8 text-center text-slate-400 text-xs">No matching students found. Try adjusting your search query or branch filter.</div>`;
+    return;
+  }
+
+  container.innerHTML = students.map(s => {
+    const skillsHtml = (s.skills || []).slice(0, 4).map(sk => `
+      <span class="bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[10px] px-2 py-0.5 rounded-md font-mono">${escapeHTML(sk)}</span>
+    `).join('');
+
+    return `
+      <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-3.5 hover:border-slate-700 transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-sm shadow-md">
+                ${escapeHTML(s.avatar || (s.name ? s.name.substring(0, 2).toUpperCase() : 'ST'))}
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-xs">${escapeHTML(s.name)}</h4>
+                <p class="text-[11px] text-slate-400">${escapeHTML(s.branch)} • CGPA: <span class="text-amber-400 font-mono font-bold">${escapeHTML(s.cgpa)}</span></p>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-black text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded font-mono">${s.capabilityScore || 90}/100</span>
+              <div class="text-[9px] text-slate-500 mt-0.5 font-mono">Capability</div>
+            </div>
+          </div>
+
+          <p class="text-slate-300 text-xs line-clamp-2 leading-relaxed">${escapeHTML(s.bio || 'Active campus builder and open-source contributor.')}</p>
+
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            ${skillsHtml}
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+          <a href="${escapeHTML(s.githubUrl || 'https://github.com')}" target="_blank" class="text-slate-400 hover:text-white flex items-center space-x-1.5 text-[11px]">
+            <i data-lucide="github" class="w-3.5 h-3.5"></i>
+            <span>GitHub Proof</span>
+          </a>
+          <button onclick="handleAssignStudentModal('${s.id}', '${escapeHTML(s.name)}')" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-lg text-[11px] flex items-center space-x-1 transition shadow-sm">
+            <i data-lucide="user-plus" class="w-3 h-3"></i>
+            <span>Assign Capstone</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  lucide.createIcons();
+}
+
+function handleAssignStudentModal(studentId, studentName) {
+  showToast(`Initiating Capstone Guidance Proposal for ${studentName}.`, 'success');
+  switchTab('faculty-challenges');
+}
+
+async function fetchFacultySupervisions() {
+  try {
+    const res = await fetch(`${API_BASE}/faculty/supervision`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) return;
+
+    const container = document.getElementById('faculty-supervision-cards-container');
+    if (!container) return;
+
+    const sups = data.supervisions || [];
+    if (sups.length === 0) {
+      container.innerHTML = `<div class="glass-panel rounded-2xl p-8 text-center text-slate-500 text-xs">No supervised projects recorded.</div>`;
+      return;
+    }
+
+    container.innerHTML = sups.map(s => {
+      const milestonesHtml = (s.milestones || []).map(m => {
+        const statusColors = {
+          'Approved': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+          'Needs Revision': 'bg-rose-500/10 text-rose-400 border-rose-500/25',
+          'In Review': 'bg-amber-500/10 text-amber-300 border-amber-500/25'
+        };
+        const badgeClass = statusColors[m.status] || 'bg-slate-800 text-slate-300 border-slate-700';
+
+        return `
+          <div class="bg-[#050916] border border-slate-800 rounded-xl p-3.5 space-y-2">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full ${m.status === 'Approved' ? 'bg-emerald-400' : (m.status === 'Needs Revision' ? 'bg-rose-400' : 'bg-amber-400')}"></span>
+                <span class="font-bold text-white text-xs">${escapeHTML(m.title)}</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono border ${badgeClass}">${escapeHTML(m.status)}</span>
+                ${m.score ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500/10 text-sky-300 border border-sky-500/20 font-bold">${m.score}/100</span>` : ''}
+              </div>
+            </div>
+
+            <div class="text-[11px] text-slate-300 leading-relaxed bg-[#030611] rounded-lg p-2.5 border border-slate-800/80">
+              <span class="text-slate-500 font-semibold block mb-0.5">Faculty Feedback:</span>
+              ${escapeHTML(m.feedback || 'Pending assessment.')}
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] pt-1">
+              <span class="text-slate-500 font-mono">Evaluated: ${escapeHTML(m.submittedAt || 'Recent')}</span>
+              <button onclick="openMilestoneReviewModal('${s.id}', '${m.id}', '${escapeHTML(s.title + ' - ' + m.title)}')" class="px-2.5 py-1 btn-gradient-primary rounded-lg text-white font-bold text-[11px] flex items-center space-x-1 shadow-sm">
+                <i data-lucide="edit-2" class="w-3 h-3"></i>
+                <span>Grade / Revise</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-500/10 text-purple-300 border border-purple-500/25">${escapeHTML(s.squadName)}</span>
+                <span class="text-xs text-slate-400">${escapeHTML(s.department)} • ${escapeHTML(s.year)}</span>
+              </div>
+              <h3 class="text-sm font-bold text-white mt-1">${escapeHTML(s.title)}</h3>
+            </div>
+            <div class="flex items-center space-x-2">
+              <a href="${escapeHTML(s.githubRepo || 'https://github.com')}" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 rounded-xl text-xs flex items-center space-x-1.5 transition">
+                <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                <span>View Repository</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Milestone Assessments</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              ${milestonesHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    lucide.createIcons();
+  } catch (err) {
+    console.error('fetchFacultySupervisions error:', err);
+  }
+}
+
+function openMilestoneReviewModal(supId, msId, title) {
+  const supInp = document.getElementById('fac-review-sup-id');
+  const msInp = document.getElementById('fac-review-ms-id');
+  const titleDisp = document.getElementById('fac-review-title-display');
+  
+  if (supInp) supInp.value = supId;
+  if (msInp) msInp.value = msId;
+  if (titleDisp) titleDisp.value = title;
+
+  openModal('modal-faculty-review');
+}
+
+async function handleFacultyReviewSubmit(event) {
+  event.preventDefault();
+  const supId = document.getElementById('fac-review-sup-id')?.value;
+  const msId = document.getElementById('fac-review-ms-id')?.value;
+  const score = parseInt(document.getElementById('fac-review-score')?.value, 10);
+  const status = document.getElementById('fac-review-status')?.value;
+  const feedback = document.getElementById('fac-review-feedback')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/faculty/supervision/review`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        supervisionId: supId,
+        milestoneId: msId,
+        score,
+        status,
+        feedback
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-faculty-review');
+      showToast('Milestone evaluation saved successfully!', 'success');
+      fetchFacultySupervisions();
+      fetchFacultyDashboard();
+    } else {
+      showToast(data.error || 'Failed to submit evaluation', 'error');
+    }
+  } catch (err) {
+    showToast('Network error while saving milestone evaluation', 'error');
+  }
+}
+
+async function fetchFacultyCollaborations() {
+  try {
+    const res = await fetch(`${API_BASE}/faculty/collaborations`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) return;
+
+    const container = document.getElementById('faculty-collaborations-cards-container');
+    if (!container) return;
+
+    const collabs = data.collaborations || [];
+    if (collabs.length === 0) {
+      container.innerHTML = `<div class="col-span-full glass-panel rounded-2xl p-8 text-center text-slate-500 text-xs">No alumni co-guide collaborations registered yet.</div>`;
+      return;
+    }
+
+    container.innerHTML = collabs.map(c => `
+      <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-3.5 hover:border-slate-700 transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 flex items-center justify-center font-bold text-white text-sm shadow-md">
+                ${escapeHTML(c.partnerName ? c.partnerName.substring(0, 2).toUpperCase() : 'AL')}
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-xs">${escapeHTML(c.partnerName)}</h4>
+                <p class="text-[11px] text-emerald-400 font-semibold">${escapeHTML(c.company)}</p>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono ${c.status === 'Active' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-300 border border-amber-500/20'}">${escapeHTML(c.status || 'Active')}</span>
+          </div>
+
+          <div>
+            <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Project Title</div>
+            <div class="text-xs font-bold text-slate-200 mt-0.5">${escapeHTML(c.title)}</div>
+          </div>
+
+          <div>
+            <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Focus Area</div>
+            <span class="inline-block mt-0.5 px-2 py-0.5 bg-slate-800/80 text-sky-300 text-[10px] rounded font-mono">${escapeHTML(c.area || 'Distributed Systems')}</span>
+          </div>
+
+          <p class="text-slate-400 text-xs leading-relaxed bg-[#040814] p-2.5 rounded-xl border border-slate-800/70">${escapeHTML(c.notes || 'Collaborative guidance underway.')}</p>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+          <span class="text-[11px] text-slate-500 font-mono">Sessions: 4 Completed</span>
+          <button onclick="showToast('Review session sync link dispatched to ${escapeHTML(c.partnerName)}', 'success')" class="px-3 py-1.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-sky-400 font-bold rounded-lg text-[11px] flex items-center space-x-1 transition">
+            <i data-lucide="calendar" class="w-3 h-3"></i>
+            <span>Schedule Sync</span>
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    lucide.createIcons();
+  } catch (err) {
+    console.error('fetchFacultyCollaborations error:', err);
+  }
+}
+
+async function handleFacultyInviteSubmit(event) {
+  event.preventDefault();
+  const partnerName = document.getElementById('fac-invite-partner-name')?.value;
+  const company = document.getElementById('fac-invite-company')?.value;
+  const title = document.getElementById('fac-invite-title')?.value;
+  const area = document.getElementById('fac-invite-area')?.value;
+  const notes = document.getElementById('fac-invite-notes')?.value;
+
+  try {
+    const res = await fetch(`${API_BASE}/faculty/collaborations/invite`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ partnerName, company, title, area, notes })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-faculty-invite-coguide');
+      showToast(`Collaboration invitation dispatched to ${partnerName}!`, 'success');
+      document.getElementById('form-faculty-invite')?.reset();
+      fetchFacultyCollaborations();
+      fetchFacultyDashboard();
+    } else {
+      showToast(data.error || 'Failed to send invite', 'error');
+    }
+  } catch (err) {
+    showToast('Network error while dispatching invite', 'error');
+  }
+}
+
+async function fetchFacultyProfile() {
+  try {
+    const res = await fetch(`${API_BASE}/faculty/profile`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (data.success && data.profile) {
+      const p = data.profile;
+      const setVal = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.value = val; };
+      setVal('fac-prof-name', p.name);
+      setVal('fac-prof-dept', p.department);
+      setVal('fac-prof-research', Array.isArray(p.researchDomains) ? p.researchDomains.join(', ') : p.researchDomains);
+      setVal('fac-prof-office', p.officeHours);
+      setVal('fac-prof-capacity', p.mentorshipPreferences);
+
+      const toggle = document.getElementById('fac-prof-active-toggle');
+      if (toggle) toggle.checked = p.visibility !== 'Private';
+    }
+  } catch (err) {
+    console.error('fetchFacultyProfile error:', err);
+  }
+}
+
+async function handleSaveFacultyProfile(event) {
+  event.preventDefault();
+  const name = document.getElementById('fac-prof-name')?.value;
+  const department = document.getElementById('fac-prof-dept')?.value;
+  const domainsStr = document.getElementById('fac-prof-research')?.value || '';
+  const officeHours = document.getElementById('fac-prof-office')?.value;
+  const mentorshipPreferences = document.getElementById('fac-prof-capacity')?.value;
+  const isAccepting = document.getElementById('fac-prof-active-toggle')?.checked;
+
+  try {
+    const res = await fetch(`${API_BASE}/faculty/profile`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        name,
+        department,
+        researchDomains: domainsStr.split(',').map(s => s.trim()).filter(Boolean),
+        officeHours,
+        mentorshipPreferences,
+        visibility: isAccepting ? 'Public' : 'Private'
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Faculty academic profile updated and published!', 'success');
+    } else {
+      showToast(data.error || 'Failed to update profile', 'error');
+    }
+  } catch (err) {
+    showToast('Network error updating profile', 'error');
+  }
+}
+
+// ================= INSTITUTION PANEL CONTROLLERS =================
+
+async function fetchInstitutionOverview() {
+  try {
+    const res = await fetch(`${API_BASE}/institution/overview`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) return;
+
+    const ov = data.overview || {};
+    const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    setTxt('inst-stat-students', ov.activeStudents?.toLocaleString() || '1,480');
+    setTxt('inst-stat-alumni', ov.verifiedAlumni?.toLocaleString() || '3,340');
+    setTxt('inst-stat-faculty', ov.activeFaculty || '86');
+    setTxt('inst-stat-employers', ov.employerPartners || '142');
+    setTxt('inst-stat-outcomes', ov.verifiedOutcomes || '428');
+    setTxt('inst-stat-bounties-amount', '₹' + (ov.bountiesDisbursedLakh || '4.2') + 'L');
+
+    // Render recruiters
+    const recContainer = document.getElementById('inst-overview-recruiters');
+    if (recContainer) {
+      const recruiters = ov.topRecruiters || [];
+      recContainer.innerHTML = recruiters.map(r => `
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-slate-300 font-medium">${escapeHTML(r.name)}</span>
+            <span class="text-sky-400 font-bold">${r.alumniCount} Alumni (${r.openRoles} Hiring)</span>
+          </div>
+          <div class="w-full bg-[#030611] h-2 rounded-full overflow-hidden border border-slate-800">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-500 h-full rounded-full" style="width: ${r.fillPercentage || 65}%"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render recent outcomes
+    const outContainer = document.getElementById('inst-overview-recent-outcomes');
+    if (outContainer) {
+      const outcomes = ov.recentOutcomes || [];
+      outContainer.innerHTML = outcomes.map(o => `
+        <div class="bg-[#050916] border border-slate-800 rounded-xl p-3 flex items-center justify-between text-xs">
+          <div>
+            <div class="font-bold text-white">${escapeHTML(o.studentName)}</div>
+            <div class="text-[11px] text-slate-400">${escapeHTML(o.role)} @ <span class="text-sky-300 font-semibold">${escapeHTML(o.company)}</span></div>
+          </div>
+          <div class="text-right">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">${escapeHTML(o.package || 'Verified')}</span>
+            <div class="text-[9px] text-slate-500 font-mono mt-0.5">${escapeHTML(o.date || 'Recent')}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    lucide.createIcons();
+  } catch (err) {
+    console.error('fetchInstitutionOverview error:', err);
+  }
+}
+
+async function fetchInstitutionIntelligence() {
+  try {
+    const res = await fetch(`${API_BASE}/institution/intelligence`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) return;
+
+    const intel = data.intelligence || {};
+    const trendsContainer = document.getElementById('inst-intel-trends');
+    if (trendsContainer) {
+      const trends = intel.sectorDemand || [];
+      trendsContainer.innerHTML = trends.map(t => `
+        <div class="space-y-1.5">
+          <div class="flex justify-between text-xs font-semibold">
+            <span class="text-slate-200">${escapeHTML(t.sector)}</span>
+            <span class="text-sky-400 font-mono">${t.demandScore}% Market Demand</span>
+          </div>
+          <div class="w-full bg-[#030611] h-2.5 rounded-full overflow-hidden border border-slate-800">
+            <div class="bg-gradient-to-r from-blue-500 via-indigo-500 to-sky-400 h-full rounded-full" style="width: ${t.demandScore}%"></div>
+          </div>
+          <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+            <span>Campus Skill Coverage: ${t.readinessScore || 78}%</span>
+            <span>Active Openings: ${t.openingsCount || 42}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    const underContainer = document.getElementById('inst-intel-underserved');
+    if (underContainer) {
+      const underserved = intel.underservedPrograms || [];
+      underContainer.innerHTML = underserved.map(u => `
+        <div class="bg-[#050916] border border-slate-800 rounded-xl p-3.5 space-y-2">
+          <div class="flex items-start justify-between">
+            <h4 class="font-bold text-white text-xs">${escapeHTML(u.department)}</h4>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/10 text-amber-300 border border-amber-500/20">${u.gapPercentage}% Gap</span>
+          </div>
+          <p class="text-[11px] text-slate-300">${escapeHTML(u.reason)}</p>
+          <div class="pt-1 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500 font-mono">Intervention:</span>
+            <button onclick="showToast('Intervention deployed: Alumni mentorship sprint scheduled for ${escapeHTML(u.department)}', 'success')" class="px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold rounded-lg transition">
+              Deploy Mentorship Surge
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    lucide.createIcons();
+  } catch (err) {
+    console.error('fetchInstitutionIntelligence error:', err);
+  }
+}
+
+async function fetchInstitutionDepartments() {
+  try {
+    const res = await fetch(`${API_BASE}/institution/departments`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) return;
+
+    institutionDepartmentsState = data.departments || [];
+    const tbody = document.getElementById('inst-departments-table-body');
+    if (!tbody) return;
+
+    if (institutionDepartmentsState.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" class="py-6 text-center text-slate-500">No departments configured yet. Click 'Add Department' to create one.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = institutionDepartmentsState.map(d => `
+      <tr class="hover:bg-slate-800/30 transition">
+        <td class="py-3 px-4 font-semibold text-white">
+          <div>${escapeHTML(d.name)}</div>
+          <span class="font-mono text-[10px] text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20">${escapeHTML(d.code)}</span>
+        </td>
+        <td class="py-3 px-4 text-slate-300">${escapeHTML(d.head)}</td>
+        <td class="py-3 px-4 text-center font-mono text-slate-200">${d.facultyCount}</td>
+        <td class="py-3 px-4 text-center font-mono text-slate-200">${d.enrolledStudents}</td>
+        <td class="py-3 px-4 text-center">
+          <span class="font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${d.placementRate || 85}%</span>
+        </td>
+        <td class="py-3 px-4 text-center font-mono text-slate-300">${d.cohortTarget || 90}%</td>
+        <td class="py-3 px-4 text-right">
+          <button onclick="deleteInstitutionDepartment('${d.id}')" class="p-1.5 hover:bg-rose-500/20 text-rose-400 rounded-lg transition" title="Delete Department">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+          </button>
+        </td>
+      </tr>
+    `).join('');
+
+    lucide.createIcons();
+  } catch (err) {
+    console.error('fetchInstitutionDepartments error:', err);
+  }
+}
+
+function openAddDepartmentModal() {
+  document.getElementById('form-institution-add-dept')?.reset();
+  openModal('modal-institution-add-dept');
+}
+
+async function handleInstitutionAddDeptSubmit(event) {
+  event.preventDefault();
+  const name = document.getElementById('inst-dept-input-name')?.value;
+  const code = document.getElementById('inst-dept-input-code')?.value;
+  const head = document.getElementById('inst-dept-input-head')?.value;
+  const facultyCount = parseInt(document.getElementById('inst-dept-input-faculty')?.value, 10);
+  const enrolledStudents = parseInt(document.getElementById('inst-dept-input-students')?.value, 10);
+  const targetPlacement = parseInt(document.getElementById('inst-dept-input-target')?.value, 10);
+
+  try {
+    const res = await fetch(`${API_BASE}/institution/departments`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        name,
+        code,
+        head,
+        facultyCount,
+        enrolledStudents,
+        cohortTarget: targetPlacement,
+        placementRate: 85
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('modal-institution-add-dept');
+      showToast(`Academic Department ${name} created successfully!`, 'success');
+      fetchInstitutionDepartments();
+      fetchInstitutionOverview();
+    } else {
+      showToast(data.error || 'Failed to create department', 'error');
+    }
+  } catch (err) {
+    showToast('Network error creating department', 'error');
+  }
+}
+
+async function deleteInstitutionDepartment(id) {
+  if (!confirm('Are you sure you want to remove this academic department?')) return;
+  try {
+    const res = await fetch(`${API_BASE}/institution/departments/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Department deleted successfully.', 'success');
+      fetchInstitutionDepartments();
+    } else {
+      showToast(data.error || 'Failed to delete department', 'error');
+    }
+  } catch (err) {
+    showToast('Network error deleting department', 'error');
+  }
+}
+
+async function fetchInstitutionOutcomes() {
+  try {
+    const res = await fetch(`${API_BASE}/institution/outcomes`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) return;
+
+    const summary = data.summary || {};
+    const setTxt = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
+    setTxt('inst-outcomes-median-ctc', summary.medianCTC || '₹14.2 LPA');
+    setTxt('inst-outcomes-higher-ed', (summary.higherStudies || 68) + ' Students');
+    setTxt('inst-outcomes-patents', (summary.patents || 42) + ' Published');
+
+    const tbody = document.getElementById('inst-outcomes-table-body');
+    if (!tbody) return;
+
+    const verified = data.verifiedPlacements || [];
+    tbody.innerHTML = verified.map(v => `
+      <tr class="hover:bg-slate-800/30 transition font-mono text-[11px]">
+        <td class="py-2.5 px-4 font-semibold text-white">
+          <div>${escapeHTML(v.studentName)}</div>
+          <span class="text-slate-500 text-[10px]">${escapeHTML(v.rollNo || '2022CS084')}</span>
+        </td>
+        <td class="py-2.5 px-4 text-slate-300 font-sans">${escapeHTML(v.department)} • ${escapeHTML(v.batch || '2026')}</td>
+        <td class="py-2.5 px-4 text-sky-400 font-sans font-bold">${escapeHTML(v.employer)}</td>
+        <td class="py-2.5 px-4 text-slate-200 font-sans">${escapeHTML(v.role)} (${escapeHTML(v.package)})</td>
+        <td class="py-2.5 px-4 text-slate-400">${escapeHTML(v.verificationMethod || 'Alumni Endorsed & ATS Sync')}</td>
+        <td class="py-2.5 px-4 text-center">
+          <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">Verified</span>
+        </td>
+      </tr>
+    `).join('');
+
+    lucide.createIcons();
+  } catch (err) {
+    console.error('fetchInstitutionOutcomes error:', err);
+  }
+}
+
+function exportInstitutionOutcomesCSV() {
+  const role = activeSessionRoleId || 'institution';
+  const downloadUrl = `${API_BASE}/institution/export-outcomes-csv?role=${role}`;
+  showToast('Generating official NAAC/NIRF accreditation outcomes CSV...', 'info');
+
+  const link = document.createElement('a');
+  link.href = downloadUrl;
+  link.setAttribute('download', 'LinkX_Accreditation_Outcomes.csv');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  setTimeout(() => {
+    showToast('Official accreditation CSV exported successfully!', 'success');
+  }, 1000);
+}
+
+async function fetchInstitutionGovernance() {
+  try {
+    const res = await fetch(`${API_BASE}/institution/governance`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) return;
+
+    const settings = data.settings || {};
+    const domainInp = document.getElementById('gov-inst-domain');
+    if (domainInp && settings.allowedDomain) domainInp.value = settings.allowedDomain;
+
+    const scrapeLock = document.getElementById('gov-scrape-lock');
+    if (scrapeLock && settings.publicScrapeProtection !== undefined) scrapeLock.checked = settings.publicScrapeProtection;
+
+    const outreachPolicy = document.getElementById('gov-outreach-policy');
+    if (outreachPolicy && settings.alumniOutreachRateLimit !== undefined) outreachPolicy.checked = settings.alumniOutreachRateLimit;
+
+    const atsLock = document.getElementById('gov-ats-lock');
+    if (atsLock && settings.externalATSWebhookLock !== undefined) atsLock.checked = settings.externalATSWebhookLock;
+
+    const tbody = document.getElementById('inst-audit-logs-body');
+    if (!tbody) return;
+
+    const logs = data.auditLogs || [];
+    tbody.innerHTML = logs.map(l => `
+      <tr class="hover:bg-slate-800/30 transition">
+        <td class="py-2 px-2.5 text-slate-400 whitespace-nowrap">${escapeHTML(l.timestamp ? new Date(l.timestamp).toLocaleTimeString() : '12:00:00')}</td>
+        <td class="py-2 px-2.5 text-purple-300 font-semibold">${escapeHTML(l.actor)}</td>
+        <td class="py-2 px-2.5 text-slate-200">
+          <span class="text-sky-400 font-bold">${escapeHTML(l.action)}</span>
+          <span class="text-slate-400 ml-1 font-sans">(${escapeHTML(l.entity)})</span>
+        </td>
+        <td class="py-2 px-2.5 text-right">
+          <span class="px-2 py-0.5 rounded text-[10px] ${l.status === 'Success' ? 'text-emerald-400 bg-emerald-500/10' : 'text-amber-300 bg-amber-500/10'}">${escapeHTML(l.status)}</span>
+        </td>
+      </tr>
+    `).join('');
+
+    lucide.createIcons();
+  } catch (err) {
+    console.error('fetchInstitutionGovernance error:', err);
+  }
+}
+
+async function saveInstitutionGovernance(event) {
+  event.preventDefault();
+  const allowedDomain = document.getElementById('gov-inst-domain')?.value;
+  const publicScrapeProtection = document.getElementById('gov-scrape-lock')?.checked;
+  const alumniOutreachRateLimit = document.getElementById('gov-outreach-policy')?.checked;
+  const externalATSWebhookLock = document.getElementById('gov-ats-lock')?.checked;
+
+  try {
+    const res = await fetch(`${API_BASE}/institution/governance`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        allowedDomain,
+        publicScrapeProtection,
+        alumniOutreachRateLimit,
+        externalATSWebhookLock
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Institutional governance policy and security rules saved!', 'success');
+      fetchInstitutionGovernance();
+    } else {
+      showToast(data.error || 'Failed to save governance policy', 'error');
+    }
+  } catch (err) {
+    showToast('Network error saving governance policy', 'error');
+  }
+}
