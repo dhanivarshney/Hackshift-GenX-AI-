@@ -409,6 +409,227 @@
       from { opacity:0; transform: scale(0.85) translateY(12px); }
       to   { opacity:1; transform: scale(1)    translateY(0); }
     }
+
+    /* ===================== NEON BACK BUTTON STYLING (#0d0d0d + #00ffff) ===================== */
+    @keyframes neon-slide-left-in {
+      0% {
+        opacity: 0;
+        transform: translateX(-24px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes neon-glow-pulse {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.4), inset 0 0 8px rgba(0, 255, 255, 0.15);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.85), 0 0 35px rgba(0, 255, 255, 0.45), inset 0 0 12px rgba(0, 255, 255, 0.3);
+      }
+    }
+
+    @keyframes neon-ripple-effect {
+      0% {
+        transform: scale(0);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(2.8);
+        opacity: 0;
+      }
+    }
+
+    .neon-back-btn {
+      background-color: #0d0d0d !important;
+      color: #00ffff !important;
+      border: 1px solid rgba(0, 255, 255, 0.6) !important;
+      border-radius: 0.75rem;
+      padding: 0.5rem 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.025em;
+      cursor: pointer;
+      position: relative;
+      overflow: visible;
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.35), inset 0 0 8px rgba(0, 255, 255, 0.12);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: neon-slide-left-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      user-select: none;
+    }
+
+    .neon-back-btn:hover {
+      background-color: #111822 !important;
+      border-color: #00ffff !important;
+      color: #ffffff !important;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.85), 0 0 35px rgba(0, 255, 255, 0.45), inset 0 0 12px rgba(0, 255, 255, 0.3) !important;
+      animation: neon-slide-left-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, neon-glow-pulse 1.8s ease-in-out infinite;
+    }
+
+    .neon-back-btn:active {
+      transform: scale(0.96);
+    }
+
+    .neon-back-btn .neon-ripple-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .neon-back-btn .neon-ripple {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: radial-gradient(circle, rgba(0, 255, 255, 0.45) 0%, transparent 70%);
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .neon-back-btn:hover .neon-ripple {
+      animation: neon-ripple-effect 1.2s ease-out infinite;
+    }
+
+    .neon-tooltip {
+      position: absolute;
+      bottom: -2.1rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: #0d0d0d;
+      color: #00ffff;
+      border: 1px solid rgba(0, 255, 255, 0.6);
+      padding: 0.2rem 0.55rem;
+      border-radius: 0.375rem;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+      z-index: 60;
+    }
+
+    .neon-back-btn:hover .neon-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Floating Circular Mobile Neon Back Button */
+    .neon-back-floating-mobile {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: 9999px;
+      background-color: #0d0d0d !important;
+      border: 1.5px solid #00ffff !important;
+      color: #00ffff !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 8px 24px rgba(0, 0, 0, 0.7), inset 0 0 10px rgba(0, 255, 255, 0.2);
+      z-index: 50;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: neon-slide-left-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      outline: none;
+    }
+
+    .neon-back-floating-mobile:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.9), 0 8px 30px rgba(0, 0, 0, 0.9), inset 0 0 14px rgba(0, 255, 255, 0.35);
+      animation: neon-slide-left-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, neon-glow-pulse 1.8s ease-in-out infinite;
+    }
+
+    .neon-back-floating-mobile:active {
+      transform: scale(0.95);
+    }
+
+    .neon-back-floating-mobile .neon-ripple-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border-radius: 9999px;
+      pointer-events: none;
+    }
+
+    .neon-back-floating-mobile .neon-ripple {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: radial-gradient(circle, rgba(0, 255, 255, 0.45) 0%, transparent 70%);
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .neon-back-floating-mobile:hover .neon-ripple {
+      animation: neon-ripple-effect 1.2s ease-out infinite;
+    }
+
+    .neon-back-floating-mobile .neon-tooltip {
+      bottom: auto;
+      top: -2.3rem;
+      left: 50%;
+    }
+
+    .neon-back-floating-mobile:hover .neon-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Redundant Footer Neon Back Button */
+    .neon-back-footer-btn {
+      background-color: #0d0d0d !important;
+      color: #00ffff !important;
+      border: 1px solid rgba(0, 255, 255, 0.5) !important;
+      border-radius: 0.625rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.25);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .neon-back-footer-btn:hover {
+      border-color: #00ffff !important;
+      color: #ffffff !important;
+      transform: scale(1.04);
+      box-shadow: 0 0 16px rgba(0, 255, 255, 0.75), inset 0 0 8px rgba(0, 255, 255, 0.2);
+    }
+
+    .neon-back-footer-btn:active {
+      transform: scale(0.96);
+    }
+
+    .neon-back-footer-btn .neon-tooltip {
+      bottom: auto;
+      top: -2.1rem;
+    }
+
+    .neon-back-footer-btn:hover .neon-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col mesh-gradient selection:bg-indigo-500 selection:text-white">
@@ -482,6 +703,13 @@
   <!-- ================= TOP STATUS BAR (ACTIVE AFTER SPLASH) ================= -->
   <div class="bg-slate-950/80 border-b border-slate-800/80 px-4 py-2 text-xs flex items-center justify-between text-slate-300">
     <div class="flex items-center space-x-2.5">
+      <!-- Top-left Back button on status bar -->
+      <button onclick="handleNavigationBack(event)" class="neon-back-btn group relative shrink-0 py-1 px-2.5 text-[11px]" title="Go Back" aria-label="Go Back">
+        <span class="neon-ripple-container"><span class="neon-ripple"></span></span>
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-[#00ffff] transition-transform duration-200 group-hover:-translate-x-1"></i>
+        <span>Back</span>
+        <span class="neon-tooltip">Go Back</span>
+      </button>
       <span class="flex h-2 w-2 relative">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 live-dot"></span>
@@ -627,19 +855,29 @@
     
     <!-- Workspace Top Header -->
     <header class="sticky top-0 z-40 bg-[#040711]/90 backdrop-blur-md border-b border-slate-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
         
-        <!-- Brand Logo & Portal Tag -->
-        <div class="flex items-center space-x-3">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-            <i data-lucide="network" class="w-5 h-5 text-white"></i>
-          </div>
-          <div>
-            <div class="flex items-center space-x-2">
-              <span class="text-lg font-black tracking-tight text-white">Nexus<span class="text-indigo-400">IQ</span></span>
-              <span id="current-portal-badge" class="text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded">Student Portal</span>
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <!-- Header Top-Left Back Button -->
+          <button onclick="handleNavigationBack(event)" class="neon-back-btn group relative shrink-0" title="Go Back" aria-label="Go Back">
+            <span class="neon-ripple-container"><span class="neon-ripple"></span></span>
+            <i data-lucide="arrow-left" class="w-4 h-4 text-[#00ffff] transition-transform duration-200 group-hover:-translate-x-1"></i>
+            <span class="hidden xs:inline sm:inline">Back</span>
+            <span class="neon-tooltip">Go Back</span>
+          </button>
+
+          <!-- Brand Logo & Portal Tag -->
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 shrink-0">
+              <i data-lucide="network" class="w-5 h-5 text-white"></i>
             </div>
-            <p class="text-[11px] text-slate-400 -mt-0.5">Apex Institute Network Node</p>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-lg font-black tracking-tight text-white">Nexus<span class="text-indigo-400">IQ</span></span>
+                <span id="current-portal-badge" class="text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded">Student Portal</span>
+              </div>
+              <p class="text-[11px] text-slate-400 -mt-0.5">Apex Institute Network Node</p>
+            </div>
           </div>
         </div>
 
@@ -1047,6 +1285,43 @@
     </main>
 
   </div>
+
+  <!-- ================= CONSISTENT STICKY FOOTER WITH REDUNDANT BACK NAVIGATION ================= -->
+  <footer class="mt-auto sticky bottom-0 z-30 bg-[#0d0d0d]/95 backdrop-blur-md border-t border-slate-800/80 px-4 py-2.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 text-xs">
+      <!-- Left: Redundant Back Navigation Button / Link -->
+      <div class="flex items-center space-x-3">
+        <button onclick="handleNavigationBack(event)" class="neon-back-footer-btn group relative" title="Go Back" aria-label="Go Back">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-[#00ffff] transition-transform duration-200 group-hover:-translate-x-1"></i>
+          <span>Back</span>
+          <span class="neon-tooltip">Go Back</span>
+        </button>
+        <span class="text-slate-500 hidden sm:inline text-[11px]">• Previous Screen</span>
+      </div>
+
+      <!-- Center: Protocol Badge -->
+      <div class="hidden md:flex items-center space-x-2 text-slate-400 text-[11px]">
+        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+        <span class="font-mono text-slate-300">NexusIQ Lineage Protocol</span>
+        <span class="text-slate-600">|</span>
+        <span>Autonomous Intent &amp; Proof-of-Work</span>
+      </div>
+
+      <!-- Right: Track Information -->
+      <div class="flex items-center space-x-3 text-[11px] text-slate-400">
+        <span class="hidden sm:inline">Track 1: Alumni Network</span>
+        <span class="text-slate-700 hidden sm:inline">•</span>
+        <span class="text-slate-500 font-mono">v1.0.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= FLOATING CIRCULAR NEON BACK BUTTON FOR MOBILE VIEW (BOTTOM-LEFT) ================= -->
+  <button onclick="handleNavigationBack(event)" class="neon-back-floating-mobile md:hidden group" title="Go Back" aria-label="Go Back">
+    <span class="neon-ripple-container"><span class="neon-ripple"></span></span>
+    <i data-lucide="arrow-left" class="w-5 h-5 text-[#00ffff] transition-transform duration-200 group-hover:-translate-x-1"></i>
+    <span class="neon-tooltip">Go Back</span>
+  </button>
 
   <!-- ================= MODAL: POST NEW BOUNTY / OPPORTUNITY ================= -->
   <div id="modal-post-bounty" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">

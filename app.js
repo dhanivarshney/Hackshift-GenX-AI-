@@ -423,10 +423,19 @@ function directAuthenticateAs(roleId) {
 }
 
 // ================= AUTHENTICATION & WORKSPACE ACTIVATION =================
-function authenticateAndOpenWorkspace(roleId, showConfetti = true) {
+function authenticateAndOpenWorkspace(roleId, showConfetti = true, pushHistory = true) {
   const cfg = ROLE_CONFIGS[roleId] || ROLE_CONFIGS.student;
   activeSessionRoleId = roleId;
   currentHeroRoleId = roleId;
+
+  // Push browser history state for seamless window.history.back()
+  if (pushHistory && window.history && window.history.pushState) {
+    window.history.pushState(
+      { screen: 'workspace', role: roleId, tab: cfg.defaultTab || 'intent-radar' },
+      '',
+      '#workspace-' + roleId
+    );
+  }
 
   // Hide login hero screen, reveal authenticated workspace
   document.getElementById('hero-login-screen').classList.add('hidden');
@@ -451,7 +460,7 @@ function authenticateAndOpenWorkspace(roleId, showConfetti = true) {
   renderWorkspaceRolePills();
 
   // Navigate directly to the most powerful tab for this role!
-  switchTab(cfg.defaultTab || 'intent-radar');
+  switchTab(cfg.defaultTab || 'intent-radar', false);
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
   lucide.createIcons();
@@ -462,8 +471,11 @@ function authenticateAndOpenWorkspace(roleId, showConfetti = true) {
   }
 }
 
-function handleLogout() {
+function handleLogout(pushHistory = true) {
   activeSessionRoleId = null;
+  if (pushHistory && window.history && window.history.pushState) {
+    window.history.pushState({ screen: 'login' }, '', '#login');
+  }
   document.getElementById('authenticated-workspace').classList.add('hidden');
   document.getElementById('hero-login-screen').classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -489,9 +501,17 @@ function renderWorkspaceRolePills() {
 }
 
 // ================= NAVIGATION TABS =================
-function switchTab(tabId) {
+function switchTab(tabId, pushHistory = true) {
   const views = ['intent-radar', 'proof-of-work', 'bounties', 'alumnus-inbox', 'network-graph', 'institution'];
   
+  if (pushHistory && activeSessionRoleId && window.history && window.history.pushState) {
+    window.history.pushState(
+      { screen: 'workspace', role: activeSessionRoleId, tab: tabId },
+      '',
+      '#' + tabId
+    );
+  }
+
   views.forEach(v => {
     const el = document.getElementById(`view-${v}`);
     const tabBtn = document.getElementById(`tab-${v}`);
@@ -519,6 +539,68 @@ function switchTab(tabId) {
   }
   lucide.createIcons();
 }
+
+// ================= GLOBAL BACK NAVIGATION (BROWSER HISTORY) =================
+function handleNavigationBack(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  // Visual click ripple and scale feedback
+  const target = event?.currentTarget;
+  if (target) {
+    target.classList.add('scale-95');
+    setTimeout(() => target.classList.remove('scale-95'), 180);
+  }
+
+  // Check if any open overlay modal needs to be closed first
+  const openModals = [
+    'intent-modal',
+    'pow-detail-modal',
+    'modal-post-bounty',
+    'candidate-modal',
+    'forgot-password-modal',
+    'reset-password-modal'
+  ];
+  for (const mId of openModals) {
+    const modalEl = document.getElementById(mId);
+    if (modalEl && !modalEl.classList.contains('hidden')) {
+      modalEl.classList.add('hidden');
+      return;
+    }
+  }
+
+  // Use browser history as explicitly required:
+  // "Back button should navigate to the previous page using browser history (window.history.back())."
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    // Graceful fallback if opened in a fresh tab without prior browser history
+    if (activeSessionRoleId) {
+      handleLogout(true);
+    } else {
+      showToast("Already at the start of navigation history.", "info");
+    }
+  }
+}
+
+// Global popstate listener to sync view states with browser history
+window.addEventListener('popstate', (e) => {
+  const state = e.state;
+  if (!state || state.screen === 'login') {
+    if (activeSessionRoleId) {
+      handleLogout(false);
+    }
+  } else if (state.screen === 'workspace') {
+    if (!activeSessionRoleId || activeSessionRoleId !== state.role) {
+      authenticateAndOpenWorkspace(state.role, false, false);
+    }
+    if (state.tab) {
+      switchTab(state.tab, false);
+    }
+  }
+});
 
 // ================= REST API FETCHERS =================
 async function fetchBountiesFromAPI() {
@@ -1663,8 +1745,8 @@ function animateWorkspaceEntrance() {
   // Workspace entrance
   const _origAuth = window.authenticateAndOpenWorkspace;
   if (typeof _origAuth === 'function') {
-    window.authenticateAndOpenWorkspace = function(roleId, sc) {
-      _origAuth(roleId, sc);
+    window.authenticateAndOpenWorkspace = function(roleId, sc, ph = true) {
+      _origAuth(roleId, sc, ph);
       animateWorkspaceEntrance();
     };
   }
@@ -1681,8 +1763,8 @@ function animateWorkspaceEntrance() {
   // Tab switch stagger
   const _origSwitch = window.switchTab;
   if (typeof _origSwitch === 'function') {
-    window.switchTab = function(tabId) {
-      _origSwitch(tabId);
+    window.switchTab = function(tabId, ph = true) {
+      _origSwitch(tabId, ph);
       setTimeout(() => {
         initScrollReveal();
         initStatBarObserver();
@@ -1700,6 +1782,10 @@ function animateWorkspaceEntrance() {
 
 // ── BOOT ──
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize default browser history state
+  if (window.history && !window.history.state) {
+    window.history.replaceState({ screen: 'login' }, '', window.location.pathname);
+  }
   initParticleField();
   initCardTilt();
   initButtonRipples();
