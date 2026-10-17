@@ -48,12 +48,12 @@
       border: 1px solid rgba(255, 255, 255, 0.07);
     }
     .glass-card-hover {
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glass-card-hover:hover {
-      border-color: rgba(99, 102, 241, 0.45);
-      transform: translateY(-2px);
-      box-shadow: 0 14px 40px -10px rgba(99, 102, 241, 0.28);
+      border-color: rgba(99, 102, 241, 0.55);
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 20px 50px -12px rgba(99, 102, 241, 0.35);
     }
     .mesh-gradient {
       background: radial-gradient(circle at 10% 15%, rgba(99, 102, 241, 0.16) 0%, transparent 45%),
@@ -62,44 +62,363 @@
     }
     .glow-indigo {
       box-shadow: 0 0 45px -5px rgba(99, 102, 241, 0.4);
+      animation: glow-pulse 3s ease-in-out infinite;
     }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #060911;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 9999px;
-    }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #060911; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
 
-    /* 3-Second Cinematic Splash Animations */
+    /* ===================== SPLASH ANIMATIONS ===================== */
     #splash-screen {
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .splash-ring {
-      animation: spin 10s linear infinite;
-    }
-    .splash-pulse {
-      animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
-    }
+    .splash-ring  { animation: spin 10s linear infinite; }
+    .splash-pulse { animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite; }
     @keyframes spin {
       from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      to   { transform: rotate(360deg); }
     }
     @keyframes ping-slow {
-      0% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.15); opacity: 0.4; }
-      100% { transform: scale(1); opacity: 0.8; }
+      0%   { transform: scale(1);    opacity: 0.8; }
+      50%  { transform: scale(1.15); opacity: 0.4; }
+      100% { transform: scale(1);    opacity: 0.8; }
     }
-    .progress-bar-fill {
-      transition: width 3s linear;
+    .progress-bar-fill { transition: width 3s linear; }
+
+    /* ===================== FLOATING BACKGROUND ORBS ===================== */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orb-drift 18s ease-in-out infinite;
+    }
+    .bg-orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+      top: -120px; left: -100px;
+      animation-duration: 20s;
+    }
+    .bg-orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 70%);
+      bottom: 10%; right: -80px;
+      animation-duration: 25s;
+      animation-delay: -8s;
+    }
+    .bg-orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      animation-duration: 30s;
+      animation-delay: -14s;
+    }
+    @keyframes orb-drift {
+      0%,100% { transform: translate(0,   0)   scale(1);   }
+      33%      { transform: translate(40px, -30px) scale(1.05); }
+      66%      { transform: translate(-30px, 25px) scale(0.95); }
+    }
+
+    /* ===================== FLOATING PARTICLES ===================== */
+    .particle {
+      position: fixed;
+      width: 2px; height: 2px;
+      border-radius: 50%;
+      background: rgba(99,102,241,0.6);
+      pointer-events: none;
+      z-index: 0;
+      animation: particle-float linear infinite;
+    }
+    @keyframes particle-float {
+      0%   { transform: translateY(100vh) translateX(0)  scale(0);   opacity: 0; }
+      10%  { opacity: 1; scale: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-10vh) translateX(var(--drift)) scale(0.5); opacity: 0; }
+    }
+
+    /* ===================== AURORA GRADIENT HEADER SHIMMER ===================== */
+    .aurora-bar {
+      background: linear-gradient(90deg,
+        rgba(99,102,241,0) 0%,
+        rgba(99,102,241,0.6) 30%,
+        rgba(168,85,247,0.8) 50%,
+        rgba(16,185,129,0.6) 70%,
+        rgba(99,102,241,0) 100%);
+      background-size: 200% 100%;
+      animation: aurora-sweep 4s linear infinite;
+      height: 1px;
+    }
+    @keyframes aurora-sweep {
+      0%   { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    /* ===================== ENTRANCE ANIMATIONS ===================== */
+    .anim-fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .anim-fade-in {
+      opacity: 0;
+      animation: fade-in 0.5s ease forwards;
+    }
+    .anim-slide-right {
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slide-right 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .anim-scale-in {
+      opacity: 0;
+      transform: scale(0.92);
+      animation: scale-in 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    @keyframes fade-up    { to { opacity:1; transform: translateY(0); } }
+    @keyframes fade-in    { to { opacity:1; } }
+    @keyframes slide-right{ to { opacity:1; transform: translateX(0); } }
+    @keyframes scale-in   { to { opacity:1; transform: scale(1); } }
+
+    /* Stagger delays */
+    .delay-0   { animation-delay: 0ms; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-400 { animation-delay: 400ms; }
+    .delay-500 { animation-delay: 500ms; }
+    .delay-600 { animation-delay: 600ms; }
+    .delay-700 { animation-delay: 700ms; }
+
+    /* ===================== NEON BORDER PULSE ===================== */
+    .neon-border-pulse {
+      animation: neon-pulse 3s ease-in-out infinite;
+    }
+    @keyframes neon-pulse {
+      0%,100% { box-shadow: 0 0 10px rgba(99,102,241,0.3), 0 0 30px rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.3); }
+      50%      { box-shadow: 0 0 20px rgba(99,102,241,0.6), 0 0 60px rgba(168,85,247,0.2); border-color: rgba(99,102,241,0.7); }
+    }
+
+    /* ===================== GLOW PULSE ===================== */
+    @keyframes glow-pulse {
+      0%,100% { box-shadow: 0 0 45px -5px rgba(99,102,241,0.4); }
+      50%      { box-shadow: 0 0 65px -3px rgba(99,102,241,0.7); }
+    }
+
+    /* ===================== BUTTON SHIMMER SWEEP ===================== */
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+      transform: translateX(-100%);
+      transition: none;
+    }
+    .btn-shimmer:hover::after {
+      animation: shimmer-sweep 0.6s ease forwards;
+    }
+    @keyframes shimmer-sweep {
+      to { transform: translateX(150%); }
+    }
+
+    /* ===================== CARD 3D TILT ===================== */
+    .card-tilt {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transform-style: preserve-3d;
+    }
+    .card-tilt:hover {
+      box-shadow: 0 25px 50px -12px rgba(99,102,241,0.3);
+    }
+
+    /* ===================== TYPING CURSOR ===================== */
+    .typing-cursor::after {
+      content: '|';
+      animation: blink-cursor 1s step-end infinite;
+      color: #818cf8;
+      font-weight: 300;
+    }
+    @keyframes blink-cursor {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+
+    /* ===================== SCAN LINE ===================== */
+    .scanline-container { position: relative; overflow: hidden; }
+    .scanline-container::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(180deg, transparent, rgba(99,102,241,0.25), transparent);
+      animation: scanline 4s linear infinite;
+      z-index: 5;
+      pointer-events: none;
+    }
+    @keyframes scanline {
+      0%   { top: -4px;   }
+      100% { top: 100%;   }
+    }
+
+    /* ===================== COUNTER ROLL-UP ===================== */
+    .counter-animate {
+      display: inline-block;
+      animation: counter-pop 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    @keyframes counter-pop {
+      0%   { transform: translateY(8px)  scale(0.9); opacity: 0; }
+      100% { transform: translateY(0px)  scale(1);   opacity: 1; }
+    }
+
+    /* ===================== SKELETON SHIMMER ===================== */
+    .skeleton {
+      background: linear-gradient(90deg, #0f172a 25%, #1e293b 50%, #0f172a 75%);
+      background-size: 200% 100%;
+      animation: skeleton-wave 1.5s ease-in-out infinite;
+    }
+    @keyframes skeleton-wave {
+      0%   { background-position:  200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    /* ===================== STAT BAR FILL ===================== */
+    .stat-bar-animated {
+      width: 0% !important;
+      transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .stat-bar-animated.in-view {
+      width: var(--target-width) !important;
+    }
+
+    /* ===================== TAB ACTIVE INDICATOR ===================== */
+    .tab-btn {
+      transition: color 0.2s ease, border-color 0.2s ease;
+      position: relative;
+    }
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 50%; right: 50%;
+      height: 2px;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      border-radius: 2px 2px 0 0;
+      transition: left 0.3s cubic-bezier(0.16,1,0.3,1), right 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .tab-btn.active-tab::after {
+      left: 0; right: 0;
+    }
+
+    /* ===================== ROLE TAB SWITCH RIPPLE ===================== */
+    .role-tab-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .role-tab-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(99,102,241,0.35) 0%, transparent 70%);
+      transform: scale(0);
+      border-radius: inherit;
+      transition: transform 0.4s ease;
+    }
+    .role-tab-btn:hover::before { transform: scale(1); }
+
+    /* ===================== MODAL BACKDROP BLUR IN ===================== */
+    .modal-backdrop-anim {
+      animation: backdrop-in 0.25s ease forwards;
+    }
+    @keyframes backdrop-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ===================== TOAST SLIDE IN ===================== */
+    #nexus-toast {
+      animation: toast-slide-in 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    @keyframes toast-slide-in {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    /* ===================== MATCH SCORE RING ===================== */
+    .score-ring {
+      animation: score-ring-in 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    @keyframes score-ring-in {
+      0%   { transform: scale(0) rotate(-90deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+    }
+
+    /* ===================== HERO LOGIN CARD ENTRANCE ===================== */
+    #hero-login-screen .glass-panel {
+      animation: hero-card-rise 0.7s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    @keyframes hero-card-rise {
+      from { opacity: 0; transform: translateY(32px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #hero-login-screen > div:first-child {
+      animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) 0s both;
+    }
+    #hero-login-screen > div:nth-child(2) {
+      animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) 0.08s both;
+    }
+
+    /* ===================== GRADIENT TEXT ANIMATE ===================== */
+    .gradient-text-animate {
+      background: linear-gradient(90deg, #818cf8, #a78bfa, #34d399, #818cf8);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-text-flow 5s linear infinite;
+    }
+    @keyframes gradient-text-flow {
+      0%   { background-position: 0%   center; }
+      100% { background-position: 300% center; }
+    }
+
+    /* ===================== LIVE DOT BOUNCE ===================== */
+    .live-dot {
+      animation: live-dot-bounce 1.4s ease-in-out infinite;
+    }
+    @keyframes live-dot-bounce {
+      0%,100% { transform: scale(1);   opacity: 1; }
+      50%      { transform: scale(1.5); opacity: 0.5; }
+    }
+
+    /* ===================== WORKSPACE HEADER SLIDE DOWN ===================== */
+    #authenticated-workspace header {
+      animation: header-slide-down 0.5s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes header-slide-down {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+
+    /* ===================== STAT CARD POP ===================== */
+    .stat-card-pop {
+      animation: stat-card-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes stat-card-pop {
+      from { opacity:0; transform: scale(0.85) translateY(12px); }
+      to   { opacity:1; transform: scale(1)    translateY(0); }
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col mesh-gradient selection:bg-indigo-500 selection:text-white">
+
+  <!-- ===== Animated Background Layer ===== -->
+  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-3" aria-hidden="true"></div>
+  <!-- Floating Particles (injected by JS) -->
+  <div id="particle-field" aria-hidden="true"></div>
 
   <!-- ================= 3-SECOND CINEMATIC INTRO SPLASH SCREEN ================= -->
   <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#040711] select-none">
@@ -165,7 +484,7 @@
     <div class="flex items-center space-x-2.5">
       <span class="flex h-2 w-2 relative">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 live-dot"></span>
       </span>
       <span class="font-bold text-white tracking-wide">NexusIQ Network Engine</span>
       <span class="text-slate-600">|</span>
@@ -201,7 +520,7 @@
         <span>Anti-Directory Intent Engine</span>
       </div>
       <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white">
-        Select Your Portal & <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400">Sign In</span>
+        Select Your Portal & <span class="gradient-text-animate">Sign In</span>
       </h2>
       <p class="text-xs sm:text-sm text-slate-300">
         Choose your role below. Each portal has tailored workflows, proof-of-work generators, and instant demo access.
@@ -209,7 +528,7 @@
     </div>
 
     <!-- Interactive 6-Role Switcher Bar -->
-    <div class="w-full max-w-4xl bg-slate-900/90 border border-slate-800 rounded-2xl p-1.5 mb-6 shadow-xl flex items-center overflow-x-auto custom-scrollbar">
+    <div class="w-full max-w-4xl bg-slate-900/90 border border-slate-800 rounded-2xl p-1.5 mb-6 shadow-xl flex items-center overflow-x-auto custom-scrollbar neon-border-pulse">
       <div id="hero-role-tabs" class="flex space-x-1 w-full text-xs font-bold">
         <!-- Injected dynamically by JS -->
       </div>

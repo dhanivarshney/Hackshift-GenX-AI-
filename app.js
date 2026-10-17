@@ -1485,3 +1485,228 @@ async function handleResetPasswordSubmit(event) {
   }, 1000);
 }
 
+
+// ===================== ANIMATION ENGINE =====================
+
+// ── 1. FLOATING PARTICLE FIELD ──
+function initParticleField() {
+  const field = document.getElementById('particle-field');
+  if (!field) return;
+  const COLORS = [
+    'rgba(99,102,241,0.7)', 'rgba(168,85,247,0.6)',
+    'rgba(16,185,129,0.5)', 'rgba(139,92,246,0.6)', 'rgba(59,130,246,0.5)',
+  ];
+  for (let i = 0; i < 28; i++) {
+    const p     = document.createElement('div');
+    const size  = Math.random() * 3 + 1;
+    const left  = Math.random() * 100;
+    const delay = Math.random() * 18;
+    const dur   = Math.random() * 14 + 10;
+    const drift = (Math.random() - 0.5) * 120;
+    const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    p.className = 'particle';
+    p.style.cssText = `left:${left}%;width:${size}px;height:${size}px;background:${color};--drift:${drift}px;animation-duration:${dur}s;animation-delay:-${delay}s;box-shadow:0 0 ${size*3}px ${color};`;
+    field.appendChild(p);
+  }
+}
+
+// ── 2. CARD 3D TILT ──
+function initCardTilt() {
+  document.addEventListener('mousemove', (e) => {
+    document.querySelectorAll('.card-tilt').forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const cx   = rect.left + rect.width / 2;
+      const cy   = rect.top  + rect.height / 2;
+      const dx   = e.clientX - cx;
+      const dy   = e.clientY - cy;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      const maxR = Math.max(rect.width, rect.height);
+      if (dist < maxR * 0.85) {
+        const rotX =  (dy / maxR) * 10;
+        const rotY = -(dx / maxR) * 10;
+        card.style.transform = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(4px)`;
+      } else {
+        card.style.transform = '';
+      }
+    });
+  });
+  document.addEventListener('mouseleave', () => {
+    document.querySelectorAll('.card-tilt').forEach(c => { c.style.transform = ''; });
+  });
+}
+
+// ── 3. BUTTON CLICK RIPPLE ──
+function initButtonRipples() {
+  if (!document.getElementById('ripple-style')) {
+    const s = document.createElement('style');
+    s.id = 'ripple-style';
+    s.textContent = `@keyframes ripple-burst{to{width:220px;height:220px;opacity:0;}}`;
+    document.head.appendChild(s);
+  }
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-shimmer');
+    if (!btn) return;
+    const rect   = btn.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.style.cssText = `position:absolute;left:${e.clientX-rect.left}px;top:${e.clientY-rect.top}px;width:0;height:0;background:rgba(255,255,255,0.22);border-radius:50%;transform:translate(-50%,-50%);animation:ripple-burst 0.55s ease-out forwards;pointer-events:none;`;
+    if (getComputedStyle(btn).position === 'static') btn.style.position = 'relative';
+    btn.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  });
+}
+
+// ── 4. STAT BAR FILL OBSERVER ──
+function initStatBarObserver() {
+  const bars = document.querySelectorAll('.stat-bar-animated:not([data-observed])');
+  const obs  = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(b => { b.dataset.observed = '1'; obs.observe(b); });
+}
+
+// ── 5. COUNTER ROLL-UP ──
+function animateCounter(el, target, dur = 1300, prefix = '', suffix = '') {
+  const t0 = performance.now();
+  (function step(now) {
+    const prog = Math.min((now - t0) / dur, 1);
+    const ease = 1 - Math.pow(1 - prog, 3);
+    el.textContent = prefix + Math.round(target * ease).toLocaleString() + suffix;
+    if (prog < 1) requestAnimationFrame(step);
+  })(t0);
+}
+
+function initCounterObserver() {
+  const els = document.querySelectorAll('[data-counter]:not([data-observed])');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        animateCounter(el, parseInt(el.dataset.counter, 10), 1400, el.dataset.prefix||'', el.dataset.suffix||'');
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  els.forEach(c => { c.dataset.observed = '1'; obs.observe(c); });
+}
+
+// ── 6. SCROLL REVEAL ──
+function initScrollReveal() {
+  const sel = '.glass-card:not([data-revealed]), .glass-panel:not([data-revealed])';
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        el.dataset.revealed = '1';
+        el.style.transition = 'opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1)';
+        const siblings = el.parentElement ? [...el.parentElement.children].filter(c => c.dataset.revealed) : [];
+        setTimeout(() => {
+          el.style.opacity   = '1';
+          el.style.transform = 'translateY(0)';
+        }, Math.min(siblings.length * 55, 280) + 40);
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll(sel).forEach(el => {
+    el.style.opacity   = '0';
+    el.style.transform = 'translateY(16px)';
+    obs.observe(el);
+  });
+}
+
+// ── 7. CARD STAGGER ──
+function applyCardStagger(container) {
+  if (!container) return;
+  [...container.children].forEach((card, i) => {
+    card.style.opacity   = '0';
+    card.style.transform = 'translateY(18px)';
+    card.style.transition = 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+    setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, i * 85 + 80);
+  });
+}
+
+// ── 8. TAB ACTIVE INDICATOR ──
+function updateTabIndicators() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    if (btn.classList.contains('border-indigo-500')) btn.classList.add('active-tab');
+    else btn.classList.remove('active-tab');
+  });
+}
+
+// ── 9. SPLASH EXIT BURST ──
+function splashExitBurst() {
+  if (typeof confetti === 'function') {
+    confetti({ particleCount:35, spread:55, origin:{x:0.5,y:0.45}, colors:['#6366f1','#a855f7','#34d399'], scalar:0.7, disableForReducedMotion:true });
+  }
+}
+
+// ── 10. WORKSPACE ENTRANCE ──
+function animateWorkspaceEntrance() {
+  const heroBanner = document.querySelector('#authenticated-workspace > section');
+  if (heroBanner) {
+    heroBanner.style.opacity   = '0';
+    heroBanner.style.transform = 'translateY(-10px)';
+    heroBanner.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    setTimeout(() => { heroBanner.style.opacity='1'; heroBanner.style.transform='translateY(0)'; }, 180);
+  }
+  setTimeout(() => {
+    initStatBarObserver();
+    initCounterObserver();
+    applyCardStagger(document.getElementById('radar-cards-container'));
+  }, 300);
+}
+
+// ── HOOKS INTO EXISTING FUNCTIONS ──
+(function() {
+  // Workspace entrance
+  const _origAuth = window.authenticateAndOpenWorkspace;
+  if (typeof _origAuth === 'function') {
+    window.authenticateAndOpenWorkspace = function(roleId, sc) {
+      _origAuth(roleId, sc);
+      animateWorkspaceEntrance();
+    };
+  }
+
+  // Splash burst
+  const _origDismiss = window.dismissSplashImmediately;
+  if (typeof _origDismiss === 'function') {
+    window.dismissSplashImmediately = function() {
+      _origDismiss();
+      setTimeout(splashExitBurst, 450);
+    };
+  }
+
+  // Tab switch stagger
+  const _origSwitch = window.switchTab;
+  if (typeof _origSwitch === 'function') {
+    window.switchTab = function(tabId) {
+      _origSwitch(tabId);
+      setTimeout(() => {
+        initScrollReveal();
+        initStatBarObserver();
+        initCounterObserver();
+        updateTabIndicators();
+        const view = document.getElementById('view-' + tabId);
+        if (view) {
+          const grid = view.querySelector('.grid, .space-y-4, .space-y-6');
+          if (grid) applyCardStagger(grid);
+        }
+      }, 60);
+    };
+  }
+})();
+
+// ── BOOT ──
+document.addEventListener('DOMContentLoaded', () => {
+  initParticleField();
+  initCardTilt();
+  initButtonRipples();
+  setTimeout(() => {
+    initScrollReveal();
+    initStatBarObserver();
+    initCounterObserver();
+    updateTabIndicators();
+  }, 600);
+});
