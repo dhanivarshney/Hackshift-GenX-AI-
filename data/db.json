@@ -263,6 +263,357 @@
       "actionedAt": "2026-10-17T18:44:37.187Z"
     }
   ],
+  "missions": [
+    {
+      "id": "ai-internship",
+      "title": "Get SDE / AI Systems Internship (90 Days)",
+      "badge": "Highest Placement Impact",
+      "eta": "45 Days Remaining",
+      "targetRole": "Backend Systems / Distributed AI Engineer",
+      "overallProgress": 70,
+      "milestones": [
+        {
+          "step": 1,
+          "name": "Assess Proof-of-Work",
+          "desc": "ATS Resume parsed & GitHub code readiness evaluated.",
+          "status": "completed",
+          "metric": "95/100 Capability Index"
+        },
+        {
+          "step": 2,
+          "name": "Build Benchmark Capstone",
+          "desc": "Distributed Key-Value Engine with Raft consensus & test coverage.",
+          "status": "completed",
+          "metric": "92.4% Unit Test Coverage"
+        },
+        {
+          "step": 3,
+          "name": "Get Expert Code Review",
+          "desc": "Alumnus Rohan Mehta (Swiggy) reviewing cache eviction PR.",
+          "status": "in-progress",
+          "metric": "15-min Review Scheduled"
+        },
+        {
+          "step": 4,
+          "name": "Prove Readiness on Hiring Radar",
+          "desc": "Matched with Razorpay Core Payments & Swiggy Routing Team.",
+          "status": "pending",
+          "metric": "Candidate Shortlisted"
+        },
+        {
+          "step": 5,
+          "name": "Adaptive Outcome Offer",
+          "desc": "Direct 1-Click ATS Referral or Paid Micro-Bounty with Founder.",
+          "status": "pending",
+          "metric": "Summer '26 SDE Offer"
+        }
+      ]
+    },
+    {
+      "id": "startup-mvp",
+      "title": "Build Startup MVP & Win Campus Syndicate Grant",
+      "badge": "Founder Track",
+      "eta": "60 Days Remaining",
+      "targetRole": "Technical Co-Founder / MVP Builder",
+      "overallProgress": 40,
+      "milestones": [
+        {
+          "step": 1,
+          "name": "Problem Validation",
+          "desc": "Survey 50+ campus developers regarding API rate limiting bottlenecks.",
+          "status": "completed",
+          "metric": "Validation Passed"
+        },
+        {
+          "step": 2,
+          "name": "Build Working Prototype",
+          "desc": "Deploy multi-tenant proxy with Redis rate limiting on Render/AWS.",
+          "status": "in-progress",
+          "metric": "PR in Review"
+        },
+        {
+          "step": 3,
+          "name": "Founder Advisory Session",
+          "desc": "Connect with Neha Kapoor (YC W24) for 20-min pitch & code critique.",
+          "status": "pending",
+          "metric": "Pending Invite"
+        },
+        {
+          "step": 4,
+          "name": "Apply for ₹50,000 Grant",
+          "desc": "Submit proof-of-work to Campus Founder Escrow Syndicate.",
+          "status": "pending",
+          "metric": "Escrow Ready"
+        }
+      ]
+    },
+    {
+      "id": "research-capstone",
+      "title": "Publish IEEE Research Paper with Industry Co-Guide",
+      "badge": "Academic Linkage",
+      "eta": "90 Days Remaining",
+      "targetRole": "Research Fellow / Systems Researcher",
+      "overallProgress": 50,
+      "milestones": [
+        {
+          "step": 1,
+          "name": "Literature Survey & Benchmark",
+          "desc": "Evaluate latency trade-offs of Raft vs Paxos in Edge IoT networks.",
+          "status": "completed",
+          "metric": "14 Papers Indexed"
+        },
+        {
+          "step": 2,
+          "name": "Faculty Challenge Match",
+          "desc": "Enrolled in Dr. R.K. Verma's R&D Capstone Challenge.",
+          "status": "in-progress",
+          "metric": "Co-Author Enrolled"
+        },
+        {
+          "step": 3,
+          "name": "Industry Alumni Validation",
+          "desc": "Google & Swiggy alumni validate architecture against real-world loads.",
+          "status": "pending",
+          "metric": "Awaiting Telemetry"
+        }
+      ]
+    }
+  ],
+  "opportunityRescue": {
+    "isTriggered": true,
+    "closedOpportunity": "Zomato Core Backend Internship (Summer '26)",
+    "closedReason": "Requisition filled yesterday • Identified Gap: Missing evidence for Raft Consensus implementation under network partitions.",
+    "rescuePathway": {
+      "headline": "Alternative Pathway Activated: Razorpay FinTech Backend + 1 Micro-Bounty",
+      "recommendedAction": "Complete Dr. Verma's Raft consensus milestone to satisfy Razorpay's REQ-2026-ENG-44 requirements.",
+      "bridgeGigs": [
+        {
+          "id": "gig-raft",
+          "title": "Implement Partition Recovery in Go Raft Engine",
+          "reward": "₹5,000 + Direct Razorpay Shortlist",
+          "mentor": "Rohan Mehta (Swiggy)",
+          "deadline": "48 Hours"
+        }
+      ],
+      "availableMentor": {
+        "name": "Rohan Mehta",
+        "company": "Swiggy",
+        "offer": "15-minute code review available this Thursday"
+      }
+    }
+  },
+  "careerShadowScenarios": [
+    {
+      "id": "scenario-cache-stampede",
+      "category": "High-Throughput Systems Engineering",
+      "title": "Black Friday Production Outage: Cache Stampede Under Burst Traffic",
+      "role": "SDE-2 On-Call Backend Engineer",
+      "company": "Swiggy / FinTech Scale",
+      "context": "It is 8:02 PM on Black Friday. Traffic spikes to 25,000 req/sec. The central Redis caching tier evicts hot restaurant catalog keys. Cache miss rate leaps from 2% to 94%. PostgreSQL primary CPU hits 100%, cascading latency to 8,200ms across all checkout APIs. Management asks for immediate triage.",
+      "question": "What is your immediate architectural decision to stabilize the system?",
+      "options": [
+        {
+          "id": "opt-a",
+          "label": "Option A: Spin up 10 extra PostgreSQL Read Replicas",
+          "score": 35,
+          "feedback": "Ineffective: Provisioning replicas takes 8–15 minutes, during which database connections will completely exhaust. Furthermore, read replicas will also get inundated with identical duplicate queries."
+        },
+        {
+          "id": "opt-b",
+          "label": "Option B: Deploy Mutex Lock (Singleflight Pattern) on Cache Misses",
+          "score": 96,
+          "feedback": "Optimal Architectural Choice! Singleflight collapses duplicate concurrent cache misses into a single flight query to the primary DB. PostgreSQL CPU immediately stabilizes from 100% to 18%."
+        },
+        {
+          "id": "opt-c",
+          "label": "Option C: Flush All Redis Keys to Force Clean Warmup",
+          "score": 10,
+          "feedback": "Catastrophic! Flushing the cache during peak burst traffic shifts 100% of read volume onto an already saturated database, leading to full cluster downtime."
+        },
+        {
+          "id": "opt-d",
+          "label": "Option D: Throttle and Drop 85% of Inbound Customer Traffic",
+          "score": 50,
+          "feedback": "Sub-optimal: While it relieves DB pressure, dropping 85% of live checkouts causes massive revenue loss and fails SLA expectations."
+        }
+      ],
+      "alumnusDebrief": "Rohan Mehta (Swiggy Batch '20): 'We actually faced this in 2023! Using Go's golang.org/x/sync/singleflight turned 4,000 duplicate queries for a single IPL match menu into 1 database query. This is a classic interview question!'"
+    },
+    {
+      "id": "scenario-startup-runway",
+      "category": "Founder & Technical Architecture",
+      "title": "Startup Runway Crisis: 3 Weeks of Capital Remaining",
+      "role": "Technical Co-Founder & CTO",
+      "company": "HyperScale AI (YC W24)",
+      "context": "Your AI tooling startup has 3 weeks of runway left in bank. Customer churn reached 24% because the self-hosted LLM latency is 4.5s. Two enterprise pilots with banks offer $40,000 ARR each if you deliver an on-premise Dockerized deployment within 10 days.",
+      "question": "Where do you allocate 100% of engineering bandwidth?",
+      "options": [
+        {
+          "id": "opt-founder-a",
+          "label": "Build the on-premise containerized pilot for the 2 enterprise banks to secure immediate cash.",
+          "score": 95,
+          "feedback": "Excellent founder pragmatism! Securing $80,000 immediately extends your runway by 6 months, giving you breathing room to optimize the public product."
+        },
+        {
+          "id": "opt-founder-b",
+          "label": "Spend the 3 weeks rewriting the inference pipeline in C++ / CUDA to reduce latency.",
+          "score": 30,
+          "feedback": "High risk of bankruptcy: If the rewrite takes 4 weeks instead of 3, the startup runs out of money before code ever hits production."
+        }
+      ],
+      "alumnusDebrief": "Neha Kapoor (Founder): 'Cash in bank beats theoretical perfection every single time when runway is under 30 days.'"
+    }
+  ],
+  "impactOffers": [
+    {
+      "id": "offer-1",
+      "alumnusId": "alumnus",
+      "alumnusName": "Rohan Mehta",
+      "company": "Swiggy",
+      "role": "SDE-2 Backend (Batch '20)",
+      "weeklyTimeAvailable": "35 Mins Left",
+      "type": "Code Review",
+      "title": "15-Min Go / Redis Architecture PR Audit",
+      "desc": "I will review your pull request, comment on memory allocation/concurrency bugs, and provide actionable ATS endorsement if test coverage > 85%.",
+      "slotsLeft": 2,
+      "pendingRequests": [
+        {
+          "studentName": "Aman Sharma",
+          "target": "Distributed Cache Eviction Engine",
+          "repoUrl": "https://github.com/aman-cs/distri-cache-engine",
+          "timeReq": "15 mins",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "offer-2",
+      "alumnusId": "alum-priya",
+      "alumnusName": "Priya Nair",
+      "company": "Google",
+      "role": "Software Engineer III (Batch '18)",
+      "weeklyTimeAvailable": "20 Mins Left",
+      "type": "Mock Interview",
+      "title": "20-Min Flash System Design Mock (Distributed Storage)",
+      "desc": "Simulated Google L4 interview round focused on scalable distributed key-value storage and trade-offs.",
+      "slotsLeft": 1,
+      "pendingRequests": []
+    }
+  ],
+  "legacyGuides": [
+    {
+      "id": "guide-swiggy",
+      "author": "Rohan Mehta (Swiggy)",
+      "batch": "Batch of 2020",
+      "title": "How I Cracked SDE-2 at Swiggy from Tier-2 Campus Without Referrals",
+      "readTime": "4 min read",
+      "views": 412,
+      "keyTakeaways": [
+        "Stop applying with generic MERN stack to-do apps. Build 1 project that solves network latency or concurrency.",
+        "Include unit tests and benchmarking results in your GitHub README; it catches senior engineers' eyes immediately.",
+        "In interviews, explain WHY you picked Redis over Memcached or Kafka over RabbitMQ."
+      ]
+    },
+    {
+      "id": "guide-founder",
+      "author": "Neha Kapoor (HyperScale AI)",
+      "batch": "Batch of 2019",
+      "title": "5 Architecture Mistakes College Final-Year Projects Make",
+      "readTime": "3 min read",
+      "views": 298,
+      "keyTakeaways": [
+        "Over-engineering: Don't use Kubernetes when a single Docker container or VPS is plenty.",
+        "Missing metrics: An app without P95 latency graphs doesn't look like production software.",
+        "Hardcoded secrets: Always use .env files and clean configuration patterns."
+      ]
+    }
+  ],
+  "facultyChallenges": [
+    {
+      "id": "fac-chal-1",
+      "professorName": "Dr. R.K. Verma",
+      "dept": "Dean R&D • Computer Science & Engineering",
+      "title": "High-Throughput Partition-Resilient Raft Consensus Engine",
+      "domain": "Distributed Systems & Cloud Infrastructure",
+      "status": "active",
+      "stipendOrCredit": "4 Academic Credits + Co-Authorship in IEEE Paper",
+      "desc": "Build an open-source lightweight Raft consensus cluster in Go that guarantees log consistency across 5 nodes during simulated 30% network packet drop.",
+      "requiredSkills": [
+        "Go",
+        "Distributed Systems",
+        "Concurrency",
+        "Raft/Paxos"
+      ],
+      "industryAlumMentor": "Rohan Mehta (SDE-2 Swiggy)",
+      "enrolledTeam": [
+        {
+          "name": "Aman Sharma",
+          "role": "Lead Go Systems Engineer",
+          "capabilityScore": 95
+        },
+        {
+          "name": "Kavita Rao",
+          "role": "Fault-Injection Tester",
+          "capabilityScore": 91
+        }
+      ],
+      "rubric": {
+        "leaderElection": "Election completes under 150ms after leader crash.",
+        "logReplication": "Zero committed state lost upon node rejoin.",
+        "testCoverage": "Must maintain >= 90% unit test coverage."
+      }
+    },
+    {
+      "id": "fac-chal-2",
+      "professorName": "Dr. Ananya Sen",
+      "dept": "Electrical & CSE Dept",
+      "title": "Edge AI Vision Classifier for Solar Micro-Crack Inspection",
+      "domain": "Computer Vision & Edge Computing",
+      "status": "active",
+      "stipendOrCredit": "₹15,000 Industry Grant by HyperScale AI",
+      "desc": "Develop sub-50ms quantized PyTorch model detecting micro-fractures in solar panel electroluminescence images on Raspberry Pi 5.",
+      "requiredSkills": [
+        "Python",
+        "PyTorch",
+        "OpenCV",
+        "Edge Quantization"
+      ],
+      "industryAlumMentor": "Neha Kapoor (CEO HyperScale AI)",
+      "enrolledTeam": [],
+      "rubric": {
+        "precision": ">= 94% recall on hairline crack detection.",
+        "latency": "Inference under 50ms per image."
+      }
+    }
+  ],
+  "gapRadar": {
+    "activeEcosystemAlerts": [
+      {
+        "id": "gap-1",
+        "severity": "critical",
+        "title": "High Student Demand vs Low Mentorship Supply in Distributed AI",
+        "metric": "18 Students seeking SDE Mentorship vs 6 Verified Alumni Available",
+        "impact": "Students at risk of missing Summer '26 application deadlines.",
+        "suggestedAction": "Mobilize Bangalore & Swiggy/Google Alumni Hubs for a 1-hour Group Sprint."
+      },
+      {
+        "id": "gap-2",
+        "severity": "warning",
+        "title": "Startup Micro-Bounties Expiring Without Student Matches",
+        "metric": "4 Paid Micro-Bounties (₹24,000 Escrow) closing in 48 hours",
+        "impact": "Campus industry funding remaining unutilized.",
+        "suggestedAction": "Dispatch direct push to Top 5% Builders matching Go and Redis tags."
+      },
+      {
+        "id": "gap-3",
+        "severity": "info",
+        "title": "NAAC Criterion 5.4.1 Alumni Co-Mentorship Goal at 82%",
+        "metric": "64 of 78 Capstone Research Projects currently paired with Industry Alumni",
+        "impact": "Accreditation target within reach before December audit.",
+        "suggestedAction": "Auto-pair remaining 14 capstones with opted-in Alumni Impact Exchange mentors."
+      }
+    ]
+  },
   "studentProfile": {
     "name": "Aman Sharma",
     "college": "Apex Institute of Technology",
@@ -317,5 +668,175 @@
     },
     "resumeText": "Backend Engineering Intern at CloudNative Labs. Engineered asynchronous message ingestion pipeline using Go and Kafka, handling 15,000 events/sec with sub-20ms P99 latency. Reduced P99 response time by 35% with in-memory caching.",
     "updatedAt": "2026-10-17T18:34:42.305Z"
+  },
+  "syndicatePool": {
+    "totalPool": 165000,
+    "corporateMatches": 65000,
+    "activeGrantsCount": 4,
+    "fundedGrants": [
+      {
+        "id": "grant-1792271748097",
+        "title": "Autonomous Hackathon Finalist GPU Compute & Travel Pass",
+        "recipient": "Junior Distributed Systems Guild (2 Mentees)",
+        "amount": "₹10,000",
+        "fundedBy": "Razorpay Placement Kickback via LinkX Syndicate",
+        "status": "Disbursed",
+        "impact": "Funded AWS GPU instances & train travel for upcoming National Hackathon Finals."
+      },
+      {
+        "id": "grant-1",
+        "title": "Smart India Hackathon Finalist GPU & Travel Grant",
+        "recipient": "Team CyberPulse (CSE '26, 3 Members)",
+        "amount": "₹15,000",
+        "fundedBy": "Swiggy Corporate Placement Kickback (Rohan Mehta referral)",
+        "status": "Disbursed",
+        "impact": "Sponsored cloud GPU compute + Delhi-to-Bangalore travel for national finals."
+      },
+      {
+        "id": "grant-2",
+        "title": "Edge AI Inference Hardware Testbed Grant",
+        "recipient": "Priya Nair & Aman Sharma (Distributed Lab)",
+        "amount": "₹12,500",
+        "fundedBy": "HyperScale AI YC W24 Syndicate Match",
+        "status": "Disbursed",
+        "impact": "Purchased 2x Jetson Orin Nano boards for solar micro-crack research with Dr. Sen."
+      },
+      {
+        "id": "grant-3",
+        "title": "Open-Source Raft Consensus Benchmarking Bounty",
+        "recipient": "Student Systems Guild",
+        "amount": "₹10,000",
+        "fundedBy": "Razorpay Alumni Talent Kickback",
+        "status": "Active",
+        "impact": "Rewarding students implementing high-concurrency chaos testing for faculty capstone."
+      }
+    ],
+    "recentPlacements": [
+      {
+        "candidateName": "Aman Sharma",
+        "company": "Razorpay",
+        "role": "High-Throughput Backend SDE Intern",
+        "referralAlum": "Rohan Mehta (Swiggy)",
+        "kickbackAmount": "₹20,000",
+        "date": "Just now"
+      },
+      {
+        "candidateName": "Aman Sharma",
+        "company": "Swiggy",
+        "role": "Backend Engineering Intern",
+        "referralAlum": "Rohan Mehta (Batch '20)",
+        "kickbackAmount": "₹20,000",
+        "date": "Yesterday"
+      },
+      {
+        "candidateName": "Sneha Roy",
+        "company": "Razorpay",
+        "role": "Systems SDE",
+        "referralAlum": "Vikram Seth (Batch '18)",
+        "kickbackAmount": "₹25,000",
+        "date": "4 days ago"
+      }
+    ]
+  },
+  "liveActivityFeed": [
+    {
+      "id": "act-1792271748097",
+      "tag": "SYNDICATE",
+      "icon": "coins",
+      "color": "amber",
+      "text": "🎉 ₹20,000 corporate kickback unlocked from Aman Sharma's offer at Razorpay!"
+    },
+    {
+      "id": "act-1",
+      "tag": "ENDORSEMENT",
+      "icon": "shield-check",
+      "color": "emerald",
+      "text": "Rohan Mehta (Swiggy) verified & endorsed Aman Sharma's Raft consensus implementation"
+    },
+    {
+      "id": "act-2",
+      "tag": "FAST-TRACK",
+      "icon": "zap",
+      "color": "blue",
+      "text": "Razorpay HR fast-tracked Aman Sharma (Score 95/100) directly into Core Systems Round 2"
+    },
+    {
+      "id": "act-3",
+      "tag": "SYNDICATE",
+      "icon": "coins",
+      "color": "amber",
+      "text": "Campus Syndicate Pool received ₹20,000 kickback from Swiggy Placement Success"
+    },
+    {
+      "id": "act-4",
+      "tag": "RESEARCH",
+      "icon": "book-open",
+      "color": "purple",
+      "text": "Dr. R.K. Verma allocated 4 Academic Credits & paired with Swiggy Alum for distributed capstone"
+    },
+    {
+      "id": "act-5",
+      "tag": "BOUNTY",
+      "icon": "rocket",
+      "color": "rose",
+      "text": "Neha Kapoor (HyperScale AI) released ₹5,000 instant escrow bounty for Golang webhook parser"
+    }
+  ],
+  "atsDossier": {
+    "candidateId": "student-aman",
+    "name": "Aman Sharma",
+    "institution": "Apex Institute of Technology",
+    "email": "2022CS084@apex.edu",
+    "targetRole": "Backend Software Engineer (Systems & Concurrency)",
+    "capabilityScore": 95,
+    "proofOfWorkHash": "git:a7f49e25d0c889f1bc41a",
+    "benchmarks": {
+      "unitTestCoverage": "92.4%",
+      "p99Latency": "18.2ms",
+      "cyclomaticComplexity": "2.1 (Low Risk)",
+      "memoryLeakAudit": "0 Leaks Detected (Valgrind & Go Race Detector Clean)"
+    },
+    "alumniEndorsement": {
+      "endorser": "Rohan Mehta",
+      "title": "SDE-2 Backend",
+      "company": "Swiggy",
+      "statement": "I personally audited Aman's pull request on distributed hash ring caching. Clean idiomatic Go, singleflight query deduplication, and production-ready concurrency primitives. Highest possible referral conviction."
+    },
+    "atsPayload": {
+      "greenhouse_job_id": "REQ-2026-ENG-44",
+      "candidate": {
+        "first_name": "Aman",
+        "last_name": "Sharma",
+        "email_addresses": [
+          {
+            "value": "2022CS084@apex.edu",
+            "type": "personal"
+          }
+        ],
+        "phone_numbers": [
+          {
+            "value": "+91 98765 43210",
+            "type": "mobile"
+          }
+        ],
+        "websites": [
+          {
+            "value": "https://github.com/aman-cs",
+            "type": "github"
+          },
+          {
+            "value": "https://github.com/aman-cs/distri-cache-engine",
+            "type": "portfolio"
+          }
+        ],
+        "custom_fields": {
+          "linkx_capability_score": 95,
+          "linkx_proof_hash": "a7f49e25d0c889f1bc41a",
+          "endorser_alumnus": "Rohan Mehta (Swiggy)",
+          "test_coverage_percent": 92.4,
+          "skip_screening_round": true
+        }
+      }
+    }
   }
 }

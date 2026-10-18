@@ -309,6 +309,233 @@ app.post('/api/student/profile', (req, res) => {
   });
 });
 
+// ================= 8. LINKX ECOSYSTEM OPERATING SYSTEM ROUTES =================
+
+// 8.1 Career Missions & Opportunity Rescue
+app.get('/api/missions', (req, res) => {
+  const db = readDB();
+  res.json({ success: true, missions: db.missions || [] });
+});
+
+app.get('/api/opportunity-rescue', (req, res) => {
+  const db = readDB();
+  res.json({ success: true, rescue: db.opportunityRescue || {} });
+});
+
+// 8.2 Career Shadow Interactive Simulation
+app.get('/api/career-shadow', (req, res) => {
+  const db = readDB();
+  res.json({ success: true, scenarios: db.careerShadowScenarios || [] });
+});
+
+app.post('/api/career-shadow/evaluate', (req, res) => {
+  const { scenarioId, optionId, reasoning } = req.body;
+  const db = readDB();
+  const scenario = (db.careerShadowScenarios || []).find(s => s.id === scenarioId);
+  if (!scenario) {
+    return res.status(404).json({ success: false, error: 'Scenario not found' });
+  }
+
+  const selectedOpt = scenario.options.find(o => o.id === optionId);
+  if (!selectedOpt) {
+    return res.status(400).json({ success: false, error: 'Invalid option selected' });
+  }
+
+  // Calculate rubric & decision score
+  let reasoningBonus = 0;
+  if (reasoning && reasoning.length > 30) reasoningBonus += 4;
+  const finalScore = Math.min(100, selectedOpt.score + reasoningBonus);
+
+  res.json({
+    success: true,
+    result: {
+      scenarioId,
+      optionId,
+      score: finalScore,
+      feedback: selectedOpt.feedback,
+      alumnusDebrief: scenario.alumnusDebrief,
+      rubricPassed: finalScore >= 80,
+      timestamp: new Date().toISOString()
+    }
+  });
+});
+
+// 8.3 Alumni Impact Exchange & Time Budget
+app.get('/api/impact-offers', (req, res) => {
+  const db = readDB();
+  res.json({ success: true, offers: db.impactOffers || [] });
+});
+
+app.post('/api/impact-offers/:id/apply', (req, res) => {
+  const { studentName, target, repoUrl, timeReq } = req.body;
+  const db = readDB();
+  const offer = (db.impactOffers || []).find(o => o.id === req.params.id);
+  if (!offer) {
+    return res.status(404).json({ success: false, error: 'Impact offer not found' });
+  }
+
+  if (offer.slotsLeft <= 0) {
+    return res.status(400).json({ success: false, error: 'No slots left for this offer this month' });
+  }
+
+  offer.pendingRequests.push({
+    studentName: studentName || 'Aman Sharma',
+    target: target || 'Distributed Cache Eviction Engine',
+    repoUrl: repoUrl || 'https://github.com/aman-cs/distri-cache-engine',
+    timeReq: timeReq || '15 mins',
+    status: 'pending',
+    appliedAt: new Date().toISOString()
+  });
+  offer.slotsLeft = Math.max(0, offer.slotsLeft - 1);
+
+  writeDB(db);
+  res.json({ success: true, message: 'Request submitted to alumnus queue!', offer });
+});
+
+// 8.4 Alumni Legacy Graph Guides
+app.get('/api/legacy-guides', (req, res) => {
+  const db = readDB();
+  res.json({ success: true, guides: db.legacyGuides || [] });
+});
+
+// 8.5 Faculty Challenge Exchange
+app.get('/api/faculty/challenges', (req, res) => {
+  const db = readDB();
+  res.json({ success: true, challenges: db.facultyChallenges || [] });
+});
+
+app.post('/api/faculty/challenges', (req, res) => {
+  const db = readDB();
+  const { title, domain, stipendOrCredit, desc, requiredSkills, rubric } = req.body;
+  const newChallenge = {
+    id: `fac-chal-${Date.now()}`,
+    professorName: 'Dr. R.K. Verma',
+    dept: 'Dean R&D • Computer Science & Engineering',
+    title: title || 'Real-time Distributed Event Stream Filter',
+    domain: domain || 'Systems & Network Optimization',
+    status: 'active',
+    stipendOrCredit: stipendOrCredit || '4 Academic Credits + Co-Authorship',
+    desc: desc || 'Build production-ready filtering engine with test coverage.',
+    requiredSkills: Array.isArray(requiredSkills) ? requiredSkills : ['Go', 'Distributed Systems'],
+    industryAlumMentor: 'Rohan Mehta (Swiggy)',
+    enrolledTeam: [],
+    rubric: rubric || {
+      performance: 'Sub-20ms P99 latency under simulated 10k RPS load.',
+      coverage: '>= 90% unit test coverage with benchmarks.'
+    },
+    createdAt: new Date().toISOString()
+  };
+
+  if (!db.facultyChallenges) db.facultyChallenges = [];
+  db.facultyChallenges.unshift(newChallenge);
+  writeDB(db);
+
+  res.json({ success: true, message: 'Faculty Challenge published to ecosystem!', challenge: newChallenge });
+});
+
+app.post('/api/faculty/challenges/:id/join', (req, res) => {
+  const { studentName, role, capabilityScore } = req.body;
+  const db = readDB();
+  const challenge = (db.facultyChallenges || []).find(c => c.id === req.params.id);
+  if (!challenge) {
+    return res.status(404).json({ success: false, error: 'Challenge not found' });
+  }
+
+  const alreadyJoined = challenge.enrolledTeam.some(m => m.name === studentName);
+  if (!alreadyJoined) {
+    challenge.enrolledTeam.push({
+      name: studentName || 'Aman Sharma',
+      role: role || 'Lead Systems Contributor',
+      capabilityScore: capabilityScore || 95,
+      joinedAt: new Date().toISOString()
+    });
+    writeDB(db);
+  }
+
+  res.json({ success: true, message: 'Joined Faculty Challenge Team!', challenge });
+});
+
+// 8.6 Campus Opportunity Gap Radar
+app.get('/api/gap-radar', (req, res) => {
+  const db = readDB();
+  res.json({ success: true, radar: db.gapRadar || { activeEcosystemAlerts: [] } });
+});
+
+// 8.7 Circular Reciprocity Syndicate & Micro-Grants Pool
+app.get('/api/syndicate', (req, res) => {
+  const db = readDB();
+  res.json({ success: true, pool: db.syndicatePool || { totalPool: 145000, fundedGrants: [], recentPlacements: [] } });
+});
+
+app.post('/api/syndicate/simulate-hire', (req, res) => {
+  const db = readDB();
+  const pool = db.syndicatePool || { totalPool: 145000, fundedGrants: [], recentPlacements: [], corporateMatches: 45000 };
+  const kickback = 20000;
+  pool.totalPool += kickback;
+  pool.corporateMatches += kickback;
+
+  const newPlacement = {
+    candidateName: req.body.candidateName || 'Aman Sharma',
+    company: req.body.company || 'Razorpay',
+    role: req.body.role || 'High-Throughput Backend SDE Intern',
+    referralAlum: req.body.referralAlum || 'Rohan Mehta (Swiggy)',
+    kickbackAmount: '₹' + kickback.toLocaleString('en-IN'),
+    date: 'Just now'
+  };
+  pool.recentPlacements.unshift(newPlacement);
+
+  // Auto-allocate a new micro-grant from the pool
+  const newGrant = {
+    id: `grant-${Date.now()}`,
+    title: 'Autonomous Hackathon Finalist GPU Compute & Travel Pass',
+    recipient: 'Junior Distributed Systems Guild (2 Mentees)',
+    amount: '₹10,000',
+    fundedBy: `${newPlacement.company} Placement Kickback via LinkX Syndicate`,
+    status: 'Disbursed',
+    impact: 'Funded AWS GPU instances & train travel for upcoming National Hackathon Finals.'
+  };
+  pool.fundedGrants.unshift(newGrant);
+  pool.activeGrantsCount = (pool.activeGrantsCount || 3) + 1;
+
+  // Add live event to activity stream
+  if (!db.liveActivityFeed) db.liveActivityFeed = [];
+  db.liveActivityFeed.unshift({
+    id: `act-${Date.now()}`,
+    tag: 'SYNDICATE',
+    icon: 'coins',
+    color: 'amber',
+    text: `🎉 ₹20,000 corporate kickback unlocked from ${newPlacement.candidateName}'s offer at ${newPlacement.company}!`
+  });
+
+  db.syndicatePool = pool;
+  writeDB(db);
+
+  res.json({
+    success: true,
+    message: `Placement verified! ₹${kickback.toLocaleString('en-IN')} added to campus syndicate pool.`,
+    pool,
+    newGrant
+  });
+});
+
+// 8.8 Verified Candidate ATS Export (Greenhouse / Workday JSON Payload)
+app.get('/api/candidates/:id/ats-dossier', (req, res) => {
+  const db = readDB();
+  res.json({
+    success: true,
+    dossier: db.atsDossier || {}
+  });
+});
+
+// 8.9 Live Campus Activity Stream
+app.get('/api/activity-stream', (req, res) => {
+  const db = readDB();
+  res.json({
+    success: true,
+    stream: db.liveActivityFeed || []
+  });
+});
+
 function startServer(port) {
   const server = app.listen(port, () => {
     console.log(`🚀 LinkX Full-Stack Engine running live at http://localhost:${port}`);

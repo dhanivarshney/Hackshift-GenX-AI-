@@ -57,6 +57,187 @@
       transform: translateY(-3px) scale(1.006);
       box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), 0 0 20px -3px rgba(56, 189, 248, 0.15);
     }
+
+    /* ===================== SILICON VALLEY STUDIO-GRADE WHITE & ELECTRIC BLUE WOW THEME ===================== */
+    #authenticated-workspace {
+      background-color: #f8fafc !important;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 45%),
+        radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.06) 0px, transparent 40%),
+        radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.04) 0px, transparent 50%),
+        linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px) !important;
+      background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px !important;
+      color: #0f172a !important;
+      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    }
+
+    #authenticated-workspace .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    #authenticated-workspace .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+    #authenticated-workspace .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    #authenticated-workspace .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* Studio Card Elevations with Inset Bevel Lighting */
+    #authenticated-workspace .glass-panel,
+    #authenticated-workspace .glass-card {
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 8px 24px -4px rgba(37, 99, 235, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+      color: #1e293b !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    #authenticated-workspace .glass-card:hover,
+    #authenticated-workspace .glass-panel:hover {
+      border-color: #93c5fd !important;
+      transform: translateY(-2px);
+      box-shadow: 
+        0 4px 6px -1px rgba(15, 23, 42, 0.05),
+        0 16px 32px -6px rgba(37, 99, 235, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    }
+
+    /* Crisp Typography Hierarchy */
+    #authenticated-workspace h1,
+    #authenticated-workspace h2,
+    #authenticated-workspace h3,
+    #authenticated-workspace h4 {
+      color: #0f172a !important;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+    #authenticated-workspace p {
+      color: #475569 !important;
+      line-height: 1.6;
+    }
+    #authenticated-workspace label {
+      color: #334155 !important;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* Refined Input & Select Controls */
+    #authenticated-workspace input:not([type="checkbox"]):not([type="radio"]),
+    #authenticated-workspace select,
+    #authenticated-workspace textarea {
+      background-color: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      color: #0f172a !important;
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03) !important;
+      transition: all 0.2s ease !important;
+    }
+    #authenticated-workspace input:focus,
+    #authenticated-workspace select:focus,
+    #authenticated-workspace textarea:focus {
+      border-color: #2563eb !important;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14), inset 0 1px 2px rgba(15, 23, 42, 0.02) !important;
+      outline: none !important;
+    }
+
+    /* Dark Container Overrides to Crisp Neutral Slate */
+    #authenticated-workspace .bg-\[\#040711\],
+    #authenticated-workspace .bg-\[\#060a14\],
+    #authenticated-workspace .bg-\[\#080e1c\],
+    #authenticated-workspace .bg-\[\#050916\]\/90,
+    #authenticated-workspace .bg-slate-900 {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+      color: #1e293b !important;
+    }
+    #authenticated-workspace .border-slate-800,
+    #authenticated-workspace .border-slate-800\/80 {
+      border-color: #e2e8f0 !important;
+    }
+    #authenticated-workspace .text-slate-300,
+    #authenticated-workspace .text-slate-200 {
+      color: #334155 !important;
+    }
+    #authenticated-workspace .text-slate-400 {
+      color: #64748b !important;
+    }
+    #authenticated-workspace .text-white {
+      color: #0f172a !important;
+    }
+
+    /* Stripe-Grade Primary Button with Radiant Bevel */
+    #authenticated-workspace .btn-gradient-primary {
+      background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 4px 14px -1px rgba(37, 99, 235, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    #authenticated-workspace .btn-gradient-primary:hover {
+      transform: translateY(-1px) scale(1.01) !important;
+      box-shadow: 0 8px 22px -2px rgba(37, 99, 235, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    }
+    #authenticated-workspace .btn-gradient-primary:active {
+      transform: scale(0.98) !important;
+    }
+    #authenticated-workspace .btn-gradient-primary * {
+      color: #ffffff !important;
+    }
+    #authenticated-workspace #header-score-number,
+    #authenticated-workspace #user-header-avatar {
+      color: #ffffff !important;
+    }
+
+    /* Navigation Tab Active Pill with Underline Aura */
+    #authenticated-workspace .tab-btn {
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    #authenticated-workspace .tab-btn.font-bold {
+      color: #1d4ed8 !important;
+    }
+    #authenticated-workspace .tab-btn.border-blue-600 {
+      border-bottom: 2.5px solid #2563eb !important;
+    }
+
+    /* Studio Light Modals */
+    #modal-candidate-resume > div,
+    #modal-apply-bounty > div,
+    #modal-post-bounty > div,
+    #modal-intent > div,
+    #modal-ats-dossier > div {
+      background: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      color: #0f172a !important;
+      box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.25) !important;
+    }
+    #modal-candidate-resume .bg-\[\#040711\],
+    #modal-candidate-resume .bg-slate-900,
+    #modal-apply-bounty .bg-\[\#040711\],
+    #modal-post-bounty .bg-\[\#040711\],
+    #modal-intent .bg-\[\#040711\] {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+      color: #1e293b !important;
+    }
+    #modal-candidate-resume .text-white,
+    #modal-apply-bounty .text-white,
+    #modal-post-bounty .text-white,
+    #modal-intent .text-white {
+      color: #0f172a !important;
+    }
+    #modal-candidate-resume .text-slate-200,
+    #modal-candidate-resume .text-slate-300,
+    #modal-apply-bounty .text-slate-200,
+    #modal-post-bounty .text-slate-200 {
+      color: #334155 !important;
+    }
+    #modal-candidate-resume .text-slate-400,
+    #modal-apply-bounty .text-slate-400,
+    #modal-post-bounty .text-slate-400 {
+      color: #64748b !important;
+    }
+    #modal-candidate-resume .border-slate-800,
+    #modal-apply-bounty .border-slate-800,
+    #modal-post-bounty .border-slate-800 {
+      border-color: #e2e8f0 !important;
+    }
     .mesh-gradient {
       background: 
         radial-gradient(circle at 12% 10%, rgba(37, 99, 235, 0.14) 0%, transparent 48%),
@@ -758,235 +939,264 @@
     </div>
   </div>
 
-  <!-- ================= SCREEN 1: THE SIMPLIFIED & ELEGANT ROLE PORTAL LAUNCHPAD ================= -->
-  <section id="hero-login-screen" class="flex-1 flex flex-col justify-center items-center px-4 py-8 sm:py-12 max-w-5xl mx-auto w-full relative">
+  <!-- ================= SCREEN 1: THE DEDICATED MULTI-ROLE LOGIN & INTENT LAUNCHPAD ================= -->
+  <section id="hero-login-screen" class="flex-1 flex flex-col justify-center items-center px-4 py-8 sm:py-14 max-w-5xl mx-auto w-full relative">
     
-    <!-- Hero Title & Tagline -->
-    <div class="text-center max-w-3xl mx-auto space-y-3 mb-8 relative z-10">
+    <!-- Hero Title & Tagline in Middle -->
+    <div class="text-center max-w-4xl mx-auto space-y-4 mb-8 relative z-10">
       
-      <!-- CENTERED BIG PROJECT NAME WITH GLOWING X -->
-      <div class="relative py-1 flex flex-col items-center justify-center">
-        <div class="absolute -inset-6 max-w-xl mx-auto bg-gradient-to-r from-blue-600/20 via-indigo-600/25 to-sky-500/20 blur-3xl -z-10 rounded-full pointer-events-none"></div>
+      <!-- High-tech Pre-header Badge with subtle gradient aura -->
+      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-950/60 via-purple-950/50 to-pink-950/40 border border-purple-500/30 text-slate-200 text-xs font-semibold tracking-wider uppercase shadow-xl shadow-purple-950/20 backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pink-400"></i>
+        <span class="bg-gradient-to-r from-sky-300 via-indigo-200 to-pink-300 bg-clip-text text-transparent font-bold">Autonomous Intent &amp; Reciprocity Network</span>
+      </div>
 
-        <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-white flex items-baseline justify-center select-none leading-none py-2 px-4 overflow-visible drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
+      <!-- CENTERED BIG PROJECT NAME WITH HUGE GLOWING X -->
+      <div class="relative py-2 flex flex-col items-center justify-center">
+        <!-- Ambient multi-color radial glow behind name -->
+        <div class="absolute -inset-6 max-w-2xl mx-auto bg-gradient-to-r from-blue-600/20 via-purple-600/25 to-pink-500/20 blur-3xl -z-10 rounded-full scale-125 pointer-events-none"></div>
+
+        <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-white flex items-baseline justify-center select-none leading-tight py-3 px-4 overflow-visible drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
           <span class="bg-gradient-to-br from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">Link</span>
-          <span class="text-7xl sm:text-8xl md:text-9xl lg:text-[11rem] font-black italic bg-gradient-to-tr from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(56,189,248,0.7)] ml-2 inline-block pr-8 pl-1 pt-1 pb-2 overflow-visible">X</span>
+          <span class="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-black italic bg-gradient-to-tr from-sky-400 via-indigo-400 via-purple-400 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(56,189,248,0.5)] drop-shadow-[0_0_65px_rgba(236,72,153,0.35)] ml-1.5 inline-block pr-6 sm:pr-8 pl-1 pt-2 pb-3 overflow-visible hover:scale-105 transition-all duration-300">X</span>
         </h1>
+
+        <!-- Subtitle Tagline with dual gradient lines -->
+        <div class="flex items-center justify-center space-x-3 mt-3">
+          <div class="h-px w-12 sm:w-24 bg-gradient-to-r from-transparent via-blue-500/60 to-purple-500/80"></div>
+          <span class="text-xs sm:text-sm font-semibold tracking-widest uppercase font-mono bg-gradient-to-r from-sky-400 via-indigo-300 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">Autonomous Intent Exchange</span>
+          <div class="h-px w-12 sm:w-24 bg-gradient-to-l from-transparent via-blue-500/60 to-purple-500/80"></div>
+        </div>
       </div>
 
-      <!-- Human-friendly Value Proposition -->
-      <p class="text-lg sm:text-xl font-bold text-white max-w-xl mx-auto tracking-wide">
-        Where Students Get <span class="bg-gradient-to-r from-sky-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent font-extrabold">Alumni Referrals</span> &amp; <span class="text-emerald-400">Paid Gigs</span>.
+      <!-- Core Mission Statement -->
+      <p class="text-base sm:text-xl font-bold text-white max-w-2xl mx-auto tracking-wide">
+        Building a <span class="bg-gradient-to-r from-sky-300 via-purple-300 to-pink-300 bg-clip-text text-transparent font-extrabold">Living Network</span>, Not a Dead Directory.
       </p>
       
-      <p class="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed">
-        No cold DMs. Upload your resume &amp; projects to get verified by AI, then receive instant 1-click referrals from seniors at top companies.
+      <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Zero spam. An autonomous intent exchange connecting Students, Alumni, Founders, Faculty &amp; Institutions with verified GitHub proof-of-work, real-time micro-bounties, and high-conviction 1-click ATS referrals.
       </p>
 
-      <div class="pt-2 text-xs font-semibold uppercase tracking-wider text-sky-400 font-mono">
-        Select a role below to explore live:
-      </div>
-    </div>
-
-    <!-- 6 Role Cards Grid (3x2 on desktop, 1-click instant login) -->
-    <div class="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-      
-      <!-- 1. Student Card -->
-      <div onclick="directAuthenticateAs('student')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-sky-500/50 hover:bg-[#0c142c] transition-all duration-200 shadow-lg hover:shadow-sky-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-sky-400 border border-blue-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-            </div>
-            <span class="text-[10px] bg-sky-500/10 text-sky-300 border border-sky-500/20 px-2 py-0.5 rounded font-mono font-semibold">Most Popular</span>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-sky-300 transition">Student Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Aman Sharma (CSE '26)</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Upload resume &amp; GitHub projects, get scored (95/100), and request 1-click ATS referrals.
-          </p>
-        </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-sky-400 font-bold">
-          <span>Enter as Student &rarr;</span>
-        </div>
+      <!-- High-Impact Value Badges with rich gradient shades -->
+      <div class="flex flex-wrap items-center justify-center gap-2.5 pt-2 text-xs">
+        <span class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-950/60 to-slate-900/90 border border-blue-500/30 text-sky-200 shadow-md shadow-blue-950/20 hover:border-blue-400/60 transition">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-sky-400"></i>
+          <span>Zero Cold DMs</span>
+        </span>
+        <span class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-950/60 to-slate-900/90 border border-indigo-500/30 text-indigo-200 shadow-md shadow-indigo-950/20 hover:border-indigo-400/60 transition">
+          <i data-lucide="git-pull-request" class="w-3.5 h-3.5 text-indigo-400"></i>
+          <span>Verified GitHub Staking</span>
+        </span>
+        <span class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-purple-950/60 to-slate-900/90 border border-purple-500/30 text-purple-200 shadow-md shadow-purple-950/20 hover:border-purple-400/60 transition">
+          <i data-lucide="zap" class="w-3.5 h-3.5 text-purple-400"></i>
+          <span>1-Click Warm Referrals</span>
+        </span>
+        <span class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-pink-950/60 to-slate-900/90 border border-pink-500/30 text-pink-200 shadow-md shadow-pink-950/20 hover:border-pink-400/60 transition">
+          <i data-lucide="coins" class="w-3.5 h-3.5 text-pink-400"></i>
+          <span>Escrow-Backed Bounties</span>
+        </span>
       </div>
 
-      <!-- 2. Alumnus Card -->
-      <div onclick="directAuthenticateAs('alumnus')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-emerald-500/50 hover:bg-[#071a17] transition-all duration-200 shadow-lg hover:shadow-emerald-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="briefcase" class="w-5 h-5"></i>
-            </div>
-            <span class="text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono font-semibold">Swiggy SDE-2</span>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition">Alumnus Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Rohan Mehta (Batch '20)</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Review 1-minute student code dossiers and endorse juniors directly to your company's ATS.
-          </p>
-        </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-emerald-400 font-bold">
-          <span>Enter as Alumnus &rarr;</span>
-        </div>
-      </div>
-
-      <!-- 3. Founder Card -->
-      <div onclick="directAuthenticateAs('founder')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-amber-500/50 hover:bg-[#1a1408] transition-all duration-200 shadow-lg hover:shadow-amber-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="rocket" class="w-5 h-5"></i>
-            </div>
-            <span class="text-[10px] bg-amber-500/10 text-amber-300 border border-amber-500/20 px-2 py-0.5 rounded font-mono font-semibold">YC W24 Founder</span>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition">Founder Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Neha Kapoor (HyperScale AI)</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Post ₹5,000–₹20,000 micro-bounties and hire campus builders based on real code PRs.
-          </p>
-        </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-amber-400 font-bold">
-          <span>Enter as Founder &rarr;</span>
-        </div>
-      </div>
-
-      <!-- 4. Recruiter Card -->
-      <div onclick="directAuthenticateAs('recruiter')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-cyan-500/50 hover:bg-[#071824] transition-all duration-200 shadow-lg hover:shadow-cyan-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="user-check" class="w-5 h-5"></i>
-            </div>
-            <span class="text-[10px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 px-2 py-0.5 rounded font-mono font-semibold">Tech Talent</span>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-cyan-300 transition">Recruiter Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Vikram Seth (Razorpay)</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Filter through pre-vetted top 1% candidates with verified GitHub code scores and parsed resumes.
-          </p>
-        </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-cyan-400 font-bold">
-          <span>Enter as Recruiter &rarr;</span>
-        </div>
-      </div>
-
-      <!-- 5. Faculty Card -->
-      <div onclick="directAuthenticateAs('faculty')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-purple-500/50 hover:bg-[#160b24] transition-all duration-200 shadow-lg hover:shadow-purple-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="book-open" class="w-5 h-5"></i>
-            </div>
-            <span class="text-[10px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-2 py-0.5 rounded font-mono font-semibold">Dean R&amp;D</span>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition">Faculty Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Dr. R.K. Verma (Apex Tech)</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Pair student capstones with industry alumni co-guides for real-world research &amp; IEEE papers.
-          </p>
-        </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-purple-400 font-bold">
-          <span>Enter as Faculty &rarr;</span>
-        </div>
-      </div>
-
-      <!-- 6. Institution Card -->
-      <div onclick="directAuthenticateAs('institution')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-rose-500/50 hover:bg-[#200812] transition-all duration-200 shadow-lg hover:shadow-rose-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="landmark" class="w-5 h-5"></i>
-            </div>
-            <span class="text-[10px] bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2 py-0.5 rounded font-mono font-semibold">Command Desk</span>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-rose-300 transition">Institution Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Apex Alumni Administration</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Monitor verified referral conversions (89%), student earnings, and NIRF/NAAC accreditation metrics.
-          </p>
-        </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-rose-400 font-bold">
-          <span>Enter as Institution &rarr;</span>
-        </div>
+      <!-- Action Prompt -->
+      <div class="pt-3 flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-400">
+        <span class="bg-gradient-to-r from-slate-400 to-slate-200 bg-clip-text text-transparent">Select Your Portal to Enter</span>
+        <i data-lucide="arrow-down" class="w-4 h-4 text-pink-400 animate-bounce"></i>
       </div>
 
     </div>
 
-    <!-- Collapsible Alternative Email Login (for realistic enterprise test) -->
-    <details class="w-full max-w-md mx-auto text-xs text-slate-400 bg-[#080d1a] border border-slate-800 rounded-2xl p-4">
-      <summary class="cursor-pointer font-semibold text-slate-300 hover:text-white flex items-center justify-between select-none">
-        <span>Looking for traditional email login?</span>
-        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
-      </summary>
-      <form onsubmit="handleHeroLoginSubmit(event)" class="space-y-3 pt-3 mt-2 border-t border-slate-800">
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Email</label>
-          <input type="email" value="2022CS084@apex.edu" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+    <!-- Interactive 6-Role Switcher Bar with subtle gradient border -->
+    <div class="w-full max-w-4xl p-[1px] rounded-2xl bg-gradient-to-r from-blue-500/30 via-purple-500/40 to-pink-500/30 shadow-2xl shadow-purple-950/30 mb-6">
+      <div class="bg-[#050916]/95 rounded-2xl p-1.5 backdrop-blur-md overflow-x-auto custom-scrollbar">
+        <div id="hero-role-tabs" class="flex space-x-1 w-full text-xs font-bold">
+          <!-- Injected dynamically by JS -->
         </div>
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Password</label>
-          <input type="password" value="password123" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+      </div>
+    </div>
+
+    <!-- The Split Interactive Login Card with gradient frame -->
+    <div class="w-full max-w-5xl p-[1px] rounded-3xl bg-gradient-to-b from-sky-500/30 via-purple-500/25 to-pink-500/35 shadow-2xl shadow-black/90 mb-10">
+      <div class="glass-panel rounded-[23px] w-full grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+        
+        <!-- Left Column: Role Value Proposition & Visual Hero with deep gradient backdrop -->
+        <div id="hero-side-banner" class="lg:col-span-5 p-8 flex flex-col justify-between bg-gradient-to-br from-[#0c142e] via-[#070c1d] to-[#030611] border-b lg:border-b-0 lg:border-r border-slate-800/80 relative">
+          <div class="space-y-4">
+            <div id="hero-side-icon-box" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500/20 via-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center text-sky-300 shadow-lg shadow-purple-950/30">
+              <i id="hero-side-icon" data-lucide="graduation-cap" class="w-7 h-7"></i>
+            </div>
+
+            <div>
+              <span id="hero-side-badge" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-gradient-to-r from-sky-500/15 via-purple-500/15 to-pink-500/15 text-sky-200 border border-purple-500/30">
+                Verified Student Access
+              </span>
+              <h3 id="hero-side-title" class="text-2xl font-black text-white mt-2">Student Builder Gateway</h3>
+              <p id="hero-side-desc" class="text-xs text-slate-300 mt-2 leading-relaxed">
+                Connect directly with alumni in your target companies without cold DMs. Showcase real code, solve startup bounties, and secure high-conviction job referrals.
+              </p>
+            </div>
+
+            <!-- Role Benefits Bullet Points -->
+            <div id="hero-side-bullets" class="space-y-2.5 pt-2">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-slate-800/80 mt-6 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Apex Institute Node #402</span>
+            <span class="text-emerald-400 flex items-center space-x-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Auth Active</span>
+            </span>
+          </div>
         </div>
-        <button type="submit" class="w-full py-2 btn-gradient-primary text-white font-bold rounded-xl text-xs transition">
-          Sign In
+
+        <!-- Right Column: Interactive Login Form -->
+        <div class="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-center space-y-6 bg-gradient-to-br from-[#050918]/90 via-[#040714]/95 to-[#0b0617]/90">
+          
+          <div>
+            <h3 id="hero-form-heading" class="text-xl font-bold text-white">Sign In to Student Portal</h3>
+            <p id="hero-form-subheading" class="text-xs text-slate-400 mt-1">Use your campus credentials or instant 1-click hackathon bypass.</p>
+          </div>
+
+          <!-- ⚡ Fast Hackathon Instant Sign-In Box with glowing gradient border -->
+          <div class="p-[1px] rounded-2xl bg-gradient-to-r from-blue-500/35 via-purple-500/40 to-pink-500/35 shadow-lg shadow-purple-950/20">
+            <div class="p-4 rounded-[15px] bg-gradient-to-br from-[#091024] via-[#060a19] to-[#0c071d] space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
+                  <span class="text-xs font-bold text-white">Judges Fast-Track Demo Pass</span>
+                </div>
+                <span class="text-[10px] font-mono text-pink-300 bg-pink-500/10 px-2 py-0.5 rounded border border-pink-500/30">Pre-Verified</span>
+              </div>
+              <p id="hero-demo-text" class="text-xs text-slate-300">
+                Sign in instantly as <b>Aman Sharma</b> (CSE '26 • Distributed Systems Builder) with pre-loaded GitHub data and intent.
+              </p>
+              <button onclick="executeHeroLogin()" class="w-full py-2.5 btn-gradient-primary text-white font-bold rounded-xl text-xs flex items-center justify-center space-x-2 transition cursor-pointer">
+                <i data-lucide="zap" class="w-4 h-4"></i>
+                <span>1-Click Instant Sign In</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Alternative Form Fields -->
+          <form onsubmit="handleHeroLoginSubmit(event)" class="space-y-4 pt-2">
+            
+            <div id="hero-dynamic-fields" class="space-y-3 text-xs">
+              <!-- Injected by JS according to selected role -->
+            </div>
+
+            <div class="flex items-center justify-between text-xs text-slate-400">
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="checkbox" checked class="rounded bg-[#080d1a] border-slate-800 text-sky-600 focus:ring-sky-500">
+                <span>Remember session</span>
+              </label>
+              <a href="#" onclick="openForgotPasswordModal(event)" class="text-sky-400 hover:text-pink-300 transition-colors duration-200">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="w-full py-2.5 bg-gradient-to-r from-slate-900/90 via-purple-950/30 to-slate-900/90 hover:from-slate-800 hover:to-slate-800 text-slate-200 font-semibold rounded-xl text-xs border border-purple-500/20 hover:border-purple-500/40 transition flex items-center justify-center space-x-2 cursor-pointer">
+              <i data-lucide="lock" class="w-3.5 h-3.5 text-sky-400"></i>
+              <span>Sign In with Credentials</span>
+            </button>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Quick 1-Click Role Direct Launchpad Grid -->
+    <div class="w-full max-w-5xl space-y-3">
+      <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+        <span class="font-bold uppercase tracking-wider text-slate-300">Or Jump Directly into Any Role Sandbox:</span>
+        <span class="text-sky-400 font-mono text-[11px]">Instant Bypass Available</span>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+        <button onclick="directAuthenticateAs('student')" class="p-3 rounded-xl bg-slate-900/80 hover:bg-blue-900/30 border border-slate-800 hover:border-blue-500/40 transition text-left flex flex-col justify-between group">
+          <div class="w-7 h-7 rounded-lg bg-blue-500/10 text-sky-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+          </div>
+          <span class="text-xs font-bold text-white group-hover:text-sky-300">Student</span>
+          <span class="text-[10px] text-slate-400">Aman Sharma</span>
         </button>
-      </form>
-    </details>
+        <button onclick="directAuthenticateAs('alumnus')" class="p-3 rounded-xl bg-slate-900/80 hover:bg-emerald-900/30 border border-slate-800 hover:border-emerald-500/40 transition text-left flex flex-col justify-between group">
+          <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+            <i data-lucide="briefcase" class="w-4 h-4"></i>
+          </div>
+          <span class="text-xs font-bold text-white group-hover:text-emerald-300">Alumnus</span>
+          <span class="text-[10px] text-slate-400">Rohan (Swiggy)</span>
+        </button>
+        <button onclick="directAuthenticateAs('founder')" class="p-3 rounded-xl bg-slate-900/80 hover:bg-amber-900/30 border border-slate-800 hover:border-amber-500/40 transition text-left flex flex-col justify-between group">
+          <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+            <i data-lucide="rocket" class="w-4 h-4"></i>
+          </div>
+          <span class="text-xs font-bold text-white group-hover:text-amber-300">Founder</span>
+          <span class="text-[10px] text-slate-400">Neha (YC W24)</span>
+        </button>
+        <button onclick="directAuthenticateAs('recruiter')" class="p-3 rounded-xl bg-slate-900/80 hover:bg-cyan-900/30 border border-slate-800 hover:border-cyan-500/40 transition text-left flex flex-col justify-between group">
+          <div class="w-7 h-7 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+            <i data-lucide="target" class="w-4 h-4"></i>
+          </div>
+          <span class="text-xs font-bold text-white group-hover:text-cyan-300">Recruiter</span>
+          <span class="text-[10px] text-slate-400">Vikram (Razorpay)</span>
+        </button>
+        <button onclick="directAuthenticateAs('faculty')" class="p-3 rounded-xl bg-slate-900/80 hover:bg-purple-900/30 border border-slate-800 hover:border-purple-500/40 transition text-left flex flex-col justify-between group">
+          <div class="w-7 h-7 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+          </div>
+          <span class="text-xs font-bold text-white group-hover:text-purple-300">Faculty</span>
+          <span class="text-[10px] text-slate-400">Dr. Verma</span>
+        </button>
+        <button onclick="directAuthenticateAs('institution')" class="p-3 rounded-xl bg-slate-900/80 hover:bg-rose-900/30 border border-slate-800 hover:border-rose-500/40 transition text-left flex flex-col justify-between group">
+          <div class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+            <i data-lucide="landmark" class="w-4 h-4"></i>
+          </div>
+          <span class="text-xs font-bold text-white group-hover:text-rose-300">Institution</span>
+          <span class="text-[10px] text-slate-400">Dean Sharma</span>
+        </button>
+      </div>
+    </div>
 
   </section>
 
   <!-- ================= SCREEN 2: AUTHENTICATED APPLICATION WORKSPACE ================= -->
-  <div id="authenticated-workspace" class="hidden flex-1 flex flex-col">
+  <div id="authenticated-workspace" class="hidden flex-1 flex flex-col bg-slate-50 text-slate-800 min-h-screen">
     
-    <header class="sticky top-0 z-40 bg-[#030611]/95 backdrop-blur-md border-b border-slate-800/80">
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
         
         <div class="flex items-center space-x-3 sm:space-x-4">
           <!-- Header Top-Left Back Button -->
-          <button onclick="handleNavigationBack(event)" class="neon-back-btn group relative shrink-0" title="Go Back" aria-label="Go Back">
-            <span class="neon-ripple-container"><span class="neon-ripple"></span></span>
-            <i data-lucide="arrow-left" class="w-4 h-4 text-[#00ffff] transition-transform duration-200 group-hover:-translate-x-1"></i>
+          <button onclick="handleNavigationBack(event)" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs border border-slate-200 flex items-center space-x-1.5 transition shrink-0" title="Go Back">
+            <i data-lucide="arrow-left" class="w-4 h-4 text-blue-600"></i>
             <span class="hidden xs:inline sm:inline">Back</span>
-            <span class="neon-tooltip">Go Back</span>
           </button>
 
           <!-- Brand Logo & Portal Tag -->
           <div class="flex items-center space-x-3">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
               <i data-lucide="network" class="w-5 h-5 text-white"></i>
             </div>
             <div>
               <div class="flex items-center space-x-2">
-                <span class="text-xl font-black tracking-tight text-white flex items-baseline overflow-visible">
+                <span class="text-xl font-black tracking-tight text-slate-900 flex items-baseline overflow-visible">
                   <span>Link</span>
-                  <span class="text-2xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-purple-300 drop-shadow-[0_0_10px_rgba(56,189,248,0.5)] ml-0.5 inline-block pr-1.5 overflow-visible">X</span>
+                  <span class="text-2xl font-black italic text-blue-600 ml-0.5 inline-block pr-1.5 overflow-visible">X</span>
                 </span>
-                <span id="current-portal-badge" class="text-[10px] font-bold uppercase tracking-wider bg-sky-500/10 text-sky-300 border border-sky-500/25 px-2 py-0.5 rounded">Student Portal</span>
+                <span id="current-portal-badge" class="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-0.5 rounded-full">Student Portal</span>
               </div>
-              <p class="text-[11px] text-slate-400 -mt-0.5">Apex Institute Network Node</p>
+              <p class="text-[11px] text-slate-500 -mt-0.5 font-medium">Apex Institute Network Node</p>
             </div>
           </div>
         </div>
 
-        <!-- Authenticated Active Node Pill (Direct switcher removed to enforce role security) -->
+        <!-- Authenticated Active Node Pill -->
         <div class="hidden lg:flex items-center space-x-2 text-xs">
-          <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 flex items-center space-x-1.5 shadow-inner">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="text-slate-400">Node Status:</span>
-            <span id="workspace-node-status" class="font-semibold text-white">Verified Campus Node</span>
+          <span class="px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 flex items-center space-x-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-slate-500">Node Status:</span>
+            <span id="workspace-node-status" class="font-semibold text-slate-800">Verified Campus Node</span>
           </span>
         </div>
 
@@ -994,23 +1204,23 @@
         <div class="flex items-center space-x-3">
           
           <!-- Active Intent Pill -->
-          <div onclick="openChangeIntentModal()" class="cursor-pointer hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#080e1c] border border-slate-800 text-slate-200 text-xs hover:border-slate-700 transition" title="Click to edit active intent">
-            <i data-lucide="zap" class="w-3.5 h-3.5 text-sky-400 animate-pulse"></i>
-            <span class="text-slate-400 font-medium">Intent:</span>
-            <span id="active-intent-text" class="font-bold text-white max-w-[140px] truncate">Seeking Referral</span>
+          <div onclick="openChangeIntentModal()" class="cursor-pointer hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 text-slate-700 text-xs transition" title="Click to edit active intent">
+            <i data-lucide="zap" class="w-3.5 h-3.5 text-blue-600 animate-pulse"></i>
+            <span class="text-slate-500 font-medium">Intent:</span>
+            <span id="active-intent-text" class="font-bold text-blue-700 max-w-[140px] truncate">Seeking Referral</span>
           </div>
 
           <!-- User Profile & Switch Portal Button -->
-          <div class="flex items-center space-x-2.5 pl-2 border-l border-slate-800">
-            <div id="user-header-avatar" class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 text-sky-300 font-bold flex items-center justify-center text-xs">
+          <div class="flex items-center space-x-2.5 pl-2 border-l border-slate-200">
+            <div id="user-header-avatar" class="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-xs shadow-xs">
               AS
             </div>
             <div class="hidden md:block text-left">
-              <div id="user-header-name" class="text-xs font-bold text-white">Aman Sharma</div>
-              <div id="user-header-role" class="text-[10px] text-slate-400">Student CSE '26</div>
+              <div id="user-header-name" class="text-xs font-bold text-slate-900">Aman Sharma</div>
+              <div id="user-header-role" class="text-[10px] text-slate-500 font-medium">Student CSE '26</div>
             </div>
-            <button onclick="handleLogout()" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold text-rose-300 hover:text-white bg-rose-950/30 hover:bg-rose-900/60 border border-rose-800/40 hover:border-rose-600 transition flex items-center space-x-1.5 shadow-sm" title="Sign Out to switch to another role portal">
-              <i data-lucide="log-out" class="w-3.5 h-3.5 text-rose-400"></i>
+            <button onclick="handleLogout()" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold text-rose-700 hover:text-white bg-rose-50 hover:bg-rose-600 border border-rose-200 hover:border-rose-600 transition flex items-center space-x-1.5 shadow-xs" title="Sign Out to switch to another role portal">
+              <i data-lucide="log-out" class="w-3.5 h-3.5 text-rose-500"></i>
               <span class="hidden sm:inline">Switch Role</span>
             </button>
           </div>
@@ -1020,50 +1230,298 @@
       </div>
 
       <!-- Main Navigation Tabs (Dynamically injected per role) -->
-      <div class="border-t border-slate-800/80 bg-[#030611]/90">
+      <div class="border-t border-slate-200 bg-white">
         <div id="workspace-tabs-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-6 text-sm font-medium overflow-x-auto custom-scrollbar">
           <!-- Injected dynamically based strictly on authenticated role -->
         </div>
       </div>
     </header>
 
+    <!-- ⚡ LIVE ECOSYSTEM PULSE TICKER (REAL-TIME NETWORK EVENTS) -->
+    <div id="ecosystem-ticker-bar" class="bg-gradient-to-r from-blue-50/90 via-slate-50 to-indigo-50/80 border-b border-blue-100/80 px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between text-xs text-slate-700 shadow-2xs backdrop-blur-xs">
+      <div class="flex items-center space-x-3 overflow-hidden">
+        <span class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px] uppercase tracking-wider shrink-0 border border-emerald-200/80 shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Ecosystem Pulse</span>
+        </span>
+        <div id="live-ticker-text" class="font-medium text-slate-700 truncate transition-opacity duration-300">
+          🔥 Rohan Mehta (Swiggy) verified &amp; endorsed Aman Sharma's Raft consensus implementation
+        </div>
+      </div>
+      <div class="hidden sm:flex items-center space-x-3 shrink-0 text-[11px] font-semibold text-slate-500">
+        <span class="flex items-center space-x-1.5 text-blue-900 bg-white px-2.5 py-0.5 rounded-full border border-blue-200/80 shadow-xs">
+          <i data-lucide="coins" class="w-3.5 h-3.5 text-amber-500"></i>
+          <span>Campus Syndicate: <b id="ticker-syndicate-total" class="text-blue-950 font-black font-mono">₹1,45,000</b></span>
+        </span>
+        <span class="text-slate-300">•</span>
+        <button onclick="switchTab('syndicate')" class="text-blue-600 hover:text-blue-800 font-bold hover:underline cursor-pointer">
+          View Grants &rarr;
+        </button>
+      </div>
+    </div>
+
     <!-- Workspace Main Views -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
+      <!-- ================= ECOSYSTEM TAB: STUDENT CAREER MISSION & OPPORTUNITY RESCUE ================= -->
+      <div id="view-student-mission" class="space-y-6">
+        
+        <!-- Header Banner: Mission Overview & Goal Stepper -->
+        <div class="bg-gradient-to-r from-blue-50 via-indigo-50/50 to-white border border-blue-200/80 rounded-2xl p-6 relative overflow-hidden shadow-xs">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative z-10">
+            <div class="max-w-2xl space-y-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] uppercase font-extrabold tracking-wider text-blue-700 bg-blue-100/80 px-2.5 py-0.5 rounded-full border border-blue-200 flex items-center space-x-1 font-mono">
+                  <i data-lucide="target" class="w-3.5 h-3.5 text-blue-600"></i>
+                  <span>Active Career Mission</span>
+                </span>
+                <span id="mission-badge" class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-semibold">
+                  Highest Placement Impact
+                </span>
+                <span id="mission-eta" class="text-xs text-slate-500 font-mono">
+                  • 45 Days Remaining
+                </span>
+              </div>
+              <h2 id="mission-title" class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                Get SDE / AI Systems Internship (90 Days)
+              </h2>
+              <p id="mission-desc" class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Target: <b class="text-slate-800">Backend Systems &amp; Distributed AI Engineer</b>. LinkX coordinates your technical milestones, mentor reviews, and employer proof-of-work around this specific outcome.
+              </p>
+            </div>
+
+            <!-- Mission Progress Gauge -->
+            <div class="flex items-center space-x-4 bg-white border border-blue-200/80 rounded-2xl p-4 shadow-xs shrink-0">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex flex-col items-center justify-center text-white shadow-md shadow-blue-500/20">
+                <span id="mission-progress-number" class="text-xl font-black leading-none text-white">70%</span>
+                <span class="text-[8px] font-mono uppercase text-blue-100 mt-0.5">Done</span>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Mission Velocity</div>
+                <div class="text-xs font-bold text-emerald-700 flex items-center space-x-1 mt-0.5">
+                  <i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  <span>On Track for Summer '26</span>
+                </div>
+                <div class="text-[10px] text-slate-500 mt-0.5 font-mono">3 of 5 Milestones Passed</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mission Switcher Dropdown & Action -->
+          <div class="mt-5 pt-4 border-t border-blue-200/60 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center space-x-2">
+              <span class="text-slate-600 font-medium">Switch Active Mission:</span>
+              <button onclick="switchCareerMission('ai-internship')" class="px-3 py-1 rounded-lg bg-blue-600 text-white font-semibold transition hover:bg-blue-700 shadow-xs">AI / SDE Internship</button>
+              <button onclick="switchCareerMission('startup-mvp')" class="px-3 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 font-medium transition hover:bg-slate-100">Startup MVP</button>
+              <button onclick="switchCareerMission('research-capstone')" class="px-3 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 font-medium transition hover:bg-slate-100">Research Paper</button>
+            </div>
+            <button onclick="openCareerShadowTab()" class="text-blue-700 font-bold hover:underline flex items-center space-x-1">
+              <span>Practice in Career Shadow Simulator &rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STANDOUT DIFFERENTIATOR: OPPORTUNITY RESCUE BANNER -->
+        <div id="opportunity-rescue-card" class="bg-gradient-to-r from-amber-50 via-orange-50/40 to-white border-2 border-amber-300/80 rounded-2xl p-5 shadow-xs relative overflow-hidden space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="p-1.5 rounded-lg bg-amber-500 text-white shadow-xs">
+                <i data-lucide="life-buoy" class="w-4 h-4"></i>
+              </span>
+              <h3 class="text-sm font-bold text-amber-900 tracking-tight flex items-center space-x-2">
+                <span>LinkX Opportunity Rescue: Adaptive Reroute</span>
+                <span class="text-[10px] font-mono bg-amber-200/80 text-amber-900 px-2 py-0.5 rounded-full font-bold">AUTOMATIC REROUTE ACTIVE</span>
+              </h3>
+            </div>
+            <span class="text-xs text-slate-500 font-mono hidden sm:inline">Zero Dead Ends</span>
+          </div>
+
+          <div class="text-xs text-slate-700 space-y-1">
+            <p><b class="text-rose-700">Obstacle Detected:</b> Target role <span class="font-semibold underline">Zomato Core Backend Internship</span> closed applications yesterday. Identified Gap: Missing evidence for <i>Raft Consensus under network packet drop</i>.</p>
+            <p><b class="text-emerald-700">Opportunity Rescue Solution:</b> LinkX found an active parallel opening — <span class="font-bold text-blue-700">Razorpay FinTech Core Backend (REQ-2026-ENG-44)</span>. Join Dr. Verma's Raft consensus challenge to earn the missing evidence in 48 hours.</p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-amber-200/60 text-xs">
+            <div class="flex items-center space-x-2 text-slate-600 font-medium">
+              <i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i>
+              <span>Available Mentor: <b>Rohan Mehta (Swiggy)</b> has 15-min flash code review available this Thursday.</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button onclick="handleAcceptOpportunityRescue()" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl shadow-sm hover:from-blue-700 hover:to-indigo-700 transition flex items-center space-x-1.5">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                <span>Accept Rescue Pathway &amp; Join Raft Challenge</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5-STAGE ADAPTIVE MILESTONE ROADMAP -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+                <i data-lucide="milestone" class="w-5 h-5 text-blue-600"></i>
+                <span>Adaptive 5-Stage Mission Roadmap</span>
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">Every step adapts based on real work, faculty challenges, and available alumni mentors.</p>
+            </div>
+            <span class="text-xs font-mono font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200">
+              Active Step: 3 of 5
+            </span>
+          </div>
+
+          <div id="mission-milestones-container" class="space-y-4">
+            <!-- Dynamic Milestones injected by JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= ECOSYSTEM TAB: CAREER SHADOW (PROFESSIONAL SCENARIO SIMULATOR) ================= -->
+      <div id="view-career-shadow" class="hidden space-y-6">
+        
+        <div class="bg-gradient-to-r from-indigo-50 via-blue-50/50 to-white border border-indigo-200/80 rounded-2xl p-6 shadow-xs">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="max-w-2xl space-y-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] uppercase font-extrabold tracking-wider text-indigo-700 bg-indigo-100/80 px-2.5 py-0.5 rounded-full border border-indigo-200 font-mono flex items-center space-x-1">
+                  <i data-lucide="cpu" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span>Alumni Role-Play Simulation</span>
+                </span>
+                <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-semibold">
+                  Interactive Decision Engine
+                </span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                LinkX Career Shadow
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Practice the exact decisions engineers, founders, and product managers make in real production incidents. Branching consequences evaluated against real engineering rubrics with direct alumni debriefs.
+              </p>
+            </div>
+
+            <!-- Simulation Stats Pill -->
+            <div class="bg-white border border-indigo-200 rounded-2xl p-4 shadow-xs flex items-center space-x-3 shrink-0">
+              <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg border border-indigo-200">
+                <i data-lucide="git-branch" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase font-bold text-slate-500 font-mono">Simulator Mode</div>
+                <div class="text-xs font-bold text-slate-900">Branching Incidents</div>
+                <div class="text-[10px] text-emerald-600 font-medium">Scored against Production SLA</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scenario Switcher Buttons -->
+          <div class="mt-5 pt-4 border-t border-indigo-200/60 flex flex-wrap items-center gap-2 text-xs">
+            <span class="text-slate-600 font-medium mr-1">Select Scenario:</span>
+            <button onclick="loadCareerShadowScenario('scenario-cache-stampede')" class="px-3 py-1.5 rounded-xl bg-blue-600 text-white font-semibold shadow-xs hover:bg-blue-700 transition">
+              1. Black Friday Cache Stampede (Backend SDE-2)
+            </button>
+            <button onclick="loadCareerShadowScenario('scenario-startup-runway')" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-medium hover:bg-slate-100 transition">
+              2. Startup Runway Crisis: 3 Weeks Left (Founder)
+            </button>
+          </div>
+        </div>
+
+        <!-- LIVE SCENARIO INTERACTIVE CONSOLE -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <span id="shadow-category" class="text-[10px] font-mono uppercase font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded">High-Throughput Systems Engineering</span>
+              <h3 id="shadow-title" class="text-lg font-bold text-slate-900 mt-1">
+                Black Friday Production Outage: Cache Stampede Under Burst Traffic
+              </h3>
+              <p id="shadow-role-company" class="text-xs text-slate-500 mt-0.5">Role: SDE-2 On-Call Backend Engineer • Swiggy / FinTech Scale</p>
+            </div>
+            <div class="text-right">
+              <span class="text-xs text-rose-600 font-bold bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-lg">P0 Severity Outage</span>
+            </div>
+          </div>
+
+          <!-- Incident Briefing / Context Card -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2 text-xs leading-relaxed text-slate-700">
+            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+              <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i>
+              <span>Live Situation Telemetry:</span>
+            </div>
+            <p id="shadow-context">
+              It is 8:02 PM on Black Friday. Traffic spikes to 25,000 req/sec. The central Redis caching tier evicts hot restaurant catalog keys. Cache miss rate leaps from 2% to 94%. PostgreSQL primary CPU hits 100%, cascading latency to 8,200ms across all checkout APIs. Management asks for immediate triage.
+            </p>
+          </div>
+
+          <!-- Question & Multiple Branching Choices -->
+          <div class="space-y-4">
+            <h4 id="shadow-question" class="text-sm font-bold text-slate-900">
+              What is your immediate architectural decision to stabilize the system?
+            </h4>
+
+            <div id="shadow-options-container" class="space-y-2.5">
+              <!-- Dynamically populated options -->
+            </div>
+          </div>
+
+          <!-- Reasoning Field -->
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold text-slate-700">
+              Explain Your Architectural Reasoning &amp; Trade-offs (evaluated by Rubric):
+            </label>
+            <textarea id="shadow-reasoning" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600 transition" placeholder="Explain why your chosen option prevents cascading failures while protecting the database..."></textarea>
+          </div>
+
+          <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+            <span class="text-[11px] text-slate-500 font-mono">Answers evaluated against production architectural rubrics</span>
+            <button id="btn-submit-shadow" onclick="handleSubmitCareerShadowDecision()" class="px-6 py-2.5 btn-gradient-primary text-white font-bold rounded-xl text-xs shadow-md shadow-blue-600/30 flex items-center space-x-2 transition">
+              <i data-lucide="play" class="w-4 h-4"></i>
+              <span>Evaluate Decision</span>
+            </button>
+          </div>
+
+          <!-- DYNAMIC SIMULATION RESULT CARD (Shown after evaluation) -->
+          <div id="shadow-result-card" class="hidden rounded-xl border p-5 space-y-4 transition">
+            <!-- Injected by JS -->
+          </div>
+
+        </div>
+
+      </div>
+
       <!-- ================= TAB 0: STUDENT CAPABILITY PROFILE & RESUME SCORER ================= -->
-      <div id="view-student-profile" class="space-y-6">
+      <div id="view-student-profile" class="hidden space-y-6">
         
         <!-- Header Banner with Live Recruiter Sync Indicator -->
-        <div class="bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-slate-900/60 border border-slate-800 rounded-2xl p-6 relative overflow-hidden shadow-lg">
+        <div class="bg-gradient-to-r from-blue-50 via-indigo-50/40 to-white border border-blue-100 rounded-2xl p-6 relative overflow-hidden shadow-xs">
           <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
             <div class="max-w-2xl">
               <div class="flex items-center space-x-2">
-                <span class="text-xs uppercase font-extrabold tracking-wider text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded border border-sky-500/20 flex items-center space-x-1">
-                  <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                <span class="text-xs uppercase font-extrabold tracking-wider text-blue-700 bg-blue-100/70 px-2.5 py-0.5 rounded-full border border-blue-200 flex items-center space-x-1">
+                  <i data-lucide="shield-check" class="w-3.5 h-3.5 text-blue-600"></i>
                   <span>Verified Profile</span>
                 </span>
-                <span class="text-xs text-emerald-400 font-mono flex items-center space-x-1">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span class="text-xs text-emerald-700 font-medium flex items-center space-x-1">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                   <span>Visible to Alumni &amp; Recruiters</span>
                 </span>
               </div>
-              <h2 class="text-xl sm:text-2xl font-bold text-white mt-2">My Capability Profile &amp; Resume Score</h2>
-              <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mt-2">My Capability Profile &amp; Resume Score</h2>
+              <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
                 Update your academic details, skills, and resume. Your <b>Capability Score (0–100)</b> is automatically evaluated from your resume depth, GitHub proof-of-work, and tech stack match.
               </p>
             </div>
 
             <!-- Current Capability Score Pill -->
-            <div class="flex items-center space-x-4 bg-[#050916]/90 border border-sky-500/30 rounded-2xl p-4 shadow-lg backdrop-blur-md">
-              <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 flex flex-col items-center justify-center text-white shadow-md shadow-blue-500/30">
-                <span id="header-score-number" class="text-xl font-black leading-none">95</span>
-                <span class="text-[9px] font-mono text-sky-200">/ 100</span>
+            <div class="flex items-center space-x-4 bg-white border border-blue-200 rounded-2xl p-4 shadow-sm">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex flex-col items-center justify-center text-white shadow-md shadow-blue-500/20">
+                <span id="header-score-number" class="text-xl font-black leading-none text-white">95</span>
+                <span class="text-[9px] font-mono text-blue-100">/ 100</span>
               </div>
               <div>
-                <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Capability Score</div>
-                <div id="header-score-tier" class="text-xs font-bold text-sky-300">Top 1% Exceptional Talent</div>
-                <div class="text-[10px] text-emerald-400 font-mono mt-0.5 flex items-center space-x-1">
-                  <i data-lucide="check-circle" class="w-3 h-3"></i>
+                <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Capability Score</div>
+                <div id="header-score-tier" class="text-xs font-bold text-blue-700">Top 1% Exceptional Talent</div>
+                <div class="text-[10px] text-emerald-700 font-semibold mt-0.5 flex items-center space-x-1">
+                  <i data-lucide="check-circle" class="w-3 h-3 text-emerald-600"></i>
                   <span>Eligible for 1-Click Referral</span>
                 </div>
               </div>
@@ -1384,22 +1842,22 @@
 
       <!-- ================= TAB 1: INTENT MATCH RADAR ================= -->
       <div id="view-intent-radar" class="hidden space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#080e1c] border border-slate-800 rounded-xl p-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
           <div class="flex items-center space-x-3">
-            <div class="p-2 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
-              <i data-lucide="radar" class="w-5 h-5"></i>
+            <div class="p-2 rounded-xl bg-blue-50 text-blue-600 border border-blue-200">
+              <i data-lucide="compass" class="w-5 h-5"></i>
             </div>
             <div>
-              <h3 class="text-sm font-bold text-white">High-Signal Intent Matches</h3>
-              <p class="text-xs text-slate-400">Ranked by verified technical expertise overlap & active intent reciprocation.</p>
+              <h3 class="text-sm font-bold text-slate-900">Matched Alumni &amp; Mentors</h3>
+              <p class="text-xs text-slate-500">Alumni and seniors matched with your technical stack and career goals.</p>
             </div>
           </div>
 
           <div class="flex flex-wrap items-center gap-2">
-            <button onclick="filterRadar('all')" class="radar-filter-btn px-3 py-1 text-xs rounded-lg bg-blue-600 text-white font-medium shadow-md shadow-blue-600/20" data-filter="all">All (14)</button>
-            <button onclick="filterRadar('hiring')" class="radar-filter-btn px-3 py-1 text-xs rounded-lg bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-medium" data-filter="hiring">Hiring / Referral</button>
-            <button onclick="filterRadar('capstone')" class="radar-filter-btn px-3 py-1 text-xs rounded-lg bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-medium" data-filter="capstone">Capstone Co-Guide</button>
-            <button onclick="filterRadar('bounty')" class="radar-filter-btn px-3 py-1 text-xs rounded-lg bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-medium" data-filter="bounty">Startup Bounties</button>
+            <button onclick="filterRadar('all')" class="radar-filter-btn px-3 py-1 text-xs rounded-lg bg-blue-600 text-white font-semibold shadow-xs" data-filter="all">All (14)</button>
+            <button onclick="filterRadar('hiring')" class="radar-filter-btn px-3 py-1 text-xs rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 font-medium" data-filter="hiring">Hiring / Referrals</button>
+            <button onclick="filterRadar('capstone')" class="radar-filter-btn px-3 py-1 text-xs rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 font-medium" data-filter="capstone">Capstone Mentors</button>
+            <button onclick="filterRadar('bounty')" class="radar-filter-btn px-3 py-1 text-xs rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 font-medium" data-filter="bounty">Paid Bounties</button>
           </div>
         </div>
 
@@ -1410,109 +1868,109 @@
 
       <!-- ================= TAB 2: PROOF-OF-WORK VERIFICATION ================= -->
       <div id="view-proof-of-work" class="hidden space-y-6">
-        <div class="bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-slate-900/60 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
+        <div class="bg-gradient-to-r from-blue-50 via-indigo-50/40 to-white border border-blue-100 rounded-2xl p-6 relative overflow-hidden shadow-xs">
           <div class="max-w-2xl">
-            <span class="text-xs uppercase font-extrabold tracking-wider text-sky-300 bg-sky-500/10 px-2.5 py-0.5 rounded border border-sky-500/25">The Anti-Cold-DM Engine</span>
-            <h2 class="text-xl font-bold text-white mt-2">Zero Spam. High-Conviction Proof-of-Work.</h2>
-            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              Alumni ignore 98% of cold DMs like <i>"Sir please refer me"</i>. In LinkX, you cannot send raw text. 
-              Paste your GitHub repo or PR; our engine scans your actual architecture, calculates your <b>Code Readiness Score</b>, and packages a <b>1-Minute Executive Dossier</b> for the alumnus!
+            <span class="text-xs uppercase font-extrabold tracking-wider text-blue-700 bg-blue-100/70 px-2.5 py-0.5 rounded-full border border-blue-200">Warm Referral Desk</span>
+            <h2 class="text-xl font-bold text-slate-900 mt-2">Request a Referral with Proof-of-Work</h2>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Skip cold DMs. Select a target alumnus, link your GitHub repository, and ask a specific technical question.
+              Our engine evaluates your code and packages a <b>1-Minute Executive Dossier</b> for the alumnus to endorse.
             </p>
           </div>
           <div class="absolute right-4 bottom-4 opacity-10 hidden lg:block">
-            <i data-lucide="shield-check" class="w-36 h-36 text-sky-400"></i>
+            <i data-lucide="shield-check" class="w-36 h-36 text-blue-600"></i>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <!-- Input Form -->
-          <div class="lg:col-span-5 glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
-            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-              <i data-lucide="git-pull-request" class="w-4 h-4 text-sky-400"></i>
-              <span>Submit Work for Warm Intro</span>
+          <div class="lg:col-span-5 glass-panel rounded-2xl p-5 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="git-pull-request" class="w-4 h-4 text-blue-600"></i>
+              <span>Create Referral Request</span>
             </h3>
 
             <div>
-              <label class="block text-xs font-medium text-slate-300 mb-1">Target Company & Alumnus</label>
-              <select id="pow-target-company" class="w-full bg-[#060a14] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Target Company &amp; Alumnus</label>
+              <select id="pow-target-company" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-600">
                 <option value="Swiggy">Swiggy (Rohan Mehta - SDE-2 Backend • Batch '20)</option>
                 <option value="Google">Google (Aditi Rao - Senior Cloud Architect • Batch '17)</option>
                 <option value="Atlassian">Atlassian (Kunal Varma - Platform Engineer • Batch '18)</option>
-                <option value="HyperScale AI">HyperScale AI (Neha Kapoor - Founder & CEO • Batch '19)</option>
+                <option value="HyperScale AI">HyperScale AI (Neha Kapoor - Founder &amp; CEO • Batch '19)</option>
               </select>
             </div>
 
             <div>
               <div class="flex items-center justify-between mb-1">
-                <label class="block text-xs font-medium text-slate-300">GitHub Repository URL</label>
-                <span class="text-[10px] text-sky-400 font-semibold">1-Click Presets:</span>
+                <label class="block text-xs font-semibold text-slate-700">GitHub Repository URL</label>
+                <span class="text-[10px] text-blue-600 font-semibold">1-Click Presets:</span>
               </div>
               <div class="flex flex-wrap gap-1.5 pb-2">
-                <button type="button" onclick="fillSampleRepo('https://github.com/aman-cs/distri-cache-engine', 'Swiggy', 'Optimizing Redis caching cluster eviction latency under 10k concurrent requests.', 'Redis Engine (Go)')" class="px-2 py-1 rounded-lg bg-blue-950/50 hover:bg-blue-900/70 border border-blue-500/30 text-blue-300 text-[10px] font-semibold transition flex items-center space-x-1">
-                  <i data-lucide="zap" class="w-3 h-3 text-sky-400"></i>
+                <button type="button" onclick="fillSampleRepo('https://github.com/aman-cs/distri-cache-engine', 'Swiggy', 'Optimizing Redis caching cluster eviction latency under 10k concurrent requests.', 'Redis Engine (Go)')" class="px-2 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 text-[10px] font-semibold transition flex items-center space-x-1">
+                  <i data-lucide="zap" class="w-3 h-3 text-blue-600"></i>
                   <span>Redis Engine (Swiggy)</span>
                 </button>
-                <button type="button" onclick="fillSampleRepo('https://github.com/expressjs/express', 'Atlassian', 'Reducing middleware pipeline overhead and memory footprint in Express core.', 'Express Core (Node)')" class="px-2 py-1 rounded-lg bg-indigo-950/50 hover:bg-indigo-900/70 border border-indigo-500/30 text-indigo-300 text-[10px] font-semibold transition flex items-center space-x-1">
-                  <i data-lucide="git-merge" class="w-3 h-3 text-indigo-400"></i>
+                <button type="button" onclick="fillSampleRepo('https://github.com/expressjs/express', 'Atlassian', 'Reducing middleware pipeline overhead and memory footprint in Express core.', 'Express Core (Node)')" class="px-2 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 text-[10px] font-semibold transition flex items-center space-x-1">
+                  <i data-lucide="git-merge" class="w-3 h-3 text-indigo-600"></i>
                   <span>Express API (Atlassian)</span>
                 </button>
-                <button type="button" onclick="fillSampleRepo('https://github.com/tiangolo/fastapi', 'Google', 'Autoscaling async inference pipelines with sub-10ms P99 latency on K8s.', 'FastAPI (Python)')" class="px-2 py-1 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-cyan-500/30 text-cyan-300 text-[10px] font-semibold transition flex items-center space-x-1">
-                  <i data-lucide="cpu" class="w-3 h-3 text-cyan-400"></i>
+                <button type="button" onclick="fillSampleRepo('https://github.com/tiangolo/fastapi', 'Google', 'Autoscaling async inference pipelines with sub-10ms P99 latency on K8s.', 'FastAPI (Python)')" class="px-2 py-1 rounded-lg bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 text-cyan-700 text-[10px] font-semibold transition flex items-center space-x-1">
+                  <i data-lucide="cpu" class="w-3 h-3 text-cyan-600"></i>
                   <span>FastAPI (Google)</span>
                 </button>
               </div>
               <div class="relative">
-                <input type="text" id="pow-repo-url" value="https://github.com/aman-cs/distri-cache-engine" class="w-full bg-[#060a14] border border-slate-800 rounded-xl pl-8 pr-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-sky-500" placeholder="https://github.com/username/project">
+                <input type="text" id="pow-repo-url" value="https://github.com/aman-cs/distri-cache-engine" class="w-full bg-white border border-slate-300 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-blue-600" placeholder="https://github.com/username/project">
                 <i data-lucide="github" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
               </div>
-              <p class="text-[10px] text-slate-400 mt-1">Accepts any real public GitHub repository or pre-selected campus project.</p>
+              <p class="text-[10px] text-slate-500 mt-1">Accepts any real public GitHub repository or pre-selected campus project.</p>
             </div>
 
             <div>
-              <label class="block text-xs font-medium text-slate-300 mb-1">Specific Production Blocker or 3-Minute Question</label>
-              <textarea id="pow-blocker" rows="3" class="w-full bg-[#060a14] border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-sky-500" placeholder="Optimizing Redis caching cluster eviction latency under 10k concurrent requests.">Optimizing Redis caching cluster eviction latency under 10k concurrent requests.</textarea>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Specific Production Blocker or 3-Minute Question</label>
+              <textarea id="pow-blocker" rows="3" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:border-blue-600" placeholder="Optimizing Redis caching cluster eviction latency under 10k concurrent requests.">Optimizing Redis caching cluster eviction latency under 10k concurrent requests.</textarea>
             </div>
 
-            <button onclick="generateProofOfWorkDossier()" id="btn-generate-pow" class="w-full py-2.5 btn-gradient-primary text-white font-semibold rounded-xl text-xs flex items-center justify-center space-x-2 transition">
+            <button onclick="generateProofOfWorkDossier()" id="btn-generate-pow" class="w-full py-2.5 btn-gradient-primary text-white font-semibold rounded-xl text-xs flex items-center justify-center space-x-2 transition shadow-xs">
               <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>Analyze Code & Generate Dossier</span>
+              <span>Analyze Code &amp; Generate Dossier</span>
             </button>
           </div>
 
           <!-- Output Preview -->
-          <div class="lg:col-span-7 glass-panel rounded-2xl p-6 border border-slate-800 space-y-4" id="pow-output-container">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div class="lg:col-span-7 glass-panel rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4" id="pow-output-container">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div class="flex items-center space-x-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse"></span>
-                <h3 class="text-sm font-bold text-white">Live AI Dossier Preview</h3>
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
+                <h3 class="text-sm font-bold text-slate-900">Live AI Dossier Preview</h3>
               </div>
-              <span class="text-[11px] font-mono text-sky-300 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20">Executive Flash Card</span>
+              <span class="text-[11px] font-mono text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-medium">Executive Flash Card</span>
             </div>
 
             <div id="pow-card-content" class="space-y-4">
               <div class="text-center py-10 space-y-3">
-                <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center mx-auto text-sky-400">
+                <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center mx-auto text-blue-600">
                   <i data-lucide="file-code" class="w-6 h-6"></i>
                 </div>
-                <p class="text-xs text-slate-400">Click <b>"Analyze Code & Generate Dossier"</b> to synthesize live repository metrics into an alumnus-ready flash card.</p>
+                <p class="text-xs text-slate-500">Click <b>"Analyze Code &amp; Generate Dossier"</b> to synthesize live repository metrics into an alumnus-ready flash card.</p>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Live Dispatched Referrals Status (Visible to Student) -->
-        <div class="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div class="glass-panel rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
             <div class="flex items-center space-x-2">
-              <div class="p-1.5 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
+              <div class="p-1.5 rounded-lg bg-blue-50 text-blue-600 border border-blue-200">
                 <i data-lucide="send" class="w-4 h-4"></i>
               </div>
               <div>
-                <h3 class="text-sm font-bold text-white">My Active Proof-of-Work Referral Dispatches</h3>
-                <p class="text-[11px] text-slate-400">Real-time status of dossiers sent to alumni decision desks.</p>
+                <h3 class="text-sm font-bold text-slate-900">My Active Proof-of-Work Referral Dispatches</h3>
+                <p class="text-[11px] text-slate-500">Real-time status of dossiers sent to alumni decision desks.</p>
               </div>
             </div>
-            <span id="student-dispatches-count" class="text-[11px] font-mono text-sky-300 bg-sky-500/10 px-2.5 py-1 rounded-lg border border-sky-500/20">1 Active Request</span>
+            <span id="student-dispatches-count" class="text-[11px] font-mono text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200 font-semibold">1 Active Request</span>
           </div>
 
           <div id="student-referrals-container" class="space-y-3">
@@ -1523,18 +1981,18 @@
 
       <!-- ================= TAB 3: OPPORTUNITY & BOUNTY EXCHANGE ================= -->
       <div id="view-bounties" class="hidden space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#080e1c] border border-slate-800 rounded-xl p-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
           <div>
             <div class="flex items-center space-x-2">
-              <h3 class="text-sm font-bold text-white">Campus Opportunity & Bounty Board</h3>
-              <span class="text-[10px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 px-2 py-0.5 rounded-full">Escrow Backed</span>
+              <h3 class="text-sm font-bold text-slate-900">Paid Campus Bounties &amp; Tasks</h3>
+              <span class="text-[10px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold">Guaranteed Escrow</span>
             </div>
-            <p class="text-xs text-slate-400">Micro-tasks, referral radars, and capstones funded & mentored directly by alumni & founders.</p>
+            <p class="text-xs text-slate-500">Micro-tasks and engineering bounties funded by alumni founders. Earn rewards and gain visibility.</p>
           </div>
 
-          <button onclick="openPostBountyModal()" class="flex items-center space-x-1.5 px-4 py-2 btn-gradient-primary text-white rounded-xl text-xs font-semibold shadow-md shadow-blue-600/20 transition">
+          <button onclick="openPostBountyModal()" class="flex items-center space-x-1.5 px-4 py-2 btn-gradient-primary text-white rounded-xl text-xs font-semibold shadow-xs transition">
             <i data-lucide="plus-circle" class="w-4 h-4"></i>
-            <span>Post New Opportunity</span>
+            <span>Post New Bounty</span>
           </button>
         </div>
 
@@ -1545,21 +2003,21 @@
 
       <!-- ================= TAB 4: ALUMNUS DECISION INBOX ================= -->
       <div id="view-alumnus-inbox" class="hidden space-y-6">
-        <div class="bg-gradient-to-r from-slate-900/90 via-[#080e1c] to-slate-900/90 border border-slate-800 rounded-2xl p-6">
+        <div class="bg-gradient-to-r from-blue-50 via-indigo-50/40 to-white border border-blue-100 rounded-2xl p-6 shadow-xs">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div class="flex items-center space-x-2">
-                <span class="text-xs uppercase font-extrabold tracking-wider text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20">Zero-Spam Decision Desk</span>
-                <span class="text-xs text-slate-300 font-mono">1-Minute Reviews</span>
+                <span class="text-xs uppercase font-extrabold tracking-wider text-blue-700 bg-blue-100/70 px-2.5 py-0.5 rounded-full border border-blue-200">Alumni Review Desk</span>
+                <span class="text-xs text-slate-500 font-mono">1-Minute Reviews</span>
               </div>
-              <h2 class="text-xl font-bold text-white mt-1.5">Incoming Verified Referral Dossiers</h2>
-              <p class="text-xs text-slate-300 mt-1">
-                Every card below is backed by verified GitHub metrics, unit test coverage, and benchmark scores. No cold DMs.
+              <h2 class="text-xl font-bold text-slate-900 mt-1.5">Incoming Student Referral Requests</h2>
+              <p class="text-xs text-slate-600 mt-1">
+                Review student applications with verified GitHub projects, test coverage, and capability scores.
               </p>
             </div>
             <div class="flex items-center space-x-2">
-              <span class="text-xs text-slate-400">Monthly Quota:</span>
-              <span class="text-xs font-bold text-sky-300 bg-sky-500/10 px-2.5 py-1 rounded-lg border border-sky-500/20">2 / 3 Left</span>
+              <span class="text-xs text-slate-500 font-medium">Monthly Quota:</span>
+              <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200">2 / 3 Left</span>
             </div>
           </div>
         </div>
@@ -1569,141 +2027,476 @@
         </div>
       </div>
 
-      <!-- ================= TAB 5: CAMPUS LINEAGE & NETWORK GRAPH ================= -->
-      <div id="view-network-graph" class="hidden space-y-6">
-        <div class="bg-[#080e1c] border border-slate-800 rounded-2xl p-6 space-y-4">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h3 class="text-base font-bold text-white flex items-center space-x-2">
-                <i data-lucide="git-merge" class="w-5 h-5 text-sky-400"></i>
-                <span>Interactive Campus Lineage & Connection Graph</span>
-              </h3>
-              <p class="text-xs text-slate-400 mt-1">Visualize how students, faculty capstones, and alumni founders interconnect dynamically.</p>
+      <!-- ================= ECOSYSTEM TAB: ALUMNI IMPACT EXCHANGE ================= -->
+      <div id="view-alumnus-impact" class="hidden space-y-6">
+        
+        <!-- Header Banner: Time Budget & Micro-Contributions -->
+        <div class="bg-gradient-to-r from-emerald-50 via-teal-50/40 to-white border border-emerald-200/80 rounded-2xl p-6 shadow-xs">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+            <div class="max-w-2xl space-y-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] uppercase font-extrabold tracking-wider text-emerald-800 bg-emerald-100/80 px-2.5 py-0.5 rounded-full border border-emerald-200 font-mono flex items-center space-x-1">
+                  <i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  <span>Alumni Impact Exchange</span>
+                </span>
+                <span class="text-xs bg-blue-100 text-blue-800 border border-blue-200 px-2 py-0.5 rounded-full font-semibold">
+                  Zero Cold DMs • Controlled Units
+                </span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                Micro-Mentorship in Controlled Units of Time
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Contribute 15–30 minutes of high-leverage guidance per month. Review student pull-requests with pre-vetted test coverage, conduct mock interviews, or refer verified talent without endless open-ended meetings.
+              </p>
             </div>
 
-            <div class="flex items-center space-x-3 text-xs">
-              <span class="flex items-center space-x-1"><span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span><span class="text-slate-300">Student</span></span>
-              <span class="flex items-center space-x-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span><span class="text-slate-300">Alumni</span></span>
-              <span class="flex items-center space-x-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span><span class="text-slate-300">Founder</span></span>
-              <span class="flex items-center space-x-1"><span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span><span class="text-slate-300">Faculty</span></span>
+            <!-- Time Budget Meter Card -->
+            <div class="bg-white border border-emerald-200 rounded-2xl p-4 shadow-xs flex items-center space-x-4 shrink-0">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-600 flex flex-col items-center justify-center text-white shadow-md shadow-emerald-500/20">
+                <span id="impact-time-left" class="text-xl font-black leading-none text-white">35m</span>
+                <span class="text-[8px] font-mono uppercase text-emerald-100 mt-0.5">Left</span>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Weekly Time Budget</div>
+                <div class="text-xs font-bold text-emerald-700 flex items-center space-x-1 mt-0.5">
+                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  <span>25m Used of 60m Allocated</span>
+                </div>
+                <div class="text-[10px] text-slate-500 mt-0.5 font-mono">2 Slots Open This Month</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- LEFT: My Active Micro-Offers (7 Cols) -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600"></i>
+                <span>My Published Micro-Offers</span>
+              </h3>
+              <button onclick="handlePublishMicroOfferPrompt()" class="px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 rounded-xl text-xs font-semibold flex items-center space-x-1 transition">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Publish New Offer</span>
+              </button>
+            </div>
+
+            <div id="impact-offers-container" class="space-y-3">
+              <!-- Dynamically populated offers -->
             </div>
           </div>
 
-          <div class="relative w-full h-96 bg-[#030611] rounded-xl border border-slate-800 flex items-center justify-center overflow-hidden">
+          <!-- RIGHT: Incoming Student Review Queue (5 Cols) -->
+          <div class="lg:col-span-5 space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="inbox" class="w-4 h-4 text-blue-600"></i>
+              <span>Pending Code &amp; Dossier Requests</span>
+            </h3>
+
+            <div id="impact-pending-container" class="space-y-3">
+              <!-- Dynamically populated pending requests -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= ECOSYSTEM TAB: ALUMNI LEGACY GRAPH ================= -->
+      <div id="view-legacy-graph" class="hidden space-y-6">
+        <div class="bg-gradient-to-r from-blue-50 via-slate-50 to-white border border-blue-200/80 rounded-2xl p-6 shadow-xs">
+          <div class="max-w-2xl space-y-2">
+            <div class="flex items-center space-x-2">
+              <span class="text-[11px] uppercase font-extrabold tracking-wider text-blue-700 bg-blue-100/80 px-2.5 py-0.5 rounded-full border border-blue-200 font-mono">
+                Reusable Knowledge Playbooks
+              </span>
+              <span class="text-xs text-slate-500 font-mono">• 100+ Students Helped Async</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Alumni Legacy Graph
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Don't answer the same question 50 times in 1-on-1 calls. Document your battle-tested path — what to build, what mistakes to avoid, and interview insights — so campus juniors learn independently first.
+            </p>
+          </div>
+        </div>
+
+        <div id="legacy-guides-container" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Dynamically populated guides -->
+        </div>
+      </div>
+
+      <!-- ================= ECOSYSTEM TAB: FACULTY CHALLENGE EXCHANGE ================= -->
+      <div id="view-faculty-challenges" class="hidden space-y-6">
+        
+        <div class="bg-gradient-to-r from-purple-50 via-indigo-50/40 to-white border border-purple-200/80 rounded-2xl p-6 shadow-xs">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+            <div class="max-w-2xl space-y-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] uppercase font-extrabold tracking-wider text-purple-700 bg-purple-100/80 px-2.5 py-0.5 rounded-full border border-purple-200 font-mono flex items-center space-x-1">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600"></i>
+                  <span>Faculty Challenge Exchange</span>
+                </span>
+                <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-semibold">
+                  Academic &amp; Industry Convergence
+                </span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                Connect Classroom Learning with Real Industry Challenges
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Faculty publish research milestones and industry challenges. LinkX recommends interdisciplinary student teams, pairs them with industry alumni co-guides, and converts completed work into verified portfolio evidence.
+              </p>
+            </div>
+
+            <button onclick="handleOpenNewChallengeModal()" class="px-5 py-2.5 btn-gradient-primary text-white font-bold rounded-xl text-xs shadow-md shadow-blue-600/30 flex items-center space-x-1.5 shrink-0 transition">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>Publish New Challenge</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="faculty-challenges-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Dynamically populated challenges -->
+        </div>
+
+      </div>
+
+      <!-- ================= ECOSYSTEM TAB: HIRING COPILOT (PROOF-OF-WORK SHORTLIST) ================= -->
+      <div id="view-hiring-copilot" class="hidden space-y-6">
+        
+        <div class="bg-gradient-to-r from-cyan-50 via-blue-50/40 to-white border border-cyan-200/80 rounded-2xl p-6 shadow-xs">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+            <div class="max-w-2xl space-y-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] uppercase font-extrabold tracking-wider text-cyan-800 bg-cyan-100/80 px-2.5 py-0.5 rounded-full border border-cyan-200 font-mono flex items-center space-x-1">
+                  <i data-lucide="cpu" class="w-3.5 h-3.5 text-cyan-600"></i>
+                  <span>Hiring Copilot</span>
+                </span>
+                <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-semibold">
+                  Zero Resume Inflation
+                </span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                Pre-Audited Proof-of-Work Candidate Shortlist
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Source campus builders vetted by Faculty Challenges, GitHub test coverage (>= 90%), and alumni endorsements. Fast-track first round interviews in 1 click without recruiter screening lag.
+              </p>
+            </div>
+
+            <div class="flex items-center space-x-3 bg-white border border-cyan-200 rounded-2xl p-3.5 shadow-xs shrink-0">
+              <div class="text-right">
+                <div class="text-[10px] uppercase font-bold text-slate-500 font-mono">Curated Cohort</div>
+                <div class="text-base font-black text-cyan-700">Top 5% Builders</div>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-600">
+                <i data-lucide="user-check" class="w-5 h-5"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="hiring-copilot-container" class="space-y-4">
+          <!-- Dynamically populated candidate shortlist cards -->
+        </div>
+
+      </div>
+
+      <!-- ================= ECOSYSTEM TAB: CAMPUS OPPORTUNITY GAP RADAR ================= -->
+      <div id="view-gap-radar" class="hidden space-y-6">
+        
+        <div class="bg-gradient-to-r from-rose-50 via-amber-50/30 to-white border border-rose-200/80 rounded-2xl p-6 shadow-xs">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+            <div class="max-w-2xl space-y-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] uppercase font-extrabold tracking-wider text-rose-800 bg-rose-100/80 px-2.5 py-0.5 rounded-full border border-rose-200 font-mono flex items-center space-x-1">
+                  <i data-lucide="radar" class="w-3.5 h-3.5 text-rose-600"></i>
+                  <span>Institutional Intelligence</span>
+                </span>
+                <span class="text-xs bg-amber-100 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-full font-semibold">
+                  Live Anomaly Detection
+                </span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                Campus Opportunity Gap Radar
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Identifies unmet needs across student demand, alumni availability, faculty research, and startup bounties. Activate targeted interventions in 1 click to maximize placement ROI and NAAC 5.4.1 criteria.
+              </p>
+            </div>
+
+            <div class="bg-white border border-rose-200 rounded-2xl p-3.5 shadow-xs flex items-center space-x-3 shrink-0">
+              <div class="text-right">
+                <div class="text-[10px] uppercase font-bold text-slate-500 font-mono">Ecosystem Health</div>
+                <div class="text-base font-black text-rose-600">3 Actionable Gaps</div>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600">
+                <i data-lucide="activity" class="w-5 h-5"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="gap-radar-container" class="space-y-4">
+          <!-- Dynamically populated gap alerts -->
+        </div>
+
+      </div>
+
+      <!-- ================= ECOSYSTEM TAB: CIRCULAR RECIPROCITY SYNDICATE (CAMPUS GRANTS POOL) ================= -->
+      <div id="view-syndicate" class="hidden space-y-6">
+        
+        <!-- Header Banner: Syndicate Mission -->
+        <div class="bg-gradient-to-r from-amber-50 via-yellow-50/40 to-white border border-amber-200/80 rounded-2xl p-6 shadow-xs">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+            <div class="max-w-2xl space-y-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] uppercase font-extrabold tracking-wider text-amber-800 bg-amber-100/90 px-2.5 py-0.5 rounded-full border border-amber-300 font-mono flex items-center space-x-1">
+                  <i data-lucide="coins" class="w-3.5 h-3.5 text-amber-600"></i>
+                  <span>Circular Reciprocity Syndicate</span>
+                </span>
+                <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold">
+                  Self-Sustaining Campus Economy
+                </span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                Turning Corporate Referrals into Student Innovation Grants
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                When alumni referrals convert into verified job offers, corporate referral rewards automatically fuel an on-campus micro-grant pool. This pool sponsors cloud GPUs, hackathon travel, and hardware kits for juniors—creating a continuous loop of reinvestment.
+              </p>
+            </div>
+
+            <!-- Pool KPI Dial -->
+            <div class="bg-white border border-amber-200 rounded-2xl p-4 shadow-xs flex items-center space-x-4 shrink-0">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-500 text-white flex items-center justify-center shadow-md shadow-amber-500/20">
+                <i data-lucide="wallet" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase font-bold text-slate-500 font-mono">Live Syndicate Treasury</div>
+                <div id="syndicate-total-pool" class="text-2xl font-black text-amber-900 font-mono">₹1,45,000</div>
+                <div class="text-[11px] text-emerald-700 font-semibold flex items-center space-x-1">
+                  <i data-lucide="trending-up" class="w-3 h-3"></i>
+                  <span>+₹20,000 this week</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ⚡ JUDGE INTERACTIVE SIMULATOR CARD -->
+        <div class="p-[1px] rounded-2xl bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-500 shadow-md">
+          <div class="bg-white rounded-[15px] p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="space-y-1.5">
+              <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-800 font-mono">Judge Interactive Demonstration</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900">
+                Simulate Candidate Hire &amp; Instant Corporate Grant Payout
+              </h3>
+              <p class="text-xs text-slate-600 max-w-2xl leading-relaxed">
+                Test the circular mechanism in real-time. Click to verify <b>Aman Sharma's</b> backend offer at <b>Razorpay</b> via <b>Rohan Mehta's</b> referral and watch ₹20,000 instantly disburse into a new student hackathon travel grant.
+              </p>
+            </div>
+
+            <button onclick="handleSimulatePlacementReward()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs shadow-md shadow-orange-500/20 flex items-center space-x-2 shrink-0 transition cursor-pointer active:scale-95">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              <span>⚡ Simulate Placement &amp; Fund Grant</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Two Column Content: Funded Grants & Corporate Ledger -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Left (7 Cols): Funded Student Grants -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                <i data-lucide="gift" class="w-4 h-4 text-amber-600"></i>
+                <span>Disbursed &amp; Active Student Grants</span>
+              </h3>
+              <span id="syndicate-grants-badge" class="text-xs font-mono font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full border border-amber-200">
+                3 Grants Live
+              </span>
+            </div>
+
+            <div id="syndicate-grants-container" class="space-y-3">
+              <!-- Dynamically populated grants -->
+            </div>
+          </div>
+
+          <!-- Right (5 Cols): Placement Kickback Ledger -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                <i data-lucide="history" class="w-4 h-4 text-blue-600"></i>
+                <span>Recent Referral Placements</span>
+              </h3>
+              <span class="text-xs font-mono text-slate-500">Corporate Matches</span>
+            </div>
+
+            <div id="syndicate-placements-container" class="bg-white border border-slate-200 rounded-2xl p-4 divide-y divide-slate-100 shadow-xs space-y-3">
+              <!-- Dynamically populated placement events -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= TAB 5: CAMPUS LINEAGE & NETWORK GRAPH ================= -->
+      <div id="view-network-graph" class="hidden space-y-6">
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+                <i data-lucide="git-merge" class="w-5 h-5 text-blue-600"></i>
+                <span>Campus Lineage &amp; Alumni Network</span>
+              </h3>
+              <p class="text-xs text-slate-500 mt-1">Explore how students, alumni mentors, and startup founders connect across companies and batches.</p>
+            </div>
+
+            <div class="flex items-center space-x-3 text-xs">
+              <span class="flex items-center space-x-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span><span class="text-slate-600 font-medium">Student</span></span>
+              <span class="flex items-center space-x-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span class="text-slate-600 font-medium">Alumni</span></span>
+              <span class="flex items-center space-x-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span><span class="text-slate-600 font-medium">Founder</span></span>
+              <span class="flex items-center space-x-1"><span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span><span class="text-slate-600 font-medium">Faculty</span></span>
+            </div>
+          </div>
+
+          <div class="relative w-full h-96 bg-[#0a1128] rounded-xl border border-slate-200 flex items-center justify-center overflow-hidden">
             <canvas id="lineage-canvas" class="w-full h-full"></canvas>
-            <div class="absolute bottom-3 left-4 text-[11px] font-mono text-slate-300 bg-[#080e1c]/90 px-2.5 py-1 rounded border border-slate-800">
+            <div class="absolute bottom-3 left-4 text-[11px] font-mono text-slate-300 bg-[#0a1128]/90 px-2.5 py-1 rounded border border-slate-700">
               Interactive Node Physics • 48 Connected Active Entities
             </div>
-            <button onclick="reseedGraph()" class="absolute top-3 right-4 px-2.5 py-1 text-xs bg-slate-900 hover:bg-slate-800 text-slate-200 rounded border border-slate-700 transition flex items-center space-x-1">
+            <button onclick="reseedGraph()" class="absolute top-3 right-4 px-2.5 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded border border-slate-600 transition flex items-center space-x-1">
               <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-sky-400"></i>
               <span>Re-cluster Nodes</span>
             </button>
           </div>
         </div>
       </div>
-
       <!-- ================= TAB 6: INSTITUTION IMPACT DESK ================= -->
       <div id="view-institution" class="hidden space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-blue-50/60 border border-blue-200/60 rounded-xl p-4">
+          <div class="flex items-center space-x-3">
+            <div class="p-2 rounded-lg bg-blue-100 text-blue-700 border border-blue-200">
+              <i data-lucide="landmark" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">Accreditation &amp; Placement Outcomes</h3>
+              <p class="text-xs text-slate-600">Institutional metrics, alumni employment clusters, and NAAC/NIRF accreditation criteria.</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-blue-700 bg-blue-100/70 px-3 py-1 rounded-lg border border-blue-200 font-mono">NAAC Criterion 5.4.1</span>
+        </div>
+
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="glass-panel rounded-2xl p-4 border border-slate-800">
-            <div class="text-[11px] font-bold uppercase text-slate-400">Active Network Size</div>
-            <div id="inst-stat-members" class="text-2xl font-black text-white mt-1">4,820</div>
-            <div class="text-[11px] text-emerald-400 flex items-center space-x-1 mt-1">
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-bold uppercase text-slate-500">Active Network Size</div>
+            <div id="inst-stat-members" class="text-2xl font-black text-slate-900 mt-1">4,820</div>
+            <div class="text-[11px] text-emerald-600 font-medium flex items-center space-x-1 mt-1">
               <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
               <span>+28% vs Static Directory</span>
             </div>
           </div>
 
-          <div class="glass-panel rounded-2xl p-4 border border-slate-800">
-            <div class="text-[11px] font-bold uppercase text-slate-400">Verified Warm Referrals</div>
-            <div id="inst-stat-referrals" class="text-2xl font-black text-sky-400 mt-1">342</div>
-            <div class="text-[11px] text-slate-400 mt-1">89% conversion to interview</div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-bold uppercase text-slate-500">Verified Warm Referrals</div>
+            <div id="inst-stat-referrals" class="text-2xl font-black text-blue-600 mt-1">342</div>
+            <div class="text-[11px] text-slate-500 mt-1">89% conversion to interview</div>
           </div>
 
-          <div class="glass-panel rounded-2xl p-4 border border-slate-800">
-            <div class="text-[11px] font-bold uppercase text-slate-400">Student Bounty Earnings</div>
-            <div id="inst-stat-bounties" class="text-2xl font-black text-amber-300 mt-1">₹4.2 Lakh</div>
-            <div class="text-[11px] text-slate-400 mt-1">Direct student disbursements</div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-bold uppercase text-slate-500">Student Bounty Earnings</div>
+            <div id="inst-stat-bounties" class="text-2xl font-black text-amber-600 mt-1">₹4.2 Lakh</div>
+            <div class="text-[11px] text-slate-500 mt-1">Direct student disbursements</div>
           </div>
 
-          <div class="glass-panel rounded-2xl p-4 border border-slate-800">
-            <div class="text-[11px] font-bold uppercase text-slate-400">Industry Capstone Projects</div>
-            <div id="inst-stat-capstones" class="text-2xl font-black text-indigo-400 mt-1">64</div>
-            <div class="text-[11px] text-slate-400 mt-1">Faculty & Alum Co-Mentored</div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-bold uppercase text-slate-500">Industry Capstone Projects</div>
+            <div id="inst-stat-capstones" class="text-2xl font-black text-indigo-600 mt-1">64</div>
+            <div class="text-[11px] text-slate-500 mt-1">Faculty & Alum Co-Mentored</div>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
-            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-              <i data-lucide="building" class="w-4 h-4 text-sky-400"></i>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="building" class="w-4 h-4 text-blue-600"></i>
               <span>Top Alumni Employer Clusters</span>
             </h3>
             <div class="space-y-3">
               <div>
                 <div class="flex justify-between text-xs mb-1">
-                  <span class="text-slate-300 font-medium">Google / Alphabet</span>
-                  <span class="text-sky-400 font-bold">142 Alumni (18 Hiring)</span>
+                  <span class="text-slate-700 font-medium">Google / Alphabet</span>
+                  <span class="text-blue-600 font-bold">142 Alumni (18 Hiring)</span>
                 </div>
-                <div class="w-full bg-[#030611] h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
                   <div class="bg-gradient-to-r from-blue-600 to-indigo-500 h-full rounded-full" style="width: 78%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between text-xs mb-1">
-                  <span class="text-slate-300 font-medium">Microsoft</span>
-                  <span class="text-indigo-400 font-bold">118 Alumni (12 Hiring)</span>
+                  <span class="text-slate-700 font-medium">Microsoft</span>
+                  <span class="text-indigo-600 font-bold">118 Alumni (12 Hiring)</span>
                 </div>
-                <div class="w-full bg-[#030611] h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
                   <div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full" style="width: 65%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between text-xs mb-1">
-                  <span class="text-slate-300 font-medium">Swiggy & Zomato</span>
-                  <span class="text-amber-400 font-bold">94 Alumni (9 Hiring)</span>
+                  <span class="text-slate-700 font-medium">Swiggy & Zomato</span>
+                  <span class="text-amber-600 font-bold">94 Alumni (9 Hiring)</span>
                 </div>
-                <div class="w-full bg-[#030611] h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
                   <div class="bg-gradient-to-r from-amber-500 to-orange-500 h-full rounded-full" style="width: 52%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between text-xs mb-1">
-                  <span class="text-slate-300 font-medium">Funded Startups & Founders</span>
-                  <span class="text-emerald-400 font-bold">76 Companies (28 Bounties)</span>
+                  <span class="text-slate-700 font-medium">Funded Startups & Founders</span>
+                  <span class="text-emerald-600 font-bold">76 Companies (28 Bounties)</span>
                 </div>
-                <div class="w-full bg-[#030611] h-2 rounded-full overflow-hidden border border-slate-800">
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
                   <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 h-full rounded-full" style="width: 44%"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
-            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-              <i data-lucide="map-pin" class="w-4 h-4 text-sky-400"></i>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="map-pin" class="w-4 h-4 text-blue-600"></i>
               <span>Alumni Geographic Hubs</span>
             </h3>
             <div class="grid grid-cols-2 gap-3">
-              <div class="bg-[#080e1c] border border-slate-800 rounded-xl p-3">
-                <span class="text-xs text-slate-400">Bangalore Hub</span>
-                <div class="text-lg font-bold text-white mt-1">1,420</div>
-                <span class="text-[10px] text-sky-400">42 City Meetups</span>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <span class="text-xs text-slate-500">Bangalore Hub</span>
+                <div class="text-lg font-bold text-slate-900 mt-1">1,420</div>
+                <span class="text-[10px] text-blue-600 font-medium">42 City Meetups</span>
               </div>
-              <div class="bg-[#080e1c] border border-slate-800 rounded-xl p-3">
-                <span class="text-xs text-slate-400">NCR / Gurgaon</span>
-                <div class="text-lg font-bold text-white mt-1">890</div>
-                <span class="text-[10px] text-sky-400">24 City Meetups</span>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <span class="text-xs text-slate-500">NCR / Gurgaon</span>
+                <div class="text-lg font-bold text-slate-900 mt-1">890</div>
+                <span class="text-[10px] text-blue-600 font-medium">24 City Meetups</span>
               </div>
-              <div class="bg-[#080e1c] border border-slate-800 rounded-xl p-3">
-                <span class="text-xs text-slate-400">Hyderabad / Pune</span>
-                <div class="text-lg font-bold text-white mt-1">740</div>
-                <span class="text-[10px] text-sky-400">19 City Meetups</span>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <span class="text-xs text-slate-500">Hyderabad / Pune</span>
+                <div class="text-lg font-bold text-slate-900 mt-1">740</div>
+                <span class="text-[10px] text-blue-600 font-medium">19 City Meetups</span>
               </div>
-              <div class="bg-[#080e1c] border border-slate-800 rounded-xl p-3">
-                <span class="text-xs text-slate-400">US & Global (SF/London)</span>
-                <div class="text-lg font-bold text-white mt-1">360</div>
-                <span class="text-[10px] text-blue-400">Global Mentors</span>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                <span class="text-xs text-slate-500">US & Global (SF/London)</span>
+                <div class="text-lg font-bold text-slate-900 mt-1">360</div>
+                <span class="text-[10px] text-indigo-600 font-medium">Global Mentors</span>
               </div>
             </div>
           </div>
@@ -1752,22 +2545,22 @@
   </button>
 
   <!-- ================= MODAL: POST NEW BOUNTY / OPPORTUNITY ================= -->
-  <div id="modal-post-bounty" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-[#080d1a] border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+  <div id="modal-post-bounty" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div class="flex items-center space-x-2">
-          <i data-lucide="plus-circle" class="w-5 h-5 text-sky-400"></i>
-          <h3 class="text-base font-bold text-white">Post Campus Opportunity / Bounty</h3>
+          <i data-lucide="plus-circle" class="w-5 h-5 text-blue-600"></i>
+          <h3 class="text-base font-bold text-slate-900">Post Campus Opportunity / Bounty</h3>
         </div>
-        <button onclick="closeModal('modal-post-bounty')" class="text-slate-400 hover:text-white">
+        <button onclick="closeModal('modal-post-bounty')" class="text-slate-400 hover:text-slate-600">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
       <form id="form-post-bounty" onsubmit="handlePostBountySubmit(event)" class="space-y-3">
         <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Opportunity Type</label>
-          <select id="bounty-type" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Opportunity Type</label>
+          <select id="bounty-type" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600">
             <option value="bounty">Micro-Bounty (Paid Gig + Referral)</option>
             <option value="referral">Referral Radar Slot</option>
             <option value="capstone">Faculty-Alumni Research Capstone</option>
@@ -1775,28 +2568,28 @@
         </div>
 
         <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Title</label>
-          <input type="text" id="bounty-title" required class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500" placeholder="e.g. Build Real-time Redis Rate Limiter">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Title</label>
+          <input type="text" id="bounty-title" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600" placeholder="e.g. Build Real-time Redis Rate Limiter">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Reward / Compensation</label>
-            <input type="text" id="bounty-reward" required class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500" placeholder="₹4,000 + Summer SDE Referral">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Reward / Compensation</label>
+            <input type="text" id="bounty-reward" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600" placeholder="₹4,000 + Summer SDE Referral">
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Tags (comma separated)</label>
-            <input type="text" id="bounty-tags" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500" placeholder="Go, Redis, 48hr">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Tags (comma separated)</label>
+            <input type="text" id="bounty-tags" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600" placeholder="Go, Redis, 48hr">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Description & Requirements</label>
-          <textarea id="bounty-desc" rows="3" required class="w-full bg-[#040711] border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-sky-500" placeholder="Explain the specific deliverable and how student work will be reviewed..."></textarea>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Description & Requirements</label>
+          <textarea id="bounty-desc" rows="3" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600" placeholder="Explain the specific deliverable and how student work will be reviewed..."></textarea>
         </div>
 
         <div class="flex items-center justify-end space-x-3 pt-2">
-          <button type="button" onclick="closeModal('modal-post-bounty')" class="px-4 py-2 bg-slate-900 text-slate-300 rounded-xl text-xs hover:bg-slate-800 border border-slate-800">Cancel</button>
+          <button type="button" onclick="closeModal('modal-post-bounty')" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs hover:bg-slate-200 border border-slate-200 font-medium">Cancel</button>
           <button type="submit" class="px-5 py-2 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-md shadow-blue-600/30">Publish to Network</button>
         </div>
       </form>
@@ -1804,14 +2597,14 @@
   </div>
 
   <!-- ================= MODAL: APPLY TO BOUNTY ================= -->
-  <div id="modal-apply-bounty" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-[#080d1a] border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+  <div id="modal-apply-bounty" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div class="flex items-center space-x-2">
-          <i data-lucide="send" class="w-5 h-5 text-sky-400"></i>
-          <h3 id="modal-apply-title" class="text-base font-bold text-white">Apply with Proof-of-Work</h3>
+          <i data-lucide="send" class="w-5 h-5 text-blue-600"></i>
+          <h3 id="modal-apply-title" class="text-base font-bold text-slate-900">Apply with Proof-of-Work</h3>
         </div>
-        <button onclick="closeModal('modal-apply-bounty')" class="text-slate-400 hover:text-white">
+        <button onclick="closeModal('modal-apply-bounty')" class="text-slate-400 hover:text-slate-600">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
@@ -1820,22 +2613,22 @@
         <input type="hidden" id="apply-bounty-id">
 
         <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Candidate Name & Branch</label>
-          <input type="text" id="apply-candidate-name" value="Aman Sharma (CSE '26)" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Candidate Name & Branch</label>
+          <input type="text" id="apply-candidate-name" value="Aman Sharma (CSE '26)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600">
         </div>
 
         <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">GitHub Repository or Pull Request URL</label>
-          <input type="text" id="apply-repo-url" value="https://github.com/aman-cs/distri-cache-engine" required class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-sky-500">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">GitHub Repository or Pull Request URL</label>
+          <input type="text" id="apply-repo-url" value="https://github.com/aman-cs/distri-cache-engine" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:bg-white focus:border-blue-600">
         </div>
 
         <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Why your proof-of-work solves this (1-2 sentences)</label>
-          <textarea id="apply-pitch" rows="3" required class="w-full bg-[#040711] border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-sky-500" placeholder="Implemented custom ring buffer handling 10k RPS with 92% test coverage. Ready to adapt for your service."></textarea>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Why your proof-of-work solves this (1-2 sentences)</label>
+          <textarea id="apply-pitch" rows="3" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600" placeholder="Implemented custom ring buffer handling 10k RPS with 92% test coverage. Ready to adapt for your service."></textarea>
         </div>
 
         <div class="flex items-center justify-end space-x-3 pt-2">
-          <button type="button" onclick="closeModal('modal-apply-bounty')" class="px-4 py-2 bg-slate-900 text-slate-300 rounded-xl text-xs hover:bg-slate-800 border border-slate-800">Cancel</button>
+          <button type="button" onclick="closeModal('modal-apply-bounty')" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs hover:bg-slate-200 border border-slate-200 font-medium">Cancel</button>
           <button type="submit" class="px-5 py-2 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-md shadow-blue-600/30">Submit Application</button>
         </div>
       </form>
@@ -1843,70 +2636,72 @@
   </div>
 
   <!-- ================= MODAL: EDIT ACTIVE INTENT ================= -->
-  <div id="modal-intent" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-[#080d1a] border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-        <h3 class="text-base font-bold text-white flex items-center space-x-2">
-          <i data-lucide="zap" class="w-4 h-4 text-sky-400"></i>
+  <div id="modal-intent" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+          <i data-lucide="zap" class="w-4 h-4 text-blue-600"></i>
           <span>Set Your Active Intent</span>
         </h3>
-        <button onclick="closeModal('modal-intent')" class="text-slate-400 hover:text-white">
+        <button onclick="closeModal('modal-intent')" class="text-slate-400 hover:text-slate-600">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
       <div class="space-y-3">
-        <label class="block text-xs font-medium text-slate-300">What are you actively looking for right now?</label>
+        <label class="block text-xs font-semibold text-slate-700">What are you actively looking for right now?</label>
         <div class="space-y-2 text-xs">
-          <label class="flex items-center space-x-2.5 p-2.5 rounded-xl bg-[#040711] border border-slate-800 cursor-pointer hover:border-slate-700 transition">
-            <input type="radio" name="intent-choice" value="Seeking Backend / Go SDE Referral" checked class="text-sky-600 focus:ring-sky-500">
-            <span class="text-white">Seeking SDE Referral (Backend / Go)</span>
+          <label class="flex items-center space-x-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-blue-400 hover:bg-blue-50/40 transition">
+            <input type="radio" name="intent-choice" value="Seeking Backend / Go SDE Referral" checked class="text-blue-600 focus:ring-blue-500">
+            <span class="text-slate-800 font-medium">Seeking SDE Referral (Backend / Go)</span>
           </label>
-          <label class="flex items-center space-x-2.5 p-2.5 rounded-xl bg-[#040711] border border-slate-800 cursor-pointer hover:border-slate-700 transition">
-            <input type="radio" name="intent-choice" value="Hiring 2 Interns for MVP" class="text-sky-600 focus:ring-sky-500">
-            <span class="text-white">Hiring 2 Interns for MVP / Startup</span>
+          <label class="flex items-center space-x-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-blue-400 hover:bg-blue-50/40 transition">
+            <input type="radio" name="intent-choice" value="Hiring 2 Interns for MVP" class="text-blue-600 focus:ring-blue-500">
+            <span class="text-slate-800 font-medium">Hiring 2 Interns for MVP / Startup</span>
           </label>
-          <label class="flex items-center space-x-2.5 p-2.5 rounded-xl bg-[#040711] border border-slate-800 cursor-pointer hover:border-slate-700 transition">
-            <input type="radio" name="intent-choice" value="Seeking Industry Co-Guide for Capstone" class="text-sky-600 focus:ring-sky-500">
-            <span class="text-white">Seeking Industry Co-Guide for Capstone</span>
+          <label class="flex items-center space-x-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-blue-400 hover:bg-blue-50/40 transition">
+            <input type="radio" name="intent-choice" value="Seeking Industry Co-Guide for Capstone" class="text-blue-600 focus:ring-blue-500">
+            <span class="text-slate-800 font-medium">Seeking Industry Co-Guide for Capstone</span>
           </label>
-          <label class="flex items-center space-x-2.5 p-2.5 rounded-xl bg-[#040711] border border-slate-800 cursor-pointer hover:border-slate-700 transition">
-            <input type="radio" name="intent-choice" value="Offering 15-Min System Design Reviews" class="text-sky-600 focus:ring-sky-500">
-            <span class="text-white">Offering 15-Min System Design Flash Reviews</span>
+          <label class="flex items-center space-x-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-blue-400 hover:bg-blue-50/40 transition">
+            <input type="radio" name="intent-choice" value="Offering 15-Min System Design Reviews" class="text-blue-600 focus:ring-blue-500">
+            <span class="text-slate-800 font-medium">Offering 15-Min System Design Flash Reviews</span>
           </label>
         </div>
       </div>
 
       <div class="flex items-center justify-end space-x-3 pt-3">
-        <button onclick="closeModal('modal-intent')" class="px-4 py-2 bg-slate-900 text-slate-300 rounded-xl text-xs hover:bg-slate-800 border border-slate-800">Cancel</button>
+        <button onclick="closeModal('modal-intent')" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs hover:bg-slate-200 border border-slate-200 font-medium">Cancel</button>
         <button onclick="saveActiveIntent()" class="px-5 py-2 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-md shadow-blue-600/30">Save Intent</button>
       </div>
     </div>
+  </div>
+
   <!-- ================= MODAL: CANDIDATE RESUME & CAPABILITY DOSSIER (FOR ALUMNI & RECRUITERS) ================= -->
-  <div id="modal-candidate-resume" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-[#080d1a] border border-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+  <div id="modal-candidate-resume" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
       
       <!-- Modal Header -->
-      <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-[#040711]">
+      <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
         <div class="flex items-center space-x-3">
           <div id="modal-cand-avatar" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-blue-500/20">
             AS
           </div>
           <div>
             <div class="flex items-center space-x-2">
-              <h3 id="modal-cand-name" class="text-sm font-bold text-white">Aman Sharma</h3>
-              <span id="modal-cand-badge" class="text-[10px] bg-sky-500/10 text-sky-300 border border-sky-500/25 px-2 py-0.5 rounded font-mono font-semibold">Top 1% Talent</span>
+              <h3 id="modal-cand-name" class="text-sm font-bold text-slate-900">Aman Sharma</h3>
+              <span id="modal-cand-badge" class="text-[10px] bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded font-mono font-semibold">Top 1% Talent</span>
             </div>
-            <p id="modal-cand-sub" class="text-xs text-slate-400">B.Tech CSE '26 • Apex Institute of Technology • CGPA 8.92</p>
+            <p id="modal-cand-sub" class="text-xs text-slate-500">B.Tech CSE '26 • Apex Institute of Technology • CGPA 8.92</p>
           </div>
         </div>
 
         <div class="flex items-center space-x-3">
           <div class="text-right">
-            <span id="modal-cand-score" class="text-lg font-black text-sky-400">95/100</span>
+            <span id="modal-cand-score" class="text-lg font-black text-blue-600">95/100</span>
             <div class="text-[9px] text-slate-500 font-mono uppercase">Capability Index</div>
           </div>
-          <button onclick="closeModal('modal-candidate-resume')" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+          <button onclick="closeModal('modal-candidate-resume')" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-200 transition">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
@@ -1917,27 +2712,27 @@
         
         <!-- Score Highlights Bar -->
         <div class="grid grid-cols-4 gap-2 text-center">
-          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2.5">
-            <div class="text-slate-400 text-[10px]">Resume ATS</div>
-            <div id="modal-cand-resume-score" class="text-sky-400 font-black text-sm mt-0.5">93%</div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+            <div class="text-slate-500 text-[10px]">Resume ATS</div>
+            <div id="modal-cand-resume-score" class="text-blue-600 font-black text-sm mt-0.5">93%</div>
           </div>
-          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2.5">
-            <div class="text-slate-400 text-[10px]">GitHub PoW</div>
-            <div id="modal-cand-github-score" class="text-indigo-400 font-black text-sm mt-0.5">96%</div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+            <div class="text-slate-500 text-[10px]">GitHub PoW</div>
+            <div id="modal-cand-github-score" class="text-indigo-600 font-black text-sm mt-0.5">96%</div>
           </div>
-          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2.5">
-            <div class="text-slate-400 text-[10px]">Test Coverage</div>
-            <div class="text-cyan-400 font-black text-sm mt-0.5">92.4%</div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+            <div class="text-slate-500 text-[10px]">Test Coverage</div>
+            <div class="text-emerald-600 font-black text-sm mt-0.5">92.4%</div>
           </div>
-          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2.5">
-            <div class="text-slate-400 text-[10px]">CGPA</div>
-            <div id="modal-cand-cgpa" class="text-amber-400 font-black text-sm mt-0.5">8.92</div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+            <div class="text-slate-500 text-[10px]">CGPA</div>
+            <div id="modal-cand-cgpa" class="text-amber-600 font-black text-sm mt-0.5">8.92</div>
           </div>
         </div>
 
         <!-- Verified Skills Tags -->
         <div class="space-y-1.5">
-          <div class="font-semibold text-slate-200">Verified Technical Skills:</div>
+          <div class="font-semibold text-slate-800">Verified Technical Skills:</div>
           <div id="modal-cand-skills" class="flex flex-wrap gap-1.5">
             <!-- Injected dynamically -->
           </div>
@@ -1946,24 +2741,24 @@
         <!-- Parsed Resume Content -->
         <div class="space-y-2">
           <div class="flex items-center justify-between">
-            <span class="font-semibold text-slate-200">Parsed Resume &amp; Work Experience:</span>
-            <span id="modal-cand-res-filename" class="text-[10px] text-slate-400 font-mono">Aman_Sharma_Resume_2026.pdf</span>
+            <span class="font-semibold text-slate-800">Parsed Resume &amp; Work Experience:</span>
+            <span id="modal-cand-res-filename" class="text-[10px] text-slate-500 font-mono">Aman_Sharma_Resume_2026.pdf</span>
           </div>
-          <div id="modal-cand-resume-body" class="bg-[#040711] border border-slate-800 rounded-xl p-4 font-mono text-[11px] text-slate-300 whitespace-pre-line leading-relaxed max-h-56 overflow-y-auto custom-scrollbar">
+          <div id="modal-cand-resume-body" class="bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-[11px] text-slate-800 whitespace-pre-line leading-relaxed max-h-56 overflow-y-auto custom-scrollbar">
             <!-- Injected dynamically -->
           </div>
         </div>
 
         <!-- GitHub Architecture Highlight -->
-        <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl space-y-1.5">
+        <div class="p-3.5 bg-blue-50/50 border border-blue-200/80 rounded-xl space-y-1.5">
           <div class="flex items-center justify-between">
-            <span class="text-sky-300 font-semibold flex items-center space-x-1.5">
-              <i data-lucide="git-pull-request" class="w-3.5 h-3.5"></i>
+            <span class="text-blue-900 font-semibold flex items-center space-x-1.5">
+              <i data-lucide="git-pull-request" class="w-3.5 h-3.5 text-blue-600"></i>
               <span>GitHub Architecture Highlight</span>
             </span>
-            <a id="modal-cand-repo-link" href="https://github.com/aman-cs/distri-cache-engine" target="_blank" class="text-sky-400 hover:underline font-mono text-[10px]">View Repo &rarr;</a>
+            <a id="modal-cand-repo-link" href="https://github.com/aman-cs/distri-cache-engine" target="_blank" class="text-blue-600 hover:underline font-mono text-[10px]">View Repo &rarr;</a>
           </div>
-          <p id="modal-cand-summary" class="text-slate-300 leading-relaxed">
+          <p id="modal-cand-summary" class="text-slate-700 leading-relaxed">
             Candidate implemented custom consistent-hashing ring in Go to distribute cache keys across 5 Redis nodes. 92.4% test coverage.
           </p>
         </div>
@@ -1971,10 +2766,10 @@
       </div>
 
       <!-- Modal Footer -->
-      <div class="p-4 border-t border-slate-800 bg-[#040711] flex items-center justify-between">
-        <span class="text-[11px] text-slate-400 font-mono">Endorsement passes directly to ATS</span>
+      <div class="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
+        <span class="text-[11px] text-slate-500 font-mono">Endorsement passes directly to ATS</span>
         <div class="flex items-center space-x-2">
-          <button onclick="closeModal('modal-candidate-resume')" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-xl text-xs border border-slate-800 transition">Close</button>
+          <button onclick="closeModal('modal-candidate-resume')" class="px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl text-xs border border-slate-200 font-medium transition">Close</button>
           <button id="modal-cand-btn-refer" onclick="handleModalReferCandidate()" class="px-5 py-2 btn-gradient-primary text-white font-bold rounded-xl text-xs shadow-md shadow-blue-600/30 flex items-center space-x-1.5 transition">
             <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
             <span>Endorse for 1-Click Referral</span>
@@ -2215,6 +3010,114 @@
 
         </div>
       </div>
+    </div>
+  <!-- ================= VERIFIED CANDIDATE ATS DOSSIER MODAL ================= -->
+  <div id="modal-ats-dossier" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" aria-modal="true" role="dialog">
+    <div onclick="closeATSDossierModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"></div>
+    
+    <div class="relative z-10 w-full max-w-2xl bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <!-- Top Accent Bar -->
+      <div class="h-1.5 w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500"></div>
+
+      <!-- Modal Header -->
+      <div class="p-6 border-b border-slate-100 flex items-start justify-between bg-slate-50/60">
+        <div class="space-y-1">
+          <div class="flex items-center space-x-2">
+            <span class="text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 border border-blue-200">
+              Workday &amp; Greenhouse Ready
+            </span>
+            <span class="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-semibold">
+              Cryptographically Staked
+            </span>
+          </div>
+          <h3 class="text-lg font-black text-slate-900">Verified ATS Candidate Package</h3>
+          <p class="text-xs text-slate-500">Pre-audited GitHub telemetry, benchmarks, and alumnus endorsement.</p>
+        </div>
+        <button onclick="closeATSDossierModal()" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar text-xs">
+        
+        <!-- Candidate Overview & Score Banner -->
+        <div class="flex items-center justify-between p-4 rounded-2xl bg-blue-50/60 border border-blue-200/80">
+          <div class="flex items-center space-x-3.5">
+            <div class="w-11 h-11 rounded-xl bg-blue-600 text-white font-black flex items-center justify-center text-sm shadow-sm">
+              AS
+            </div>
+            <div>
+              <h4 id="ats-candidate-name" class="text-sm font-bold text-slate-900">Aman Sharma</h4>
+              <p class="text-[11px] text-slate-600">B.Tech CSE '26 • Apex Institute of Technology</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] font-mono font-bold text-slate-500 uppercase">Capability Index</span>
+            <div class="text-xl font-black text-blue-700 font-mono">95<span class="text-xs text-slate-400">/100</span></div>
+          </div>
+        </div>
+
+        <!-- Verified Telemetry Grid -->
+        <div class="space-y-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">Automated Code Quality &amp; AST Audit</span>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <span class="text-[10px] text-slate-500 font-medium">Test Coverage</span>
+              <div id="ats-test-coverage" class="text-sm font-extrabold text-emerald-700 font-mono mt-0.5">92.4%</div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <span class="text-[10px] text-slate-500 font-medium">P99 Latency</span>
+              <div id="ats-latency" class="text-sm font-extrabold text-blue-700 font-mono mt-0.5">18.2ms</div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <span class="text-[10px] text-slate-500 font-medium">Complexity</span>
+              <div id="ats-complexity" class="text-sm font-extrabold text-slate-800 font-mono mt-0.5">2.1 (Low)</div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <span class="text-[10px] text-slate-500 font-medium">Memory Audit</span>
+              <div id="ats-memory" class="text-sm font-extrabold text-emerald-700 font-mono mt-0.5">0 Leaks</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alumnus Staked Endorsement Statement -->
+        <div class="p-4 rounded-2xl bg-amber-50/60 border border-amber-200/80 space-y-1.5">
+          <div class="flex items-center space-x-2 text-amber-900 font-bold text-xs">
+            <i data-lucide="badge-check" class="w-4 h-4 text-amber-600"></i>
+            <span>Staked Alumnus Endorsement — Rohan Mehta (SDE-2 @ Swiggy)</span>
+          </div>
+          <p id="ats-endorsement-text" class="text-[11px] text-slate-700 italic leading-relaxed">
+            "I personally audited Aman's pull request on distributed hash ring caching. Clean idiomatic Go, singleflight query deduplication, and production-ready concurrency primitives. Highest possible referral conviction."
+          </p>
+        </div>
+
+        <!-- Greenhouse / Workday Standard JSON View -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">Standardized ATS Ingestion Payload</span>
+            <span class="text-[10px] text-slate-400 font-mono">application/json</span>
+          </div>
+          <pre id="ats-json-payload" class="p-3.5 rounded-xl bg-slate-900 text-sky-300 font-mono text-[11px] overflow-x-auto max-h-48 custom-scrollbar border border-slate-800 leading-snug"></pre>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between gap-3">
+        <button onclick="handleCopyATSJson()" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-bold text-xs flex items-center space-x-1.5 transition cursor-pointer shadow-2xs">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span>Copy Greenhouse JSON</span>
+        </button>
+
+        <div class="flex items-center space-x-2">
+          <button onclick="handleDownloadATSDossier()" class="px-4 py-2 rounded-xl btn-gradient-primary text-white font-bold text-xs flex items-center space-x-1.5 transition cursor-pointer shadow-md shadow-blue-600/20">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Download Signed Dossier</span>
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 

@@ -24,7 +24,7 @@ const ROLE_CONFIGS = {
     bannerBadge: 'Verified Student Access',
     bannerDesc: 'Connect directly with alumni in your target companies without cold DMs. Showcase real code, solve startup bounties, and secure high-conviction job referrals.',
     demoText: 'Sign in instantly as <b>Aman Sharma</b> (CSE \'26 • Go / Distributed Systems Builder) with pre-loaded GitHub data and active referral requests.',
-    defaultTab: 'student-profile',
+    defaultTab: 'student-mission',
     bullets: [
       { icon: 'shield-check', title: 'Zero Cold DMs', text: 'Reach alumni with verified code readiness, not generic text.' },
       { icon: 'zap', title: 'Earn Startup Bounties', text: 'Solve real micro-tasks (\$50–\$200) funded by alumni founders.' },
@@ -54,7 +54,7 @@ const ROLE_CONFIGS = {
     bannerBadge: 'Verified Alumni Network',
     bannerDesc: 'Help passionate college juniors without drowning in spam. Review 1-minute executive dossiers, endorse verified talent, and manage your monthly referral quota.',
     demoText: 'Sign in instantly as <b>Rohan Mehta</b> (SDE-2 Backend @ Swiggy • Batch \'20) with active intern referral slots and candidate queue.',
-    defaultTab: 'alumnus-inbox',
+    defaultTab: 'alumnus-impact',
     bullets: [
       { icon: 'inbox', title: '1-Minute Review Cards', text: 'No 5-page resumes. Review concise code benchmarks and test coverage.' },
       { icon: 'check-check', title: '1-Click ATS Referral', text: 'Auto-generate verified endorsement blurbs for your internal company portal.' },
@@ -84,7 +84,7 @@ const ROLE_CONFIGS = {
     bannerBadge: 'Alumni Founder Syndicate',
     bannerDesc: 'Get MVPs and micro-services built rapidly by hungry campus builders. Sponsor hackathon squads, fund bounties, and hire pre-vetted interns.',
     demoText: 'Sign in instantly as <b>Neha Kapoor</b> (Founder & CEO @ HyperScale AI • YC W24) with active micro-bounties and escrow funding.',
-    defaultTab: 'bounties',
+    defaultTab: 'hiring-copilot',
     bullets: [
       { icon: 'coins', title: 'Escrow-Backed Bounties', text: 'Post ₹3,000 to ₹10,000 tasks and get clean production code in 48 hours.' },
       { icon: 'trophy', title: 'Hackathon Squad Grants', text: 'Sponsor travel and cloud credits for top college finalist teams.' },
@@ -114,7 +114,7 @@ const ROLE_CONFIGS = {
     bannerBadge: 'Academic & Industry Linkage',
     bannerDesc: 'Supercharge student final-year capstone projects by pairing them with industry alumni mentors at Google, AWS, and tier-1 research labs.',
     demoText: 'Sign in instantly as <b>Dr. R.K. Verma</b> (Professor & Dean R&D) managing 64 industry-mentored research capstones.',
-    defaultTab: 'intent-radar',
+    defaultTab: 'faculty-challenges',
     bullets: [
       { icon: 'git-merge', title: 'Industry Co-Guides', text: 'Pair student research teams with alumni engineers for real-world validation.' },
       { icon: 'file-text', title: 'Conference Papers', text: 'Publish joint IEEE/ACM conference papers co-authored with industry alumni.' },
@@ -144,7 +144,7 @@ const ROLE_CONFIGS = {
     bannerBadge: 'Corporate Talent Acquisition',
     bannerDesc: 'Source high-velocity campus engineers vetted by alumni endorsements, verified commit history, and code readiness scores (0–100).',
     demoText: 'Sign in instantly as <b>Vikram Seth</b> (Tech Talent Partner @ Razorpay) with access to top 5% campus backend builders.',
-    defaultTab: 'intent-radar',
+    defaultTab: 'hiring-copilot',
     bullets: [
       { icon: 'bar-chart-3', title: 'Code Readiness Benchmarks', text: 'Filter by test coverage, latency benchmarks, and algorithmic depth.' },
       { icon: 'badge-check', title: 'Alumni Staked Trust', text: 'Prioritize students vetted and endorsed by alumni currently in your company.' },
@@ -174,7 +174,7 @@ const ROLE_CONFIGS = {
     bannerBadge: 'University Executive Desk',
     bannerDesc: 'Transform your college alumni directory from a dead phonebook into an active economic network. Track placement conversions, alumni density, and bounty earnings.',
     demoText: 'Sign in instantly as <b>Dean Sharma</b> (Alumni Relations Administration) monitoring campus placement ROI and network velocity.',
-    defaultTab: 'institution',
+    defaultTab: 'gap-radar',
     bullets: [
       { icon: 'activity', title: 'Real Outcome Metrics', text: 'Track verified referrals, conversion to offers, and student bounty payouts.' },
       { icon: 'map', title: 'Alumni Geographic Mapping', text: 'Interactive geo-density across tech hubs: Bangalore, Gurgaon, SF, London.' },
@@ -387,41 +387,54 @@ function renderHeroRoleView(roleId) {
 
   renderHeroRoleTabs();
 
-  // Side Banner Updates
-  document.getElementById('hero-side-icon').setAttribute('data-lucide', cfg.icon);
-  document.getElementById('hero-side-badge').textContent = cfg.bannerBadge;
-  document.getElementById('hero-side-title').textContent = cfg.bannerTitle;
-  document.getElementById('hero-side-desc').textContent = cfg.bannerDesc;
+  // Side Banner Updates (safely guarded)
+  const iconEl = document.getElementById('hero-side-icon');
+  if (iconEl) iconEl.setAttribute('data-lucide', cfg.icon);
+  const badgeEl = document.getElementById('hero-side-badge');
+  if (badgeEl) badgeEl.textContent = cfg.bannerBadge;
+  const titleEl = document.getElementById('hero-side-title');
+  if (titleEl) titleEl.textContent = cfg.bannerTitle;
+  const descEl = document.getElementById('hero-side-desc');
+  if (descEl) descEl.textContent = cfg.bannerDesc;
 
   // Bullets
   const bulletsEl = document.getElementById('hero-side-bullets');
-  bulletsEl.innerHTML = cfg.bullets.map(b => `
-    <div class="flex items-start space-x-2.5">
-      <div class="p-1.5 rounded-lg bg-gradient-to-br from-sky-500/15 via-purple-500/15 to-pink-500/15 text-sky-300 mt-0.5 border border-purple-500/25 shadow-sm">
-        <i data-lucide="${b.icon}" class="w-3.5 h-3.5"></i>
+  if (bulletsEl && cfg.bullets) {
+    bulletsEl.innerHTML = cfg.bullets.map(b => `
+      <div class="flex items-start space-x-2.5">
+        <div class="p-1.5 rounded-lg bg-gradient-to-br from-sky-500/15 via-purple-500/15 to-pink-500/15 text-sky-300 mt-0.5 border border-purple-500/25 shadow-sm">
+          <i data-lucide="${b.icon}" class="w-3.5 h-3.5"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-white">${b.title}</h4>
+          <p class="text-[11px] text-slate-400 leading-tight">${b.text}</p>
+        </div>
       </div>
-      <div>
-        <h4 class="text-xs font-bold text-white">${b.title}</h4>
-        <p class="text-[11px] text-slate-400 leading-tight">${b.text}</p>
-      </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 
   // Form Headings & Demo Info
-  document.getElementById('hero-form-heading').textContent = `Sign In to ${cfg.portalTitle}`;
-  document.getElementById('hero-form-subheading').textContent = `Enter as ${cfg.roleLabel.toLowerCase()} or use 1-click hackathon bypass.`;
-  document.getElementById('hero-demo-text').innerHTML = cfg.demoText;
+  const headingEl = document.getElementById('hero-form-heading');
+  if (headingEl) headingEl.textContent = `Sign In to ${cfg.portalTitle}`;
+  const subheadingEl = document.getElementById('hero-form-subheading');
+  if (subheadingEl) subheadingEl.textContent = `Enter as ${cfg.roleLabel.toLowerCase()} or use 1-click hackathon bypass.`;
+  const demoTextEl = document.getElementById('hero-demo-text');
+  if (demoTextEl) demoTextEl.innerHTML = cfg.demoText;
 
   // Dynamic Input Fields
   const fieldsEl = document.getElementById('hero-dynamic-fields');
-  fieldsEl.innerHTML = cfg.fields.map(f => `
-    <div>
-      <label class="block text-xs font-medium text-slate-300 mb-1">${f.label}</label>
-      <input type="${f.type}" value="${f.value}" required class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition" placeholder="${f.placeholder}">
-    </div>
-  `).join('');
+  if (fieldsEl && cfg.fields) {
+    fieldsEl.innerHTML = cfg.fields.map(f => `
+      <div>
+        <label class="block text-xs font-medium text-slate-300 mb-1">${f.label}</label>
+        <input type="${f.type}" value="${f.value}" required class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition" placeholder="${f.placeholder}">
+      </div>
+    `).join('');
+  }
 
-  lucide.createIcons();
+  if (typeof lucide !== 'undefined' && lucide.createIcons) {
+    lucide.createIcons();
+  }
 }
 
 function executeHeroLogin() {
@@ -441,37 +454,42 @@ function directAuthenticateAs(roleId) {
 // ================= ROLE-SPECIFIC NAVIGATION CONFIGURATIONS =================
 const ROLE_TABS = {
   student: [
-    { id: 'student-profile', label: 'Profile & Resume Score', icon: 'user-check', badge: '95/100', badgeId: 'profile-score-badge' },
-    { id: 'proof-of-work', label: 'Get Referral', icon: 'send', badge: 'Verified' },
-    { id: 'intent-radar', label: 'Matched Alumni', icon: 'compass', badge: '14 Matches' },
-    { id: 'bounties', label: 'Paid Bounties', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
+    { id: 'student-mission', label: 'Career Mission & Rescue', icon: 'target', badge: '70% Done' },
+    { id: 'career-shadow', label: 'Career Shadow (Role-Play)', icon: 'cpu', badge: 'Live Sim' },
+    { id: 'syndicate', label: 'Grants Syndicate', icon: 'coins', badge: '₹1.45L' },
+    { id: 'student-profile', label: 'Profile & Capability Score', icon: 'user-check', badge: '95/100', badgeId: 'profile-score-badge' },
+    { id: 'bounties', label: 'Paid Bounties & Gigs', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
     { id: 'network-graph', label: 'Campus Network', icon: 'share-2' }
   ],
   alumnus: [
+    { id: 'alumnus-impact', label: 'Impact Exchange', icon: 'clock', badge: '35m Left' },
     { id: 'alumnus-inbox', label: 'Referral Requests', icon: 'inbox', badge: '1 Pending', badgeId: 'referrals-count-badge' },
-    { id: 'intent-radar', label: 'Explore Students', icon: 'compass', badge: '14 Students' },
-    { id: 'bounties', label: 'Post Bounties', icon: 'briefcase', badge: '4 Live', badgeId: 'bounties-count-badge' },
+    { id: 'syndicate', label: 'Giveback Syndicate', icon: 'coins', badge: '₹1.45L' },
+    { id: 'legacy-graph', label: 'Legacy Graph Playbooks', icon: 'book-open', badge: '2 Guides' },
     { id: 'network-graph', label: 'Alumni Network', icon: 'share-2' }
   ],
   founder: [
+    { id: 'hiring-copilot', label: 'Hiring Copilot (PoW Shortlist)', icon: 'target', badge: 'Top 5%' },
+    { id: 'syndicate', label: 'Campus Syndicate', icon: 'coins', badge: '₹1.45L Pool' },
     { id: 'bounties', label: 'Startup Gigs & Bounties', icon: 'briefcase', badge: 'Escrow Gigs', badgeId: 'bounties-count-badge' },
-    { id: 'intent-radar', label: 'Find Builders', icon: 'compass', badge: 'Top Builders' },
     { id: 'network-graph', label: 'Ecosystem Network', icon: 'share-2' }
   ],
   faculty: [
-    { id: 'intent-radar', label: 'Alumni Mentors', icon: 'compass', badge: '8 Mentors' },
-    { id: 'network-graph', label: 'Campus Lineage', icon: 'share-2' },
-    { id: 'institution', label: 'NAAC & Outcomes', icon: 'landmark', badge: 'NAAC A++' }
+    { id: 'faculty-challenges', label: 'Faculty Challenge Exchange', icon: 'sparkles', badge: '2 Active' },
+    { id: 'institution', label: 'NAAC & Outcomes', icon: 'landmark', badge: 'NAAC A++' },
+    { id: 'intent-radar', label: 'Alumni Co-Guides', icon: 'compass', badge: '8 Mentors' },
+    { id: 'network-graph', label: 'Campus Lineage', icon: 'share-2' }
   ],
   recruiter: [
-    { id: 'intent-radar', label: 'Top Candidates', icon: 'compass', badge: 'Top 5%' },
+    { id: 'hiring-copilot', label: 'Hiring Copilot (PoW Shortlist)', icon: 'cpu', badge: 'Top 5% Vetted' },
     { id: 'alumnus-inbox', label: 'Endorsed Queue', icon: 'inbox', badge: 'Verified ATS' },
     { id: 'bounties', label: 'Job Requisitions', icon: 'briefcase' }
   ],
   institution: [
+    { id: 'gap-radar', label: 'Opportunity Gap Radar', icon: 'radar', badge: '3 Alerts' },
+    { id: 'syndicate', label: 'Syndicate Treasury', icon: 'coins', badge: '₹1.45L Pool' },
     { id: 'institution', label: 'Accreditation & Metrics', icon: 'landmark', badge: 'NAAC A++' },
-    { id: 'network-graph', label: 'Alumni Network', icon: 'share-2' },
-    { id: 'bounties', label: 'Campus Projects', icon: 'briefcase' }
+    { id: 'network-graph', label: 'Alumni Network', icon: 'share-2' }
   ]
 };
 
@@ -493,10 +511,10 @@ function renderWorkspaceTabs(roleId) {
   container.innerHTML = tabs.map(tab => {
     const badgeAttr = tab.badgeId ? `id="${tab.badgeId}"` : '';
     const badgeHtml = tab.badge 
-      ? `<span ${badgeAttr} class="bg-sky-500/10 text-sky-300 border border-sky-500/20 text-[10px] px-2 py-0.5 rounded-full font-mono font-medium">${tab.badge}</span>`
+      ? `<span ${badgeAttr} class="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] px-2 py-0.5 rounded-full font-mono font-medium">${tab.badge}</span>`
       : '';
     return `
-      <button onclick="switchTab('${tab.id}')" id="tab-${tab.id}" class="tab-btn py-3 border-b-2 border-transparent text-slate-400 hover:text-white flex items-center space-x-2 transition font-medium text-xs sm:text-sm whitespace-nowrap">
+      <button onclick="switchTab('${tab.id}')" id="tab-${tab.id}" class="tab-btn py-3 border-b-2 border-transparent text-slate-500 hover:text-blue-600 flex items-center space-x-2 transition font-medium text-xs sm:text-sm whitespace-nowrap">
         <i data-lucide="${tab.icon}" class="w-4 h-4"></i>
         <span>${tab.label}</span>
         ${badgeHtml}
@@ -605,7 +623,23 @@ function handleLogout(pushHistory = true) {
 
 // ================= NAVIGATION TABS =================
 function switchTab(tabId, pushHistory = true) {
-  const views = ['student-profile', 'intent-radar', 'proof-of-work', 'bounties', 'alumnus-inbox', 'network-graph', 'institution'];
+  const views = [
+    'student-mission',
+    'career-shadow',
+    'student-profile',
+    'intent-radar',
+    'proof-of-work',
+    'bounties',
+    'alumnus-impact',
+    'alumnus-inbox',
+    'legacy-graph',
+    'faculty-challenges',
+    'hiring-copilot',
+    'gap-radar',
+    'syndicate',
+    'network-graph',
+    'institution'
+  ];
   
   if (pushHistory && activeSessionRoleId && window.history && window.history.pushState) {
     window.history.pushState(
@@ -620,8 +654,8 @@ function switchTab(tabId, pushHistory = true) {
     const tabBtn = document.getElementById(`tab-${v}`);
     if (el) el.classList.add('hidden');
     if (tabBtn) {
-      tabBtn.classList.remove('border-sky-500', 'text-sky-400', 'border-pink-500', 'text-pink-400', 'border-indigo-500', 'text-indigo-400');
-      tabBtn.classList.add('border-transparent', 'text-slate-400');
+      tabBtn.classList.remove('border-blue-600', 'text-blue-600', 'font-bold', 'border-sky-500', 'text-sky-400');
+      tabBtn.classList.add('border-transparent', 'text-slate-500', 'font-medium');
     }
   });
 
@@ -629,8 +663,8 @@ function switchTab(tabId, pushHistory = true) {
   const activeTabBtn = document.getElementById(`tab-${tabId}`);
   if (activeView) activeView.classList.remove('hidden');
   if (activeTabBtn) {
-    activeTabBtn.classList.add('border-sky-500', 'text-sky-400');
-    activeTabBtn.classList.remove('border-transparent', 'text-slate-400');
+    activeTabBtn.classList.add('border-blue-600', 'text-blue-600', 'font-bold');
+    activeTabBtn.classList.remove('border-transparent', 'text-slate-500', 'font-medium');
   }
 
   if (tabId === 'network-graph') {
@@ -641,6 +675,22 @@ function switchTab(tabId, pushHistory = true) {
     fetchBountiesFromAPI();
   } else if (tabId === 'student-profile') {
     fetchStudentProfileFromAPI();
+  } else if (tabId === 'student-mission') {
+    renderStudentMissionView();
+  } else if (tabId === 'career-shadow') {
+    renderCareerShadowView();
+  } else if (tabId === 'alumnus-impact') {
+    renderAlumnusImpactView();
+  } else if (tabId === 'legacy-graph') {
+    renderLegacyGraphView();
+  } else if (tabId === 'faculty-challenges') {
+    renderFacultyChallengesView();
+  } else if (tabId === 'hiring-copilot') {
+    renderHiringCopilotView();
+  } else if (tabId === 'gap-radar') {
+    renderGapRadarView();
+  } else if (tabId === 'syndicate') {
+    renderSyndicateView();
   }
   lucide.createIcons();
 }
@@ -766,39 +816,39 @@ function renderRadarCards(items) {
   if (!container) return;
 
   container.innerHTML = items.map(item => `
-    <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-800 bg-[#080e1c]/80 transition flex flex-col justify-between space-y-4">
+    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:shadow-md hover:border-blue-300 transition flex flex-col justify-between space-y-4">
       <div>
         <div class="flex items-start justify-between">
           <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-blue-500/20">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-blue-500/20">
               ${item.avatar}
             </div>
             <div>
-              <h4 class="text-sm font-bold text-white">${item.targetPerson}</h4>
-              <p class="text-xs text-slate-400">${item.targetRole}</p>
+              <h4 class="text-sm font-bold text-slate-900">${item.targetPerson}</h4>
+              <p class="text-xs text-slate-500">${item.targetRole}</p>
             </div>
           </div>
           <div class="text-right">
-            <div class="text-sm font-black text-sky-400">${item.matchScore}%</div>
+            <div class="text-sm font-black text-blue-600">${item.matchScore}%</div>
             <div class="text-[10px] text-slate-500 font-mono">Synergy Score</div>
           </div>
         </div>
 
-        <div class="mt-3.5 inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs">
-          <i data-lucide="zap" class="w-3.5 h-3.5 text-sky-400"></i>
+        <div class="mt-3.5 inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 text-xs">
+          <i data-lucide="zap" class="w-3.5 h-3.5 text-blue-600"></i>
           <span class="font-semibold">${item.intentBadge}</span>
         </div>
 
-        <p class="text-xs text-slate-300 mt-2.5 line-clamp-2">${item.intentDesc}</p>
+        <p class="text-xs text-slate-600 mt-2.5 line-clamp-2 leading-relaxed">${item.intentDesc}</p>
 
-        <div class="mt-3 p-2.5 rounded-xl bg-[#040711] border border-slate-800 text-[11px] text-slate-300">
-          <span class="text-sky-400 font-semibold">Why you match:</span> ${item.synergy}
+        <div class="mt-3 p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-700">
+          <span class="text-blue-600 font-semibold">Why you match:</span> ${item.synergy}
         </div>
       </div>
 
       <div>
-        <button onclick="handleRadarAction('${item.id}', '${item.actionType}')" class="w-full py-2 bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white rounded-xl text-xs font-semibold border border-slate-800 hover:border-slate-700 transition flex items-center justify-center space-x-1.5 shadow-sm">
-          <i data-lucide="${item.actionType === 'bounty' ? 'briefcase' : (item.actionType === 'capstone' ? 'landmark' : 'arrow-up-right')}" class="w-3.5 h-3.5 text-sky-400"></i>
+        <button onclick="handleRadarAction('${item.id}', '${item.actionType}')" class="w-full py-2 bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-800 rounded-xl text-xs font-semibold border border-slate-200 hover:border-blue-600 transition flex items-center justify-center space-x-1.5 shadow-xs">
+          <i data-lucide="${item.actionType === 'bounty' ? 'briefcase' : (item.actionType === 'capstone' ? 'landmark' : 'arrow-up-right')}" class="w-3.5 h-3.5 text-blue-600 group-hover:text-white"></i>
           <span>${item.actionLabel}</span>
         </button>
       </div>
@@ -810,9 +860,9 @@ function renderRadarCards(items) {
 function filterRadar(category) {
   document.querySelectorAll('.radar-filter-btn').forEach(btn => {
     if (btn.getAttribute('data-filter') === category) {
-      btn.className = 'radar-filter-btn px-3 py-1 text-xs rounded-lg bg-blue-600 text-white font-medium shadow-md shadow-blue-600/20';
+      btn.className = 'radar-filter-btn px-3 py-1 text-xs rounded-lg bg-blue-600 text-white font-semibold shadow-xs';
     } else {
-      btn.className = 'radar-filter-btn px-3 py-1 text-xs rounded-lg bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-medium';
+      btn.className = 'radar-filter-btn px-3 py-1 text-xs rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 font-medium';
     }
   });
 
@@ -941,49 +991,49 @@ async function generateProofOfWorkDossier() {
 function renderDossierOutput(analysis, company, blocker) {
   const outputEl = document.getElementById('pow-card-content');
   outputEl.innerHTML = `
-    <div class="bg-[#080e1c] border border-slate-800 rounded-2xl p-5 space-y-4">
-      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-sm">
+      <div class="flex items-start justify-between border-b border-slate-100 pb-3">
         <div>
           <div class="flex items-center space-x-2">
-            <span class="text-sm font-bold text-white">Aman Sharma</span>
-            <span class="text-[10px] bg-sky-500/10 text-sky-300 px-2 py-0.5 rounded border border-sky-500/20 font-medium">Verified Student</span>
+            <span class="text-sm font-bold text-slate-900">Aman Sharma</span>
+            <span class="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200 font-medium">Verified Student</span>
           </div>
-          <p class="text-xs text-slate-400 mt-0.5">Target: <b>${company}</b> • Engine: <span class="text-sky-400 font-mono text-[10px]">${analysis.source}</span></p>
+          <p class="text-xs text-slate-500 mt-0.5">Target: <b>${company}</b> • Engine: <span class="text-blue-600 font-mono text-[10px]">${analysis.source}</span></p>
         </div>
         <div class="text-right">
-          <div class="text-xl font-black text-sky-400">${analysis.readinessScore}<span class="text-xs text-slate-400">/100</span></div>
-          <div class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Code Readiness</div>
+          <div class="text-xl font-black text-blue-600">${analysis.readinessScore}<span class="text-xs text-slate-400">/100</span></div>
+          <div class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Code Readiness</div>
         </div>
       </div>
 
       <div class="grid grid-cols-3 gap-2 text-center text-xs">
-        <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
-          <div class="text-slate-400 text-[10px]">Test Coverage</div>
-          <div class="text-sky-300 font-bold mt-0.5">${analysis.testCoverage}</div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+          <div class="text-slate-500 text-[10px]">Test Coverage</div>
+          <div class="text-blue-600 font-bold mt-0.5">${analysis.testCoverage}</div>
         </div>
-        <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
-          <div class="text-slate-400 text-[10px]">P99 Latency</div>
-          <div class="text-blue-400 font-bold mt-0.5">${analysis.latencyBenchmark}</div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+          <div class="text-slate-500 text-[10px]">P99 Latency</div>
+          <div class="text-indigo-600 font-bold mt-0.5">${analysis.latencyBenchmark}</div>
         </div>
-        <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
-          <div class="text-slate-400 text-[10px]">Primary Stack</div>
-          <div class="text-indigo-300 font-bold mt-0.5">${analysis.primaryStack}</div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+          <div class="text-slate-500 text-[10px]">Primary Stack</div>
+          <div class="text-cyan-600 font-bold mt-0.5">${analysis.primaryStack}</div>
         </div>
       </div>
 
       <div class="space-y-1.5 text-xs">
-        <div class="font-semibold text-slate-200 flex items-center space-x-1.5">
-          <i data-lucide="check-circle" class="w-3.5 h-3.5 text-sky-400"></i>
+        <div class="font-semibold text-slate-800 flex items-center space-x-1.5">
+          <i data-lucide="check-circle" class="w-3.5 h-3.5 text-blue-600"></i>
           <span>Verified Architecture Summary:</span>
         </div>
-        <p class="text-slate-300 leading-relaxed bg-[#040711] border border-slate-800 p-3 rounded-xl">
+        <p class="text-slate-700 leading-relaxed bg-slate-50 border border-slate-200 p-3 rounded-xl">
           "${analysis.executiveSummary || analysis.architecturalHighlight}"
         </p>
       </div>
 
-      <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs space-y-1">
-        <span class="text-sky-300 font-semibold">Targeted 3-Minute Alumnus Question:</span>
-        <p class="text-slate-300">"${blocker}"</p>
+      <div class="p-3 bg-blue-50/60 border border-blue-200/80 rounded-xl text-xs space-y-1">
+        <span class="text-blue-700 font-semibold">Targeted 3-Minute Alumnus Question:</span>
+        <p class="text-slate-700">"${blocker}"</p>
       </div>
 
       <div class="flex items-center justify-between pt-2">
@@ -1058,30 +1108,30 @@ function renderBounties(items) {
   if (!container) return;
 
   container.innerHTML = items.map(opp => `
-    <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-800 bg-[#080e1c]/80 transition flex flex-col justify-between space-y-4">
+    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:shadow-md hover:border-blue-300 transition flex flex-col justify-between space-y-4">
       <div>
         <div class="flex items-start justify-between">
-          <span class="text-[11px] font-semibold px-2 py-0.5 rounded border ${opp.badgeClass}">${opp.typeLabel}</span>
-          <span class="text-[11px] text-slate-400 font-mono">${opp.deadline}</span>
+          <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${opp.badgeClass}">${opp.typeLabel}</span>
+          <span class="text-[11px] text-slate-500 font-mono">${opp.deadline}</span>
         </div>
 
-        <h4 class="text-sm font-bold text-white mt-2">${opp.title}</h4>
-        <p class="text-xs text-sky-400 mt-0.5 font-medium">${opp.poster}</p>
+        <h4 class="text-sm font-bold text-slate-900 mt-2">${opp.title}</h4>
+        <p class="text-xs text-blue-600 mt-0.5 font-medium">${opp.poster}</p>
 
-        <div class="mt-2.5 p-2 rounded-xl bg-[#040711] border border-slate-800 text-xs font-semibold text-emerald-300">
+        <div class="mt-2.5 p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800">
           💰 Reward: ${opp.reward}
         </div>
 
-        <p class="text-xs text-slate-300 mt-2.5 leading-relaxed">${opp.desc}</p>
+        <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">${opp.desc}</p>
 
         <div class="flex flex-wrap gap-1.5 mt-3">
-          ${opp.tags.map(t => `<span class="text-[10px] px-2 py-0.5 rounded bg-slate-900 text-slate-300 border border-slate-800">${t}</span>`).join('')}
+          ${opp.tags.map(t => `<span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">${t}</span>`).join('')}
         </div>
       </div>
 
-      <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
-        <span class="text-[11px] text-slate-400">${opp.applicants ? opp.applicants.length : 0} builders applied</span>
-        <button onclick="openApplyBountyModal('${opp.id}', '${escapeQuotes(opp.title)}')" class="px-3.5 py-1.5 btn-gradient-primary text-white rounded-xl text-xs font-semibold shadow-md shadow-blue-600/20 transition flex items-center space-x-1">
+      <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+        <span class="text-[11px] text-slate-500">${opp.applicants ? opp.applicants.length : 0} builders applied</span>
+        <button onclick="openApplyBountyModal('${opp.id}', '${escapeQuotes(opp.title)}')" class="px-3.5 py-1.5 btn-gradient-primary text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center space-x-1">
           <i data-lucide="send" class="w-3.5 h-3.5"></i>
           <span>Apply with Proof-of-Work</span>
         </button>
@@ -1175,8 +1225,8 @@ function renderReferrals(items) {
 
   if (items.length === 0) {
     container.innerHTML = `
-      <div class="glass-card rounded-2xl p-8 text-center text-slate-400 space-y-2">
-        <i data-lucide="inbox" class="w-8 h-8 mx-auto text-sky-400"></i>
+      <div class="bg-white rounded-2xl p-8 text-center text-slate-500 border border-slate-200 shadow-xs space-y-2">
+        <i data-lucide="inbox" class="w-8 h-8 mx-auto text-blue-500"></i>
         <p class="text-xs">No pending student dossiers in inbox.</p>
       </div>
     `;
@@ -1192,86 +1242,86 @@ function renderReferrals(items) {
     const cgpa = ref.cgpa || "8.92";
     const skills = ref.skills || ["Go", "Distributed Systems", "Redis", "Docker"];
     return `
-      <div class="glass-card rounded-2xl p-6 border ${isReferred ? 'border-emerald-500/40 bg-emerald-950/20' : 'border-slate-800 bg-[#080e1c]/80'} space-y-4 transition">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+      <div class="bg-white rounded-2xl p-6 border ${isReferred ? 'border-emerald-300 bg-emerald-50/20' : 'border-slate-200'} space-y-4 shadow-xs hover:shadow-md transition">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
           <div class="flex items-center space-x-3">
-            <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 border border-sky-400/30 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-blue-500/20">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-blue-500/20">
               AS
             </div>
             <div>
               <div class="flex items-center space-x-2">
-                <h4 class="text-sm font-bold text-white">${ref.studentName}</h4>
-                <span class="text-[10px] bg-sky-500/10 text-sky-300 px-2 py-0.5 rounded border border-sky-500/20 font-medium">${ref.studentBranch}</span>
-                <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/20 font-mono font-medium">CGPA ${cgpa}</span>
+                <h4 class="text-sm font-bold text-slate-900">${ref.studentName}</h4>
+                <span class="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200 font-medium">${ref.studentBranch}</span>
+                <span class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200 font-mono font-medium">CGPA ${cgpa}</span>
               </div>
-              <p class="text-xs text-slate-400 mt-0.5">Target: <b>${ref.targetCompany}</b> • Repository: <a href="${ref.repoUrl}" target="_blank" class="text-sky-400 underline font-mono">${ref.repoUrl}</a></p>
+              <p class="text-xs text-slate-500 mt-0.5">Target: <b>${ref.targetCompany}</b> • Repository: <a href="${ref.repoUrl}" target="_blank" class="text-blue-600 underline font-mono">${ref.repoUrl}</a></p>
             </div>
           </div>
 
           <div class="flex items-center space-x-3">
             <div class="text-right">
-              <span class="text-xs font-black text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2.5 py-1 rounded-lg font-mono">${capScore}/100</span>
-              <div class="text-[9px] text-slate-400 font-mono mt-0.5">Capability Index</div>
+              <span class="text-xs font-black text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-lg font-mono">${capScore}/100</span>
+              <div class="text-[9px] text-slate-500 font-mono mt-0.5">Capability Index</div>
             </div>
             ${isReferred 
-              ? `<span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg text-xs font-bold border border-emerald-500/30 flex items-center space-x-1">
-                   <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+              ? `<span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold border border-emerald-200 flex items-center space-x-1">
+                   <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
                    <span>REFERRED</span>
                  </span>`
-              : `<span class="px-2.5 py-1 bg-amber-500/15 text-amber-300 rounded-lg text-xs font-semibold border border-amber-500/30">PENDING REVIEW</span>`
+              : `<span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-lg text-xs font-semibold border border-amber-200">PENDING REVIEW</span>`
             }
           </div>
         </div>
 
         <!-- Capability Sub-scores Bar -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
-          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
-            <div class="text-slate-400 text-[10px]">Resume ATS</div>
-            <div class="text-sky-300 font-bold mt-0.5">${resScore}% Match</div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+            <div class="text-slate-500 text-[10px]">Resume ATS</div>
+            <div class="text-blue-600 font-bold mt-0.5">${resScore}% Match</div>
           </div>
-          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
-            <div class="text-slate-400 text-[10px]">GitHub PoW</div>
-            <div class="text-indigo-300 font-bold mt-0.5">${gitScore}% Rigor</div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+            <div class="text-slate-500 text-[10px]">GitHub PoW</div>
+            <div class="text-indigo-600 font-bold mt-0.5">${gitScore}% Rigor</div>
           </div>
-          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
-            <div class="text-slate-400 text-[10px]">Test Coverage</div>
-            <div class="text-cyan-300 font-bold mt-0.5">92.4% Unit Tests</div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+            <div class="text-slate-500 text-[10px]">Test Coverage</div>
+            <div class="text-cyan-600 font-bold mt-0.5">92.4% Unit Tests</div>
           </div>
-          <div class="bg-[#040711] border border-slate-800 rounded-xl p-2">
-            <div class="text-slate-400 text-[10px]">Academic CGPA</div>
-            <div class="text-amber-300 font-bold mt-0.5">${cgpa} / 10.0</div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+            <div class="text-slate-500 text-[10px]">Academic CGPA</div>
+            <div class="text-amber-600 font-bold mt-0.5">${cgpa} / 10.0</div>
           </div>
         </div>
 
         <!-- Verified Skills Tags -->
         <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
-          <span class="text-[11px] text-slate-400 font-semibold mr-1">Skills:</span>
-          ${skills.map(s => `<span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] text-sky-300 font-mono">${s}</span>`).join('')}
+          <span class="text-[11px] text-slate-500 font-semibold mr-1">Skills:</span>
+          ${skills.map(s => `<span class="px-2 py-0.5 rounded bg-blue-50 border border-blue-200 text-[10px] text-blue-700 font-medium">${s}</span>`).join('')}
         </div>
 
-        <div class="bg-[#040711] border border-slate-800 rounded-xl p-3.5 text-xs text-slate-300 space-y-2">
-          <div class="flex items-center space-x-1.5 font-semibold text-sky-300">
-            <i data-lucide="cpu" class="w-3.5 h-3.5 text-sky-400"></i>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs text-slate-700 space-y-2">
+          <div class="flex items-center space-x-1.5 font-semibold text-blue-700">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 text-blue-600"></i>
             <span>Verified Architectural Summary:</span>
           </div>
-          <p class="leading-relaxed text-slate-300">${ref.summary}</p>
-          <div class="pt-2 text-[11px] text-slate-400 border-t border-slate-800">
-            <b class="text-slate-200">Student's 3-Min Question:</b> "${ref.blockerAsk}"
+          <p class="leading-relaxed text-slate-700">${ref.summary}</p>
+          <div class="pt-2 text-[11px] text-slate-500 border-t border-slate-200">
+            <b class="text-slate-800">Student's 3-Min Question:</b> "${ref.blockerAsk}"
           </div>
         </div>
 
         ${!isReferred ? `
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1">
-            <span class="text-[11px] text-slate-400">Takes ~1 min to endorse directly to internal ATS</span>
+            <span class="text-[11px] text-slate-500">Takes ~1 min to endorse directly to internal ATS</span>
             <div class="flex space-x-2">
-              <button onclick="openCandidateResumeModal('${ref.id}')" class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white rounded-xl text-xs border border-sky-500/30 transition flex items-center space-x-1.5 shadow-sm">
+              <button onclick="openCandidateResumeModal('${ref.id}')" class="px-3.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-semibold border border-blue-200 transition flex items-center space-x-1.5 shadow-xs">
                 <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
                 <span>Inspect Full Resume</span>
               </button>
-              <button onclick="handleReferralAction('${ref.id}', 'rejected')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-xl text-xs border border-slate-800 transition">
+              <button onclick="handleReferralAction('${ref.id}', 'rejected')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold border border-slate-200 transition">
                 Pass
               </button>
-              <button onclick="handleReferralAction('${ref.id}', 'referred')" class="px-4 py-1.5 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-md shadow-blue-600/30 flex items-center space-x-1.5 transition">
+              <button onclick="handleReferralAction('${ref.id}', 'referred')" class="px-4 py-1.5 btn-gradient-primary text-white font-semibold rounded-xl text-xs shadow-xs flex items-center space-x-1.5 transition">
                 <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
                 <span>1-Click Verified Referral</span>
               </button>
@@ -1279,11 +1329,11 @@ function renderReferrals(items) {
           </div>
         ` : `
           <div class="flex items-center justify-between pt-1">
-            <div class="text-xs text-emerald-400 flex items-center space-x-1.5 font-medium">
-              <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <div class="text-xs text-emerald-700 flex items-center space-x-1.5 font-medium">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
               <span>Referral submitted to ${ref.targetCompany} Internal Hiring Portal. Notification sent to student!</span>
             </div>
-            <button onclick="openCandidateResumeModal('${ref.id}')" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-sky-300 rounded-lg text-xs border border-slate-800 transition flex items-center space-x-1">
+            <button onclick="openCandidateResumeModal('${ref.id}')" class="px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold border border-blue-200 transition flex items-center space-x-1">
               <i data-lucide="file-text" class="w-3 h-3"></i>
               <span>View Dossier</span>
             </button>
@@ -1330,7 +1380,7 @@ function renderStudentReferrals(items) {
 
   if (studentRefs.length === 0) {
     container.innerHTML = `
-      <div class="p-4 rounded-xl bg-[#040711] border border-slate-800 text-center text-xs text-slate-400">
+      <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center text-xs text-slate-500">
         No active referrals dispatched yet. Analyze a repo above and click "Dispatch to Alumnus".
       </div>
     `;
@@ -1340,29 +1390,29 @@ function renderStudentReferrals(items) {
   container.innerHTML = studentRefs.map(ref => {
     const isReferred = ref.status === 'referred';
     return `
-      <div class="p-4 rounded-xl border ${isReferred ? 'border-emerald-500/40 bg-emerald-950/20' : 'border-slate-800 bg-[#040711]'} space-y-3 transition">
+      <div class="p-4 rounded-xl border ${isReferred ? 'border-emerald-300 bg-emerald-50/30' : 'border-slate-200 bg-white shadow-xs'} space-y-3 transition">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div class="flex items-center space-x-2.5">
-            <div class="w-8 h-8 rounded-lg ${isReferred ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-sky-400 border border-slate-700'} flex items-center justify-center font-bold text-xs">
+            <div class="w-8 h-8 rounded-lg ${isReferred ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-blue-100 text-blue-700 border border-blue-200'} flex items-center justify-center font-bold text-xs">
               ${isReferred ? '✓' : 'POW'}
             </div>
             <div>
               <div class="flex items-center space-x-2">
-                <span class="text-xs font-bold text-white">Target: ${ref.targetCompany}</span>
-                <span class="text-[10px] text-slate-400 font-mono">• Mentor: ${ref.alumnusName || 'Alumnus'}</span>
+                <span class="text-xs font-bold text-slate-900">Target: ${ref.targetCompany}</span>
+                <span class="text-[10px] text-slate-500 font-mono">• Mentor: ${ref.alumnusName || 'Alumnus'}</span>
               </div>
-              <a href="${ref.repoUrl}" target="_blank" class="text-[11px] text-sky-400 underline font-mono truncate block max-w-xs sm:max-w-md">${ref.repoUrl}</a>
+              <a href="${ref.repoUrl}" target="_blank" class="text-[11px] text-blue-600 underline font-mono truncate block max-w-xs sm:max-w-md">${ref.repoUrl}</a>
             </div>
           </div>
 
           <div class="flex items-center space-x-2">
-            <span class="text-xs font-mono font-bold text-sky-400">${ref.readinessScore || 94}/100 Score</span>
+            <span class="text-xs font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">${ref.readinessScore || 94}/100 Score</span>
             ${isReferred 
-              ? `<span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold flex items-center space-x-1 shadow-sm">
-                   <i data-lucide="check-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+              ? `<span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold flex items-center space-x-1 shadow-xs">
+                   <i data-lucide="check-check" class="w-3.5 h-3.5 text-emerald-600"></i>
                    <span>1-CLICK ATS REFERRAL CONFIRMED</span>
                  </span>`
-              : `<span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[11px] font-medium flex items-center space-x-1 animate-pulse">
+              : `<span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-200 text-[11px] font-medium flex items-center space-x-1">
                    <i data-lucide="clock" class="w-3 h-3"></i>
                    <span>In Alumnus Review Queue</span>
                  </span>`
@@ -1370,13 +1420,14 @@ function renderStudentReferrals(items) {
           </div>
         </div>
 
-        <div class="text-[11px] text-slate-300 bg-[#080d1a] p-2.5 rounded-lg border border-slate-800/80">
-          <span class="text-slate-400 font-medium">Summary:</span> "${ref.summary}"
-          ${isReferred ? `<div class="mt-1.5 text-emerald-300 font-semibold flex items-center space-x-1.5 border-t border-slate-800/60 pt-1.5"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-emerald-400"></i><span>Alumnus Endorsement: "${ref.feedback || 'Candidate endorsed for SDE-1 backend position via internal ATS.'}"</span></div>` : ''}
+        <div class="text-[11px] text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+          <span class="text-slate-500 font-medium">Summary:</span> "${ref.summary}"
+          ${isReferred ? `<div class="mt-1.5 text-emerald-700 font-semibold flex items-center space-x-1.5 border-t border-slate-200 pt-1.5"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-emerald-600"></i><span>Alumnus Endorsement: "${ref.feedback || 'Candidate endorsed for SDE-1 backend position via internal ATS.'}"</span></div>` : ''}
         </div>
       </div>
     `;
   }).join('');
+  lucide.createIcons();
   lucide.createIcons();
 }
 
@@ -1451,9 +1502,9 @@ function renderSkillChips() {
   if (!container) return;
 
   container.innerHTML = currentStudentSkills.map(skill => `
-    <span class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-blue-950/60 text-sky-200 border border-blue-500/30 text-xs font-medium shadow-sm transition hover:border-blue-400">
+    <span class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold shadow-xs transition hover:border-blue-400">
       <span>${skill}</span>
-      <button type="button" onclick="removeSkill('${skill}')" class="text-slate-400 hover:text-rose-400 transition ml-1" title="Remove skill">
+      <button type="button" onclick="removeSkill('${skill}')" class="text-blue-400 hover:text-rose-500 transition ml-1" title="Remove skill">
         <i data-lucide="x" class="w-3 h-3"></i>
       </button>
     </span>
@@ -1757,7 +1808,7 @@ function openCandidateResumeModal(refId) {
   const skillsContainer = document.getElementById('modal-cand-skills');
   if (skillsContainer) {
     skillsContainer.innerHTML = candSkills.map(s => `
-      <span class="px-2 py-0.5 rounded bg-[#060a14] border border-slate-800 text-[11px] text-sky-300 font-mono font-medium">${s}</span>
+      <span class="px-2.5 py-1 rounded-lg bg-blue-50 border border-blue-200 text-[11px] text-blue-700 font-mono font-medium">${s}</span>
     `).join('');
   }
 
@@ -1765,7 +1816,7 @@ function openCandidateResumeModal(refId) {
   if (referBtn) {
     if (ref.status === 'referred') {
       referBtn.disabled = true;
-      referBtn.className = "px-5 py-2 bg-emerald-600/30 text-emerald-300 font-bold rounded-xl text-xs border border-emerald-500/30 flex items-center space-x-1.5 cursor-not-allowed";
+      referBtn.className = "px-5 py-2 bg-emerald-50 text-emerald-700 font-bold rounded-xl text-xs border border-emerald-200 flex items-center space-x-1.5 cursor-not-allowed";
       referBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i><span>Already Referred</span>`;
     } else {
       referBtn.disabled = false;
@@ -1916,10 +1967,10 @@ function showToast(msg) {
 
   const toast = document.createElement('div');
   toast.id = 'linkx-toast';
-  toast.className = 'fixed bottom-5 right-5 z-50 bg-[#080d1a]/95 border border-slate-700/80 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center space-x-2 transition transform translate-y-0 shadow-sky-950/40';
+  toast.className = 'fixed bottom-5 right-5 z-50 bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-2.5 border border-slate-800 transition transform translate-y-0';
   toast.innerHTML = `
-    <i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>
-    <span class="text-slate-100 font-medium">${msg}</span>
+    <i data-lucide="check-circle" class="w-4 h-4 text-blue-400"></i>
+    <span class="text-white font-medium">${msg}</span>
   `;
   document.body.appendChild(toast);
   lucide.createIcons();
@@ -2411,7 +2462,983 @@ function applyCardStagger(container) {
   });
 }
 
-// ── 8. TAB ACTIVE INDICATOR ──
+// =========================================================================
+// ================= LINKX OPPORTUNITY OPERATING SYSTEM ENGINE =============
+// =========================================================================
+
+let activeCareerMissionId = 'ai-internship';
+let cachedMissions = [];
+let cachedOpportunityRescue = null;
+let cachedShadowScenarios = [];
+let activeShadowScenarioId = 'scenario-cache-stampede';
+let selectedShadowOptionId = null;
+
+// ── 1. STUDENT CAREER MISSION & OPPORTUNITY RESCUE ──
+async function renderStudentMissionView() {
+  const milestonesContainer = document.getElementById('mission-milestones-container');
+  if (!milestonesContainer) return;
+
+  try {
+    const [resMissions, resRescue] = await Promise.all([
+      fetch(`${API_BASE}/missions`),
+      fetch(`${API_BASE}/opportunity-rescue`)
+    ]);
+
+    if (resMissions.ok) {
+      const data = await resMissions.json();
+      cachedMissions = data.missions || [];
+    }
+    if (resRescue.ok) {
+      const data = await resRescue.json();
+      cachedOpportunityRescue = data.rescue || null;
+    }
+  } catch (err) {
+    console.warn('Using local fallback for missions');
+  }
+
+  const mission = cachedMissions.find(m => m.id === activeCareerMissionId) || cachedMissions[0] || {
+    title: 'Get SDE / AI Systems Internship (90 Days)',
+    badge: 'Highest Placement Impact',
+    eta: '45 Days Remaining',
+    targetRole: 'Backend Systems / Distributed AI Engineer',
+    overallProgress: 70,
+    milestones: [
+      { step: 1, name: "Assess Proof-of-Work", desc: "ATS Resume parsed & GitHub code readiness evaluated.", status: "completed", metric: "95/100 Capability Index" },
+      { step: 2, name: "Build Benchmark Capstone", desc: "Distributed Key-Value Engine with Raft consensus & test coverage.", status: "completed", metric: "92.4% Unit Test Coverage" },
+      { step: 3, name: "Get Expert Code Review", desc: "Alumnus Rohan Mehta (Swiggy) reviewing cache eviction PR.", status: "in-progress", metric: "15-min Review Scheduled" },
+      { step: 4, name: "Prove Readiness on Hiring Radar", desc: "Matched with Razorpay Core Payments & Swiggy Routing Team.", status: "pending", metric: "Candidate Shortlisted" },
+      { step: 5, name: "Adaptive Outcome Offer", desc: "Direct 1-Click ATS Referral or Paid Micro-Bounty with Founder.", status: "pending", metric: "Summer '26 SDE Offer" }
+    ]
+  };
+
+  const setText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined) el.textContent = val;
+  };
+
+  setText('mission-title', mission.title);
+  setText('mission-badge', mission.badge);
+  setText('mission-eta', `• ${mission.eta}`);
+  setText('mission-progress-number', `${mission.overallProgress}%`);
+
+  const descEl = document.getElementById('mission-desc');
+  if (descEl) {
+    descEl.innerHTML = `Target: <b class="text-slate-800">${mission.targetRole}</b>. LinkX coordinates your technical milestones, mentor reviews, and employer proof-of-work around this specific outcome.`;
+  }
+
+  // Render Milestones Stepper
+  milestonesContainer.innerHTML = mission.milestones.map((m) => {
+    const isDone = m.status === 'completed';
+    const isCurrent = m.status === 'in-progress';
+    
+    let iconBadge = '';
+    let cardBorder = 'border-slate-200 bg-white';
+    
+    if (isDone) {
+      iconBadge = `<div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 border border-emerald-300 flex items-center justify-center font-bold text-xs shrink-0"><i data-lucide="check" class="w-4 h-4"></i></div>`;
+      cardBorder = 'border-emerald-200/80 bg-emerald-50/20';
+    } else if (isCurrent) {
+      iconBadge = `<div class="w-8 h-8 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20 flex items-center justify-center font-bold text-xs shrink-0 animate-pulse">${m.step}</div>`;
+      cardBorder = 'border-blue-400 bg-blue-50/40 shadow-xs ring-1 ring-blue-400/30';
+    } else {
+      iconBadge = `<div class="w-8 h-8 rounded-xl bg-slate-100 text-slate-500 border border-slate-200 flex items-center justify-center font-bold text-xs shrink-0 font-mono">${m.step}</div>`;
+      cardBorder = 'border-slate-200 bg-white opacity-85';
+    }
+
+    return `
+      <div class="p-4 rounded-xl border ${cardBorder} flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition">
+        <div class="flex items-start space-x-3">
+          ${iconBadge}
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-bold text-slate-900">${m.name}</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded ${isDone ? 'bg-emerald-100 text-emerald-800' : (isCurrent ? 'bg-blue-100 text-blue-800 font-bold' : 'bg-slate-100 text-slate-600')}">${m.status.toUpperCase()}</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">${m.desc}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-2 shrink-0 self-end sm:self-auto">
+          <span class="text-xs font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-lg">
+            ${m.metric}
+          </span>
+          ${isCurrent ? `
+            <button onclick="openCareerShadowTab()" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-xs flex items-center space-x-1 transition">
+              <span>Simulate</span>
+              <i data-lucide="arrow-right" class="w-3 h-3"></i>
+            </button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  lucide.createIcons();
+}
+
+function switchCareerMission(missionId) {
+  activeCareerMissionId = missionId;
+  renderStudentMissionView();
+  showToast(`Active Mission updated!`);
+}
+
+function handleAcceptOpportunityRescue() {
+  const rescueCard = document.getElementById('opportunity-rescue-card');
+  if (rescueCard) {
+    rescueCard.className = "bg-gradient-to-r from-emerald-50 via-teal-50/40 to-white border-2 border-emerald-400 rounded-2xl p-5 shadow-xs relative overflow-hidden space-y-3 transition";
+    rescueCard.innerHTML = `
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="p-1.5 rounded-lg bg-emerald-600 text-white shadow-xs">
+            <i data-lucide="check-check" class="w-4 h-4"></i>
+          </span>
+          <h3 class="text-sm font-bold text-emerald-900 tracking-tight flex items-center space-x-2">
+            <span>Opportunity Rescue Activated: Enrolled in Raft Consensus Challenge</span>
+            <span class="text-[10px] font-mono bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded-full font-bold">REROUTE IN PROGRESS</span>
+          </h3>
+        </div>
+        <span class="text-xs text-emerald-700 font-mono font-bold">48 Hours Remaining</span>
+      </div>
+      <p class="text-xs text-slate-700">
+        You are now partnered with <b>Dr. R.K. Verma (Dean R&D)</b> and <b>Rohan Mehta (Swiggy)</b>. Complete the Raft consensus pull request to satisfy Razorpay's REQ-2026-ENG-44.
+      </p>
+      <div class="pt-2 border-t border-emerald-200 flex items-center justify-between text-xs">
+        <span class="text-emerald-800 font-semibold flex items-center space-x-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i><span>Thursday 15-min review locked with Rohan Mehta</span></span>
+        <button onclick="switchTab('faculty-challenges')" class="px-3.5 py-1.5 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 shadow-xs transition">
+          Open Challenge Workspace &rarr;
+        </button>
+      </div>
+    `;
+  }
+
+  // Join the challenge in backend
+  fetch(`${API_BASE}/faculty/challenges/fac-chal-1/join`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ studentName: 'Aman Sharma', role: 'Lead Go Systems Engineer', capabilityScore: 95 })
+  }).catch(() => {});
+
+  triggerConfetti();
+  showToast("Opportunity Rescue Activated! Enrolled in Dr. Verma's Raft Challenge with Swiggy Mentor.");
+  lucide.createIcons();
+}
+
+function openCareerShadowTab() {
+  switchTab('career-shadow');
+}
+
+// ── 2. CAREER SHADOW INTERACTIVE SIMULATOR ──
+async function renderCareerShadowView() {
+  try {
+    const res = await fetch(`${API_BASE}/career-shadow`);
+    if (res.ok) {
+      const data = await res.json();
+      cachedShadowScenarios = data.scenarios || [];
+    }
+  } catch (err) {
+    console.warn('Using local fallback for shadow scenarios');
+  }
+
+  loadCareerShadowScenario(activeShadowScenarioId);
+}
+
+function loadCareerShadowScenario(scenarioId) {
+  activeShadowScenarioId = scenarioId;
+  selectedShadowOptionId = null;
+
+  const scenario = cachedShadowScenarios.find(s => s.id === scenarioId) || cachedShadowScenarios[0] || {
+    id: 'scenario-cache-stampede',
+    category: 'High-Throughput Systems Engineering',
+    title: 'Black Friday Production Outage: Cache Stampede Under Burst Traffic',
+    role: 'SDE-2 On-Call Backend Engineer',
+    company: 'Swiggy / FinTech Scale',
+    context: 'It is 8:02 PM on Black Friday. Traffic spikes to 25,000 req/sec. The central Redis caching tier evicts hot restaurant catalog keys. Cache miss rate leaps from 2% to 94%. PostgreSQL primary CPU hits 100%, cascading latency to 8,200ms across all checkout APIs. Management asks for immediate triage.',
+    question: 'What is your immediate architectural decision to stabilize the system?',
+    options: [
+      { id: 'opt-a', label: 'Option A: Spin up 10 extra PostgreSQL Read Replicas', score: 35, feedback: 'Ineffective: Provisioning replicas takes 8–15 minutes, during which database connections will completely exhaust.' },
+      { id: 'opt-b', label: 'Option B: Deploy Mutex Lock (Singleflight Pattern) on Cache Misses', score: 96, feedback: 'Optimal Architectural Choice! Singleflight collapses duplicate concurrent cache misses into a single query to the primary DB. PostgreSQL CPU immediately stabilizes from 100% to 18%.' },
+      { id: 'opt-c', label: 'Option C: Flush All Redis Keys to Force Clean Warmup', score: 10, feedback: 'Catastrophic! Flushing the cache during peak burst traffic shifts 100% of read volume onto an already saturated database.' },
+      { id: 'opt-d', label: 'Option D: Throttle and Drop 85% of Inbound Customer Traffic', score: 50, feedback: 'Sub-optimal: While it relieves DB pressure, dropping 85% of live checkouts causes massive revenue loss and fails SLA expectations.' }
+    ],
+    alumnusDebrief: "Rohan Mehta (Swiggy Batch '20): 'We actually faced this in 2023! Using Go\\'s singleflight turned 4,000 duplicate queries for a single IPL match menu into 1 database query. This is a classic interview question!'"
+  };
+
+  const setText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined) el.textContent = val;
+  };
+
+  setText('shadow-category', scenario.category);
+  setText('shadow-title', scenario.title);
+  setText('shadow-role-company', `Role: ${scenario.role} • ${scenario.company}`);
+  setText('shadow-context', scenario.context);
+  setText('shadow-question', scenario.question);
+
+  const optionsContainer = document.getElementById('shadow-options-container');
+  if (optionsContainer) {
+    optionsContainer.innerHTML = scenario.options.map(opt => `
+      <label onclick="handleSelectShadowOption('${opt.id}')" id="label-opt-${opt.id}" class="flex items-start space-x-3 p-3.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-400 cursor-pointer transition">
+        <input type="radio" name="shadow-choice" value="${opt.id}" class="mt-0.5 text-blue-600 focus:ring-blue-500">
+        <span class="text-xs font-medium text-slate-800 leading-relaxed">${opt.label}</span>
+      </label>
+    `).join('');
+  }
+
+  const resultCard = document.getElementById('shadow-result-card');
+  if (resultCard) resultCard.classList.add('hidden');
+
+  const reasoningInput = document.getElementById('shadow-reasoning');
+  if (reasoningInput) reasoningInput.value = '';
+
+  lucide.createIcons();
+}
+
+function handleSelectShadowOption(optId) {
+  selectedShadowOptionId = optId;
+  document.querySelectorAll('#shadow-options-container label').forEach(lbl => {
+    lbl.classList.remove('border-blue-600', 'bg-blue-50/70', 'ring-1', 'ring-blue-600/30');
+    lbl.classList.add('border-slate-200', 'bg-slate-50');
+  });
+  const selectedLabel = document.getElementById(`label-opt-${optId}`);
+  if (selectedLabel) {
+    selectedLabel.classList.add('border-blue-600', 'bg-blue-50/70', 'ring-1', 'ring-blue-600/30');
+    selectedLabel.classList.remove('border-slate-200', 'bg-slate-50');
+  }
+}
+
+async function handleSubmitCareerShadowDecision() {
+  if (!selectedShadowOptionId) {
+    showToast("Please select an architectural decision option first!");
+    return;
+  }
+
+  const reasoning = document.getElementById('shadow-reasoning')?.value || '';
+  const btn = document.getElementById('btn-submit-shadow');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i><span>Running Simulation...</span>`;
+    lucide.createIcons();
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/career-shadow/evaluate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        scenarioId: activeShadowScenarioId,
+        optionId: selectedShadowOptionId,
+        reasoning
+      })
+    });
+
+    const data = res.ok ? await res.json() : null;
+    const result = data?.result || {
+      score: 96,
+      feedback: "Optimal Architectural Choice! Singleflight collapses duplicate concurrent cache misses into a single query to the primary DB.",
+      alumnusDebrief: "Rohan Mehta (Swiggy Batch '20): 'We actually faced this in 2023! Using Go\\'s singleflight turned 4,000 duplicate queries for a single IPL match menu into 1 database query.'",
+      rubricPassed: true
+    };
+
+    const resultCard = document.getElementById('shadow-result-card');
+    if (resultCard) {
+      const isHigh = result.score >= 80;
+      resultCard.className = `rounded-2xl border p-5 space-y-4 shadow-xs ${isHigh ? 'border-emerald-300 bg-emerald-50/30' : 'border-amber-300 bg-amber-50/30'}`;
+      resultCard.innerHTML = `
+        <div class="flex items-center justify-between border-b ${isHigh ? 'border-emerald-200' : 'border-amber-200'} pb-3">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-10 h-10 rounded-xl ${isHigh ? 'bg-emerald-600' : 'bg-amber-600'} text-white font-bold flex items-center justify-center text-sm shadow-sm">
+              ${result.score}%
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-slate-900">${isHigh ? 'Optimal SDE-2 Architecture Pattern' : 'High SLA & Cascading Risk'}</h4>
+              <p class="text-[11px] text-slate-600 font-mono">Rubric Assessment: ${isHigh ? 'Passed SLA Requirements' : 'Needs Optimization'}</p>
+            </div>
+          </div>
+          <span class="text-xs font-mono font-bold ${isHigh ? 'text-emerald-800 bg-emerald-100' : 'text-amber-800 bg-amber-100'} px-2.5 py-1 rounded-lg">
+            Score: ${result.score}/100
+          </span>
+        </div>
+
+        <div class="text-xs text-slate-700 leading-relaxed space-y-2">
+          <p><b>Simulation Result:</b> ${result.feedback}</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 space-y-1.5">
+          <div class="flex items-center space-x-2 text-xs font-bold text-blue-900">
+            <i data-lucide="message-square" class="w-4 h-4 text-blue-600"></i>
+            <span>Alumnus Practitioner Debrief:</span>
+          </div>
+          <p class="text-xs text-slate-700 italic leading-relaxed">
+            "${result.alumnusDebrief}"
+          </p>
+        </div>
+
+        <div class="flex items-center justify-end space-x-3 pt-2">
+          <button onclick="switchTab('alumnus-impact')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs transition flex items-center space-x-1.5">
+            <span>Connect with Mentor on Impact Exchange</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      `;
+      resultCard.classList.remove('hidden');
+    }
+
+    if (result.score >= 80) triggerConfetti();
+    showToast(`Simulation Evaluated: Score ${result.score}/100`);
+  } catch (err) {
+    showToast("Simulation evaluated successfully!");
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<i data-lucide="play" class="w-4 h-4"></i><span>Evaluate Decision</span>`;
+      lucide.createIcons();
+    }
+  }
+}
+
+// ── 3. ALUMNI IMPACT EXCHANGE & TIME BUDGET ──
+async function renderAlumnusImpactView() {
+  const offersContainer = document.getElementById('impact-offers-container');
+  const pendingContainer = document.getElementById('impact-pending-container');
+  if (!offersContainer || !pendingContainer) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/impact-offers`);
+    if (res.ok) {
+      const data = await res.json();
+      const offers = data.offers || [];
+
+      // Render Active Offers
+      offersContainer.innerHTML = offers.map(o => `
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-3 hover:border-emerald-300 transition">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">${o.type}</span>
+              <span class="text-xs text-slate-500 font-mono">• ${o.slotsLeft} Slots Left</span>
+            </div>
+            <span class="text-xs font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">${o.weeklyTimeAvailable}</span>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-slate-900">${o.title}</h4>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">${o.desc}</p>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <span class="text-slate-500 font-medium">By: ${o.alumnusName} (${o.company})</span>
+            <span class="text-emerald-700 font-semibold flex items-center space-x-1"><i data-lucide="check" class="w-3.5 h-3.5"></i><span>Active Slot</span></span>
+          </div>
+        </div>
+      `).join('');
+
+      // Render Pending Review Requests
+      const allPending = offers.flatMap(o => o.pendingRequests.map(r => ({ ...r, offerTitle: o.title })));
+      if (allPending.length === 0) {
+        pendingContainer.innerHTML = `
+          <div class="bg-white rounded-2xl p-6 text-center text-slate-500 border border-slate-200 shadow-xs space-y-2">
+            <i data-lucide="inbox" class="w-8 h-8 mx-auto text-emerald-500"></i>
+            <p class="text-xs font-medium">No pending student requests in queue.</p>
+          </div>
+        `;
+      } else {
+        pendingContainer.innerHTML = allPending.map(p => `
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+              <div>
+                <h4 class="text-xs font-bold text-slate-900">${p.studentName}</h4>
+                <p class="text-[11px] text-slate-500 font-mono">Req: ${p.timeReq} • ${p.target}</p>
+              </div>
+              <span class="text-[10px] font-mono font-bold bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded">Pending Review</span>
+            </div>
+
+            <div class="text-xs text-slate-700 space-y-1">
+              <div class="font-mono text-[11px] text-blue-600 truncate"><a href="${p.repoUrl}" target="_blank" class="hover:underline">${p.repoUrl}</a></div>
+              <p class="text-[11px] text-slate-600">Candidate requesting 15-min PR review on Redis eviction benchmark (92.4% test coverage).</p>
+            </div>
+
+            <div class="flex items-center space-x-2 pt-2 border-t border-slate-100">
+              <button onclick="handleAcceptImpactRequest('${p.studentName}', '${p.target}')" class="flex-1 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs transition flex items-center justify-center space-x-1">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                <span>Accept Review (15m)</span>
+              </button>
+              <button onclick="showToast('Request dismissed.'); this.closest('.bg-white').remove();" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium transition">
+                Decline
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+  } catch (err) {
+    console.warn('Error loading impact offers:', err);
+  }
+
+  lucide.createIcons();
+}
+
+function handleAcceptImpactRequest(studentName, target) {
+  triggerConfetti();
+  showToast(`Accepted 15-min review for ${studentName}! Thursday slot confirmed in calendar.`);
+  const container = document.getElementById('impact-pending-container');
+  if (container) {
+    container.innerHTML = `
+      <div class="bg-emerald-50 rounded-2xl p-5 border border-emerald-200 text-center space-y-2">
+        <i data-lucide="check-circle" class="w-8 h-8 mx-auto text-emerald-600"></i>
+        <h4 class="text-xs font-bold text-emerald-900">Review Slot Locked!</h4>
+        <p class="text-[11px] text-emerald-700">${studentName} has been notified with your Google Meet link.</p>
+      </div>
+    `;
+    lucide.createIcons();
+  }
+}
+
+function handlePublishMicroOfferPrompt() {
+  showToast("Published new 20-min Mock System Design slot to Campus Impact Exchange!");
+  triggerConfetti();
+}
+
+// ── 4. ALUMNI LEGACY GRAPH GUIDES ──
+async function renderLegacyGraphView() {
+  const container = document.getElementById('legacy-guides-container');
+  if (!container) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/legacy-guides`);
+    if (res.ok) {
+      const data = await res.json();
+      const guides = data.guides || [];
+
+      container.innerHTML = guides.map(g => `
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4 hover:border-blue-400 transition flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200 font-mono">${g.batch}</span>
+              <span class="text-xs text-slate-500 font-mono">${g.readTime} • ${g.views} Reads</span>
+            </div>
+
+            <div>
+              <h4 class="text-base font-bold text-slate-900 leading-snug">${g.title}</h4>
+              <p class="text-xs text-slate-500 mt-1 font-medium">By: ${g.author}</p>
+            </div>
+
+            <div class="space-y-1.5 pt-2 border-t border-slate-100">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Key Battle-Tested Takeaways:</div>
+              ${g.keyTakeaways.map(t => `
+                <div class="flex items-start space-x-2 text-xs text-slate-700">
+                  <span class="text-blue-600 font-bold">•</span>
+                  <span>${t}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="text-slate-500 font-mono">Reusable Playbook</span>
+            <button onclick="showToast('Playbook saved to student mission reading list!');" class="text-blue-600 font-bold hover:underline flex items-center space-x-1">
+              <span>Save to My Mission &rarr;</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+  } catch (err) {
+    console.warn('Error loading legacy guides:', err);
+  }
+
+  lucide.createIcons();
+}
+
+// ── 5. FACULTY CHALLENGE EXCHANGE ──
+async function renderFacultyChallengesView() {
+  const container = document.getElementById('faculty-challenges-container');
+  if (!container) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/faculty/challenges`);
+    if (res.ok) {
+      const data = await res.json();
+      const challenges = data.challenges || [];
+
+      container.innerHTML = challenges.map(c => `
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4 hover:border-purple-300 transition flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-200">${c.domain}</span>
+              <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">${c.stipendOrCredit}</span>
+            </div>
+
+            <div>
+              <h4 class="text-base font-bold text-slate-900">${c.title}</h4>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">Academic Lead: ${c.professorName} (${c.dept})</p>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">${c.desc}</p>
+            </div>
+
+            <!-- Required Skills Chips -->
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${c.requiredSkills.map(s => `
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-50 border border-slate-200 text-slate-700">${s}</span>
+              `).join('')}
+            </div>
+
+            <!-- Enrolled Student Team & Industry Alum -->
+            <div class="bg-slate-50 rounded-xl p-3 space-y-2 border border-slate-200 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-900 flex items-center space-x-1.5"><i data-lucide="users" class="w-3.5 h-3.5 text-blue-600"></i><span>Active Team:</span></span>
+                <span class="text-[10px] text-slate-500 font-mono">${c.enrolledTeam.length} Contributors</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                ${c.enrolledTeam.map(tm => `
+                  <span class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-lg bg-blue-50 text-blue-800 border border-blue-200 text-[11px] font-medium">
+                    <span>${tm.name}</span>
+                    <span class="font-mono text-[10px] text-blue-600">(${tm.capabilityScore}/100)</span>
+                  </span>
+                `).join('')}
+                ${c.enrolledTeam.length === 0 ? '<span class="text-slate-400 text-[11px] italic">No students joined yet. Be the first to apply!</span>' : ''}
+              </div>
+              <div class="text-[11px] text-slate-600 pt-1 border-t border-slate-200 flex items-center space-x-1">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>Industry Alum Co-Guide: <b>${c.industryAlumMentor}</b></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="text-[11px] text-slate-500 font-mono">NAAC 5.4.1 Validated</span>
+            <button onclick="handleJoinFacultyChallenge('${c.id}')" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold shadow-xs transition flex items-center space-x-1">
+              <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+              <span>Join Challenge Team</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+  } catch (err) {
+    console.warn('Error loading faculty challenges:', err);
+  }
+
+  lucide.createIcons();
+}
+
+function handleJoinFacultyChallenge(chalId) {
+  fetch(`${API_BASE}/faculty/challenges/${chalId}/join`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ studentName: 'Aman Sharma', role: 'Distributed Systems Engineer', capabilityScore: 95 })
+  }).then(() => {
+    triggerConfetti();
+    showToast("Enrolled in Faculty Challenge! Milestone added to your Career Mission.");
+    renderFacultyChallengesView();
+  }).catch(() => {
+    showToast("Joined Challenge Team!");
+  });
+}
+
+function handleOpenNewChallengeModal() {
+  showToast("Faculty Challenge Composer opened! Submissions automatically link to Student Missions.");
+}
+
+// ── 6. HIRING COPILOT (PROOF-OF-WORK SHORTLIST) ──
+function renderHiringCopilotView() {
+  const container = document.getElementById('hiring-copilot-container');
+  if (!container) return;
+
+  const candidate = {
+    name: 'Aman Sharma',
+    branch: "B.Tech CSE '26 • Apex Institute of Technology",
+    cgpa: "8.92",
+    capabilityScore: 95,
+    resumeScore: 96,
+    githubScore: 96,
+    testCoverage: "92.4%",
+    repoUrl: "https://github.com/aman-cs/distri-cache-engine",
+    projectTitle: "Distributed Redis Caching Ring with Consistent Hashing",
+    summary: "Built Go consistent-hashing ring distributing keys across 5 cluster nodes. Authored full integration test suites achieving 92.4% test coverage.",
+    badges: ["Faculty Challenge Winner", "Alumni Endorsed (Swiggy)", "ATS Match 96%", "Raft Consensus Proven"],
+    alumnusEndorsement: "Rohan Mehta (Swiggy SDE-2): 'Candidate's code shows clear mastery of Go concurrency, mutex locking, and singleflight patterns. Highly recommend for SDE-1 backend.'"
+  };
+
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-5 hover:border-cyan-400 transition">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold flex items-center justify-center text-base shadow-md shadow-blue-500/20">
+            AS
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h3 class="text-base font-bold text-slate-900">${candidate.name}</h3>
+              <span class="text-[10px] font-mono font-bold bg-cyan-50 text-cyan-800 border border-cyan-200 px-2 py-0.5 rounded-full">Top 1% Exceptional Talent</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5">${candidate.branch} • CGPA ${candidate.cgpa}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <div class="text-right">
+            <span class="text-2xl font-black text-cyan-600">${candidate.capabilityScore}<span class="text-xs text-slate-400 font-normal">/100</span></span>
+            <div class="text-[10px] uppercase font-bold text-slate-500 font-mono">Proof-of-Work Index</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified Badges Row -->
+      <div class="flex flex-wrap gap-2">
+        ${candidate.badges.map(b => `
+          <span class="px-2.5 py-1 rounded-lg bg-cyan-50 text-cyan-800 border border-cyan-200 text-xs font-semibold flex items-center space-x-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-cyan-600"></i>
+            <span>${b}</span>
+          </span>
+        `).join('')}
+      </div>
+
+      <!-- Metrics Benchmarks Bar -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 border border-slate-200 rounded-xl p-3 text-center text-xs">
+        <div>
+          <div class="text-slate-500 text-[10px]">Resume ATS Score</div>
+          <div class="text-sm font-bold text-slate-900 mt-0.5">${candidate.resumeScore}%</div>
+        </div>
+        <div>
+          <div class="text-slate-500 text-[10px]">GitHub PoW Score</div>
+          <div class="text-sm font-bold text-blue-600 mt-0.5">${candidate.githubScore}%</div>
+        </div>
+        <div>
+          <div class="text-slate-500 text-[10px]">Test Coverage</div>
+          <div class="text-sm font-bold text-emerald-600 mt-0.5">${candidate.testCoverage}</div>
+        </div>
+        <div>
+          <div class="text-slate-500 text-[10px]">P99 Latency Metric</div>
+          <div class="text-sm font-bold text-indigo-600 mt-0.5">14ms Burst</div>
+        </div>
+      </div>
+
+      <!-- Alumnus Staked Trust Quote -->
+      <div class="bg-blue-50/50 border border-blue-200 rounded-xl p-4 text-xs space-y-1">
+        <div class="font-bold text-blue-950 flex items-center space-x-1.5">
+          <i data-lucide="award" class="w-4 h-4 text-blue-600"></i>
+          <span>Alumni Staked Endorsement:</span>
+        </div>
+        <p class="text-slate-700 italic leading-relaxed">
+          "${candidate.alumnusEndorsement}"
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-slate-100 text-xs">
+        <a href="${candidate.repoUrl}" target="_blank" class="text-blue-600 font-mono text-xs hover:underline flex items-center space-x-1">
+          <i data-lucide="github" class="w-3.5 h-3.5"></i>
+          <span>${candidate.repoUrl} &rarr;</span>
+        </a>
+        <div class="flex items-center space-x-2.5">
+          <button onclick="openCandidateResumeModal('ref-1')" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition cursor-pointer">
+            Code Dossier
+          </button>
+          <button onclick="openATSDossierModal('student-aman')" class="px-3.5 py-2 bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold rounded-xl transition border border-blue-200 flex items-center space-x-1.5 shadow-2xs cursor-pointer">
+            <i data-lucide="file-check" class="w-3.5 h-3.5 text-blue-600"></i>
+            <span>Export ATS Package</span>
+          </button>
+          <button onclick="handleCopilotFastTrackInterview('Aman Sharma', 'Razorpay Core Payments')" class="px-4 py-2 btn-gradient-primary text-white font-bold rounded-xl shadow-md shadow-blue-600/30 flex items-center space-x-1.5 transition cursor-pointer">
+            <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+            <span>1-Click Fast-Track</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  lucide.createIcons();
+}
+
+function handleCopilotFastTrackInterview(name, company) {
+  triggerConfetti();
+  showToast(`Fast-Track Interview Dispatched! Candidate ${name} invited directly to 1st round.`);
+}
+
+// ── 7. CAMPUS OPPORTUNITY GAP RADAR ──
+async function renderGapRadarView() {
+  const container = document.getElementById('gap-radar-container');
+  if (!container) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/gap-radar`);
+    if (res.ok) {
+      const data = await res.json();
+      const alerts = data.radar?.activeEcosystemAlerts || [];
+
+      container.innerHTML = alerts.map(a => {
+        let borderClass = 'border-slate-200 bg-white';
+        let badgeClass = 'bg-slate-100 text-slate-800';
+        let icon = 'alert-circle';
+        
+        if (a.severity === 'critical') {
+          borderClass = 'border-rose-300 bg-rose-50/20';
+          badgeClass = 'bg-rose-100 text-rose-800 font-bold';
+          icon = 'alert-octagon';
+        } else if (a.severity === 'warning') {
+          borderClass = 'border-amber-300 bg-amber-50/20';
+          badgeClass = 'bg-amber-100 text-amber-800 font-bold';
+          icon = 'alert-triangle';
+        } else {
+          borderClass = 'border-blue-300 bg-blue-50/20';
+          badgeClass = 'bg-blue-100 text-blue-800 font-bold';
+          icon = 'info';
+        }
+
+        return `
+          <div class="rounded-2xl p-6 border ${borderClass} shadow-xs space-y-4 transition">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+              <div class="flex items-center space-x-2.5">
+                <span class="p-2 rounded-xl ${badgeClass}">
+                  <i data-lucide="${icon}" class="w-4 h-4"></i>
+                </span>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900">${a.title}</h4>
+                  <p class="text-xs text-slate-500 font-mono mt-0.5">${a.metric}</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-full ${badgeClass}">
+                ${a.severity}
+              </span>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed">
+              <b class="text-slate-800">Ecosystem Impact:</b> ${a.impact}
+            </p>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div class="text-slate-700 font-medium">
+                <span class="font-bold text-slate-900">Recommended Action:</span> ${a.suggestedAction}
+              </div>
+              <button onclick="handleTriggerGapAction('${a.id}', '${a.suggestedAction}')" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-bold shadow-xs transition shrink-0 flex items-center space-x-1.5">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                <span>Execute Intervention</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  } catch (err) {
+    console.warn('Error loading gap radar:', err);
+  }
+
+  lucide.createIcons();
+}
+
+function handleTriggerGapAction(gapId, actionTitle) {
+  triggerConfetti();
+  showToast(`Campus Intervention Dispatched: ${actionTitle}`);
+}
+
+// ── 7. CIRCULAR RECIPROCITY SYNDICATE & MICRO-GRANTS ──
+let currentSyndicateData = null;
+
+async function renderSyndicateView() {
+  const totalPoolEl = document.getElementById('syndicate-total-pool');
+  const grantsContainer = document.getElementById('syndicate-grants-container');
+  const placementsContainer = document.getElementById('syndicate-placements-container');
+  const grantsBadge = document.getElementById('syndicate-grants-badge');
+  const tickerPoolEl = document.getElementById('ticker-syndicate-total');
+
+  try {
+    const res = await fetch(`${API_BASE}/syndicate`);
+    const data = await res.json();
+    if (!data.success) return;
+
+    currentSyndicateData = data.pool;
+    const pool = data.pool;
+
+    if (totalPoolEl) totalPoolEl.textContent = '₹' + pool.totalPool.toLocaleString('en-IN');
+    if (tickerPoolEl) tickerPoolEl.textContent = '₹' + pool.totalPool.toLocaleString('en-IN');
+    if (grantsBadge) grantsBadge.textContent = `${pool.fundedGrants.length} Grants Live`;
+
+    if (grantsContainer) {
+      grantsContainer.innerHTML = pool.fundedGrants.map(g => `
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs hover:border-amber-400 transition space-y-3">
+          <div class="flex items-start justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex items-center space-x-2">
+                <span class="text-[10px] font-mono font-bold bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-full">
+                  ${g.amount} Disbursed
+                </span>
+                <span class="text-[10px] font-mono ${g.status === 'Disbursed' ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-blue-700 bg-blue-50 border-blue-200'} px-2 py-0.5 rounded-full border font-semibold">
+                  ${g.status}
+                </span>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">${g.title}</h4>
+              <p class="text-xs text-slate-500"><b class="text-slate-700">Recipient:</b> ${g.recipient}</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shrink-0">
+              <i data-lucide="award" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-600 leading-relaxed">
+            <p><b>Impact:</b> ${g.impact}</p>
+            <p class="text-[11px] text-slate-400 mt-1">Funded by: <span class="font-medium text-slate-600">${g.fundedBy}</span></p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    if (placementsContainer) {
+      placementsContainer.innerHTML = pool.recentPlacements.map(p => `
+        <div class="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between gap-3 text-xs">
+          <div class="space-y-0.5">
+            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+              <span>${p.candidateName}</span>
+              <span class="text-[10px] text-slate-400 font-normal">→ ${p.company}</span>
+            </div>
+            <div class="text-[11px] text-slate-500">${p.role}</div>
+            <div class="text-[10px] text-slate-400">Referred by: ${p.referralAlum}</div>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="text-xs font-black text-emerald-700 font-mono">+${p.kickbackAmount}</span>
+            <div class="text-[10px] text-slate-400">${p.date}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    lucide.createIcons();
+  } catch (err) {
+    console.warn('Error loading syndicate pool:', err);
+  }
+}
+
+async function handleSimulatePlacementReward() {
+  try {
+    const res = await fetch(`${API_BASE}/syndicate/simulate-hire`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        candidateName: 'Aman Sharma',
+        company: 'Razorpay',
+        role: 'High-Throughput Backend SDE Intern',
+        referralAlum: 'Rohan Mehta (Swiggy)'
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      triggerConfetti();
+      showToast("Verified Placement: ₹20,000 corporate kickback added to Campus Micro-Grant Pool!");
+      renderSyndicateView();
+      fetchActivityStream();
+    }
+  } catch (err) {
+    console.error('Error simulating placement reward:', err);
+  }
+}
+
+// ── 8. VERIFIED ATS DOSSIER EXPORT (GREENHOUSE / WORKDAY) ──
+let currentATSDossier = null;
+
+async function openATSDossierModal(candidateId) {
+  try {
+    const res = await fetch(`${API_BASE}/candidates/${candidateId}/ats-dossier`);
+    const data = await res.json();
+    if (!data.success) return;
+
+    currentATSDossier = data.dossier;
+    const d = data.dossier;
+
+    const nameEl = document.getElementById('ats-candidate-name');
+    if (nameEl) nameEl.textContent = d.name;
+
+    const covEl = document.getElementById('ats-test-coverage');
+    if (covEl) covEl.textContent = d.benchmarks.unitTestCoverage;
+
+    const latEl = document.getElementById('ats-latency');
+    if (latEl) latEl.textContent = d.benchmarks.p99Latency;
+
+    const compEl = document.getElementById('ats-complexity');
+    if (compEl) compEl.textContent = d.benchmarks.cyclomaticComplexity;
+
+    const memEl = document.getElementById('ats-memory');
+    if (memEl) memEl.textContent = d.benchmarks.memoryLeakAudit;
+
+    const endEl = document.getElementById('ats-endorsement-text');
+    if (endEl) endEl.textContent = `"${d.alumniEndorsement.statement}"`;
+
+    const jsonEl = document.getElementById('ats-json-payload');
+    if (jsonEl) jsonEl.textContent = JSON.stringify(d.atsPayload, null, 2);
+
+    const modal = document.getElementById('modal-ats-dossier');
+    if (modal) modal.classList.remove('hidden');
+
+    lucide.createIcons();
+  } catch (err) {
+    console.warn('Error opening ATS dossier:', err);
+  }
+}
+
+function closeATSDossierModal() {
+  const modal = document.getElementById('modal-ats-dossier');
+  if (modal) modal.classList.add('hidden');
+}
+
+function handleCopyATSJson() {
+  const jsonEl = document.getElementById('ats-json-payload');
+  if (jsonEl && jsonEl.textContent) {
+    navigator.clipboard.writeText(jsonEl.textContent).then(() => {
+      showToast("Greenhouse / Workday JSON copied to clipboard!");
+    }).catch(() => {
+      showToast("JSON ready for copy");
+    });
+  }
+}
+
+function handleDownloadATSDossier() {
+  if (!currentATSDossier) return;
+  const blob = new Blob([JSON.stringify(currentATSDossier, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `linkx_ats_dossier_${(currentATSDossier.name || 'candidate').toLowerCase().replace(/\s+/g, '_')}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("Verified ATS Candidate Package downloaded!");
+}
+
+// ── 9. LIVE ECOSYSTEM PULSE TICKER ──
+let activityStreamItems = [];
+let activityStreamIndex = 0;
+let activityStreamInterval = null;
+
+async function fetchActivityStream() {
+  try {
+    const res = await fetch(`${API_BASE}/activity-stream`);
+    const data = await res.json();
+    if (data.success && data.stream) {
+      activityStreamItems = data.stream;
+      updateTickerDisplay();
+    }
+  } catch (err) {
+    console.warn('Error fetching activity stream:', err);
+  }
+}
+
+function updateTickerDisplay() {
+  const textEl = document.getElementById('live-ticker-text');
+  if (!textEl || !activityStreamItems.length) return;
+
+  const item = activityStreamItems[activityStreamIndex % activityStreamItems.length];
+  textEl.style.opacity = '0';
+  setTimeout(() => {
+    textEl.textContent = item.text;
+    textEl.style.opacity = '1';
+  }, 200);
+
+  activityStreamIndex++;
+}
+
+function initActivityStreamTicker() {
+  fetchActivityStream();
+  if (activityStreamInterval) clearInterval(activityStreamInterval);
+  activityStreamInterval = setInterval(updateTickerDisplay, 4500);
+}
+
+// ── 10. TAB ACTIVE INDICATOR ──
 function updateTabIndicators() {
   document.querySelectorAll('.tab-btn').forEach(btn => {
     if (btn.classList.contains('border-pink-500') || btn.classList.contains('border-indigo-500')) btn.classList.add('active-tab');
@@ -2471,6 +3498,35 @@ function animateWorkspaceEntrance() {
   }
 })();
 
+// Explicitly bind Hero Login and Opportunity OS handlers to window for inline onclick handlers
+window.renderHeroRoleTabs = renderHeroRoleTabs;
+window.renderHeroRoleView = renderHeroRoleView;
+window.executeHeroLogin = executeHeroLogin;
+window.handleHeroLoginSubmit = handleHeroLoginSubmit;
+window.directAuthenticateAs = directAuthenticateAs;
+window.renderStudentMissionView = renderStudentMissionView;
+window.switchCareerMission = switchCareerMission;
+window.handleAcceptOpportunityRescue = handleAcceptOpportunityRescue;
+window.renderCareerShadowView = renderCareerShadowView;
+window.loadCareerShadowScenario = loadCareerShadowScenario;
+window.handleSubmitCareerShadowDecision = handleSubmitCareerShadowDecision;
+window.renderAlumnusImpactView = renderAlumnusImpactView;
+window.handleAcceptImpactRequest = handleAcceptImpactRequest;
+window.renderLegacyGraphView = renderLegacyGraphView;
+window.renderFacultyChallengesView = renderFacultyChallengesView;
+window.handleJoinFacultyChallenge = handleJoinFacultyChallenge;
+window.renderHiringCopilotView = renderHiringCopilotView;
+window.handleCopilotFastTrackInterview = handleCopilotFastTrackInterview;
+window.renderGapRadarView = renderGapRadarView;
+window.handleTriggerGapAction = handleTriggerGapAction;
+window.renderSyndicateView = renderSyndicateView;
+window.handleSimulatePlacementReward = handleSimulatePlacementReward;
+window.openATSDossierModal = openATSDossierModal;
+window.closeATSDossierModal = closeATSDossierModal;
+window.handleCopyATSJson = handleCopyATSJson;
+window.handleDownloadATSDossier = handleDownloadATSDossier;
+window.initActivityStreamTicker = initActivityStreamTicker;
+
 // ── BOOT ──
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize default browser history state
@@ -2484,6 +3540,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchBountiesFromAPI();
   fetchReferralsFromAPI();
   fetchInstitutionStats();
+  initActivityStreamTicker();
 
   setTimeout(() => {
     initScrollReveal();
