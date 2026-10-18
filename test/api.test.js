@@ -1,7 +1,57 @@
-import test from 'node:test';
+import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
+import { spawn } from 'node:child_process';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const BASE_URL = process.env.TEST_API_URL || 'http://127.0.0.1:3000';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+let BASE_URL = process.env.TEST_API_URL || 'http://127.0.0.1:3000';
+let serverProcess = null;
+
+async function isServerReady(url) {
+  try {
+    const res = await fetch(`${url}/api/personas`, { signal: AbortSignal.timeout(800) });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+before(async () => {
+  const ready = await isServerReady(BASE_URL);
+  if (!ready) {
+    const serverPath = path.resolve(__dirname, '../server.js');
+    serverProcess = spawn(process.execPath, [serverPath], {
+      env: { ...process.env, PORT: '3000' },
+      stdio: 'ignore'
+    });
+
+    const start = Date.now();
+    let connected = false;
+    while (Date.now() - start < 10000) {
+      await new Promise(r => setTimeout(r, 200));
+      if (await isServerReady(BASE_URL)) {
+        connected = true;
+        break;
+      }
+    }
+    if (!connected) {
+      throw new Error(`Failed to automatically start LinkX server at ${BASE_URL} for tests.`);
+    }
+  }
+});
+
+after(() => {
+  if (serverProcess) {
+    try {
+      serverProcess.kill();
+    } catch {
+      // Ignore
+    }
+  }
+});
 
 test('LinkX Full-Stack Platform End-to-End Test Suite', async (t) => {
   let authToken = null;
