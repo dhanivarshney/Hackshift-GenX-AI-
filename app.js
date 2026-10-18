@@ -11,6 +11,7 @@ const ROLE_CONFIGS = {
     id: 'student',
     roleLabel: 'Student',
     portalTitle: 'Student Portal',
+    email: 'aman@apex.edu',
     name: 'Aman Sharma',
     avatar: 'AS',
     branch: "B.Tech CSE '26",
@@ -41,6 +42,7 @@ const ROLE_CONFIGS = {
     id: 'alumnus',
     roleLabel: 'Alumnus',
     portalTitle: 'Alumni Portal',
+    email: 'rohan.mehta@swiggy.in',
     name: 'Rohan Mehta',
     avatar: 'RM',
     branch: "Batch '20 • SDE-2 Backend",
@@ -71,6 +73,7 @@ const ROLE_CONFIGS = {
     id: 'founder',
     roleLabel: 'Founder',
     portalTitle: 'Founder Portal',
+    email: 'neha@hyperscale.ai',
     name: 'Neha Kapoor',
     avatar: 'NK',
     branch: "Batch '19 • Founder & CEO",
@@ -101,6 +104,7 @@ const ROLE_CONFIGS = {
     id: 'faculty',
     roleLabel: 'Faculty',
     portalTitle: 'Faculty Portal',
+    email: 'dr.verma@apex.edu',
     name: 'Dr. R.K. Verma',
     avatar: 'RV',
     branch: "Professor & Dean R&D",
@@ -131,6 +135,7 @@ const ROLE_CONFIGS = {
     id: 'recruiter',
     roleLabel: 'Recruiter',
     portalTitle: 'Recruiter Radar',
+    email: 'vikram@razorpay.com',
     name: 'Vikram Seth',
     avatar: 'VS',
     branch: "Tech Talent Partner",
@@ -161,6 +166,7 @@ const ROLE_CONFIGS = {
     id: 'institution',
     roleLabel: 'Institution',
     portalTitle: 'Institution Command',
+    email: 'admin@apex.edu',
     name: 'Dean Sharma',
     avatar: 'DS',
     branch: "Dean of Alumni Relations",
@@ -310,14 +316,14 @@ const MATCH_RADAR_ITEMS = [
   }
 ];
 
-// ================= INITIALIZATION & 3-SECOND SPLASH =================
+// ================= INITIALIZATION & SNAPPY SPLASH =================
 document.addEventListener('DOMContentLoaded', async () => {
   renderHeroRoleTabs();
   renderHeroRoleView(currentHeroRoleId);
   renderRadarCards(MATCH_RADAR_ITEMS);
   setupLineageCanvas();
 
-  // Run 3-second cinematic intro splash
+  // Snappy splash screen with instant bypass on repeat visits
   startSplashCountdown();
 
   // Load backend data in background
@@ -326,41 +332,57 @@ document.addEventListener('DOMContentLoaded', async () => {
     fetchReferralsFromAPI()
   ]);
 
-  lucide.createIcons();
+  if (window.lucide && typeof lucide.createIcons === 'function') {
+    lucide.createIcons();
+  }
 });
 
 function startSplashCountdown() {
+  // If splash was already seen in this session, dismiss immediately without lag
+  if (sessionStorage.getItem('linkx_splash_seen')) {
+    dismissSplashImmediately(true);
+    return;
+  }
+
   const progressBar = document.getElementById('splash-progress');
   const timerText = document.getElementById('splash-timer-text');
   
   if (progressBar) {
-    // Trigger smooth fill
+    progressBar.style.transition = 'width 500ms ease-out';
     setTimeout(() => {
       progressBar.style.width = '100%';
-    }, 50);
+    }, 20);
   }
 
-  let remaining = 3;
-  splashTimer = setInterval(() => {
-    remaining--;
-    if (timerText) timerText.textContent = `${remaining}s`;
-
-    if (remaining <= 0) {
-      clearInterval(splashTimer);
-      dismissSplashImmediately();
-    }
-  }, 1000);
+  // Snappy countdown transition (600ms total instead of 3000ms freeze)
+  splashTimer = setTimeout(() => {
+    if (timerText) timerText.textContent = 'Ready';
+    dismissSplashImmediately(false);
+  }, 600);
 }
 
-function dismissSplashImmediately() {
-  if (splashTimer) clearInterval(splashTimer);
+function dismissSplashImmediately(instant = false) {
+  if (splashTimer) {
+    clearTimeout(splashTimer);
+    clearInterval(splashTimer);
+  }
+  try {
+    sessionStorage.setItem('linkx_splash_seen', 'true');
+  } catch (e) {}
+
   const splash = document.getElementById('splash-screen');
   if (splash) {
-    splash.style.opacity = '0';
-    splash.style.transform = 'scale(1.04)';
-    setTimeout(() => {
+    if (instant) {
       splash.style.display = 'none';
-    }, 800);
+    } else {
+      splash.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
+      splash.style.opacity = '0';
+      splash.style.transform = 'scale(1.02)';
+      splash.style.pointerEvents = 'none';
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 250);
+    }
   }
 }
 
@@ -374,10 +396,10 @@ function renderHeroRoleTabs() {
     const isSelected = key === currentHeroRoleId;
     const cfg = ROLE_CONFIGS[key];
     const activeClass = isSelected
-      ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 text-white shadow-lg shadow-blue-600/30 font-bold border border-sky-400/40 scale-[1.02]'
-      : 'text-slate-400 hover:text-white hover:bg-slate-800/60 font-medium';
+      ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 text-white shadow-lg shadow-blue-600/30 font-bold border border-sky-400/50 scale-[1.02]'
+      : 'text-slate-400 hover:text-white hover:bg-slate-800/60 font-medium border border-transparent';
     return `
-      <button onclick="renderHeroRoleView('${key}')" class="flex-1 py-2 px-3 rounded-xl transition text-center whitespace-nowrap flex items-center justify-center space-x-1.5 ${activeClass}">
+      <button type="button" onclick="renderHeroRoleView('${key}')" class="flex-1 py-2 px-3 rounded-xl transition text-center whitespace-nowrap flex items-center justify-center space-x-1.5 text-xs ${activeClass}">
         <i data-lucide="${cfg.icon}" class="w-3.5 h-3.5"></i>
         <span>${cfg.roleLabel}</span>
       </button>
@@ -391,55 +413,145 @@ function renderHeroRoleView(roleId) {
 
   renderHeroRoleTabs();
 
-  // Side Banner Updates
-  document.getElementById('hero-side-icon').setAttribute('data-lucide', cfg.icon);
-  document.getElementById('hero-side-badge').textContent = cfg.bannerBadge;
-  document.getElementById('hero-side-title').textContent = cfg.bannerTitle;
-  document.getElementById('hero-side-desc').textContent = cfg.bannerDesc;
+  // Side Banner Updates with safe null checks
+  const iconEl = document.getElementById('hero-side-icon');
+  if (iconEl) iconEl.setAttribute('data-lucide', cfg.icon);
+
+  const badgeEl = document.getElementById('hero-side-badge');
+  if (badgeEl) badgeEl.textContent = cfg.bannerBadge;
+
+  const titleEl = document.getElementById('hero-side-title');
+  if (titleEl) titleEl.textContent = cfg.bannerTitle;
+
+  const descEl = document.getElementById('hero-side-desc');
+  if (descEl) descEl.textContent = cfg.bannerDesc;
 
   // Bullets
   const bulletsEl = document.getElementById('hero-side-bullets');
-  bulletsEl.innerHTML = cfg.bullets.map(b => `
-    <div class="flex items-start space-x-2.5">
-      <div class="p-1.5 rounded-lg bg-gradient-to-br from-sky-500/15 via-purple-500/15 to-pink-500/15 text-sky-300 mt-0.5 border border-purple-500/25 shadow-sm">
-        <i data-lucide="${b.icon}" class="w-3.5 h-3.5"></i>
+  if (bulletsEl && Array.isArray(cfg.bullets)) {
+    bulletsEl.innerHTML = cfg.bullets.map(b => `
+      <div class="flex items-start space-x-2.5">
+        <div class="p-1.5 rounded-lg bg-gradient-to-br from-sky-500/15 via-purple-500/15 to-pink-500/15 text-sky-300 mt-0.5 border border-purple-500/25 shadow-sm shrink-0">
+          <i data-lucide="${b.icon}" class="w-3.5 h-3.5"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-white">${b.title}</h4>
+          <p class="text-[11px] text-slate-400 leading-tight">${b.text}</p>
+        </div>
       </div>
-      <div>
-        <h4 class="text-xs font-bold text-white">${b.title}</h4>
-        <p class="text-[11px] text-slate-400 leading-tight">${b.text}</p>
-      </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 
-  // Form Headings & Demo Info
-  document.getElementById('hero-form-heading').textContent = `Sign In to ${cfg.portalTitle}`;
-  document.getElementById('hero-form-subheading').textContent = `Enter as ${cfg.roleLabel.toLowerCase()} or use 1-click hackathon bypass.`;
-  document.getElementById('hero-demo-text').innerHTML = cfg.demoText;
+  // Demo Info Box
+  const demoTextEl = document.getElementById('hero-demo-text');
+  if (demoTextEl) demoTextEl.innerHTML = cfg.demoText;
 
-  // Dynamic Input Fields
-  const fieldsEl = document.getElementById('hero-dynamic-fields');
-  fieldsEl.innerHTML = cfg.fields.map(f => `
-    <div>
-      <label class="block text-xs font-medium text-slate-300 mb-1">${f.label}</label>
-      <input type="${f.type}" value="${f.value}" required class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition" placeholder="${f.placeholder}">
-    </div>
-  `).join('');
+  // Form Headings
+  const formHeading = document.getElementById('hero-form-heading');
+  if (formHeading) formHeading.textContent = `Sign In to ${cfg.portalTitle}`;
 
-  lucide.createIcons();
+  const formSubheading = document.getElementById('hero-form-subheading');
+  if (formSubheading) formSubheading.textContent = `Enter as verified ${cfg.roleLabel.toLowerCase()} or use 1-click fast-track bypass.`;
+
+  // Email Label & Input (Pre-filled with role email)
+  const emailLabel = document.getElementById('hero-email-label');
+  if (emailLabel) {
+    emailLabel.textContent = cfg.id === 'student' ? 'Official / College Email'
+      : cfg.id === 'alumnus' ? 'Corporate / Work Email'
+      : cfg.id === 'founder' ? 'Founder Work Email'
+      : cfg.id === 'faculty' ? 'Institutional .edu Email'
+      : cfg.id === 'recruiter' ? 'Corporate Recruiter Email'
+      : 'Institutional Admin Email';
+  }
+
+  const emailInput = document.getElementById('hero-email-input');
+  if (emailInput) {
+    emailInput.value = cfg.email || '';
+    emailInput.placeholder = cfg.email || '';
+  }
+
+  const pwInput = document.getElementById('hero-password-input');
+  if (pwInput) {
+    pwInput.value = 'password123';
+  }
+
+  // Button Texts
+  const signinBtnText = document.getElementById('btn-hero-signin-text');
+  if (signinBtnText) signinBtnText.textContent = `Sign In to ${cfg.portalTitle}`;
+
+  const demoBtnText = document.getElementById('btn-hero-demo-text');
+  if (demoBtnText) demoBtnText.textContent = `⚡ 1-Click Fast-Track Demo (${cfg.roleLabel})`;
+
+  // Clear any existing errors
+  const errBox = document.getElementById('hero-signin-error');
+  if (errBox) {
+    errBox.textContent = '';
+    errBox.classList.add('hidden');
+  }
+
+  if (window.lucide && typeof lucide.createIcons === 'function') {
+    lucide.createIcons();
+  }
 }
 
 function executeHeroLogin() {
-  authenticateAndOpenWorkspace(currentHeroRoleId, true);
+  authenticateAndOpenWorkspace(currentHeroRoleId, true, true);
 }
 
-function handleHeroLoginSubmit(event) {
+async function handleHeroLoginSubmit(event) {
   event.preventDefault();
-  authenticateAndOpenWorkspace(currentHeroRoleId, true);
+  const email = document.getElementById('hero-email-input')?.value?.trim();
+  const password = document.getElementById('hero-password-input')?.value;
+  const role = currentHeroRoleId;
+  const btn = document.getElementById('btn-hero-signin');
+  const btnText = document.getElementById('btn-hero-signin-text');
+  const errBox = document.getElementById('hero-signin-error');
+
+  if (errBox) {
+    errBox.classList.add('hidden');
+    errBox.textContent = '';
+  }
+
+  if (btn) btn.disabled = true;
+  if (btnText) btnText.textContent = 'Verifying credentials…';
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, role })
+    });
+    const data = await res.json();
+    if (data.success) {
+      const userRole = data.user?.role || data.user?.roles?.[0] || role;
+      authenticateAndOpenWorkspace(userRole, true, true);
+      showToast(`Welcome back, ${data.user?.name || 'User'}!`);
+    } else {
+      if (errBox) {
+        errBox.textContent = data.error || 'Invalid credentials or role mismatch.';
+        errBox.classList.remove('hidden');
+      } else {
+        showToast(data.error || 'Invalid credentials.');
+      }
+    }
+  } catch (err) {
+    const msg = 'Network error or backend unreachable — please try again.';
+    if (errBox) {
+      errBox.textContent = msg;
+      errBox.classList.remove('hidden');
+    } else {
+      showToast(msg);
+    }
+  } finally {
+    if (btn) btn.disabled = false;
+    const cfg = ROLE_CONFIGS[currentHeroRoleId] || ROLE_CONFIGS.student;
+    if (btnText) btnText.textContent = `Sign In to ${cfg.portalTitle}`;
+  }
 }
 
 function directAuthenticateAs(roleId) {
-  dismissSplashImmediately();
-  authenticateAndOpenWorkspace(roleId, true);
+  dismissSplashImmediately(true);
+  authenticateAndOpenWorkspace(roleId, true, true);
 }
 
 // ================= ROLE-SPECIFIC NAVIGATION CONFIGURATIONS =================
@@ -2574,11 +2686,13 @@ function animateWorkspaceEntrance() {
     };
   }
   // Splash burst
-  const _origDismiss = window.dismissSplashImmediately;
+    const _origDismiss = window.dismissSplashImmediately;
   if (typeof _origDismiss === 'function') {
-    window.dismissSplashImmediately = function() {
-      _origDismiss();
-      setTimeout(splashExitBurst, 450);
+    window.dismissSplashImmediately = function(instant = false) {
+      _origDismiss(instant);
+      if (!instant) {
+        setTimeout(splashExitBurst, 450);
+      }
     };
   }
 

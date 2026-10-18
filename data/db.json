@@ -320,6 +320,45 @@
   },
   "mentorshipBookings": [
     {
+      "id": "booking-1792288516771",
+      "slotId": "slot-1",
+      "studentId": "student",
+      "studentName": "Aman Sharma",
+      "mentorName": "Rohan Mehta (Swiggy)",
+      "topic": "System Design Deep Dive & Portfolio Review",
+      "message": "Excited to review distributed caching architecture.",
+      "status": "completed",
+      "createdAt": "2026-10-18T01:55:16.771Z",
+      "feedbackRating": 5,
+      "updatedAt": "2026-10-18T01:55:16.795Z"
+    },
+    {
+      "id": "booking-1792288408301",
+      "slotId": "slot-1",
+      "studentId": "student",
+      "studentName": "Aman Sharma",
+      "mentorName": "Rohan Mehta (Swiggy)",
+      "topic": "System Design Deep Dive & Portfolio Review",
+      "message": "Excited to review distributed caching architecture.",
+      "status": "completed",
+      "createdAt": "2026-10-18T01:53:28.301Z",
+      "feedbackRating": 5,
+      "updatedAt": "2026-10-18T01:53:28.330Z"
+    },
+    {
+      "id": "booking-1792280011200",
+      "slotId": "slot-1",
+      "studentId": "student",
+      "studentName": "Aman Sharma",
+      "mentorName": "Rohan Mehta (Swiggy)",
+      "topic": "System Design Deep Dive & Portfolio Review",
+      "message": "Excited to review distributed caching architecture.",
+      "status": "completed",
+      "createdAt": "2026-10-17T23:33:31.200Z",
+      "feedbackRating": 5,
+      "updatedAt": "2026-10-17T23:33:31.234Z"
+    },
+    {
       "id": "booking-1792279886102",
       "slotId": "slot-1",
       "studentId": "student",
@@ -986,9 +1025,144 @@
       },
       "createdAt": "2026-10-17T23:31:25.771Z",
       "theme": "hybrid"
+    },
+    {
+      "id": "user-1792280010848",
+      "personaId": "student",
+      "name": "Test Cadet",
+      "email": "test.user.1792280010647@university.edu",
+      "salt": "737a60c2b8c6b08948df9b66f9ccd8e2",
+      "passwordHash": "75a4cc6cb09abaf66220263c309cb3c3d2ab65c349e5165b85e09f7fda7b248904ae934c1fe027d778a2f5f6164112bfd2e4f00c5171cf1a658f3b9005008b84",
+      "role": "student",
+      "roles": [
+        "student"
+      ],
+      "college": "Apex Institute of Technology",
+      "branch": "B.Tech CSE",
+      "bio": "",
+      "skills": [
+        "Go",
+        "JavaScript"
+      ],
+      "themePreference": "hybrid",
+      "privacy": {
+        "profileVisibility": "public",
+        "consentIntroductions": true,
+        "showContactInfo": false,
+        "emailNotifications": true
+      },
+      "createdAt": "2026-10-17T23:33:30.848Z",
+      "theme": "hybrid"
+    },
+    {
+      "id": "user-1792288407967",
+      "personaId": "student",
+      "name": "Test Cadet",
+      "email": "test.user.1792288407795@university.edu",
+      "salt": "c675b5a352337d39050ee82d02ece8dd",
+      "passwordHash": "96777ff40eca307e7091ec8f7ea921d3c20470fbe3df3b454d394b963fed107dc6d1a69ca7de0d8b8031005cf7b1736a2fc8dda0d6a5b2e0337af091b3c60193",
+      "role": "student",
+      "roles": [
+        "student"
+      ],
+      "college": "Apex Institute of Technology",
+      "branch": "B.Tech CSE",
+      "bio": "",
+      "skills": [
+        "Go",
+        "JavaScript"
+      ],
+      "themePreference": "hybrid",
+      "privacy": {
+        "profileVisibility": "public",
+        "consentIntroductions": true,
+        "showContactInfo": false,
+        "emailNotifications": true
+      },
+      "createdAt": "2026-10-18T01:53:27.967Z",
+      "theme": "hybrid"
+    },
+    {
+      "id": "user-1792288516461",
+      "personaId": "student",
+      "name": "Test Cadet",
+      "email": "test.user.1792288516306@university.edu",
+      "salt": "51b1068b342ac57449b8b47aa996fd85",
+      "passwordHash": "b0b0b26587a80f70018cad690b63a1f5a8b0da1a369bbdf433f11c7b57441231996478b0b0e1576fd77c9ae49a5685e35904b53c5dfd429f2b3d6a5ab95c03e6",
+      "role": "student",
+      "roles": [
+        "student"
+      ],
+      "college": "Apex Institute of Technology",
+      "branch": "B.Tech CSE",
+      "bio": "",
+      "skills": [
+        "Go",
+        "JavaScript"
+      ],
+      "themePreference": "hybrid",
+      "privacy": {
+        "profileVisibility": "public",
+        "consentIntroductions": true,
+        "showContactInfo": false,
+        "emailNotifications": true
+      },
+      "createdAt": "2026-10-18T01:55:16.461Z",
+      "theme": "hybrid"
     }
   ],
   "legacyPosts": [
+    {
+      "id": "legacy-1792288516817",
+      "title": "Mastering Event-Driven Microservices in High-Throughput Fintech",
+      "author": "Alumni Contributor",
+      "authorRole": "Alumnus",
+      "category": "Playbook",
+      "tags": [
+        "Distributed Systems",
+        "Kafka",
+        "Architecture"
+      ],
+      "summary": "A step-by-step playbook on idempotent event consumers and Kafka partitions.",
+      "content": "A step-by-step playbook on idempotent event consumers and Kafka partitions.",
+      "upvotes": 2,
+      "createdAt": "2026-10-18T01:55:16.817Z",
+      "readTime": "2 min read"
+    },
+    {
+      "id": "legacy-1792288408392",
+      "title": "Mastering Event-Driven Microservices in High-Throughput Fintech",
+      "author": "Alumni Contributor",
+      "authorRole": "Alumnus",
+      "category": "Playbook",
+      "tags": [
+        "Distributed Systems",
+        "Kafka",
+        "Architecture"
+      ],
+      "summary": "A step-by-step playbook on idempotent event consumers and Kafka partitions.",
+      "content": "A step-by-step playbook on idempotent event consumers and Kafka partitions.",
+      "upvotes": 2,
+      "createdAt": "2026-10-18T01:53:28.392Z",
+      "readTime": "2 min read"
+    },
+    {
+      "id": "legacy-1792280011266",
+      "title": "Mastering Event-Driven Microservices in High-Throughput Fintech",
+      "author": "Alumni Contributor",
+      "authorRole": "Alumnus",
+      "category": "Playbook",
+      "tags": [
+        "Distributed Systems",
+        "Kafka",
+        "Architecture"
+      ],
+      "summary": "A step-by-step playbook on idempotent event consumers and Kafka partitions.",
+      "content": "A step-by-step playbook on idempotent event consumers and Kafka partitions.",
+      "upvotes": 2,
+      "createdAt": "2026-10-17T23:33:31.266Z",
+      "readTime": "2 min read"
+    },
     {
       "id": "legacy-1792279886147",
       "title": "Mastering Event-Driven Microservices in High-Throughput Fintech",
@@ -1250,6 +1424,162 @@
     }
   ],
   "facultyChallenges": [
+    {
+      "id": "challenge-1792288516877",
+      "title": "Autonomous Drone Swarm Coordination via Edge Mesh",
+      "facultyName": "Faculty Member",
+      "facultyDept": "Department of Computer Science",
+      "institution": "Apex Institute of Technology",
+      "industryPartner": "Alumni Syndicate Partner",
+      "requiredSkills": [
+        "General Tech"
+      ],
+      "teamSize": "2-4 Students",
+      "duration": "8 Weeks",
+      "deadline": "Open",
+      "deliverables": "Working prototype and project report.",
+      "status": "Active Applications Open",
+      "description": "Design zero-latency failover protocols for decentralized drone teams.",
+      "teamsApplied": [
+        {
+          "id": "team-1792288516896",
+          "teamId": "team-1792288516896",
+          "teamName": "Student's Team",
+          "leadStudent": "Aman Sharma",
+          "leadBranch": "B.Tech CSE '26",
+          "membersCount": 1,
+          "members": [
+            "Student"
+          ],
+          "compatibilityScore": 94,
+          "repoUrl": "https://github.com/aman-cs/distri-cache-engine",
+          "pitch": "Built decentralized drone routing in autonomous robotics lab.",
+          "status": "pending",
+          "appliedAt": "2026-10-18T01:55:16.896Z",
+          "milestones": [
+            {
+              "title": "Milestone 1: Architecture Blueprint & Setup",
+              "done": false,
+              "dueDate": "Week 2"
+            },
+            {
+              "title": "Milestone 2: Core Algorithm Implementation",
+              "done": false,
+              "dueDate": "Week 5"
+            },
+            {
+              "title": "Milestone 3: Benchmark Testing & Telemetry",
+              "done": false,
+              "dueDate": "Week 8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "challenge-1792288408456",
+      "title": "Autonomous Drone Swarm Coordination via Edge Mesh",
+      "facultyName": "Faculty Member",
+      "facultyDept": "Department of Computer Science",
+      "institution": "Apex Institute of Technology",
+      "industryPartner": "Alumni Syndicate Partner",
+      "requiredSkills": [
+        "General Tech"
+      ],
+      "teamSize": "2-4 Students",
+      "duration": "8 Weeks",
+      "deadline": "Open",
+      "deliverables": "Working prototype and project report.",
+      "status": "Active Applications Open",
+      "description": "Design zero-latency failover protocols for decentralized drone teams.",
+      "teamsApplied": [
+        {
+          "id": "team-1792288408484",
+          "teamId": "team-1792288408484",
+          "teamName": "Student's Team",
+          "leadStudent": "Aman Sharma",
+          "leadBranch": "B.Tech CSE '26",
+          "membersCount": 1,
+          "members": [
+            "Student"
+          ],
+          "compatibilityScore": 94,
+          "repoUrl": "https://github.com/aman-cs/distri-cache-engine",
+          "pitch": "Built decentralized drone routing in autonomous robotics lab.",
+          "status": "pending",
+          "appliedAt": "2026-10-18T01:53:28.484Z",
+          "milestones": [
+            {
+              "title": "Milestone 1: Architecture Blueprint & Setup",
+              "done": false,
+              "dueDate": "Week 2"
+            },
+            {
+              "title": "Milestone 2: Core Algorithm Implementation",
+              "done": false,
+              "dueDate": "Week 5"
+            },
+            {
+              "title": "Milestone 3: Benchmark Testing & Telemetry",
+              "done": false,
+              "dueDate": "Week 8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "challenge-1792280011334",
+      "title": "Autonomous Drone Swarm Coordination via Edge Mesh",
+      "facultyName": "Faculty Member",
+      "facultyDept": "Department of Computer Science",
+      "institution": "Apex Institute of Technology",
+      "industryPartner": "Alumni Syndicate Partner",
+      "requiredSkills": [
+        "General Tech"
+      ],
+      "teamSize": "2-4 Students",
+      "duration": "8 Weeks",
+      "deadline": "Open",
+      "deliverables": "Working prototype and project report.",
+      "status": "Active Applications Open",
+      "description": "Design zero-latency failover protocols for decentralized drone teams.",
+      "teamsApplied": [
+        {
+          "id": "team-1792280011358",
+          "teamId": "team-1792280011358",
+          "teamName": "Student's Team",
+          "leadStudent": "Aman Sharma",
+          "leadBranch": "B.Tech CSE '26",
+          "membersCount": 1,
+          "members": [
+            "Student"
+          ],
+          "compatibilityScore": 94,
+          "repoUrl": "https://github.com/aman-cs/distri-cache-engine",
+          "pitch": "Built decentralized drone routing in autonomous robotics lab.",
+          "status": "pending",
+          "appliedAt": "2026-10-17T23:33:31.358Z",
+          "milestones": [
+            {
+              "title": "Milestone 1: Architecture Blueprint & Setup",
+              "done": false,
+              "dueDate": "Week 2"
+            },
+            {
+              "title": "Milestone 2: Core Algorithm Implementation",
+              "done": false,
+              "dueDate": "Week 5"
+            },
+            {
+              "title": "Milestone 3: Benchmark Testing & Telemetry",
+              "done": false,
+              "dueDate": "Week 8"
+            }
+          ]
+        }
+      ]
+    },
     {
       "id": "challenge-1792279886206",
       "title": "Autonomous Drone Swarm Coordination via Edge Mesh",
@@ -2190,6 +2520,51 @@
       "userId": "user-1792279885771",
       "role": "student",
       "expiresAt": 1792884685955
+    },
+    "token-user-1792280010848-1792280010858": {
+      "userId": "user-1792280010848",
+      "role": "student",
+      "expiresAt": 1792884810859
+    },
+    "token-user-1792280010848-1792280010909": {
+      "userId": "user-1792280010848",
+      "role": "student",
+      "expiresAt": 1792884810909
+    },
+    "token-user-1792280010848-1792280011034": {
+      "userId": "user-1792280010848",
+      "role": "student",
+      "expiresAt": 1792884811034
+    },
+    "token-user-1792288407967-1792288407975": {
+      "userId": "user-1792288407967",
+      "role": "student",
+      "expiresAt": 1792893207975
+    },
+    "token-user-1792288407967-1792288408025": {
+      "userId": "user-1792288407967",
+      "role": "student",
+      "expiresAt": 1792893208025
+    },
+    "token-user-1792288407967-1792288408142": {
+      "userId": "user-1792288407967",
+      "role": "student",
+      "expiresAt": 1792893208142
+    },
+    "token-user-1792288516461-1792288516467": {
+      "userId": "user-1792288516461",
+      "role": "student",
+      "expiresAt": 1792893316467
+    },
+    "token-user-1792288516461-1792288516514": {
+      "userId": "user-1792288516461",
+      "role": "student",
+      "expiresAt": 1792893316514
+    },
+    "token-user-1792288516461-1792288516629": {
+      "userId": "user-1792288516461",
+      "role": "student",
+      "expiresAt": 1792893316629
     }
   },
   "resetTokens": {
@@ -2207,6 +2582,39 @@
     }
   },
   "interviewInvitations": [
+    {
+      "id": "interview-1792288516940",
+      "candidateId": "u-cand-1",
+      "candidateName": "Aman Sharma",
+      "company": "Stripe / Scale AI Partner",
+      "roleTitle": "Full-Stack Distributed Systems Engineer",
+      "interviewDate": "Flexible (Next Week)",
+      "note": "We were impressed by your verified distributed caching proof-of-work on LinkX.",
+      "status": "invitation_sent",
+      "sentAt": "2026-10-18T01:55:16.940Z"
+    },
+    {
+      "id": "interview-1792288408541",
+      "candidateId": "u-cand-1",
+      "candidateName": "Aman Sharma",
+      "company": "Stripe / Scale AI Partner",
+      "roleTitle": "Full-Stack Distributed Systems Engineer",
+      "interviewDate": "Flexible (Next Week)",
+      "note": "We were impressed by your verified distributed caching proof-of-work on LinkX.",
+      "status": "invitation_sent",
+      "sentAt": "2026-10-18T01:53:28.541Z"
+    },
+    {
+      "id": "interview-1792280011413",
+      "candidateId": "u-cand-1",
+      "candidateName": "Aman Sharma",
+      "company": "Stripe / Scale AI Partner",
+      "roleTitle": "Full-Stack Distributed Systems Engineer",
+      "interviewDate": "Flexible (Next Week)",
+      "note": "We were impressed by your verified distributed caching proof-of-work on LinkX.",
+      "status": "invitation_sent",
+      "sentAt": "2026-10-17T23:33:31.413Z"
+    },
     {
       "id": "interview-1792279886277",
       "candidateId": "u-cand-1",
@@ -2353,6 +2761,96 @@
   ],
   "notifications": [
     {
+      "id": "notif-1792288517143",
+      "recipient": "alumnus",
+      "type": "coguide_invite",
+      "title": "🎓 Faculty Co-Guide Invitation from Dr. R.K. Verma",
+      "message": "You have been invited as an industry co-guide for \"Distributed Transaction Processing\".",
+      "actionUrl": "#mentorship",
+      "read": false,
+      "createdAt": "2026-10-18T01:55:17.143Z"
+    },
+    {
+      "id": "notif-1792288517105",
+      "recipient": "student",
+      "type": "milestone_review",
+      "title": "✅ Capstone Milestone Approved!",
+      "message": "Dr. R.K. Verma has reviewed Milestone 1: Architecture Blueprint & Load Simulation Harness: \"Excellent Raft consensus implementation with verified test coverage.\"",
+      "actionUrl": "#faculty-challenges",
+      "read": false,
+      "createdAt": "2026-10-18T01:55:17.105Z"
+    },
+    {
+      "id": "notif-1792288516940",
+      "recipient": "student",
+      "type": "interview_invitation",
+      "title": "🎉 Interview Invitation from Stripe / Scale AI Partner!",
+      "message": "Stripe / Scale AI Partner has shortlisted your proof-of-work for Full-Stack Distributed Systems Engineer.",
+      "actionUrl": "#student-profile",
+      "read": true,
+      "createdAt": "2026-10-18T01:55:16.940Z"
+    },
+    {
+      "id": "notif-1792288408782",
+      "recipient": "alumnus",
+      "type": "coguide_invite",
+      "title": "🎓 Faculty Co-Guide Invitation from Dr. R.K. Verma",
+      "message": "You have been invited as an industry co-guide for \"Distributed Transaction Processing\".",
+      "actionUrl": "#mentorship",
+      "read": false,
+      "createdAt": "2026-10-18T01:53:28.782Z"
+    },
+    {
+      "id": "notif-1792288408746",
+      "recipient": "student",
+      "type": "milestone_review",
+      "title": "✅ Capstone Milestone Approved!",
+      "message": "Dr. R.K. Verma has reviewed Milestone 1: Architecture Blueprint & Load Simulation Harness: \"Excellent Raft consensus implementation with verified test coverage.\"",
+      "actionUrl": "#faculty-challenges",
+      "read": true,
+      "createdAt": "2026-10-18T01:53:28.746Z"
+    },
+    {
+      "id": "notif-1792288408541",
+      "recipient": "student",
+      "type": "interview_invitation",
+      "title": "🎉 Interview Invitation from Stripe / Scale AI Partner!",
+      "message": "Stripe / Scale AI Partner has shortlisted your proof-of-work for Full-Stack Distributed Systems Engineer.",
+      "actionUrl": "#student-profile",
+      "read": true,
+      "createdAt": "2026-10-18T01:53:28.541Z"
+    },
+    {
+      "id": "notif-1792280011674",
+      "recipient": "alumnus",
+      "type": "coguide_invite",
+      "title": "🎓 Faculty Co-Guide Invitation from Dr. R.K. Verma",
+      "message": "You have been invited as an industry co-guide for \"Distributed Transaction Processing\".",
+      "actionUrl": "#mentorship",
+      "read": false,
+      "createdAt": "2026-10-17T23:33:31.674Z"
+    },
+    {
+      "id": "notif-1792280011625",
+      "recipient": "student",
+      "type": "milestone_review",
+      "title": "✅ Capstone Milestone Approved!",
+      "message": "Dr. R.K. Verma has reviewed Milestone 1: Architecture Blueprint & Load Simulation Harness: \"Excellent Raft consensus implementation with verified test coverage.\"",
+      "actionUrl": "#faculty-challenges",
+      "read": true,
+      "createdAt": "2026-10-17T23:33:31.625Z"
+    },
+    {
+      "id": "notif-1792280011413",
+      "recipient": "student",
+      "type": "interview_invitation",
+      "title": "🎉 Interview Invitation from Stripe / Scale AI Partner!",
+      "message": "Stripe / Scale AI Partner has shortlisted your proof-of-work for Full-Stack Distributed Systems Engineer.",
+      "actionUrl": "#student-profile",
+      "read": true,
+      "createdAt": "2026-10-17T23:33:31.413Z"
+    },
+    {
       "id": "notif-1792279886474",
       "recipient": "alumnus",
       "type": "coguide_invite",
@@ -2369,7 +2867,7 @@
       "title": "✅ Capstone Milestone Approved!",
       "message": "Dr. R.K. Verma has reviewed Milestone 1: Architecture Blueprint & Load Simulation Harness: \"Excellent Raft consensus implementation with verified test coverage.\"",
       "actionUrl": "#faculty-challenges",
-      "read": false,
+      "read": true,
       "createdAt": "2026-10-17T23:31:26.435Z"
     },
     {
@@ -2959,7 +3457,7 @@
         "student": "Aman Sharma",
         "alumnus": "Rohan Mehta"
       },
-      "updatedAt": "2026-10-17T23:31:26.363Z",
+      "updatedAt": "2026-10-18T01:55:17.033Z",
       "messages": [
         {
           "id": "m-1",
@@ -3058,6 +3556,27 @@
           "senderName": "Aman Sharma",
           "text": "Hello! Looking forward to collaborating on the AI Capstone challenge.",
           "timestamp": "2026-10-17T23:31:26.363Z"
+        },
+        {
+          "id": "m-1792280011519",
+          "sender": "student",
+          "senderName": "Aman Sharma",
+          "text": "Hello! Looking forward to collaborating on the AI Capstone challenge.",
+          "timestamp": "2026-10-17T23:33:31.519Z"
+        },
+        {
+          "id": "m-1792288408653",
+          "sender": "student",
+          "senderName": "Aman Sharma",
+          "text": "Hello! Looking forward to collaborating on the AI Capstone challenge.",
+          "timestamp": "2026-10-18T01:53:28.653Z"
+        },
+        {
+          "id": "m-1792288517033",
+          "sender": "student",
+          "senderName": "Aman Sharma",
+          "text": "Hello! Looking forward to collaborating on the AI Capstone challenge.",
+          "timestamp": "2026-10-18T01:55:17.033Z"
         }
       ]
     },
@@ -3105,7 +3624,7 @@
       ],
       "progressPercent": 64,
       "createdAt": "2026-10-17T21:06:19.909Z",
-      "updatedAt": "2026-10-17T23:31:25.998Z",
+      "updatedAt": "2026-10-18T01:55:16.668Z",
       "phases": [
         {
           "id": "phase-1",
@@ -3258,7 +3777,7 @@
       "allowDirectStudentPitch": true,
       "requireSquadProposal": true
     },
-    "updatedAt": "2026-10-17T23:31:26.510Z"
+    "updatedAt": "2026-10-18T01:55:17.180Z"
   },
   "facultySupervisions": [
     {
@@ -3285,7 +3804,7 @@
           "submissionNotes": "Implemented Locust load generation scripts and Locust telemetry Prometheus export.",
           "status": "Approved",
           "feedback": "Excellent Raft consensus implementation with verified test coverage.",
-          "reviewedAt": "2026-10-17T23:31:26.435Z",
+          "reviewedAt": "2026-10-18T01:55:17.105Z",
           "score": 95
         },
         {
@@ -3310,6 +3829,33 @@
         }
       ],
       "reviewHistory": [
+        {
+          "milestoneId": "m-1",
+          "milestoneTitle": "Milestone 1: Architecture Blueprint & Load Simulation Harness",
+          "reviewer": "Dr. R.K. Verma",
+          "decision": "approved",
+          "score": 95,
+          "feedback": "Excellent Raft consensus implementation with verified test coverage.",
+          "timestamp": "2026-10-18T01:55:17.105Z"
+        },
+        {
+          "milestoneId": "m-1",
+          "milestoneTitle": "Milestone 1: Architecture Blueprint & Load Simulation Harness",
+          "reviewer": "Dr. R.K. Verma",
+          "decision": "approved",
+          "score": 95,
+          "feedback": "Excellent Raft consensus implementation with verified test coverage.",
+          "timestamp": "2026-10-18T01:53:28.746Z"
+        },
+        {
+          "milestoneId": "m-1",
+          "milestoneTitle": "Milestone 1: Architecture Blueprint & Load Simulation Harness",
+          "reviewer": "Dr. R.K. Verma",
+          "decision": "approved",
+          "score": 95,
+          "feedback": "Excellent Raft consensus implementation with verified test coverage.",
+          "timestamp": "2026-10-17T23:33:31.625Z"
+        },
         {
           "milestoneId": "m-1",
           "milestoneTitle": "Milestone 1: Architecture Blueprint & Load Simulation Harness",
@@ -3403,6 +3949,60 @@
     }
   ],
   "facultyCollaborations": [
+    {
+      "id": "collab-1792288517142",
+      "challengeId": "challenge-1",
+      "challengeTitle": "Distributed Transaction Processing",
+      "title": "Distributed Transaction Processing",
+      "alumnusId": "mentor-alumnus",
+      "alumnusName": "Test Alumni Guide",
+      "partnerName": "Test Alumni Guide",
+      "company": "Stripe Global",
+      "alumnusRole": "Stripe Global",
+      "topic": "Fintech Systems",
+      "area": "Fintech Systems",
+      "status": "invited",
+      "invitedAt": "2026-10-18T01:55:17.143Z",
+      "respondedAt": null,
+      "nextSession": "Awaiting alumnus confirmation",
+      "notes": "Co-mentoring 4th year student capstone squad."
+    },
+    {
+      "id": "collab-1792288408782",
+      "challengeId": "challenge-1",
+      "challengeTitle": "Distributed Transaction Processing",
+      "title": "Distributed Transaction Processing",
+      "alumnusId": "mentor-alumnus",
+      "alumnusName": "Test Alumni Guide",
+      "partnerName": "Test Alumni Guide",
+      "company": "Stripe Global",
+      "alumnusRole": "Stripe Global",
+      "topic": "Fintech Systems",
+      "area": "Fintech Systems",
+      "status": "invited",
+      "invitedAt": "2026-10-18T01:53:28.782Z",
+      "respondedAt": null,
+      "nextSession": "Awaiting alumnus confirmation",
+      "notes": "Co-mentoring 4th year student capstone squad."
+    },
+    {
+      "id": "collab-1792280011674",
+      "challengeId": "challenge-1",
+      "challengeTitle": "Distributed Transaction Processing",
+      "title": "Distributed Transaction Processing",
+      "alumnusId": "mentor-alumnus",
+      "alumnusName": "Test Alumni Guide",
+      "partnerName": "Test Alumni Guide",
+      "company": "Stripe Global",
+      "alumnusRole": "Stripe Global",
+      "topic": "Fintech Systems",
+      "area": "Fintech Systems",
+      "status": "invited",
+      "invitedAt": "2026-10-17T23:33:31.674Z",
+      "respondedAt": null,
+      "nextSession": "Awaiting alumnus confirmation",
+      "notes": "Co-mentoring 4th year student capstone squad."
+    },
     {
       "id": "collab-1792279886474",
       "challengeId": "challenge-1",
@@ -3632,6 +4232,87 @@
     }
   ],
   "institutionAuditLogs": [
+    {
+      "id": "audit-1792288517370",
+      "timestamp": "2026-10-18T01:55:17.370Z",
+      "actor": "Dean Sharma (Admin)",
+      "action": "UPDATE_GOVERNANCE_POLICIES",
+      "target": "Updated Institutional Privacy & Consent Controls",
+      "ipAddress": "10.0.4.12 (University Gateway)",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "audit-1792288517258",
+      "timestamp": "2026-10-18T01:55:17.258Z",
+      "actor": "Dean Sharma (Admin)",
+      "action": "DELETE_DEPARTMENT",
+      "target": "Robotics & Mechatronics (ROBO)",
+      "ipAddress": "10.0.4.12 (University Gateway)",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "audit-1792288517242",
+      "timestamp": "2026-10-18T01:55:17.242Z",
+      "actor": "Dean Sharma (Admin)",
+      "action": "CREATE_DEPARTMENT",
+      "target": "Robotics & Mechatronics (ROBO)",
+      "ipAddress": "10.0.4.12 (University Gateway)",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "audit-1792288408968",
+      "timestamp": "2026-10-18T01:53:28.969Z",
+      "actor": "Dean Sharma (Admin)",
+      "action": "UPDATE_GOVERNANCE_POLICIES",
+      "target": "Updated Institutional Privacy & Consent Controls",
+      "ipAddress": "10.0.4.12 (University Gateway)",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "audit-1792288408906",
+      "timestamp": "2026-10-18T01:53:28.906Z",
+      "actor": "Dean Sharma (Admin)",
+      "action": "DELETE_DEPARTMENT",
+      "target": "Robotics & Mechatronics (ROBO)",
+      "ipAddress": "10.0.4.12 (University Gateway)",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "audit-1792288408885",
+      "timestamp": "2026-10-18T01:53:28.885Z",
+      "actor": "Dean Sharma (Admin)",
+      "action": "CREATE_DEPARTMENT",
+      "target": "Robotics & Mechatronics (ROBO)",
+      "ipAddress": "10.0.4.12 (University Gateway)",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "audit-1792280011885",
+      "timestamp": "2026-10-17T23:33:31.885Z",
+      "actor": "Dean Sharma (Admin)",
+      "action": "UPDATE_GOVERNANCE_POLICIES",
+      "target": "Updated Institutional Privacy & Consent Controls",
+      "ipAddress": "10.0.4.12 (University Gateway)",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "audit-1792280011812",
+      "timestamp": "2026-10-17T23:33:31.812Z",
+      "actor": "Dean Sharma (Admin)",
+      "action": "DELETE_DEPARTMENT",
+      "target": "Robotics & Mechatronics (ROBO)",
+      "ipAddress": "10.0.4.12 (University Gateway)",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "audit-1792280011789",
+      "timestamp": "2026-10-17T23:33:31.789Z",
+      "actor": "Dean Sharma (Admin)",
+      "action": "CREATE_DEPARTMENT",
+      "target": "Robotics & Mechatronics (ROBO)",
+      "ipAddress": "10.0.4.12 (University Gateway)",
+      "status": "SUCCESS"
+    },
     {
       "id": "audit-1792279886749",
       "timestamp": "2026-10-17T23:31:26.749Z",

@@ -808,7 +808,8 @@
   <div id="particle-field" aria-hidden="true"></div>
 
   <!-- ================= 3-SECOND CINEMATIC INTRO SPLASH SCREEN ================= -->
-  <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#02040a] select-none">
+  <!-- ================= FAST CINEMATIC INTRO SPLASH SCREEN (CLICK ANYWHERE TO SKIP) ================= -->
+  <div id="splash-screen" onclick="dismissSplashImmediately()" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#02040a] select-none cursor-pointer" title="Click anywhere to enter immediately">
     
     <!-- Cyber Background Rings -->
     <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
@@ -818,7 +819,7 @@
     </div>
 
     <!-- Center Grand Brand Reveal -->
-    <div class="relative z-10 flex flex-col items-center text-center space-y-6 px-4 max-w-xl">
+    <div class="relative z-10 flex flex-col items-center text-center space-y-6 px-4 max-w-xl pointer-events-none">
       
       <!-- Glowing Animated Emblem -->
       <div class="relative w-24 h-24 flex items-center justify-center">
@@ -841,17 +842,17 @@
       </div>
 
       <p class="text-xs text-slate-400 max-w-md leading-relaxed">
-        Autonomous Intent & Proof-of-Work Exchange connecting Students, Alumni, Founders, Faculty & Institutions.
+        Autonomous Intent &amp; Proof-of-Work Exchange connecting Students, Alumni, Founders, Faculty &amp; Institutions.
       </p>
 
-      <!-- 3-Second Loading Bar Indicator -->
-      <div class="w-64 space-y-2 pt-4">
+      <!-- Snappy Loading Bar Indicator -->
+      <div class="w-64 space-y-2 pt-2">
         <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
           <span class="flex items-center space-x-1.5">
-            <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
-            <span class="text-slate-300">Initializing Engine</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-slate-300">Fast Launch</span>
           </span>
-          <span id="splash-timer-text" class="text-sky-300">3s</span>
+          <span id="splash-timer-text" class="text-sky-300 font-bold">Ready</span>
         </div>
         <div class="w-full bg-[#070c18] border border-slate-800 h-1.5 rounded-full overflow-hidden">
           <div id="splash-progress" class="bg-gradient-to-r from-blue-600 via-indigo-500 to-sky-400 h-full w-0 progress-bar-fill"></div>
@@ -861,9 +862,9 @@
     </div>
 
     <!-- Skip Button in Bottom Right -->
-    <button onclick="dismissSplashImmediately()" class="absolute bottom-6 right-6 text-xs text-slate-400 hover:text-slate-200 font-mono flex items-center space-x-1.5 bg-slate-900/80 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-800 transition">
-      <span>Skip Intro</span>
-      <i data-lucide="fast-forward" class="w-3.5 h-3.5"></i>
+    <button onclick="dismissSplashImmediately(true)" class="absolute bottom-6 right-6 text-xs text-slate-400 hover:text-white font-mono flex items-center space-x-1.5 bg-slate-900/90 hover:bg-slate-800 px-3.5 py-2 rounded-xl border border-slate-800 shadow-lg transition">
+      <span>Enter Workspace</span>
+      <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
     </button>
   </div>
 
@@ -944,168 +945,269 @@
         No cold DMs. Upload your resume &amp; projects to get verified by AI, then receive instant 1-click referrals from seniors at top companies.
       </p>
 
-      <div class="pt-2 text-xs font-semibold uppercase tracking-wider text-sky-400 font-mono">
-        Select a role below to explore live:
-      </div>
     </div>
 
-    <!-- 6 Role Cards Grid (3x2 on desktop, 1-click instant login) -->
-    <div class="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+    <!-- ================= MASTER HERO LOGIN & ROLE SWITCHER BOX ================= -->
+    <div class="w-full max-w-4xl mx-auto glass-panel rounded-3xl p-5 sm:p-7 border border-slate-800 shadow-2xl relative mb-10 overflow-hidden">
       
-      <!-- 1. Student Card -->
-      <div onclick="directAuthenticateAs('student')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-sky-500/50 hover:bg-[#0c142c] transition-all duration-200 shadow-lg hover:shadow-sky-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-sky-400 border border-blue-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-            </div>
-            <span class="text-[10px] bg-sky-500/10 text-sky-300 border border-sky-500/20 px-2 py-0.5 rounded font-mono font-semibold">Most Popular</span>
-          </div>
+      <!-- Top Card Header & Role Switcher Bar -->
+      <div class="space-y-3.5 pb-5 border-b border-slate-800/80">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <h3 class="text-base font-bold text-white group-hover:text-sky-300 transition">Student Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Aman Sharma (CSE '26)</p>
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center space-x-2">
+              <i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i>
+              <span>LinkX Unified Role Login Gateway</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Switch easily across all 6 verified platform roles to sign in or test 1-click bypass.</p>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Upload resume &amp; GitHub projects, get scored (95/100), and request 1-click ATS referrals.
-          </p>
+          <div class="flex items-center space-x-2 self-start sm:self-auto">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">
+              Live Verified Nodes
+            </span>
+          </div>
         </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-sky-400 font-bold">
-          <span>Enter as Student &rarr;</span>
+
+        <!-- Role Switcher Pills Bar (All 6 Roles) -->
+        <div id="hero-role-tabs" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 p-1.5 rounded-2xl bg-[#040711] border border-slate-800/90 text-xs">
+          <!-- Dynamically populated by renderHeroRoleTabs() in app.js -->
         </div>
       </div>
 
-      <!-- 2. Alumnus Card -->
-      <div onclick="directAuthenticateAs('alumnus')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-emerald-500/50 hover:bg-[#071a17] transition-all duration-200 shadow-lg hover:shadow-emerald-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="briefcase" class="w-5 h-5"></i>
+      <!-- Main Interactive Box Content (2 Columns) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-5">
+        
+        <!-- Left Column: Active Persona Snapshot & Value Bullets (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col justify-between space-y-4 p-5 rounded-2xl bg-[#040711] border border-slate-800/90">
+          <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+              <div id="hero-side-icon-box" class="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/25 text-sky-400 font-bold flex items-center justify-center text-lg shrink-0 shadow-lg">
+                <i id="hero-side-icon" data-lucide="graduation-cap" class="w-6 h-6"></i>
+              </div>
+              <div class="min-w-0 flex-1">
+                <span id="hero-side-badge" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-sky-500/10 text-sky-300 border border-sky-500/20 inline-block mb-0.5">Verified Student</span>
+                <h3 id="hero-side-title" class="text-sm font-bold text-white truncate">Student Builder Gateway</h3>
+              </div>
             </div>
-            <span class="text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono font-semibold">Swiggy SDE-2</span>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition">Alumnus Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Rohan Mehta (Batch '20)</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Review 1-minute student code dossiers and endorse juniors directly to your company's ATS.
-          </p>
-        </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-emerald-400 font-bold">
-          <span>Enter as Alumnus &rarr;</span>
-        </div>
-      </div>
 
-      <!-- 3. Founder Card -->
-      <div onclick="directAuthenticateAs('founder')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-amber-500/50 hover:bg-[#1a1408] transition-all duration-200 shadow-lg hover:shadow-amber-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="rocket" class="w-5 h-5"></i>
-            </div>
-            <span class="text-[10px] bg-amber-500/10 text-amber-300 border border-amber-500/20 px-2 py-0.5 rounded font-mono font-semibold">YC W24 Founder</span>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition">Founder Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Neha Kapoor (HyperScale AI)</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Post ₹5,000–₹20,000 micro-bounties and hire campus builders based on real code PRs.
-          </p>
-        </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-amber-400 font-bold">
-          <span>Enter as Founder &rarr;</span>
-        </div>
-      </div>
+            <p id="hero-side-desc" class="text-xs text-slate-300 leading-relaxed">
+              Connect directly with alumni in your target companies without cold DMs. Showcase real code and secure job referrals.
+            </p>
 
-      <!-- 4. Recruiter Card -->
-      <div onclick="directAuthenticateAs('recruiter')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-cyan-500/50 hover:bg-[#071824] transition-all duration-200 shadow-lg hover:shadow-cyan-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="user-check" class="w-5 h-5"></i>
+            <div id="hero-side-bullets" class="space-y-2.5 pt-2 border-t border-slate-800/60 text-xs">
+              <!-- Dynamically populated bullets -->
             </div>
-            <span class="text-[10px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 px-2 py-0.5 rounded font-mono font-semibold">Tech Talent</span>
           </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-cyan-300 transition">Recruiter Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Vikram Seth (Razorpay)</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Filter through pre-vetted top 1% candidates with verified GitHub code scores and parsed resumes.
-          </p>
-        </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-cyan-400 font-bold">
-          <span>Enter as Recruiter &rarr;</span>
-        </div>
-      </div>
 
-      <!-- 5. Faculty Card -->
-      <div onclick="directAuthenticateAs('faculty')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-purple-500/50 hover:bg-[#160b24] transition-all duration-200 shadow-lg hover:shadow-purple-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="book-open" class="w-5 h-5"></i>
+          <!-- Verified Demo Helper Box -->
+          <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] space-y-1">
+            <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 flex items-center justify-between">
+              <span>Verified Test Account</span>
+              <span class="text-emerald-400 font-mono">Default: password123</span>
             </div>
-            <span class="text-[10px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-2 py-0.5 rounded font-mono font-semibold">Dean R&amp;D</span>
+            <div id="hero-demo-text" class="text-slate-300 leading-tight">
+              <!-- Injected by JS -->
+            </div>
           </div>
-          <div>
-            <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition">Faculty Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Dr. R.K. Verma (Apex Tech)</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Pair student capstones with industry alumni co-guides for real-world research &amp; IEEE papers.
-          </p>
         </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-purple-400 font-bold">
-          <span>Enter as Faculty &rarr;</span>
-        </div>
-      </div>
 
-      <!-- 6. Institution Card -->
-      <div onclick="directAuthenticateAs('institution')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-rose-500/50 hover:bg-[#200812] transition-all duration-200 shadow-lg hover:shadow-rose-500/10 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/25 flex items-center justify-center group-hover:scale-110 transition">
-              <i data-lucide="landmark" class="w-5 h-5"></i>
-            </div>
-            <span class="text-[10px] bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2 py-0.5 rounded font-mono font-semibold">Command Desk</span>
-          </div>
+        <!-- Right Column: Interactive Login Form (7 cols) -->
+        <div class="lg:col-span-7 flex flex-col justify-between p-5 rounded-2xl bg-[#040711] border border-slate-800/90 space-y-4">
           <div>
-            <h3 class="text-base font-bold text-white group-hover:text-rose-300 transition">Institution Portal</h3>
-            <p class="text-xs text-slate-400 mt-1">Apex Alumni Administration</p>
+            <div class="border-b border-slate-800/60 pb-3 mb-4">
+              <h3 id="hero-form-heading" class="text-sm font-bold text-white">Sign In to Student Portal</h3>
+              <p id="hero-form-subheading" class="text-xs text-slate-400 mt-0.5">Enter with verified credentials or use 1-click instant access.</p>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="hero-signin-error" class="hidden mb-3 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs"></div>
+
+            <form id="hero-login-form" onsubmit="handleHeroLoginSubmit(event)" class="space-y-3.5">
+              <div>
+                <label id="hero-email-label" class="block text-xs font-medium text-slate-300 mb-1">Official / College Email</label>
+                <div class="relative">
+                  <input type="email" id="hero-email-input" required class="w-full bg-[#080d1a] border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition" placeholder="aman@apex.edu">
+                  <div class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label class="block text-xs font-medium text-slate-300">Password</label>
+                  <button type="button" onclick="openForgotPasswordModal()" class="text-[11px] font-medium text-sky-400 hover:text-sky-300 transition">
+                    Forgot Password?
+                  </button>
+                </div>
+                <div class="relative">
+                  <input type="password" id="hero-password-input" value="password123" required class="w-full bg-[#080d1a] border border-slate-800 rounded-xl px-3.5 py-2.5 pr-10 text-xs text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition" placeholder="••••••••">
+                  <button type="button" onclick="togglePasswordVisibility('hero-password-input', 'hero-pw-toggle-icon')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition">
+                    <i id="hero-pw-toggle-icon" data-lucide="eye" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="pt-2 space-y-2">
+                <button type="submit" id="btn-hero-signin" class="w-full py-2.5 btn-gradient-primary text-white font-bold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-lg transition">
+                  <i data-lucide="log-in" class="w-4 h-4"></i>
+                  <span id="btn-hero-signin-text">Sign In to Student Portal</span>
+                </button>
+
+                <button type="button" onclick="executeHeroLogin()" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 font-bold rounded-xl text-xs flex items-center justify-center space-x-2 transition">
+                  <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
+                  <span id="btn-hero-demo-text">⚡ 1-Click Fast-Track Demo (Student)</span>
+                </button>
+              </div>
+            </form>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Monitor verified referral conversions (89%), student earnings, and NIRF/NAAC accreditation metrics.
-          </p>
         </div>
-        <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-rose-400 font-bold">
-          <span>Enter as Institution &rarr;</span>
-        </div>
+
       </div>
 
     </div>
 
-    <!-- Collapsible Alternative Email Login (for realistic enterprise test) -->
-    <details class="w-full max-w-md mx-auto text-xs text-slate-400 bg-[#080d1a] border border-slate-800 rounded-2xl p-4">
-      <summary class="cursor-pointer font-semibold text-slate-300 hover:text-white flex items-center justify-between select-none">
-        <span>Looking for traditional email login?</span>
-        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
-      </summary>
-      <form onsubmit="handleHeroLoginSubmit(event)" class="space-y-3 pt-3 mt-2 border-t border-slate-800">
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Email</label>
-          <input type="email" value="2022CS084@apex.edu" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+    <!-- Quick Direct 1-Click Cards Grid (3x2) -->
+    <div class="w-full max-w-4xl space-y-3 mb-8">
+      <div class="flex items-center justify-between text-xs text-slate-400 px-1 font-mono uppercase tracking-wider">
+        <span>Direct 1-Click Portal Launchers</span>
+        <span class="text-sky-400">Instant Access</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        
+        <!-- 1. Student Card -->
+        <div onclick="directAuthenticateAs('student')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-sky-500/50 hover:bg-[#0c142c] transition-all duration-200 shadow-lg hover:shadow-sky-500/10 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-sky-400 border border-blue-500/25 flex items-center justify-center group-hover:scale-110 transition">
+                <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] bg-sky-500/10 text-sky-300 border border-sky-500/20 px-2 py-0.5 rounded font-mono font-semibold">Most Popular</span>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white group-hover:text-sky-300 transition">Student Portal</h3>
+              <p class="text-xs text-slate-400 mt-1">Aman Sharma (CSE '26)</p>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Upload resume &amp; GitHub projects, get scored (95/100), and request 1-click ATS referrals.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-sky-400 font-bold">
+            <span>Enter as Student &rarr;</span>
+          </div>
         </div>
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Password</label>
-          <input type="password" value="password123" class="w-full bg-[#040711] border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+
+        <!-- 2. Alumnus Card -->
+        <div onclick="directAuthenticateAs('alumnus')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-emerald-500/50 hover:bg-[#071a17] transition-all duration-200 shadow-lg hover:shadow-emerald-500/10 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 flex items-center justify-center group-hover:scale-110 transition">
+                <i data-lucide="briefcase" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono font-semibold">Swiggy SDE-2</span>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition">Alumnus Portal</h3>
+              <p class="text-xs text-slate-400 mt-1">Rohan Mehta (Batch '20)</p>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Review 1-minute student code dossiers and endorse juniors directly to your company's ATS.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-emerald-400 font-bold">
+            <span>Enter as Alumnus &rarr;</span>
+          </div>
         </div>
-        <button type="submit" class="w-full py-2 btn-gradient-primary text-white font-bold rounded-xl text-xs transition">
-          Sign In
-        </button>
-      </form>
-    </details>
+
+        <!-- 3. Founder Card -->
+        <div onclick="directAuthenticateAs('founder')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-amber-500/50 hover:bg-[#1a1408] transition-all duration-200 shadow-lg hover:shadow-amber-500/10 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25 flex items-center justify-center group-hover:scale-110 transition">
+                <i data-lucide="rocket" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] bg-amber-500/10 text-amber-300 border border-amber-500/20 px-2 py-0.5 rounded font-mono font-semibold">YC W24 Founder</span>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition">Founder Portal</h3>
+              <p class="text-xs text-slate-400 mt-1">Neha Kapoor (HyperScale AI)</p>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Post ₹5,000–₹20,000 micro-bounties and hire campus builders based on real code PRs.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-amber-400 font-bold">
+            <span>Enter as Founder &rarr;</span>
+          </div>
+        </div>
+
+        <!-- 4. Recruiter Card -->
+        <div onclick="directAuthenticateAs('recruiter')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-cyan-500/50 hover:bg-[#071824] transition-all duration-200 shadow-lg hover:shadow-cyan-500/10 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/25 flex items-center justify-center group-hover:scale-110 transition">
+                <i data-lucide="user-check" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 px-2 py-0.5 rounded font-mono font-semibold">Tech Talent</span>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white group-hover:text-cyan-300 transition">Recruiter Portal</h3>
+              <p class="text-xs text-slate-400 mt-1">Vikram Seth (Razorpay)</p>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Filter through pre-vetted top 1% candidates with verified GitHub code scores and parsed resumes.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-cyan-400 font-bold">
+            <span>Enter as Recruiter &rarr;</span>
+          </div>
+        </div>
+
+        <!-- 5. Faculty Card -->
+        <div onclick="directAuthenticateAs('faculty')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-purple-500/50 hover:bg-[#160b24] transition-all duration-200 shadow-lg hover:shadow-purple-500/10 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/25 flex items-center justify-center group-hover:scale-110 transition">
+                <i data-lucide="book-open" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-2 py-0.5 rounded font-mono font-semibold">Dean R&amp;D</span>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition">Faculty Portal</h3>
+              <p class="text-xs text-slate-400 mt-1">Dr. R.K. Verma (Apex Tech)</p>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Pair student capstones with industry alumni co-guides for real-world research &amp; IEEE papers.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-purple-400 font-bold">
+            <span>Enter as Faculty &rarr;</span>
+          </div>
+        </div>
+
+        <!-- 6. Institution Card -->
+        <div onclick="directAuthenticateAs('institution')" class="group cursor-pointer glass-card rounded-2xl p-5 border border-slate-800 hover:border-rose-500/50 hover:bg-[#200812] transition-all duration-200 shadow-lg hover:shadow-rose-500/10 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/25 flex items-center justify-center group-hover:scale-110 transition">
+                <i data-lucide="landmark" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2 py-0.5 rounded font-mono font-semibold">Command Desk</span>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white group-hover:text-rose-300 transition">Institution Portal</h3>
+              <p class="text-xs text-slate-400 mt-1">Apex Alumni Administration</p>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Monitor verified referral conversions (89%), student earnings, and NIRF/NAAC accreditation metrics.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs text-rose-400 font-bold">
+            <span>Enter as Institution &rarr;</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </section>
 
