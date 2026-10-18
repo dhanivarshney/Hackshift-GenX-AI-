@@ -316,21 +316,25 @@ const MATCH_RADAR_ITEMS = [
   }
 ];
 
-// ================= INITIALIZATION & SNAPPY SPLASH =================
+// ================= INITIALIZATION & 3-SECOND CINEMATIC HERO SPLASH =================
+let splashTimer = null;
+let splashInterval = null;
+
 document.addEventListener('DOMContentLoaded', async () => {
   renderHeroRoleTabs();
   renderHeroRoleView(currentHeroRoleId);
   renderRadarCards(MATCH_RADAR_ITEMS);
-  setupLineageCanvas();
 
-  // Snappy splash screen with instant bypass on repeat visits
+  // Hero screen stays for at least 3 seconds before opening login page
   startSplashCountdown();
 
   // Load backend data in background
-  await Promise.all([
-    fetchBountiesFromAPI(),
-    fetchReferralsFromAPI()
-  ]);
+  try {
+    await Promise.all([
+      fetchBountiesFromAPI(),
+      fetchReferralsFromAPI()
+    ]);
+  } catch (err) {}
 
   if (window.lucide && typeof lucide.createIcons === 'function') {
     lucide.createIcons();
@@ -338,50 +342,69 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function startSplashCountdown() {
-  // If splash was already seen in this session, dismiss immediately without lag
-  if (sessionStorage.getItem('linkx_splash_seen')) {
-    dismissSplashImmediately(true);
-    return;
-  }
-
   const progressBar = document.getElementById('splash-progress');
   const timerText = document.getElementById('splash-timer-text');
   
-  if (progressBar) {
-    progressBar.style.transition = 'width 500ms ease-out';
-    setTimeout(() => {
-      progressBar.style.width = '100%';
-    }, 20);
+  if (timerText) {
+    timerText.textContent = '3s';
   }
 
-  // Snappy countdown transition (600ms total instead of 3000ms freeze)
-  splashTimer = setTimeout(() => {
-    if (timerText) timerText.textContent = 'Ready';
-    dismissSplashImmediately(false);
-  }, 600);
+  if (progressBar) {
+    progressBar.style.width = '0%';
+    progressBar.style.transition = 'width 3000ms linear';
+    setTimeout(() => {
+      progressBar.style.width = '100%';
+    }, 50);
+  }
+
+  // Hero screen stays for full 3 seconds (3s -> 2s -> 1s -> Ready)
+  let remaining = 3;
+  if (splashInterval) {
+    clearInterval(splashInterval);
+    splashInterval = null;
+  }
+  splashInterval = setInterval(() => {
+    remaining--;
+    if (timerText) {
+      if (remaining > 0) {
+        timerText.textContent = `${remaining}s`;
+      } else {
+        timerText.textContent = 'Ready';
+      }
+    }
+
+    if (remaining <= 0) {
+      clearInterval(splashInterval);
+      splashInterval = null;
+      dismissSplashImmediately(false);
+    }
+  }, 1000);
 }
 
 function dismissSplashImmediately(instant = false) {
+  if (splashInterval) {
+    clearInterval(splashInterval);
+    splashInterval = null;
+  }
   if (splashTimer) {
     clearTimeout(splashTimer);
-    clearInterval(splashTimer);
+    splashTimer = null;
   }
-  try {
-    sessionStorage.setItem('linkx_splash_seen', 'true');
-  } catch (e) {}
 
   const splash = document.getElementById('splash-screen');
   if (splash) {
+    // Immediately disable pointer-events so underlying login page is directly clickable
+    splash.style.pointerEvents = 'none';
+
     if (instant) {
       splash.style.display = 'none';
     } else {
-      splash.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
+      splash.style.transition = 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
       splash.style.opacity = '0';
       splash.style.transform = 'scale(1.02)';
-      splash.style.pointerEvents = 'none';
       setTimeout(() => {
         splash.style.display = 'none';
-      }, 250);
+      }, 400);
     }
   }
 }
