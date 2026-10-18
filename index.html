@@ -224,7 +224,7 @@
 
     /* ===================== SPLASH ANIMATIONS ===================== */
     #splash-screen {
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .splash-ring  { animation: spin 10s linear infinite; }
     .splash-pulse { animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite; }
@@ -237,7 +237,13 @@
       50%  { transform: scale(1.15); opacity: 0.4; }
       100% { transform: scale(1);    opacity: 0.8; }
     }
-    .progress-bar-fill { transition: width 3s linear; }
+    @keyframes fill-progress {
+      from { width: 0%; }
+      to   { width: 100%; }
+    }
+    .progress-bar-fill {
+      animation: fill-progress 3s linear forwards;
+    }
 
     /* ===================== FLOATING BACKGROUND ORBS ===================== */
     .bg-orb {

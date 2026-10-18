@@ -317,16 +317,19 @@ const MATCH_RADAR_ITEMS = [
 ];
 
 // ================= INITIALIZATION & 3-SECOND CINEMATIC HERO SPLASH =================
-let splashTimer = null;
 let splashInterval = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  renderHeroRoleTabs();
-  renderHeroRoleView(currentHeroRoleId);
-  renderRadarCards(MATCH_RADAR_ITEMS);
+  if (window.lucide && typeof lucide.createIcons === 'function') {
+    lucide.createIcons();
+  }
 
   // Hero screen stays for at least 3 seconds before opening login page
   startSplashCountdown();
+
+  renderHeroRoleTabs();
+  renderHeroRoleView(currentHeroRoleId);
+  renderRadarCards(MATCH_RADAR_ITEMS);
 
   // Load backend data in background
   try {
@@ -356,6 +359,12 @@ function startSplashCountdown() {
       progressBar.style.width = '100%';
     }, 50);
   }
+
+  // Fallback safety timeout guarantees splash closes after 3.5s max even if interval stalls
+  if (splashTimer) clearTimeout(splashTimer);
+  splashTimer = setTimeout(() => {
+    dismissSplashImmediately(false);
+  }, 3500);
 
   // Hero screen stays for full 3 seconds (3s -> 2s -> 1s -> Ready)
   let remaining = 3;
@@ -576,6 +585,14 @@ function directAuthenticateAs(roleId) {
   dismissSplashImmediately(true);
   authenticateAndOpenWorkspace(roleId, true, true);
 }
+
+// Global window attachments for inline HTML onclick/onsubmit attributes
+window.dismissSplashImmediately = dismissSplashImmediately;
+window.renderHeroRoleView = renderHeroRoleView;
+window.renderHeroRoleTabs = renderHeroRoleTabs;
+window.executeHeroLogin = executeHeroLogin;
+window.handleHeroLoginSubmit = handleHeroLoginSubmit;
+window.directAuthenticateAs = directAuthenticateAs;
 
 // ================= ROLE-SPECIFIC NAVIGATION CONFIGURATIONS =================
 const ROLE_TABS = {
@@ -5445,57 +5462,5 @@ async function handleCompleteAlumniSessionSubmit(event) {
   }
 }
 
-// ================= PASSWORD SHOW / HIDE TOGGLE =================
-function togglePasswordVisibility(inputId, iconId) {
-  const input = document.getElementById(inputId);
-  const icon  = document.getElementById(iconId);
-  if (!input) return;
-  if (input.type === 'password') {
-    input.type = 'text';
-    if (icon) { icon.setAttribute('data-lucide', 'eye-off'); lucide.createIcons(); }
-  } else {
-    input.type = 'password';
-    if (icon) { icon.setAttribute('data-lucide', 'eye'); lucide.createIcons(); }
-  }
-}
 
-// ================= ENHANCED AUTH SIGN-IN (Role-Validated) =================
-async function handleAuthSignInSubmit(event) {
-  event.preventDefault();
-  const email    = document.getElementById('auth-signin-email')?.value?.trim();
-  const password = document.getElementById('auth-signin-password')?.value;
-  const roleEl   = document.getElementById('auth-signin-role');
-  const role     = roleEl?.value || '';
-  const btn      = event.target.querySelector('[type="submit"]');
-  const errBox   = document.getElementById('auth-signin-error');
 
-  if (errBox) errBox.classList.add('hidden');
-  if (btn)   { btn.disabled = true; btn.textContent = 'Signing in…'; }
-
-  try {
-    const res = await fetch(`${API_BASE}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, role })
-    });
-    const data = await res.json();
-    if (data.success) {
-      closeModal('modal-auth-dialog');
-      const userRole = data.user?.roles?.[0] || role || 'student';
-      authenticateAndOpenWorkspace(userRole, true, true);
-    } else {
-      if (errBox) {
-        errBox.textContent = data.error || 'Invalid credentials.';
-        errBox.classList.remove('hidden');
-      } else {
-        showToast(data.error || 'Invalid credentials.', 'error');
-      }
-    }
-  } catch (err) {
-    const msg = 'Network error — please try again.';
-    if (errBox) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
-    else showToast(msg, 'error');
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = 'Sign In to LinkX'; }
-  }
-}
